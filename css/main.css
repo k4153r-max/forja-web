@@ -108,13 +108,37 @@ body::before {
   object-fit: cover;
   box-shadow: 0 0 20px rgba(232, 93, 42, 0.28);
 }
-.brand-hero-logo {
-  display: block;
-  width: min(280px, 70vw);
+/* Logo oficial Forja — columna derecha del hero */
+.hero-visual-logo {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-frame {
+  width: min(100%, 420px);
+  border-radius: 22px;
+  border: 1px solid var(--line-strong);
+  background: #12100e;
+  padding: 8px;
+  box-shadow:
+    0 0 0 1px rgba(232, 93, 42, 0.08),
+    0 28px 70px rgba(0, 0, 0, 0.55),
+    0 0 80px rgba(232, 93, 42, 0.12);
+  overflow: hidden;
+}
+.logo-frame img {
+  width: 100%;
   height: auto;
-  border-radius: 18px;
-  margin: 0 0 22px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  display: block;
+  border-radius: 16px;
+}
+.nav-links a {
+  color: #c4b8aa;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--cream);
 }
 .nav-links {
   display: flex;
@@ -724,6 +748,12 @@ h3 { font-size: 1.25rem; letter-spacing: -0.02em; }
     grid-template-columns: 1fr;
   }
   .hero-visual { display: none; }
+  .hero-visual-logo {
+    display: flex;
+    order: -1;
+    margin-bottom: 8px;
+  }
+  .logo-frame { width: min(100%, 280px); margin-inline: auto; }
   .nav-links {
     position: fixed;
     inset: 0 0 0 auto;
