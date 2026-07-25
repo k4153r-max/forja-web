@@ -5,7 +5,8 @@
 
   const onScroll = () => {
     if (!nav) return;
-    nav.classList.toggle("scrolled", window.scrollY > 24);
+    // account for live-strip above sticky nav
+    nav.classList.toggle("scrolled", window.scrollY > 12);
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
@@ -36,14 +37,16 @@
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -32px 0px" }
     );
-    reveals.forEach((el) => io.observe(el));
+    reveals.forEach((el, i) => {
+      el.style.transitionDelay = `${Math.min(i % 6, 5) * 0.05}s`;
+      io.observe(el);
+    });
   } else {
     reveals.forEach((el) => el.classList.add("visible"));
   }
 
-  // Contact form: mailto fallback (sin backend aún)
   const form = document.querySelector("[data-contact-form]");
   if (form) {
     form.addEventListener("submit", (ev) => {
@@ -57,7 +60,6 @@
       const body = encodeURIComponent(
         `Nombre: ${nombre}\nEmail: ${email}\nProducto: ${producto}\n\n${mensaje}`
       );
-      // Cambia este correo cuando tengas uno de Forja
       const to = form.dataset.mailto || "hola@forja.cl";
       window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
     });

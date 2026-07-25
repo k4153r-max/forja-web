@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portafolio — Forja</title>
-  <meta name="description" content="Portafolio de Forja: indago.cl, Ysabel Aragón NW y más proyectos en producción.">
-  <meta name="theme-color" content="#0e0c0a">
+  <meta name="description" content="Portafolio de Forja: indago.cl, Ysabel Aragón NW, Nexo y demos en producción.">
+  <meta name="theme-color" content="#0a0908">
   <link rel="canonical" href="/portafolio/">
   <meta property="og:title" content="Portafolio — Forja">
-  <meta property="og:description" content="Proyectos reales en producción: indago y Ysabel Aragón NW.">
+  <meta property="og:description" content="Proyectos reales en producción: indago, Ysabel Aragón NW y Nexo.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -17,10 +17,20 @@
   <link rel="apple-touch-icon" href="/assets/logos/forja-icon.jpg">
 </head>
 <body>
+  <div class="live-strip">
+    <div class="wrap">
+      <span class="pulse">Trabajo en producción</span>
+      <div class="links">
+        <a href="https://www.indago.cl" target="_blank" rel="noopener">indago.cl</a>
+        <a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">ysabelaragonnw.cl</a>
+      </div>
+    </div>
+  </div>
+
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
       <a href="/" class="logo" aria-label="Forja">
-        <img src="/assets/logos/forja-icon.jpg" alt="" width="32" height="32" class="logo-img">
+        <img src="/assets/logos/forja-icon.jpg" alt="" width="34" height="34" class="logo-img">
         forja
       </a>
       <nav class="nav-links" aria-label="Principal">
@@ -41,7 +51,7 @@
     <section class="page-hero">
       <div class="wrap">
         <p class="eyebrow">Portafolio</p>
-        <h1>Trabajo que ya está en el mundo.</h1>
+        <h1>Trabajo que ya está <span class="grad-text">en el mundo.</span></h1>
         <p class="lead">
           Sitios y productos en producción, con dominio propio.
           Forja no solo diseña: opera y mantiene.
@@ -63,15 +73,7 @@
                 <span class="pill">B2C</span>
               </div>
               <h3>indago</h3>
-              <p>
-                Comparador de precios en Chile. Scraping multi-tienda, catálogo,
-                matching de productos y experiencia web para comprar mejor.
-              </p>
-              <ul class="muted" style="margin:0 0 16px;padding-left:1.1em;list-style:disc;font-size:0.9rem;line-height:1.6">
-                <li>Producto Forja (marca indago)</li>
-                <li>Stack propio · producción Railway</li>
-                <li>Dominio: www.indago.cl</li>
-              </ul>
+              <p>Comparador de precios en Chile. Scraping multi-tienda, catálogo, matching y experiencia web para comprar mejor.</p>
               <span class="url">www.indago.cl ↗</span>
             </div>
           </a>
@@ -87,53 +89,43 @@
                 <span class="pill">Dominio propio</span>
               </div>
               <h3>Ysabel Aragón NW</h3>
-              <p>
-                Salón de manicure y estética en Puente Alto. Web pública con SEO local,
-                reserva online, abonos, agenda, caja y canales (WhatsApp, email).
-                Es el caso real del sistema Nexo en operación todos los días.
-              </p>
-              <ul class="muted" style="margin:0 0 16px;padding-left:1.1em;list-style:disc;font-size:0.9rem;line-height:1.6">
-                <li>Web + panel de administración</li>
-                <li>Reservas, Mercado Pago, recordatorios</li>
-                <li>Dominio: www.ysabelaragonnw.cl</li>
-              </ul>
+              <p>Web del salón + panel de operación y reservas online. Caso real de Nexo en uso diario.</p>
               <span class="url">www.ysabelaragonnw.cl ↗</span>
             </div>
           </a>
-        </div>
 
-        <div class="section-head reveal" style="margin-top:64px;margin-bottom:24px">
-          <p class="eyebrow">También</p>
-          <h2>Producto y demos</h2>
-          <p class="lead">Nexo es el producto empaquetable; las demos muestran cómo se ve un salón nuevo.</p>
-        </div>
-        <div class="portfolio-grid">
-          <a class="portfolio-card reveal" href="/nexus/" style="border-color:rgba(45,212,191,.2)">
-            <div class="shot" style="background:linear-gradient(145deg,#0f2926,#0e0c0a)">
-              <span class="shot-label" style="color:#2dd4bf">Nexo</span>
+          <a class="portfolio-card nexo reveal" href="/nexus/">
+            <div class="shot">
+              <img class="shot-logo" src="/assets/logos/nexo-wordmark.jpg" alt="Nexo" width="240" height="100" style="border-radius:12px;background:#fff;padding:12px 16px">
             </div>
             <div class="body">
               <div class="tags">
-                <span class="pill">Producto B2B</span>
-                <span class="pill">Salones / locales</span>
+                <span class="pill live">Producto</span>
+                <span class="pill">B2B SaaS</span>
+                <span class="pill">Chile</span>
               </div>
               <h3>Nexo</h3>
-              <p>Sistema de operación: agenda, reservas, caja, equipo y WhatsApp. Un salón = una instancia.</p>
-              <span class="url" style="color:var(--nexo)">Ver producto Nexo →</span>
+              <p>Sistema de operación multi-vertical para salones y locales. Agenda, caja, reservas, roles y trial.</p>
+              <span class="url">Ver producto →</span>
             </div>
           </a>
-          <a class="portfolio-card reveal" href="/demos/">
-            <div class="shot" style="background:linear-gradient(145deg,#2a1a12,#0e0c0a)">
-              <span class="shot-label">Demos</span>
+
+          <a class="portfolio-card nexo reveal" href="/demos/">
+            <div class="shot">
+              <div style="position:relative;z-index:1;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+                <span style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#c2617a,#fdf6f8)"></span>
+                <span style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#1a211e,#c9a227)"></span>
+                <span style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#5b8a72,#e8f0eb)"></span>
+              </div>
             </div>
             <div class="body">
               <div class="tags">
-                <span class="pill">Pruebas</span>
+                <span class="pill">Demos</span>
                 <span class="pill">3 marcas ficticias</span>
               </div>
               <h3>Webs demo de salones</h3>
-              <p>Luna Nails, Atelier Norte y Aura Studio — cómo se ve la cara pública con Nexo.</p>
-              <span class="url">Ver demos →</span>
+              <p>Luna Nails, Atelier Norte y Aura Studio: cara pública con distinta vertical, misma potencia Nexo.</p>
+              <span class="url">Abrir demos →</span>
             </div>
           </a>
         </div>
@@ -144,12 +136,12 @@
       <div class="wrap">
         <div class="cta-box reveal">
           <div>
-            <h2>¿Tu negocio el próximo en el portafolio?</h2>
-            <p>Web + sistema a medida, o Nexo listo para salones. Hablemos.</p>
+            <h2>¿El próximo proyecto es el tuyo?</h2>
+            <p>Nexo para locales, indago, o algo nuevo que valga la pena forjar.</p>
           </div>
           <div class="btn-row">
             <a class="btn btn-primary" href="/contacto/">Contactar Forja</a>
-            <a class="btn btn-ghost" href="/">Volver al inicio</a>
+            <a class="btn btn-ghost" href="/nexus/">Ver Nexo</a>
           </div>
         </div>
       </div>
@@ -159,12 +151,8 @@
   <footer class="footer">
     <div class="wrap">
       <div class="footer-bottom" style="border:0;padding-top:0">
-        <span>© <span id="y"></span> Forja · Portafolio</span>
-        <span>
-          <a href="https://www.indago.cl" target="_blank" rel="noopener">indago.cl</a>
-          ·
-          <a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">ysabelaragonnw.cl</a>
-        </span>
+        <span>© <span id="y"></span> Forja</span>
+        <a href="/">Volver al inicio</a>
       </div>
     </div>
   </footer>

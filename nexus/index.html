@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nexo — Todo tu local, conectado | Forja</title>
-  <meta name="description" content="Nexo une agenda, reservas online, caja, equipo y WhatsApp para salones y locales de servicios. Un producto de Forja.">
-  <meta name="theme-color" content="#0e0c0a">
+  <meta name="description" content="Nexo une agenda, reservas online, caja, equipo y WhatsApp para salones y locales. Trial 14 días. Un producto de Forja.">
+  <meta name="theme-color" content="#0a0908">
   <link rel="canonical" href="/nexus/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Nexo — Todo tu local, conectado">
@@ -19,10 +19,21 @@
   <link rel="apple-touch-icon" href="/assets/logos/nexo-icon.jpg">
 </head>
 <body>
+  <div class="live-strip">
+    <div class="wrap">
+      <span class="pulse">Nexo en vivo</span>
+      <div class="links">
+        <a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial demo</a>
+        <a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">App pública</a>
+        <a href="/demos/">Webs salones</a>
+      </div>
+    </div>
+  </div>
+
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
       <a href="/" class="logo" aria-label="Forja">
-        <img src="/assets/logos/forja-icon.jpg" alt="" width="32" height="32" class="logo-img">
+        <img src="/assets/logos/forja-icon.jpg" alt="" width="34" height="34" class="logo-img">
         forja
       </a>
       <nav class="nav-links" aria-label="Principal">
@@ -30,7 +41,7 @@
         <a href="/portafolio/">Portafolio</a>
         <a href="/nexus/" class="active">Nexo</a>
         <a href="/demos/">Demos</a>
-        <a href="/contacto/" class="nav-cta">Pedir demo</a>
+        <a href="/contacto/?producto=Nexo" class="nav-cta">Pedir trial</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -41,18 +52,42 @@
   <main>
     <section class="page-hero">
       <div class="hero-glow nexo" aria-hidden="true"></div>
-      <div class="wrap">
-        <p class="eyebrow nexo">Producto · Forja</p>
-        <img src="/assets/logos/nexo-wordmark.jpg" alt="Nexo" width="280" height="140" style="max-width:min(280px,70vw);height:auto;border-radius:12px;margin:8px 0 18px;background:#fff;padding:10px 16px">
-        <h1 style="max-width:12em">Nexo une todo tu local.</h1>
-        <p class="lead">
-          Agenda, reservas online con abono, caja, equipo y WhatsApp —
-          en un solo sistema con <strong style="color:var(--cream)">tu marca</strong>, no la de un marketplace.
-        </p>
-        <div class="btn-row" style="margin-top:28px">
-          <a class="btn btn-nexo" href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">Ver app en vivo</a>
-          <a class="btn btn-ghost" href="/demos/">Webs de salones demo</a>
-          <a class="btn btn-ghost" href="/contacto/?producto=Nexo">Quiero Nexo para mi salón</a>
+      <div class="wrap hero-grid" style="align-items:end">
+        <div>
+          <p class="eyebrow nexo">Producto · by FORJA</p>
+          <img src="/assets/logos/nexo-wordmark.jpg" alt="Nexo" width="240" height="120"
+               style="max-width:min(240px,65vw);height:auto;border-radius:12px;margin:4px 0 18px;background:#fff;padding:10px 14px">
+          <h1 style="max-width:11em">Todo tu local, <span class="grad-nexo">conectado.</span></h1>
+          <p class="lead" style="margin-top:16px">
+            Agenda, reservas online con abono, caja, equipo y WhatsApp —
+            en un solo sistema con <strong>tu marca</strong>, no la de un marketplace.
+          </p>
+          <div class="btn-row" style="margin-top:28px">
+            <a class="btn btn-nexo" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Probar trial 14 días</a>
+            <a class="btn btn-ghost" href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">Ver app demo</a>
+            <a class="btn btn-ghost" href="/contacto/?producto=Nexo">Hablar con Forja</a>
+          </div>
+          <div class="chip-row">
+            <span class="chip nexo">Desde $49.000 / mes</span>
+            <span class="chip">Setup desde $120.000</span>
+            <span class="chip">Trial $0</span>
+          </div>
+        </div>
+        <div class="mock reveal" aria-hidden="true">
+          <div class="mock-bar">
+            <i></i><i></i><i></i>
+            <span class="url">nexo · vista día</span>
+          </div>
+          <div class="mock-body">
+            <div class="mock-kpis">
+              <div class="mock-kpi"><div class="lbl">Citas</div><div class="val teal">9</div></div>
+              <div class="mock-kpi"><div class="lbl">Equipo</div><div class="val">3</div></div>
+              <div class="mock-kpi"><div class="lbl">Caja</div><div class="val">$186k</div></div>
+            </div>
+            <div class="mock-row"><span class="dot"></span> 09:00 · Manicure gel <span class="meta">Camila</span></div>
+            <div class="mock-row"><span class="dot"></span> 11:00 · Corte + barba <span class="meta">Diego</span></div>
+            <div class="mock-row"><span class="dot warn"></span> 15:30 · Facial <span class="meta">Aura</span></div>
+          </div>
         </div>
       </div>
     </section>
@@ -62,38 +97,38 @@
         <div class="section-head reveal">
           <p class="eyebrow nexo">Qué resuelve</p>
           <h2>Menos caos. Menos no-shows. Más control.</h2>
-          <p class="lead">Hecho para dueñas de salón y locales de servicios que hoy viven en WhatsApp, Excel y la memoria del equipo.</p>
+          <p class="lead">Para dueñas y equipos que hoy viven en WhatsApp, Excel y la memoria del local.</p>
         </div>
         <div class="features">
           <div class="feature nexo reveal">
-            <div class="feature-ico">📅</div>
-            <h3>Agenda del equipo</h3>
-            <p>Horarios, solapes, lista de espera y estados de cita en un solo panel.</p>
+            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+            <h3>Agenda timeline</h3>
+            <p>Vista día por profesional, arrastrar citas, roles dueña / recepción.</p>
           </div>
           <div class="feature nexo reveal">
-            <div class="feature-ico">🌐</div>
+            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div>
             <h3>Reserva online</h3>
-            <p>Link y web de reserva con tu nombre. La clienta elige servicio, profesional y hora.</p>
+            <p>Link con tu marca. El cliente elige servicio, profesional y hora.</p>
           </div>
           <div class="feature nexo reveal">
-            <div class="feature-ico">💳</div>
+            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
             <h3>Abonos Mercado Pago</h3>
-            <p>Reduce no-shows pidiendo seña. El resto se cierra en caja el día de la cita.</p>
+            <p>Seña al reservar. El resto se cierra en caja el día de la cita.</p>
           </div>
           <div class="feature nexo reveal">
-            <div class="feature-ico">💬</div>
-            <h3>WhatsApp y recordatorios</h3>
-            <p>Confirmaciones, avisos y campañas sin copiar-pegar todo el día.</p>
+            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17l-2 3V7a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H7z"/></svg></div>
+            <h3>WhatsApp y SMS</h3>
+            <p>Confirmaciones, recordatorios y campañas sin copiar-pegar.</p>
           </div>
           <div class="feature nexo reveal">
-            <div class="feature-ico">💰</div>
+            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18M7 8h8a3 3 0 010 6H9a3 3 0 000 6h9"/></svg></div>
             <h3>Caja y liquidación</h3>
-            <p>Cobros, gastos, comisiones del equipo y reportes listos para decidir.</p>
+            <p>Cobros, gastos, comisiones y reportes listos para decidir.</p>
           </div>
           <div class="feature nexo reveal">
-            <div class="feature-ico">🏠</div>
+            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg></div>
             <h3>Tu instancia</h3>
-            <p>Un salón = un sistema. Tus clientas, tu dominio, tus datos. Sin mezclar con otros.</p>
+            <p>Un local = un sistema. Tus clientes, tu dominio, tus datos.</p>
           </div>
         </div>
       </div>
@@ -102,34 +137,34 @@
     <section class="section alt">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="eyebrow nexo">Cómo se implementa</p>
+          <p class="eyebrow nexo">Implementación</p>
           <h2>Listo en días, no en meses</h2>
         </div>
         <div class="steps">
-          <div class="step nexo reveal">
+          <div class="step reveal">
             <h3>Setup</h3>
-            <p>Servicios, empleadas, horarios, logo y datos del salón. Dominio o subdominio tuyo.</p>
+            <p>Servicios, equipo, horarios, logo y datos del local. Dominio o subdominio tuyo.</p>
           </div>
-          <div class="step nexo reveal">
-            <h3>Pagos y WhatsApp</h3>
-            <p>Conectamos Mercado Pago y los canales que uses. Probamos una reserva de punta a punta.</p>
+          <div class="step reveal">
+            <h3>Pagos y mensajes</h3>
+            <p>Mercado Pago y canales que uses. Probamos una reserva de punta a punta.</p>
           </div>
-          <div class="step nexo reveal">
+          <div class="step reveal">
             <h3>Operación</h3>
-            <p>Capacitación corta al equipo. Soporte de Forja mientras corres el día a día.</p>
+            <p>Capacitación corta. Soporte de Forja mientras corres el día a día.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="precios">
       <div class="wrap">
-        <div class="section-head reveal">
+        <div class="section-head center reveal">
           <p class="eyebrow nexo">Planes</p>
           <h2>Precios claros, en pesos</h2>
-          <p class="lead">Referencia Chile (CLP). Ajustamos si el local tiene varias sedes o necesidades especiales.</p>
+          <p class="lead">Referencia Chile (CLP). Se ajustan al tamaño del local.</p>
         </div>
-        <div class="pricing" style="grid-template-columns:repeat(3,1fr)">
+        <div class="pricing">
           <div class="price-card reveal">
             <div class="plan">Prueba</div>
             <h3>Trial 14 días</h3>
@@ -141,7 +176,7 @@
               <li>Link de reserva online</li>
               <li>Onboarding guiado</li>
             </ul>
-            <a class="btn btn-ghost" href="/contacto/?producto=Nexo+Trial" style="width:100%">Pedir trial</a>
+            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener" style="width:100%">Abrir trial demo</a>
           </div>
           <div class="price-card featured reveal">
             <div class="plan">Mensual</div>
@@ -170,15 +205,15 @@
             <a class="btn btn-ghost" href="/contacto/?producto=Nexo+Setup" style="width:100%">Consultar setup</a>
           </div>
         </div>
-        <p class="muted reveal" style="margin-top:20px;font-size:0.9rem">
-          Demo pública: <a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener" style="color:var(--nexo)">nexus-erz6</a>
-          · Trial demo: <a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener" style="color:var(--nexo)">nexus-trial-demo</a>
-          · Precios “desde”; se cierran al tamaño del local.
+        <p class="muted reveal" style="margin-top:22px;font-size:0.9rem;text-align:center">
+          Demo: <a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener" style="color:var(--nexo)">nexus-erz6</a>
+          · Trial: <a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener" style="color:var(--nexo)">nexus-trial-demo</a>
+          (clave demo en el login si está configurada)
         </p>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section tight">
       <div class="wrap">
         <div class="principle reveal" style="background:linear-gradient(135deg,rgba(45,212,191,.1),transparent 50%),var(--ink-2)">
           <blockquote>“Todo tu local, conectado.”</blockquote>
@@ -191,12 +226,12 @@
       <div class="wrap">
         <div class="cta-box nexo reveal">
           <div>
-            <h2>Agenda una conversación de 15 minutos</h2>
-            <p>Contanos cómo atienden hoy y te decimos si Nexo les calza — sin compromiso.</p>
+            <h2>15 minutos para ver si Nexo calza</h2>
+            <p>Contanos cómo atienden hoy. Sin compromiso.</p>
           </div>
           <div class="btn-row">
             <a class="btn btn-nexo" href="/contacto/?producto=Nexo">Contactar Forja</a>
-            <a class="btn btn-ghost" href="/">Volver a Forja</a>
+            <a class="btn btn-ghost" href="/demos/">Ver demos de salones</a>
           </div>
         </div>
       </div>
@@ -208,28 +243,27 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="/" class="logo">
-            <span class="logo-mark" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M4 18h16M7 18V9l5-5 5 5v9M9 13h6"/></svg>
-            </span>
+            <img src="/assets/logos/forja-icon.jpg" alt="" width="28" height="28" class="logo-img">
             forja
           </a>
           <p>Nexo es un producto de Forja. Operación de locales, hecha en Chile.</p>
         </div>
         <div>
           <h4>Nexo</h4>
-          <a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">App demo</a>
+          <a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial demo</a>
+          <a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">App pública</a>
           <a href="/demos/">Webs salones</a>
-          <a href="/contacto/?producto=Nexo">Pedir acceso</a>
         </div>
         <div>
           <h4>Forja</h4>
           <a href="/">Inicio</a>
-          <a href="/#productos">Productos</a>
+          <a href="/portafolio/">Portafolio</a>
           <a href="/contacto/">Contacto</a>
         </div>
         <div>
           <h4>También</h4>
           <a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a>
+          <a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">Ysabel Aragón NW</a>
         </div>
       </div>
       <div class="footer-bottom">

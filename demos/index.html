@@ -4,86 +4,105 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Demos de salones — Nexo · Forja</title>
-  <meta name="description" content="Webs de prueba de salones ficticios impulsados por Nexo. Ejemplos de cómo se ve un local con su marca.">
+  <meta name="description" content="Webs de prueba de salones ficticios impulsados por Nexo. Luna, Atelier y Aura.">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#0e0c0a">
+  <meta name="theme-color" content="#0a0908">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/demos.css">
+  <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/assets/logos/forja-icon.jpg" type="image/jpeg">
-  <style>
-    body { background:#0e0c0a; color:#f4efe6; }
-    .top { border-bottom:1px solid rgba(244,239,230,.1); }
-    .top .d-nav a.logo { color:#f4efe6; font-family:Syne,sans-serif; font-weight:700; display:flex; align-items:center; gap:10px; }
-    .top .d-nav a.logo img { width:32px; height:32px; border-radius:9px; object-fit:cover; }
-  </style>
 </head>
 <body>
-  <div class="demo-ribbon">
-    Demos de prueba · no son salones reales
-    <span>·</span>
-    <a href="/nexus/">Producto Nexo</a>
-    <span>·</span>
-    <a href="/">Forja</a>
-  </div>
-  <header class="top">
-    <div class="wrap d-nav">
-      <a href="/" class="d-brand logo"><img src="/assets/logos/forja-icon.jpg" alt=""> forja · demos</a>
-      <div class="d-nav-links">
-        <a href="/nexus/">Nexo</a>
+  <div class="live-strip">
+    <div class="wrap">
+      <span class="pulse">Demos ficticios · no son locales reales</span>
+      <div class="links">
+        <a href="/nexus/">Producto Nexo</a>
         <a href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar (app real)</a>
-        <a href="/contacto/?producto=Nexo" class="d-btn d-btn-fill" style="padding:9px 16px;font-size:.85rem">Quiero Nexo</a>
       </div>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="/" class="logo" aria-label="Forja">
+        <img src="/assets/logos/forja-icon.jpg" alt="" width="34" height="34" class="logo-img">
+        forja
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="/">Inicio</a>
+        <a href="/nexus/">Nexo</a>
+        <a href="/demos/" class="active">Demos</a>
+        <a href="/contacto/?producto=Nexo" class="nav-cta">Quiero Nexo</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="hub-hero">
-      <p class="d-kicker" style="color:#e85d2a">Webs de prueba</p>
-      <h1>Tres salones ficticios.<br>Misma potencia Nexo.</h1>
-      <p>
-        Cada demo muestra cómo se ve la <strong style="color:#f4efe6">cara pública del salón</strong>
-        (marca, servicios, agenda). La reserva real apunta a la app Nexo de prueba.
-        No son locales reales — sirven para vender y probar.
-      </p>
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow nexo">Webs de prueba</p>
+        <h1>Tres locales ficticios.<br><span class="grad-nexo">Misma potencia Nexo.</span></h1>
+        <p class="lead">
+          Cada demo muestra la <strong>cara pública del local</strong>
+          (marca, servicios). La reserva real apunta a la app Nexo de prueba.
+        </p>
+      </div>
     </section>
 
-    <div class="hub-grid">
-      <a class="hub-card" href="/demos/luna/">
-        <div class="swatch" style="background:linear-gradient(135deg,#fdf6f8,#c2617a 80%)"></div>
-        <h2>Luna Nails</h2>
-        <p>Salón de uñas premium. Rosa, suave, enfocado en soft gel y nail art.</p>
-        <span class="go">Abrir demo →</span>
-      </a>
-      <a class="hub-card" href="/demos/atelier/">
-        <div class="swatch" style="background:linear-gradient(135deg,#1a211e,#c9a227 85%)"></div>
-        <h2>Atelier Norte</h2>
-        <p>Barbería + grooming. Oscuro, dorado, look masculino moderno.</p>
-        <span class="go">Abrir demo →</span>
-      </a>
-      <a class="hub-card" href="/demos/aura/">
-        <div class="swatch" style="background:linear-gradient(135deg,#e8f0eb,#5b8a72 80%)"></div>
-        <h2>Aura Studio</h2>
-        <p>Spa y estética. Verde salvia, calma, tratamientos faciales y cuerpo.</p>
-        <span class="go">Abrir demo →</span>
-      </a>
-    </div>
-
-    <section style="padding-bottom:64px">
-      <div class="cta-block" style="background:linear-gradient(135deg,#0f766e,#134e4a)">
-        <div>
-          <h2 style="font-family:Syne,sans-serif;font-size:1.5rem">¿Quieres tu salón así?</h2>
-          <p>Nexo te deja tu marca, tu dominio y tu agenda. Forja lo implementa.</p>
+    <section class="section" style="padding-top:8px">
+      <div class="wrap">
+        <div class="bento">
+          <a class="bento-card reveal" href="/demos/luna/" style="text-decoration:none;color:inherit">
+            <div style="height:8px;border-radius:999px;background:linear-gradient(90deg,#fdf6f8,#c2617a);margin-bottom:18px"></div>
+            <span class="tag tag-forja" style="background:rgba(194,97,122,.15);color:#e8a0b0">Uñas</span>
+            <h3>Luna Nails</h3>
+            <p>Salón de uñas premium. Rosa, soft gel y nail art.</p>
+            <span class="link" style="color:#e8a0b0">Abrir demo →</span>
+          </a>
+          <a class="bento-card reveal" href="/demos/atelier/" style="text-decoration:none;color:inherit">
+            <div style="height:8px;border-radius:999px;background:linear-gradient(90deg,#1a211e,#c9a227);margin-bottom:18px"></div>
+            <span class="tag tag-forja" style="background:rgba(201,162,39,.15);color:#e8c547">Barbería</span>
+            <h3>Atelier Norte</h3>
+            <p>Barbería + grooming. Oscuro, dorado, look moderno.</p>
+            <span class="link" style="color:#e8c547">Abrir demo →</span>
+          </a>
+          <a class="bento-card wide reveal" href="/demos/aura/" style="text-decoration:none;color:inherit">
+            <div style="height:8px;border-radius:999px;background:linear-gradient(90deg,#e8f0eb,#5b8a72);margin-bottom:18px;max-width:280px"></div>
+            <span class="tag tag-nexo">Spa · estética</span>
+            <h3>Aura Studio</h3>
+            <p>Spa y estética. Verde salvia, calma, faciales y cuerpo. Prueba multi-vertical de Nexo.</p>
+            <span class="link">Abrir demo →</span>
+          </a>
         </div>
-        <a class="d-btn d-btn-fill" href="/contacto/?producto=Nexo" style="background:#fff;color:#0f766e">Hablar con Forja</a>
+
+        <div class="cta-box nexo reveal" style="margin-top:40px">
+          <div>
+            <h2>¿Quieres tu local así?</h2>
+            <p>Nexo te deja tu marca, tu dominio y tu agenda. Forja lo implementa.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-nexo" href="/contacto/?producto=Nexo">Hablar con Forja</a>
+            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial panel →</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="wrap d-footer" style="border-color:rgba(244,239,230,.1)">
-    <span>© Forja · demos Nexo</span>
-    <span><a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">App demo Nexo</a></span>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-bottom" style="border:0;padding-top:0">
+        <span>© <span id="y"></span> Forja · demos Nexo</span>
+        <a href="/nexus/">Volver a Nexo</a>
+      </div>
+    </div>
   </footer>
+  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+  <script src="/js/main.js"></script>
 </body>
 </html>
