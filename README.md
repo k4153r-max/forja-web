@@ -9,10 +9,12 @@ Sitio principal del holding **Forja** y del producto **Nexo**.
 
 ```
 forja-web/
-  index.html        → Forja (home)
-  nexus/index.html  → Landing Nexo
-  contacto/         → Contacto
-  css/main.css
+  index.html           → Forja (home)
+  nexus/index.html     → Landing Nexo
+  demos/               → Hub + webs de prueba de salones
+    luna/ atelier/ aura/
+  contacto/            → Contacto
+  css/main.css · demos.css
   js/main.js
   assets/
 ```
