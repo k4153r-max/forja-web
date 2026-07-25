@@ -492,24 +492,47 @@ h3 { font-size: 1.25rem; letter-spacing: -0.02em; }
   position: relative;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
-  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 24px;
 }
 .portfolio-card .shot::before {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.9;
+  opacity: 1;
+  z-index: 0;
 }
 .portfolio-card.indago .shot::before {
   background:
-    radial-gradient(circle at 80% 20%, rgba(124, 108, 240, 0.45), transparent 50%),
-    linear-gradient(145deg, #1a1530, #0e0c0a);
+    radial-gradient(circle at 80% 20%, rgba(124, 108, 240, 0.35), transparent 55%),
+    linear-gradient(145deg, #14101f, #0a090e);
 }
 .portfolio-card.ysabel .shot::before {
   background:
-    radial-gradient(circle at 20% 80%, rgba(194, 97, 122, 0.4), transparent 50%),
-    linear-gradient(145deg, #2b1520, #0e0c0a);
+    radial-gradient(circle at 50% 40%, rgba(194, 97, 122, 0.22), transparent 55%),
+    linear-gradient(145deg, #1c1216, #0e0a0c);
+}
+.portfolio-card .shot-logo {
+  position: relative;
+  z-index: 1;
+  max-width: min(72%, 260px);
+  max-height: 72%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+}
+.portfolio-card.indago .shot-logo {
+  max-width: min(88%, 320px);
+  border-radius: 12px;
+}
+.portfolio-card.ysabel .shot-logo {
+  max-height: 78%;
+  max-width: min(55%, 180px);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px;
 }
 .portfolio-card .shot-label {
   position: relative;
