@@ -1,5 +1,8 @@
 # Forja Web
 
+> **Cerebro maestro (toda la operación Forja/Nexo):**  
+> `C:\Users\Antonio\Desktop\FORJA_CEREBRO.md` — leer y actualizar al cerrar trabajo.
+
 Sitio principal del holding **Forja** y del producto **Nexo**.
 
 - **No** es el sistema operativo del salón (eso es `nexus` app).
