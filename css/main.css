@@ -101,11 +101,20 @@ body::before {
   overflow: hidden;
 }
 .logo-mark svg { width: 16px; height: 16px; }
-.logo img {
-  width: 28px; height: 28px;
-  border-radius: 8px;
+.logo img,
+.logo-img {
+  width: 32px; height: 32px;
+  border-radius: 9px;
   object-fit: cover;
-  box-shadow: 0 0 20px rgba(232, 93, 42, 0.25);
+  box-shadow: 0 0 20px rgba(232, 93, 42, 0.28);
+}
+.brand-hero-logo {
+  display: block;
+  width: min(280px, 70vw);
+  height: auto;
+  border-radius: 18px;
+  margin: 0 0 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
 }
 .nav-links {
   display: flex;
