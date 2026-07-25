@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto — Forja</title>
+  <meta name="description" content="Escribe a Forja por Nexo, indago u otros productos. Chile.">
+  <meta name="theme-color" content="#0e0c0a">
+  <link rel="canonical" href="/contacto/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="/" class="logo" aria-label="Forja">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M4 18h16M7 18V9l5-5 5 5v9M9 13h6"/></svg>
+        </span>
+        forja
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="/">Inicio</a>
+        <a href="/#productos">Productos</a>
+        <a href="/nexus/">Nexo</a>
+        <a href="/contacto/" class="active nav-cta">Contacto</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow">Contacto</p>
+        <h1>Hablemos.</h1>
+        <p class="lead">Nexo para tu salón, indago, o una idea nueva. Respondemos lo más pronto posible.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap contact-grid">
+        <div class="contact-card reveal">
+          <!-- Cambia data-mailto al correo real de Forja cuando lo tengas -->
+          <form data-contact-form data-mailto="hola@forja.cl">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" required autocomplete="name" placeholder="Tu nombre">
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required autocomplete="email" placeholder="tu@email.com">
+
+            <label for="producto">Tema</label>
+            <select id="producto" name="producto">
+              <option value="Nexo">Nexo — sistema para salones</option>
+              <option value="indago">indago</option>
+              <option value="General">Consulta general Forja</option>
+              <option value="Otro">Otro</option>
+            </select>
+
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" required placeholder="Cuéntanos de tu salón o proyecto…"></textarea>
+
+            <button class="btn btn-primary" type="submit">Enviar mensaje</button>
+            <p class="muted" style="margin-top:12px;font-size:0.82rem">
+              Se abre tu correo con el mensaje listo. Cuando tengamos backend de Forja, esto se envía directo.
+            </p>
+          </form>
+        </div>
+        <div class="contact-aside reveal">
+          <h3>Productos</h3>
+          <p><a href="/nexus/">Nexo</a> — operación de locales</p>
+          <p><a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a> — comparador de precios</p>
+
+          <h3>Demo Nexo</h3>
+          <p><a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">nexus-erz6.onrender.com</a></p>
+
+          <h3>Email</h3>
+          <p><a href="mailto:hola@forja.cl">hola@forja.cl</a></p>
+          <p class="muted" style="margin-top:8px;font-size:0.85rem">Reemplaza este correo en el HTML cuando tengas el dominio de Forja.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-bottom" style="border:0;padding-top:0">
+        <span>© <span id="y"></span> Forja</span>
+        <a href="/">Volver al inicio</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+    const params = new URLSearchParams(location.search);
+    const p = params.get("producto");
+    if (p) {
+      const sel = document.getElementById("producto");
+      const opt = [...sel.options].find(o => o.value.toLowerCase().includes(p.toLowerCase().split("+")[0].toLowerCase()) || p.toLowerCase().includes(o.value.toLowerCase()));
+      if (opt) sel.value = opt.value;
+      else {
+        const o = document.createElement("option");
+        o.value = p; o.textContent = p; o.selected = true;
+        sel.appendChild(o);
+      }
+    }
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

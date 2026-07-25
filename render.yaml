@@ -1,0 +1,15 @@
+# Sitio estático Forja + Nexo — plan Free en Render
+services:
+  - type: web
+    name: forja-web
+    runtime: static
+    plan: free
+    buildCommand: echo "static site"
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
