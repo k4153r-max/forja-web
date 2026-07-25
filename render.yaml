@@ -1,10 +1,12 @@
 # Sitio estático Forja + Nexo — plan Free en Render
+# Blueprint: https://dashboard.render.com/blueprint/new?repo=https://github.com/k4153r-max/forja-web
 services:
   - type: web
     name: forja-web
     runtime: static
     plan: free
-    buildCommand: echo "static site"
+    branch: master
+    buildCommand: "true"
     staticPublishPath: .
     headers:
       - path: /*
