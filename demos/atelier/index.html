@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Atelier Norte — Demo Nexo</title>
+  <title>Atelier Norte — Barbería & grooming · Demo Nexo</title>
   <meta name="description" content="Demo de barbería y grooming con Nexo. Cortes, barba y agenda online.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0f1412">
@@ -11,26 +11,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/demos.css">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/logos/forja-icon.jpg" type="image/jpeg">
 </head>
 <body class="theme-atelier">
   <div class="demo-ribbon">
-    DEMO · Atelier Norte no es un local real
-    <span>·</span>
+    <span class="badge">Demo Nexo</span>
+    <span>Atelier Norte no es un local real</span>
+    <span class="sep">·</span>
     <a href="/demos/">Todas las demos</a>
-    <span>·</span>
-    <a href="/nexus/">Nexo</a>
+    <span class="sep">·</span>
+    <a href="/nexus/">Producto Nexo</a>
   </div>
 
-  <header>
+  <header class="d-header">
     <div class="wrap d-nav">
       <a href="/demos/atelier/" class="d-brand"><span class="mark">A</span> Atelier Norte</a>
-      <nav class="d-nav-links">
+      <nav class="d-nav-links" aria-label="Principal">
         <a href="#servicios">Servicios</a>
         <a href="#equipo">Barberos</a>
-        <a href="#agenda">Agenda</a>
-        <a class="d-btn d-btn-fill" style="padding:9px 16px;font-size:.85rem" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar</a>
+        <a href="#opiniones">Opiniones</a>
+        <a href="#info">Horario</a>
+        <a class="d-btn d-btn-fill d-btn-sm" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar</a>
       </nav>
+      <button class="d-nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
@@ -39,62 +44,101 @@
       <div>
         <p class="d-kicker">Barbería · Grooming</p>
         <h1>Estilo limpio.<br><em>Cero espera.</em></h1>
-        <p class="sub">Demo de barbería moderna. El cliente reserva online; el equipo ve la agenda en Nexo.</p>
+        <p class="sub">
+          Demo de barbería moderna. El cliente reserva online; el equipo ve la agenda en
+          <strong>Nexo</strong> — fades, clásico y barba sin la fila de la esquina.
+        </p>
         <div class="d-hero-actions">
           <a class="d-btn d-btn-fill" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar corte</a>
           <a class="d-btn d-btn-line" href="#servicios">Carta de servicios</a>
         </div>
+        <div class="d-hero-meta">
+          <div><strong>3 sillones</strong><span>agenda por barbero</span></div>
+          <div><strong>45–70 min</strong><span>servicios típicos</span></div>
+          <div><strong>Walk-in off</strong><span>solo con reserva demo</span></div>
+        </div>
       </div>
       <aside class="d-hero-card" id="agenda">
-        <h3>Sillones hoy</h3>
-        <div class="slot"><span><b>Mateo</b> · 14:00</span><span class="tag">Corte + barba</span></div>
-        <div class="slot"><span><b>Mateo</b> · 15:00</span><span class="tag free">Libre</span></div>
-        <div class="slot"><span><b>Diego</b> · 16:30</span><span class="tag free">Libre</span></div>
-        <div class="slot"><span><b>Diego</b> · 18:00</span><span class="tag">Fade</span></div>
-        <a class="d-btn d-btn-fill" style="width:100%;margin-top:16px" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar en Nexo →</a>
+        <div class="card-head">
+          <h3>Sillones hoy</h3>
+          <span class="live">En tiempo real</span>
+        </div>
+        <div class="slot">
+          <div><b>Mateo · 14:00</b><div class="who">Corte + barba</div></div>
+          <span class="tag">Ocupado</span>
+        </div>
+        <div class="slot">
+          <div><b>Mateo · 15:00</b><div class="who">Fade</div></div>
+          <span class="tag free">Libre</span>
+        </div>
+        <div class="slot">
+          <div><b>Diego · 16:30</b><div class="who">Clásico</div></div>
+          <span class="tag free">Libre</span>
+        </div>
+        <div class="slot">
+          <div><b>Diego · 18:00</b><div class="who">Perfilado barba</div></div>
+          <span class="tag">Ocupado</span>
+        </div>
+        <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar en Nexo →</a>
       </aside>
     </section>
 
-    <section class="d-section" id="servicios">
+    <div class="wrap mood" aria-hidden="true">
+      <div class="mood-tile"><span>Fade</span></div>
+      <div class="mood-tile"><span>Barba</span></div>
+      <div class="mood-tile"><span>Clásico</span></div>
+      <div class="mood-tile"><span>Kids</span></div>
+    </div>
+
+    <div class="wrap stats">
+      <div class="stat"><strong>0 fila</strong><span>reserva con hora fija</span></div>
+      <div class="stat"><strong>3</strong><span>barberos en agenda</span></div>
+      <div class="stat"><strong>$15–24k</strong><span>ticket demo</span></div>
+      <div class="stat"><strong>WhatsApp</strong><span>recordatorios Nexo</span></div>
+    </div>
+
+    <section class="d-section alt" id="servicios">
       <div class="wrap">
-        <h2>Servicios</h2>
-        <p class="lead">Precios de ejemplo para esta demo de barbería.</p>
+        <div class="sec-head">
+          <h2>Servicios</h2>
+          <p class="lead">Precios de ejemplo para barbería. En producción salen del catálogo Nexo.</p>
+        </div>
         <div class="svc-grid">
           <article class="svc">
             <div class="cat">Cabello</div>
             <h3>Corte clásico</h3>
-            <p>Tijera y máquina, acabado limpio.</p>
-            <div class="meta"><span>45 min</span><span>$15.000</span></div>
+            <p>Tijera y máquina, acabado limpio y peinado final.</p>
+            <div class="meta"><span>45 min</span><span class="price">$15.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Cabello</div>
             <h3>Fade / degradado</h3>
             <p>Skin, mid o high fade a elección.</p>
-            <div class="meta"><span>50 min</span><span>$18.000</span></div>
+            <div class="meta"><span>50 min</span><span class="price">$18.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Barba</div>
             <h3>Perfilado de barba</h3>
             <p>Toalla caliente, navaja y aceite.</p>
-            <div class="meta"><span>30 min</span><span>$10.000</span></div>
+            <div class="meta"><span>30 min</span><span class="price">$10.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Combo</div>
             <h3>Corte + barba</h3>
             <p>El full service del Atelier.</p>
-            <div class="meta"><span>70 min</span><span>$24.000</span></div>
+            <div class="meta"><span>70 min</span><span class="price">$24.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Cuidado</div>
             <h3>Tratamiento capilar</h3>
             <p>Hidratación y peinado final.</p>
-            <div class="meta"><span>25 min</span><span>$8.000</span></div>
+            <div class="meta"><span>25 min</span><span class="price">$8.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Kids</div>
             <h3>Corte niños</h3>
             <p>Hasta 12 años, con paciencia incluida.</p>
-            <div class="meta"><span>35 min</span><span>$12.000</span></div>
+            <div class="meta"><span>35 min</span><span class="price">$12.000</span></div>
           </article>
         </div>
       </div>
@@ -102,32 +146,114 @@
 
     <section class="d-section" id="equipo">
       <div class="wrap">
-        <h2>Barberos</h2>
-        <p class="lead">Equipo de ejemplo.</p>
+        <div class="sec-head">
+          <h2>Barberos</h2>
+          <p class="lead">Cada sillón es un profesional en la agenda Nexo.</p>
+        </div>
         <div class="team-grid">
-          <div class="team"><div class="ava">M</div><h3>Mateo</h3><p>Fades & textura</p></div>
-          <div class="team"><div class="ava">D</div><h3>Diego</h3><p>Clásico & barba</p></div>
-          <div class="team"><div class="ava">L</div><h3>Lucas</h3><p>Color & peinado</p></div>
+          <div class="team">
+            <div class="ava">M</div>
+            <h3>Mateo</h3>
+            <div class="role">Fades & textura</div>
+            <p>Especialista en degradados y cortes modernos.</p>
+          </div>
+          <div class="team">
+            <div class="ava">D</div>
+            <h3>Diego</h3>
+            <div class="role">Clásico & barba</div>
+            <p>Líneas limpias, afeitado y barba de precisión.</p>
+          </div>
+          <div class="team">
+            <div class="ava">L</div>
+            <h3>Lucas</h3>
+            <div class="role">Color & peinado</div>
+            <p>Mechas, tintes y peinados para eventos.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="d-section">
+    <section class="d-section alt" id="opiniones">
       <div class="wrap">
-        <div class="cta-block">
+        <div class="sec-head">
+          <h2>Opiniones (demo)</h2>
+          <p class="lead">Textos ilustrativos para la demo de venta.</p>
+        </div>
+        <div class="rev-grid">
+          <article class="rev">
+            <div class="stars">★★★★★</div>
+            <p>“Agendé el fade desde el celu y entré a la hora. Cero esperar de pie.”</p>
+            <div class="who">— Tomás · Fade</div>
+          </article>
+          <article class="rev">
+            <div class="stars">★★★★★</div>
+            <p>“La barba quedó perfecta. Diego se toma el tiempo.”</p>
+            <div class="who">— Andrés · Perfilado</div>
+          </article>
+          <article class="rev">
+            <div class="stars">★★★★★</div>
+            <p>“El combo vale cada peso. Local ordenado y con hora clara.”</p>
+            <div class="who">— Nico · Corte + barba</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="d-section" id="info">
+      <div class="wrap">
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Horario</h3>
+            <div class="row"><span>Mar – Vie</span><b>11:00 – 20:00</b></div>
+            <div class="row"><span>Sábado</span><b>10:00 – 18:00</b></div>
+            <div class="row"><span>Dom – Lun</span><b>Cerrado</b></div>
+            <p class="note" style="margin-top:12px">Configurable en Nexo por local.</p>
+          </div>
+          <div class="info-card">
+            <h3>Ubicación (demo)</h3>
+            <p class="addr">Manuel Montt 890<br>Providencia · Santiago</p>
+            <p class="note">Dirección ficticia para la demo de barbería.</p>
+            <a class="d-btn d-btn-line d-btn-sm" style="margin-top:14px" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar →</a>
+          </div>
+        </div>
+
+        <div class="faq" style="margin-top:28px">
+          <details>
+            <summary>¿Atienden walk-in?</summary>
+            <p>En esta demo priorizamos reserva online. Un local real puede mezclar walk-in y agenda en Nexo.</p>
+          </details>
+          <details>
+            <summary>¿Puedo elegir barbero?</summary>
+            <p>Sí. En la reserva Nexo el cliente elige profesional o “cualquiera disponible”.</p>
+          </details>
+          <details>
+            <summary>¿Quiero esto para mi barbería?</summary>
+            <p>Forja implementa Nexo con tu marca. <a href="/contacto/?producto=Nexo" style="color:var(--d-brand);font-weight:650">Hablar con Forja →</a></p>
+          </details>
+        </div>
+
+        <div class="cta-block" style="margin-top:36px">
           <div>
             <h2>Tu turno, sin fila</h2>
             <p>Reserva demo en la app Nexo (datos de prueba).</p>
           </div>
           <a class="d-btn d-btn-fill" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar ahora</a>
         </div>
+
+        <div class="powered">
+          <p><strong>Powered by Nexo</strong> — multi-vertical: salones, barberías y spa. Un producto de Forja.</p>
+          <a href="/nexus/">Conocer Nexo →</a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="wrap d-footer">
-    <span>Atelier Norte · demo · Powered by <a href="/nexus/">Nexo</a></span>
-    <span><a href="/demos/">← Otras demos</a></span>
+    <span>Atelier Norte · demo · <a href="/nexus/">Nexo</a> by Forja</span>
+    <span><a href="/demos/">← Otras demos</a> · <a href="/demos/luna/">Luna</a> · <a href="/demos/aura/">Aura</a></span>
   </footer>
+
+  <a class="d-sticky-book" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar corte</a>
+  <script src="/js/demos.js"></script>
 </body>
 </html>

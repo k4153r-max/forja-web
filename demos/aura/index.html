@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aura Studio — Demo Nexo</title>
+  <title>Aura Studio — Spa & estética · Demo Nexo</title>
   <meta name="description" content="Demo de spa y estética con Nexo. Faciales, masajes y reserva online.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#5b8a72">
@@ -11,26 +11,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/demos.css">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/logos/forja-icon.jpg" type="image/jpeg">
 </head>
 <body class="theme-aura">
   <div class="demo-ribbon">
-    DEMO · Aura Studio no es un centro real
-    <span>·</span>
+    <span class="badge">Demo Nexo</span>
+    <span>Aura Studio no es un centro real</span>
+    <span class="sep">·</span>
     <a href="/demos/">Todas las demos</a>
-    <span>·</span>
-    <a href="/nexus/">Nexo</a>
+    <span class="sep">·</span>
+    <a href="/nexus/">Producto Nexo</a>
   </div>
 
-  <header>
+  <header class="d-header">
     <div class="wrap d-nav">
       <a href="/demos/aura/" class="d-brand"><span class="mark">A</span> Aura Studio</a>
-      <nav class="d-nav-links">
+      <nav class="d-nav-links" aria-label="Principal">
         <a href="#servicios">Tratamientos</a>
         <a href="#equipo">Equipo</a>
-        <a href="#agenda">Agenda</a>
-        <a class="d-btn d-btn-fill" style="padding:9px 16px;font-size:.85rem" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar</a>
+        <a href="#opiniones">Opiniones</a>
+        <a href="#info">Horario</a>
+        <a class="d-btn d-btn-fill d-btn-sm" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar</a>
       </nav>
+      <button class="d-nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
@@ -39,62 +44,101 @@
       <div>
         <p class="d-kicker">Spa · Estética · Bienestar</p>
         <h1>Pausa. Respirá.<br><em>Volvé a vos.</em></h1>
-        <p class="sub">Demo de centro de estética. La clienta reserva online; el equipo organiza el día en Nexo.</p>
+        <p class="sub">
+          Demo de centro de estética. La clienta reserva online; el equipo organiza el día en
+          <strong>Nexo</strong> — faciales, masajes y rituales sin WhatsApp eterno.
+        </p>
         <div class="d-hero-actions">
           <a class="d-btn d-btn-fill" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar sesión</a>
           <a class="d-btn d-btn-line" href="#servicios">Ver tratamientos</a>
         </div>
+        <div class="d-hero-meta">
+          <div><strong>Cabinas</strong><span>agenda por terapeuta</span></div>
+          <div><strong>50–90 min</strong><span>sesiones demo</span></div>
+          <div><strong>Calma</strong><span>branding multi-vertical</span></div>
+        </div>
       </div>
       <aside class="d-hero-card" id="agenda">
-        <h3>Disponibilidad</h3>
-        <div class="slot"><span><b>Hoy</b> · 12:00</span><span class="tag">Facial</span></div>
-        <div class="slot"><span><b>Hoy</b> · 16:00</span><span class="tag free">Libre</span></div>
-        <div class="slot"><span><b>Mañana</b> · 10:30</span><span class="tag free">Libre</span></div>
-        <div class="slot"><span><b>Mañana</b> · 18:00</span><span class="tag free">Libre</span></div>
-        <a class="d-btn d-btn-fill" style="width:100%;margin-top:16px" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Elegir hora en Nexo →</a>
+        <div class="card-head">
+          <h3>Disponibilidad</h3>
+          <span class="live">Actualizada</span>
+        </div>
+        <div class="slot">
+          <div><b>Hoy · 12:00</b><div class="who">Sofía · Facial</div></div>
+          <span class="tag">Ocupado</span>
+        </div>
+        <div class="slot">
+          <div><b>Hoy · 16:00</b><div class="who">Amanda · Masaje</div></div>
+          <span class="tag free">Libre</span>
+        </div>
+        <div class="slot">
+          <div><b>Mañana · 10:30</b><div class="who">Sofía · Peeling</div></div>
+          <span class="tag free">Libre</span>
+        </div>
+        <div class="slot">
+          <div><b>Mañana · 18:00</b><div class="who">Isidora · Ritual Aura</div></div>
+          <span class="tag free">Libre</span>
+        </div>
+        <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Elegir hora en Nexo →</a>
       </aside>
     </section>
 
-    <section class="d-section" id="servicios">
+    <div class="wrap mood" aria-hidden="true">
+      <div class="mood-tile"><span>Facial</span></div>
+      <div class="mood-tile"><span>Masaje</span></div>
+      <div class="mood-tile"><span>Ritual</span></div>
+      <div class="mood-tile"><span>Piel</span></div>
+    </div>
+
+    <div class="wrap stats">
+      <div class="stat"><strong>90 min</strong><span>ritual estrella</span></div>
+      <div class="stat"><strong>3</strong><span>terapeutas demo</span></div>
+      <div class="stat"><strong>Abono</strong><span>opcional en Nexo</span></div>
+      <div class="stat"><strong>Spa</strong><span>otra vertical del mismo software</span></div>
+    </div>
+
+    <section class="d-section alt" id="servicios">
       <div class="wrap">
-        <h2>Tratamientos</h2>
-        <p class="lead">Carta de ejemplo para la demo de spa.</p>
+        <div class="sec-head">
+          <h2>Tratamientos</h2>
+          <p class="lead">Carta de ejemplo para spa. Duraciones y precios viven en el catálogo Nexo.</p>
+        </div>
         <div class="svc-grid">
           <article class="svc">
             <div class="cat">Rostro</div>
             <h3>Limpieza facial</h3>
-            <p>Limpieza profunda e hidratación.</p>
-            <div class="meta"><span>60 min</span><span>$32.000</span></div>
+            <p>Limpieza profunda e hidratación para todo tipo de piel.</p>
+            <div class="meta"><span>60 min</span><span class="price">$32.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Rostro</div>
             <h3>Peeling suave</h3>
             <p>Renovación de piel con activos suaves.</p>
-            <div class="meta"><span>50 min</span><span>$38.000</span></div>
+            <div class="meta"><span>50 min</span><span class="price">$38.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Cuerpo</div>
             <h3>Masaje descontracturante</h3>
             <p>Espalda, cuello y hombros.</p>
-            <div class="meta"><span>50 min</span><span>$35.000</span></div>
+            <div class="meta"><span>50 min</span><span class="price">$35.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Cuerpo</div>
             <h3>Masaje relajante</h3>
             <p>Cuerpo completo con aceites naturales.</p>
-            <div class="meta"><span>70 min</span><span>$45.000</span></div>
+            <div class="meta"><span>70 min</span><span class="price">$45.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Depilación</div>
             <h3>Depilación facial</h3>
             <p>Cejas, bozo o combo.</p>
-            <div class="meta"><span>20–40 min</span><span>desde $8.000</span></div>
+            <div class="meta"><span>20–40 min</span><span class="price">desde $8.000</span></div>
           </article>
           <article class="svc">
             <div class="cat">Pack</div>
             <h3>Ritual Aura</h3>
             <p>Facial + masaje corto. Ideal primera visita.</p>
-            <div class="meta"><span>90 min</span><span>$58.000</span></div>
+            <div class="meta"><span>90 min</span><span class="price">$58.000</span></div>
           </article>
         </div>
       </div>
@@ -102,32 +146,114 @@
 
     <section class="d-section" id="equipo">
       <div class="wrap">
-        <h2>Equipo</h2>
-        <p class="lead">Terapeutas de ejemplo.</p>
+        <div class="sec-head">
+          <h2>Equipo</h2>
+          <p class="lead">Terapeutas de ejemplo con agenda separada en Nexo.</p>
+        </div>
         <div class="team-grid">
-          <div class="team"><div class="ava">S</div><h3>Sofía</h3><p>Faciales</p></div>
-          <div class="team"><div class="ava">A</div><h3>Amanda</h3><p>Masajes</p></div>
-          <div class="team"><div class="ava">I</div><h3>Isidora</h3><p>Depilación</p></div>
+          <div class="team">
+            <div class="ava">S</div>
+            <h3>Sofía</h3>
+            <div class="role">Faciales</div>
+            <p>Piel sensible, limpiezas y protocolos de glow.</p>
+          </div>
+          <div class="team">
+            <div class="ava">A</div>
+            <h3>Amanda</h3>
+            <div class="role">Masajes</div>
+            <p>Descontracturante y relajante de cuerpo completo.</p>
+          </div>
+          <div class="team">
+            <div class="ava">I</div>
+            <h3>Isidora</h3>
+            <div class="role">Depilación & rituales</div>
+            <p>Detalle facial y packs de primera visita.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="d-section">
+    <section class="d-section alt" id="opiniones">
       <div class="wrap">
-        <div class="cta-block">
+        <div class="sec-head">
+          <h2>Experiencias (demo)</h2>
+          <p class="lead">Testimonios ilustrativos para mostrar la cara pública del spa.</p>
+        </div>
+        <div class="rev-grid">
+          <article class="rev">
+            <div class="stars">★★★★★</div>
+            <p>“Salí renovada. La reserva online fue simple y me recordaron la hora.”</p>
+            <div class="who">— Paula · Ritual Aura</div>
+          </article>
+          <article class="rev">
+            <div class="stars">★★★★★</div>
+            <p>“El masaje descontracturante me salvó la semana. Ambiente impecable.”</p>
+            <div class="who">— María José · Masaje</div>
+          </article>
+          <article class="rev">
+            <div class="stars">★★★★★</div>
+            <p>“Facial suave, sin agresiones. Sofía explicó cada paso.”</p>
+            <div class="who">— Antonia · Limpieza facial</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="d-section" id="info">
+      <div class="wrap">
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Horario</h3>
+            <div class="row"><span>Mar – Vie</span><b>10:00 – 19:00</b></div>
+            <div class="row"><span>Sábado</span><b>10:00 – 16:00</b></div>
+            <div class="row"><span>Dom – Lun</span><b>Cerrado</b></div>
+            <p class="note" style="margin-top:12px">Horarios de demo; editables en el panel.</p>
+          </div>
+          <div class="info-card">
+            <h3>Ubicación (demo)</h3>
+            <p class="addr">Los Leones 450<br>Providencia · Santiago</p>
+            <p class="note">Dirección ficticia para la demo de spa.</p>
+            <a class="d-btn d-btn-line d-btn-sm" style="margin-top:14px" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar →</a>
+          </div>
+        </div>
+
+        <div class="faq" style="margin-top:28px">
+          <details>
+            <summary>¿Debo llegar antes?</summary>
+            <p>En un spa real suele pedirse 10 minutos de anticipación. Nexo puede recordar eso por email o WhatsApp.</p>
+          </details>
+          <details>
+            <summary>¿Hay abono al reservar?</summary>
+            <p>En Nexo se puede activar abono con Mercado Pago para bajar no-shows. En esta demo depende de la config del servidor de prueba.</p>
+          </details>
+          <details>
+            <summary>¿Nexo sirve para spa, no solo uñas?</summary>
+            <p>Sí. La demo Aura existe para mostrar multi-vertical. <a href="/nexus/" style="color:var(--d-brand);font-weight:650">Ver Nexo →</a></p>
+          </details>
+        </div>
+
+        <div class="cta-block" style="margin-top:36px">
           <div>
             <h2>Tu espacio, tu hora</h2>
             <p>Reserva demo en la app Nexo (datos de prueba).</p>
           </div>
           <a class="d-btn d-btn-fill" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar ahora</a>
         </div>
+
+        <div class="powered">
+          <p><strong>Powered by Nexo</strong> — el mismo software de Luna y Atelier, otra marca. Un producto de Forja.</p>
+          <a href="/nexus/">Conocer Nexo →</a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="wrap d-footer">
-    <span>Aura Studio · demo · Powered by <a href="/nexus/">Nexo</a></span>
-    <span><a href="/demos/">← Otras demos</a></span>
+    <span>Aura Studio · demo · <a href="/nexus/">Nexo</a> by Forja</span>
+    <span><a href="/demos/">← Otras demos</a> · <a href="/demos/luna/">Luna</a> · <a href="/demos/atelier/">Atelier</a></span>
   </footer>
+
+  <a class="d-sticky-book" href="https://nexus-erz6.onrender.com/reservar" target="_blank" rel="noopener">Reservar sesión</a>
+  <script src="/js/demos.js"></script>
 </body>
 </html>
