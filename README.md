@@ -1,9 +1,9 @@
-# Forja Web
+# ETEMEN Web (ex-Forja Web)
 
-> **Cerebro maestro (toda la operación Forja/Nexo):**  
+> **Cerebro maestro (toda la operación ETEMEN/Nexo):**  
 > `C:\Users\Antonio\Desktop\FORJA_CEREBRO.md` — leer y actualizar al cerrar trabajo.
 
-Sitio principal del holding **Forja** y del producto **Nexo**.
+Sitio principal del holding **ETEMEN Studio** y del producto **Nexo**.
 
 - **No** es el sistema operativo del salón (eso es `nexus` app).
 - **No** toca `salon-ysabel` / Ysabel Aragón NW.
@@ -12,7 +12,7 @@ Sitio principal del holding **Forja** y del producto **Nexo**.
 
 ```
 forja-web/
-  index.html           → Forja (home)
+  index.html           → ETEMEN Studio (home)
   nexus/index.html     → Landing Nexo
   demos/               → Hub + webs de prueba de salones
     luna/ atelier/ aura/
@@ -47,7 +47,8 @@ O usa el `render.yaml` con Blueprint.
 
 ## Configurar después
 
-- [ ] Correo real en `contacto/index.html` (`data-mailto` y texto `hola@forja.cl`)
-- [ ] Dominio `forja.cl` / `usenexo.cl` cuando existan
+- [ ] Correo real en `contacto/index.html` (`data-mailto` y texto `hola@etemen.cl`)
+- [ ] Dominio `etemen.cl` / `etemen.studio` cuando existan
 - [ ] Precios definitivos en `/nexus/`
 - [ ] OG image propia
+
