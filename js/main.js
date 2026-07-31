@@ -56,11 +56,11 @@
       const email = (data.get("email") || "").toString().trim();
       const producto = (data.get("producto") || "General").toString();
       const mensaje = (data.get("mensaje") || "").toString().trim();
-      const subject = encodeURIComponent(`[Forja] ${producto} — ${nombre || "Consulta"}`);
+      const subject = encodeURIComponent(`[ETEMEN] ${producto} — ${nombre || "Consulta"}`);
       const body = encodeURIComponent(
         `Nombre: ${nombre}\nEmail: ${email}\nProducto: ${producto}\n\n${mensaje}`
       );
-      const to = form.dataset.mailto || "hola@forja.cl";
+      const to = form.dataset.mailto || "hola@etemen.cl";
       window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
     });
   }

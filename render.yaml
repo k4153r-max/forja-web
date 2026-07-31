@@ -1,4 +1,4 @@
-# Sitio estático Forja + Nexo — plan Free en Render
+# Sitio estático ETEMEN Studio + Nexo — plan Free en Render
 # Blueprint: https://dashboard.render.com/blueprint/new?repo=https://github.com/k4153r-max/forja-web
 services:
   - type: web

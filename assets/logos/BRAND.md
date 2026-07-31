@@ -1,28 +1,55 @@
-# Forja — identidad de marca
+# ETEMEN — identidad de marca
 
-## Logo oficial
+**Origen:** *Etemenanki* (babilónico) — *“La casa del fundamento del cielo y la tierra”.*  
+**Lema:** *Fundamento sólido. Productos extraordinarios.*
+
+## Logo oficial (v2026)
 
 | Archivo | Uso |
 |---------|-----|
-| `forja-official.jpg` | Logo principal (yunque + martillo + circuitos + FORJA). Hero, redes, pitch. |
-| `forja-icon.jpg` | Isotipo simplificado (favicon, nav 28px, app icon). |
-| `forja-mark.svg` | Marca vector simple de respaldo. |
+| `etemen-logo-official.jpg` | **Lockup oficial** (monograma + wordmark + tagline) |
+| `etemen-icon.jpg` | Isotipo app / avatar redes (fondo navy) |
+| `etemen-mark.svg` | Isotipo vector navy (fondos claros) |
+| `etemen-mark-light.svg` | Isotipo vector light (web dark / nav) |
+| `etemen-lockup.svg` | Lockup vector navy |
+| `etemen-lockup-light.svg` | Lockup vector light |
+| `etemen-logo.png` | Sheet de variantes (referencia) |
+| `/assets/favicon.svg` | Favicon del sitio |
 
-## Productos
+### Concepto del monograma
+- **E** geométrica = ETEMEN, estructura, ingeniería.
+- **Cimientos en chevron cobre** = zigurat / fundamento (Etemenanki).
+- No usar el yunque de Forja: esa marca está retirada.
+
+## Productos (marcas propias)
 
 | Archivo | Marca |
 |---------|--------|
-| `nexo-icon.jpg` / `nexo-wordmark.jpg` | Nexo |
-| `nexo-mark.svg` | Nexo vector simple |
+| `nexo-icon.jpg` / `nexo-wordmark.jpg` / `nexo-mark.svg` | Nexo |
+| (indago en `assets/portfolio/`) | indago |
 
-## Colores Forja
+## Paleta ETEMEN
 
-- Fondo: `#0e0c0a`
-- Ember: `#e85d2a` / cobre `#c9956c`
-- Texto: `#f4efe6`
+| Token | Hex | Uso |
+|-------|-----|-----|
+| Obsidian | `#070B14` | Fondo profundo |
+| Navy | `#1B2A4A` | Marca, textos dark |
+| Navy mid | `#121C30` | Superficies |
+| Copper | `#C4894A` | Acento principal |
+| Copper light | `#D9A870` | Highlights, taglines |
+| Cream | `#F3EEE6` | Secciones claras |
+| Nexo teal | `#00C9A7` | Solo producto Nexo |
+| indago violet | `#8B7CF7` | Solo producto indago |
 
-## Regla
+## Tipografía
 
-- **Forja** = holding / estudio  
-- **Nexo**, **indago** = productos con marca propia  
-- No usar el logo full de Forja como logo de Nexo
+- **Display:** Syne (títulos)
+- **UI / cuerpo:** Plus Jakarta Sans
+
+## Reglas
+
+1. **ETEMEN** = holding / estudio (marca madre).
+2. **Nexo**, **indago** = productos con marca propia.
+3. No usar el logo full de ETEMEN como logo de Nexo.
+4. En marketing público: no nombrar competidores.
+5. Nunca “Forja” en copy público (marca retirada).
