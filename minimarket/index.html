@@ -3,278 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Minimarket — Tu minimarket, en orden | ETEMEN Studio</title>
-  <meta name="description" content="Minimarket: caja POS, stock, lectora de barras, tickets y fiado para almacenes de barrio. Trial 14 días. $19.900/mes. Producto de ETEMEN.">
-  <meta name="theme-color" content="#1a1612">
+  <title>Minimarket — Caja, stock y fiado | ETEMEN</title>
+  <meta name="description" content="Minimarket: caja POS, stock, lectora de barras, tickets y fiado para almacenes de barrio. $19.900/mes. Trial 14 días. Producto de ETEMEN.">
+  <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="https://forja-web-ur0v.onrender.com/minimarket/">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://forja-web-ur0v.onrender.com/minimarket/">
   <meta property="og:title" content="Minimarket — Tu minimarket, en orden">
-  <meta property="og:description" content="Caja POS, stock, tickets y fiado para minimarkets de barrio. Trial 14 días. Producto de ETEMEN.">
-  <meta property="og:locale" content="es_CL">
+  <meta property="og:description" content="Caja POS, stock, barras y fiado para almacenes de barrio.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <style>
-    .chip.mm { background: rgba(196,92,38,.15); color: #e8914a; }
-    .eyebrow.mm { color: #e8914a; }
-    .grad-mm {
-      background: linear-gradient(120deg, #e8914a, #c45c26);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .btn-mm {
-      background: linear-gradient(135deg, #c45c26, #e8914a);
-      color: #fff !important; border: none;
-    }
-    .btn-mm:hover { filter: brightness(1.08); box-shadow: 0 16px 44px rgba(196,92,38,.35); }
-    .feature.mm .feature-ico { color: #e8914a; border-color: rgba(196,92,38,.35); }
-    .price-card.featured.mm { border-color: rgba(196,92,38,.45); box-shadow: 0 0 0 1px rgba(196,92,38,.2); }
-    .mock.mm .mock-kpi .val { color: #e8914a; }
-
-    /* Logo stage */
-    .mm-stage {
-      position: relative; min-height: min(86vh, 780px);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 72px 20px 56px; overflow: hidden;
-    }
-    .mm-stage::before {
-      content: ""; position: absolute; inset: -20% -10%;
-      background:
-        radial-gradient(ellipse 55% 50% at 50% 42%, rgba(196,92,38,.32), transparent 62%),
-        radial-gradient(ellipse 40% 35% at 18% 78%, rgba(232,145,74,.12), transparent 55%);
-      animation: mmPulse 8s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-    @keyframes mmPulse {
-      from { opacity: .85; transform: scale(1); }
-      to { opacity: 1; transform: scale(1.05); }
-    }
-    .mm-stage .orb {
-      position: absolute; width: min(500px, 88vw); height: min(500px, 88vw);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(196,92,38,.22), transparent 68%);
-      filter: blur(10px); pointer-events: none;
-    }
-    .mm-stage .ring {
-      position: absolute; width: min(400px, 76vw); height: min(400px, 76vw);
-      border-radius: 50%; border: 1px solid rgba(232,145,74,.22);
-      box-shadow: 0 0 80px rgba(196,92,38,.1); pointer-events: none;
-    }
-    .mm-logo-wrap {
-      position: relative; z-index: 2;
-      display: flex; flex-direction: column; align-items: center; gap: 18px;
-    }
-    .mm-mark {
-      width: clamp(96px, 20vw, 148px); height: clamp(96px, 20vw, 148px);
-      border-radius: 32px;
-      background: linear-gradient(145deg, #c45c26, #e8914a);
-      display: grid; place-items: center;
-      font-family: var(--display); font-weight: 800;
-      font-size: clamp(2.8rem, 8vw, 4.2rem); color: #fff;
-      letter-spacing: -.04em;
-      box-shadow:
-        0 0 0 1px rgba(255,200,150,.35),
-        0 0 70px rgba(196,92,38,.45),
-        0 28px 80px rgba(0,0,0,.5);
-      animation: mmFloat 5s ease-in-out infinite;
-    }
-    @keyframes mmFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .mm-word {
-      position: relative; z-index: 2;
-      font-family: var(--display); font-weight: 800;
-      font-size: clamp(2.4rem, 9vw, 4.6rem);
-      letter-spacing: -.04em; line-height: 1;
-      color: #fff;
-      text-shadow: 0 0 60px rgba(196,92,38,.4);
-    }
-    .mm-stage .eyebrow { position: relative; z-index: 2; }
-    .mm-stage h1 {
-      position: relative; z-index: 2;
-      font-size: clamp(1.55rem, 4.5vw, 2.6rem);
-      max-width: 14em; margin: 14px auto 0; line-height: 1.08;
-    }
-    .mm-stage .lead {
-      position: relative; z-index: 2;
-      max-width: 36em; margin: 16px auto 0;
-    }
-    .mm-stage .btn-row, .mm-stage .chip-row, .mm-stage .hero-note {
-      position: relative; z-index: 2; justify-content: center;
-    }
-    .mm-stage .btn-row { margin-top: 28px; }
-    .mm-stage .chip-row { margin-top: 20px; }
-  </style>
 </head>
 <body>
-  <div class="live-strip">
-    <div class="wrap">
-      <span class="pulse">Minimarket · almacenes de barrio</span>
-      <div class="links">
-        <a href="/contacto/?producto=Minimarket">Pedir trial</a>
-        <a href="/nexus/">También: Nexo</a>
-      </div>
-    </div>
-  </div>
-
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="/" class="logo" aria-label="ETEMEN Studio">
-        <img class="logo-mark logo-icon" src="/assets/logos/etemen-icon.jpg" alt="ETEMEN" width="40" height="40">
+      <a href="/" class="logo" aria-label="ETEMEN">
+        <img class="logo-icon" src="/assets/logos/etemen-icon.jpg" alt="" width="32" height="32">
         <div class="logo-wordmark">
           <span class="name">ETEMEN</span>
-          <span class="tagline">Fundamento Sólido</span>
+          <span class="tagline">Estudio</span>
         </div>
       </a>
       <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="/nexus/">Nexo</a>
         <a href="/minimarket/" class="active">Minimarket</a>
-        <a href="/demos/">Demos</a>
         <a href="/contacto/?producto=Minimarket" class="nav-cta">Pedir trial</a>
       </nav>
-      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <main>
-    <section class="mm-stage">
-      <div class="orb" aria-hidden="true"></div>
-      <div class="ring" aria-hidden="true"></div>
-      <p class="eyebrow mm">Producto · by ETEMEN</p>
-      <div class="mm-logo-wrap">
-        <div class="mm-mark" aria-hidden="true">M</div>
-        <div class="mm-word">Minimarket</div>
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="product-brand">
+          <div class="mark-letter" aria-hidden="true">M</div>
+          <div class="word">Minimarket</div>
+        </div>
+        <p class="eyebrow mm">Para minimarkets y almacenes de barrio</p>
+        <h1>Tu minimarket, en orden.</h1>
+        <p class="lead">
+          Caja POS, stock, lectora de barras, tickets e impresión, y fiado con límite.
+          Hecho para el mostrador. Sin ERP caro. Sin ruido.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-mm" href="/contacto/?producto=Minimarket+Trial">Pedir trial 14 días</a>
+          <a class="btn btn-ghost" href="#precios">Precios</a>
+          <a class="btn btn-ghost" href="/contacto/?producto=Minimarket">Contacto</a>
+        </div>
+        <div class="chip-row">
+          <span class="chip mm">$19.900 / mes</span>
+          <span class="chip">Setup desde $39.000</span>
+          <span class="chip">Trial gratis</span>
+        </div>
+        <p class="hero-note">Control de almacén. No reemplaza boleta electrónica del SII.</p>
       </div>
-      <h1>Tu minimarket, <span class="grad-mm">en orden.</span></h1>
-      <p class="lead">
-        Caja POS, stock, lectora de barras, tickets y <strong>fiado bajo control</strong>.
-        Hecho para minimarkets y almacenes de barrio en Chile.
-      </p>
-      <div class="btn-row">
-        <a class="btn btn-mm" href="/contacto/?producto=Minimarket+Trial">Pedir trial 14 días</a>
-        <a class="btn btn-ghost" href="#precios">Ver precios</a>
-        <a class="btn btn-ghost" href="/contacto/?producto=Minimarket">Hablar con ETEMEN</a>
-      </div>
-      <div class="chip-row">
-        <span class="chip mm">$19.900 / mes</span>
-        <span class="chip">Setup desde $39.000</span>
-        <span class="chip">Trial $0 · 14 días</span>
-      </div>
-      <p class="hero-note">Control de almacén (caja, stock, fiado). No reemplaza boleta electrónica del SII.</p>
     </section>
 
-    <section class="section">
+    <section class="section alt">
       <div class="wrap">
-        <div class="section-head reveal">
-          <p class="eyebrow mm">Qué resuelve</p>
-          <h2>Menos cuaderno. Menos “¿cuánto debo?”. Más control.</h2>
-          <p class="lead">Para el dueño que atiende solo o con un cajero y no quiere un ERP de $200 mil.</p>
+        <div class="section-head">
+          <p class="eyebrow">Qué incluye</p>
+          <h2>Lo que usás en el día</h2>
         </div>
         <div class="features">
-          <div class="feature mm reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg></div>
-            <h3>Caja POS</h3>
-            <p>Buscar, escanear, carrito. Efectivo, tarjeta, transfer, fiado y pago mixto.</p>
-          </div>
-          <div class="feature mm reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4zM8 11h8M7 3v4M17 3v4"/></svg></div>
-            <h3>Lectora de barras</h3>
-            <p>Pistola USB: escaneá y suma al ticket. Beep, F2 y búsqueda por código.</p>
-          </div>
-          <div class="feature mm reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h4"/></svg></div>
-            <h3>Tickets e impresión</h3>
-            <p>Comprobante térmico al cobrar. Reimpresión desde ventas del día.</p>
-          </div>
-          <div class="feature mm reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16v12H4zM8 7V5h8v2"/></svg></div>
-            <h3>Inventario</h3>
-            <p>Stock al vender, alertas, import CSV, compras a proveedor.</p>
-          </div>
-          <div class="feature mm reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-3 4-5 7-5s5.5 2 7 5"/></svg></div>
-            <h3>Fiado con límite</h3>
-            <p>Saldo por vecino, tope, abonos y estado de cuenta imprimible.</p>
-          </div>
-          <div class="feature mm reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14"/></svg></div>
-            <h3>Backup</h3>
-            <p>Descargá tu base cuando quieras. Tus datos en tu instancia.</p>
-          </div>
+          <div class="feature"><h3>Caja POS</h3><p>Carrito, efectivo, tarjeta, transfer, fiado y mixto. Vuelto al toque.</p></div>
+          <div class="feature"><h3>Lectora de barras</h3><p>Pistola USB: escaneá y suma. Beep y atajos de teclado.</p></div>
+          <div class="feature"><h3>Tickets</h3><p>Impresión térmica al cobrar. Reimpresión desde ventas del día.</p></div>
+          <div class="feature"><h3>Inventario</h3><p>Stock al vender, alertas, import CSV, compras a proveedor.</p></div>
+          <div class="feature"><h3>Fiado</h3><p>Límite por cliente, abonos y estado de cuenta imprimible.</p></div>
+          <div class="feature"><h3>Arqueo y backup</h3><p>Cierre de caja con diferencia. Descargá tu base cuando quieras.</p></div>
         </div>
       </div>
     </section>
 
-    <section class="section alt" id="precios">
+    <section class="section" id="precios">
       <div class="wrap">
-        <div class="section-head center reveal">
-          <p class="eyebrow mm">Planes</p>
+        <div class="section-head center">
+          <p class="eyebrow mm">Precios</p>
           <h2>Precio de minimarket, no de ERP</h2>
-          <p class="lead">Fijo por local. Cajeros ilimitados. Sin comisión por venta.</p>
         </div>
         <div class="pricing">
-          <div class="price-card reveal">
+          <div class="price-card">
             <div class="plan">Prueba</div>
-            <h3>Trial 14 días</h3>
-            <p class="muted">Sin tarjeta · instancia propia</p>
+            <h3>Trial</h3>
             <div class="amount">$0 <small>/ 14 días</small></div>
             <ul>
-              <li>Caja POS + tickets</li>
-              <li>Lectora de barras</li>
-              <li>Stock y fiado</li>
-              <li>Soporte por WhatsApp</li>
+              <li>Caja + stock + fiado</li>
+              <li>Tickets e impresión</li>
+              <li>Sin tarjeta</li>
             </ul>
             <a class="btn btn-ghost" href="/contacto/?producto=Minimarket+Trial" style="width:100%">Pedir trial</a>
           </div>
-          <div class="price-card featured mm reveal">
+          <div class="price-card featured mm">
             <div class="plan">Mensual</div>
             <h3>Minimarket Operación</h3>
-            <p class="muted">1 local · precio fijo</p>
             <div class="amount">$19.900 <small>/ mes</small></div>
             <ul>
-              <li>Todo el trial, sin límite de tiempo</li>
+              <li>1 local · cajeros ilimitados</li>
               <li>Backup y actualizaciones</li>
-              <li>Soporte en horario hábil</li>
-              <li>Datos del local, no de un marketplace</li>
+              <li>Soporte ETEMEN</li>
+              <li>Sin comisión por venta</li>
             </ul>
-            <a class="btn btn-mm" href="/contacto/?producto=Minimarket+Mensual" style="width:100%">Quiero este plan</a>
+            <a class="btn btn-mm" href="/contacto/?producto=Minimarket+Mensual" style="width:100%">Empezar</a>
           </div>
-          <div class="price-card reveal">
-            <div class="plan">Implementación</div>
+          <div class="price-card">
+            <div class="plan">Una vez</div>
             <h3>Setup</h3>
-            <p class="muted">Una vez · remoto</p>
             <div class="amount">$39.000 <small>/ desde</small></div>
             <ul>
               <li>Carga de productos</li>
-              <li>PINs y nombre del local</li>
+              <li>PINs y nombre</li>
               <li>1 sesión remota</li>
-              <li>Checklist de primer día</li>
             </ul>
-            <a class="btn btn-ghost" href="/contacto/?producto=Minimarket+Setup" style="width:100%">Agendar setup</a>
+            <a class="btn btn-ghost" href="/contacto/?producto=Minimarket+Setup" style="width:100%">Consultar</a>
           </div>
         </div>
-        <p class="muted" style="text-align:center;margin-top:24px;font-size:.9rem">
-          Anual: $199.000 (≈ 10 meses). Precios CLP.
-        </p>
+        <p class="muted" style="text-align:center;margin-top:20px">Anual $199.000 (≈ 10 meses). Precios en CLP.</p>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section alt">
       <div class="wrap">
-        <div class="cta-box reveal" style="border-color:rgba(196,92,38,.3)">
+        <div class="section-head">
+          <p class="eyebrow">Otras plataformas ETEMEN</p>
+          <h2>¿No es un almacén?</h2>
+        </div>
+        <div class="products" style="grid-template-columns:1fr 1fr">
+          <a class="product nexo" href="/nexus/" style="text-decoration:none">
+            <span class="who">Salones y spa</span>
+            <h3>Nexo</h3>
+            <p>Agenda y reservas online. Desde $45.000/mes.</p>
+            <span class="meta">Ver Nexo →</span>
+          </a>
+          <a class="product indago" href="https://www.indago.cl" target="_blank" rel="noopener" style="text-decoration:none">
+            <span class="who">Comparar precios</span>
+            <h3>indago</h3>
+            <p>Comparador de precios en Chile. Gratis.</p>
+            <span class="meta">Abrir indago ↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="wrap">
+        <div class="cta-box">
           <div>
-            <h2>¿Tenés un minimarket de barrio?</h2>
-            <p>Probá 14 días. Si te ordena la caja y el fiado, seguimos con el plan.</p>
+            <h2>¿Minimarket calza con tu local?</h2>
+            <p>Pedí un trial o escribinos. Sin compromiso.</p>
           </div>
           <div class="btn-row">
-            <a class="btn btn-mm" href="/contacto/?producto=Minimarket+Trial">Pedir trial</a>
-            <a class="btn btn-ghost" href="mailto:hola@etemen.cl?subject=Minimarket%20soporte">hola@etemen.cl</a>
+            <a class="btn btn-mm" href="/contacto/?producto=Minimarket">Contactar</a>
+            <a class="btn btn-ghost" href="mailto:hola@etemen.cl">hola@etemen.cl</a>
           </div>
         </div>
       </div>
@@ -283,10 +166,34 @@
 
   <footer class="footer">
     <div class="wrap">
-      <div class="footer-bottom" style="border:0;padding-top:0">
-        <span>© <span id="y"></span> ETEMEN Studio · Minimarket</span>
-        <a href="/nexus/">Nexo (salones)</a>
-        <a href="/">Inicio</a>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <img class="logo-icon" src="/assets/logos/etemen-icon.jpg" alt="" width="32" height="32">
+            <div class="logo-wordmark"><span class="name">ETEMEN</span></div>
+          </a>
+          <p>Minimarket es un producto de ETEMEN. Chile.</p>
+        </div>
+        <div>
+          <h4>Minimarket</h4>
+          <a href="/contacto/?producto=Minimarket+Trial">Pedir trial</a>
+          <a href="#precios">Precios</a>
+        </div>
+        <div>
+          <h4>Productos</h4>
+          <a href="/nexus/">Nexo</a>
+          <a href="/minimarket/">Minimarket</a>
+          <a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <a href="/contacto/">Formulario</a>
+          <a href="mailto:hola@etemen.cl">hola@etemen.cl</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="y"></span> ETEMEN · Minimarket</span>
+        <span>Chile</span>
       </div>
     </div>
   </footer>

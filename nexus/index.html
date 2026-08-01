@@ -3,547 +3,188 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nexo — Todo tu local, conectado | ETEMEN Studio</title>
-  <meta name="description" content="Nexo: agenda, reservas online, caja y WhatsApp para salones, barberías y spa. Ecosystem ETEMEN: Nexo, Minimarket e indago. Trial 14 días.">
-  <meta name="theme-color" content="#070B14">
+  <title>Nexo — Sistema para salones, barberías y spa | ETEMEN</title>
+  <meta name="description" content="Nexo: agenda, reservas online con abono, caja y WhatsApp. Para salones, barberías y spa. $45.000/mes. Trial 14 días. Producto de ETEMEN.">
+  <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="https://forja-web-ur0v.onrender.com/nexus/">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://forja-web-ur0v.onrender.com/nexus/">
   <meta property="og:title" content="Nexo — Todo tu local, conectado">
-  <meta property="og:description" content="El sistema de operación del local. Salones, barberías y spa. Un producto de ETEMEN.">
+  <meta property="og:description" content="Agenda, reservas, caja y WhatsApp para locales de servicio.">
   <meta property="og:image" content="https://forja-web-ur0v.onrender.com/assets/logos/nexo-wordmark.jpg">
-  <meta property="og:locale" content="es_CL">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Nexo — Todo tu local, conectado">
-  <meta name="twitter:description" content="Agenda, reservas, caja y WhatsApp. Producto de ETEMEN Studio.">
-  <meta name="twitter:image" content="https://forja-web-ur0v.onrender.com/assets/logos/nexo-wordmark.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/assets/logos/nexo-icon.jpg" type="image/jpeg">
-  <link rel="apple-touch-icon" href="/assets/logos/nexo-icon.jpg">
-  <style>
-    /* ── Logo stage: the eye magnet ── */
-    .nexo-stage {
-      position: relative;
-      min-height: min(88vh, 820px);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 72px 20px 56px; overflow: hidden;
-    }
-    .nexo-stage::before {
-      content: ""; position: absolute; inset: -20% -10%;
-      background:
-        radial-gradient(ellipse 55% 50% at 50% 42%, rgba(0,201,167,.28), transparent 62%),
-        radial-gradient(ellipse 40% 35% at 20% 80%, rgba(196,137,74,.12), transparent 55%),
-        radial-gradient(ellipse 35% 30% at 85% 20%, rgba(0,201,167,.1), transparent 50%);
-      animation: nexoPulse 8s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-    @keyframes nexoPulse {
-      from { opacity: .85; transform: scale(1); }
-      to { opacity: 1; transform: scale(1.06); }
-    }
-    .nexo-stage .orb {
-      position: absolute; width: min(520px, 90vw); height: min(520px, 90vw);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,201,167,.18), transparent 68%);
-      filter: blur(8px); pointer-events: none;
-    }
-    .nexo-stage .ring {
-      position: absolute; width: min(420px, 78vw); height: min(420px, 78vw);
-      border-radius: 50%; border: 1px solid rgba(0,201,167,.18);
-      box-shadow: 0 0 80px rgba(0,201,167,.08), inset 0 0 60px rgba(0,201,167,.05);
-      pointer-events: none;
-    }
-    .nexo-stage .ring.r2 {
-      width: min(520px, 88vw); height: min(520px, 88vw);
-      border-color: rgba(0,201,167,.08); animation: nexoSpin 40s linear infinite;
-    }
-    @keyframes nexoSpin { to { transform: rotate(360deg); } }
-    .nexo-logo-wrap {
-      position: relative; z-index: 2;
-      display: flex; flex-direction: column; align-items: center; gap: 22px;
-    }
-    .nexo-mark-hero {
-      width: clamp(88px, 18vw, 140px); height: clamp(88px, 18vw, 140px);
-      border-radius: 28px;
-      box-shadow:
-        0 0 0 1px rgba(0,201,167,.35),
-        0 0 60px rgba(0,201,167,.35),
-        0 24px 80px rgba(0,0,0,.45);
-      object-fit: cover;
-      animation: nexoFloat 5s ease-in-out infinite;
-    }
-    @keyframes nexoFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .nexo-wordmark-hero {
-      width: min(520px, 88vw); height: auto;
-      border-radius: 20px;
-      background: #fff;
-      padding: clamp(18px, 4vw, 32px) clamp(28px, 6vw, 48px);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.08),
-        0 0 100px rgba(0,201,167,.25),
-        0 40px 100px rgba(0,0,0,.5);
-      filter: drop-shadow(0 0 40px rgba(0,201,167,.2));
-    }
-    .nexo-stage .eyebrow {
-      position: relative; z-index: 2; margin-bottom: 8px;
-    }
-    .nexo-stage h1 {
-      position: relative; z-index: 2;
-      font-size: clamp(1.8rem, 5.5vw, 3.4rem);
-      max-width: 14em; margin: 8px auto 0; line-height: 1.05;
-    }
-    .nexo-stage .lead {
-      position: relative; z-index: 2;
-      max-width: 36em; margin: 18px auto 0; font-size: 1.05rem;
-    }
-    .nexo-stage .btn-row {
-      position: relative; z-index: 2;
-      justify-content: center; margin-top: 28px;
-    }
-    .nexo-stage .chip-row {
-      position: relative; z-index: 2;
-      justify-content: center; margin-top: 22px;
-    }
-    .nexo-stage .hero-note {
-      position: relative; z-index: 2; margin-top: 16px;
-    }
-
-    /* ── Platforms grid ── */
-    .plat-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    @media (max-width: 900px) {
-      .plat-grid { grid-template-columns: 1fr; }
-    }
-    .plat-card {
-      position: relative; overflow: hidden;
-      border-radius: 18px; padding: 24px 22px;
-      border: 1px solid var(--line);
-      background: linear-gradient(165deg, rgba(255,255,255,.04), rgba(0,0,0,.2));
-      text-decoration: none; color: inherit;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
-      display: flex; flex-direction: column; gap: 10px; min-height: 200px;
-    }
-    .plat-card:hover {
-      border-color: rgba(0,201,167,.4);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(0,0,0,.35);
-    }
-    .plat-card.bodega:hover { border-color: rgba(196,92,38,.45); }
-    .plat-card.indago:hover { border-color: rgba(99,102,241,.45); }
-    .plat-card .plat-ico {
-      width: 48px; height: 48px; border-radius: 12px;
-      display: grid; place-items: center; font-weight: 800;
-      font-family: var(--display); font-size: 1.1rem;
-      background: var(--nexo-soft); color: var(--nexo);
-      border: 1px solid rgba(0,201,167,.25);
-    }
-    .plat-card.bodega .plat-ico {
-      background: rgba(196,92,38,.15); color: #e8914a;
-      border-color: rgba(196,92,38,.3);
-    }
-    .plat-card.indago .plat-ico {
-      background: rgba(99,102,241,.12); color: #a5b4fc;
-      border-color: rgba(99,102,241,.3);
-    }
-    .plat-card h3 {
-      font-family: var(--display); font-size: 1.35rem; font-weight: 800;
-      letter-spacing: -.03em; margin: 0;
-    }
-    .plat-card p { color: var(--muted); font-size: .92rem; line-height: 1.5; margin: 0; flex: 1; }
-    .plat-card .plat-link {
-      font-size: .85rem; font-weight: 700; color: var(--nexo);
-    }
-    .plat-card.bodega .plat-link { color: #e8914a; }
-    .plat-card.indago .plat-link { color: #a5b4fc; }
-    .plat-card .plat-tag {
-      display: inline-block; font-size: .68rem; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      padding: 4px 8px; border-radius: 6px; width: fit-content;
-      background: rgba(0,201,167,.12); color: var(--nexo);
-    }
-    .plat-card.bodega .plat-tag { background: rgba(196,92,38,.12); color: #e8914a; }
-    .plat-card.indago .plat-tag { background: rgba(99,102,241,.12); color: #a5b4fc; }
-
-    .vert-row {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px;
-    }
-    @media (max-width: 720px) { .vert-row { grid-template-columns: 1fr; } }
-    .vert-card {
-      border-radius: 16px; padding: 20px; border: 1px solid var(--line);
-      background: rgba(0,0,0,.22); text-decoration: none; color: inherit;
-      transition: border-color .2s, transform .2s;
-    }
-    .vert-card:hover { border-color: rgba(0,201,167,.35); transform: translateY(-2px); }
-    .vert-card .bar {
-      height: 4px; border-radius: 999px; margin-bottom: 14px;
-    }
-    .vert-card h3 { font-size: 1.1rem; font-family: var(--display); margin: 0 0 6px; }
-    .vert-card p { margin: 0; font-size: .88rem; color: var(--muted); }
-
-    .logo-strip {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-      gap: 20px 36px; padding: 28px 0; opacity: .9;
-    }
-    .logo-strip img {
-      height: 36px; width: auto; border-radius: 8px;
-      background: #fff; padding: 6px 12px;
-      filter: grayscale(.2); transition: filter .2s, transform .2s;
-    }
-    .logo-strip img:hover { filter: none; transform: scale(1.05); }
-    .logo-strip .mark-only {
-      height: 44px; width: 44px; padding: 0; border-radius: 12px; object-fit: cover;
-    }
-  </style>
 </head>
 <body>
-  <div class="live-strip">
-    <div class="wrap">
-      <span class="pulse">Nexo en vivo</span>
-      <div class="links">
-        <a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial demo</a>
-        <a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">App pública</a>
-        <a href="/demos/">Webs salones</a>
-        <a href="/minimarket/">Minimarket</a>
-      </div>
-    </div>
-  </div>
-
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="/" class="logo" aria-label="ETEMEN Studio">
-        <img class="logo-mark logo-icon" src="/assets/logos/etemen-icon.jpg" alt="ETEMEN" width="40" height="40">
+      <a href="/" class="logo" aria-label="ETEMEN">
+        <img class="logo-icon" src="/assets/logos/etemen-icon.jpg" alt="" width="32" height="32">
         <div class="logo-wordmark">
           <span class="name">ETEMEN</span>
-          <span class="tagline">Fundamento Sólido</span>
+          <span class="tagline">Estudio</span>
         </div>
       </a>
       <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="/nexus/" class="active">Nexo</a>
         <a href="/minimarket/">Minimarket</a>
-        <a href="/demos/">Demos</a>
         <a href="/contacto/?producto=Nexo" class="nav-cta">Pedir trial</a>
       </nav>
-      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <main>
-    <!-- ═══════════ LOGO STAGE ═══════════ -->
-    <section class="nexo-stage">
-      <div class="orb" aria-hidden="true"></div>
-      <div class="ring" aria-hidden="true"></div>
-      <div class="ring r2" aria-hidden="true"></div>
-
-      <p class="eyebrow nexo">Producto · by ETEMEN</p>
-
-      <div class="nexo-logo-wrap">
-        <img class="nexo-mark-hero" src="/assets/logos/nexo-icon.jpg" width="140" height="140" alt="Marca Nexo">
-        <img class="nexo-wordmark-hero" src="/assets/logos/nexo-wordmark.jpg" width="520" height="160" alt="Nexo">
-      </div>
-
-      <h1>Todo tu local, <span class="grad-nexo">conectado.</span></h1>
-      <p class="lead">
-        Agenda, reservas online con abono, caja, equipo y WhatsApp —
-        en un solo sistema con <strong>tu marca</strong>, no la de un marketplace.
-      </p>
-      <div class="btn-row">
-        <a class="btn btn-nexo" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Probar trial 14 días</a>
-        <a class="btn btn-ghost" href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">Ver app demo</a>
-        <a class="btn btn-ghost" href="/contacto/?producto=Nexo">Hablar con ETEMEN</a>
-      </div>
-      <div class="chip-row">
-        <span class="chip nexo">Desde $45.000 / mes</span>
-        <span class="chip">Setup desde $100.000</span>
-        <span class="chip">Trial $0 · 14 días</span>
-      </div>
-      <p class="hero-note">Trial en Render free — puede tardar ~30 s si estuvo dormido.</p>
-    </section>
-
-    <!-- ═══════════ PLATAFORMAS ETEMEN ═══════════ -->
-    <section class="section alt" id="plataformas">
+    <section class="page-hero">
       <div class="wrap">
-        <div class="section-head reveal">
-          <p class="eyebrow nexo">Ecosistema ETEMEN</p>
-          <h2>Todas las plataformas que ofrecemos</h2>
-          <p class="lead">Un estudio, tres productos. El local de servicio, el almacén de barrio y el comparador de precios — cada uno con su marca y su dominio.</p>
+        <div class="product-brand nexo">
+          <img class="mark" src="/assets/logos/nexo-icon.jpg" width="56" height="56" alt="">
+          <img class="wordmark" src="/assets/logos/nexo-wordmark.jpg" alt="Nexo" height="48">
         </div>
-        <div class="plat-grid">
-          <a class="plat-card reveal" href="/nexus/">
-            <span class="plat-tag">B2B · Locales de servicio</span>
-            <div class="plat-ico">
-              <img src="/assets/logos/nexo-icon.jpg" alt="" width="48" height="48" style="width:100%;height:100%;border-radius:11px;object-fit:cover">
-            </div>
-            <h3>Nexo</h3>
-            <p>Operación del salón, barbería o spa: agenda, reservas online, abonos, caja, equipo y WhatsApp. Instancia propia por local.</p>
-            <span class="plat-link">Desde $45.000/mes →</span>
-          </a>
-          <a class="plat-card bodega reveal" href="/minimarket/">
-            <span class="plat-tag">B2B · Almacenes</span>
-            <div class="plat-ico">M</div>
-            <h3>Minimarket</h3>
-            <p>Caja POS, stock, lectora de barras, tickets y fiado para almacenes de barrio. Simple, en CLP, sin ERP caro.</p>
-            <span class="plat-link">Desde $19.900/mes →</span>
-          </a>
-          <a class="plat-card indago reveal" href="https://www.indago.cl" target="_blank" rel="noopener">
-            <span class="plat-tag">B2C · Compras</span>
-            <div class="plat-ico">i</div>
-            <h3>indago</h3>
-            <p>Comparador de precios en Chile. Indaga tiendas, encuentra el mejor precio y compra con más información.</p>
-            <span class="plat-link">indago.cl ↗</span>
-          </a>
-        </div>
-
-        <div class="logo-strip reveal" aria-label="Marcas del ecosistema">
-          <img class="mark-only" src="/assets/logos/etemen-icon.jpg" alt="ETEMEN">
-          <img src="/assets/logos/nexo-wordmark.jpg" alt="Nexo" width="120" height="40">
-          <img class="mark-only" src="/assets/logos/nexo-icon.jpg" alt="Nexo mark">
-          <span style="font-family:var(--display);font-weight:800;font-size:1.1rem;color:#e8914a;letter-spacing:-.02em">Minimarket</span>
-          <span style="font-family:var(--display);font-weight:800;font-size:1.1rem;color:#a5b4fc;letter-spacing:-.02em">indago</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════ VERTICALES NEXO ═══════════ -->
-    <section class="section" id="verticales">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <p class="eyebrow nexo">Nexo multi-vertical</p>
-          <h2>Una plataforma. Tres caras del local.</h2>
-          <p class="lead">El mismo motor de agenda y reservas, con marca y catálogo de cada negocio. Demos ficticias listas para mostrar.</p>
-        </div>
-        <div class="vert-row">
-          <a class="vert-card reveal" href="/demos/luna/">
-            <div class="bar" style="background:linear-gradient(90deg,#fdf6f8,#c2617a)"></div>
-            <h3>Salón · Uñas</h3>
-            <p>Luna Nails — soft gel, nail art, estética. Reserva online con tu marca.</p>
-          </a>
-          <a class="vert-card reveal" href="/demos/atelier/">
-            <div class="bar" style="background:linear-gradient(90deg,#1a211e,#c9a227)"></div>
-            <h3>Barbería</h3>
-            <p>Atelier Norte — fades, barba, sillones. Agenda por barbero.</p>
-          </a>
-          <a class="vert-card reveal" href="/demos/aura/">
-            <div class="bar" style="background:linear-gradient(90deg,#e8f0eb,#5b8a72)"></div>
-            <h3>Spa · Estética</h3>
-            <p>Aura Studio — faciales, masajes, rituales. Cabinas y terapeutas.</p>
-          </a>
-        </div>
-        <p class="muted reveal" style="text-align:center;margin-top:20px;font-size:.9rem">
-          Ver todas las demos → <a href="/demos/" style="color:var(--nexo);font-weight:700">/demos/</a>
-          · Caso real en producción: <a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener" style="color:var(--nexo);font-weight:700">Ysabel Aragón NW</a>
+        <p class="eyebrow nexo">Para salones · barberías · spa</p>
+        <h1>Todo tu local, conectado.</h1>
+        <p class="lead">
+          Un solo sistema: agenda, reservas online con abono, caja, equipo y WhatsApp.
+          Con tu marca. Sin marketplace. Sin comisión por cita.
         </p>
+        <div class="btn-row">
+          <a class="btn btn-nexo" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Probar 14 días gratis</a>
+          <a class="btn btn-ghost" href="#precios">Precios</a>
+          <a class="btn btn-ghost" href="/contacto/?producto=Nexo">Contacto</a>
+        </div>
+        <div class="chip-row">
+          <span class="chip nexo">$45.000 / mes</span>
+          <span class="chip">Setup $100.000</span>
+          <span class="chip">1 local = 1 instancia</span>
+        </div>
       </div>
     </section>
 
-    <!-- ═══════════ QUÉ RESUELVE ═══════════ -->
     <section class="section alt">
       <div class="wrap">
-        <div class="section-head reveal">
-          <p class="eyebrow nexo">Qué resuelve Nexo</p>
-          <h2>Menos caos. Menos no-shows. Más control.</h2>
-          <p class="lead">Para dueñas y equipos que hoy viven en WhatsApp, Excel y la memoria del local.</p>
+        <div class="section-head">
+          <p class="eyebrow">Qué incluye</p>
+          <h2>Lo esencial del día a día</h2>
         </div>
         <div class="features">
-          <div class="feature nexo reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
-            <h3>Agenda timeline</h3>
-            <p>Vista día por profesional, arrastrar citas, roles dueña / recepción.</p>
-          </div>
-          <div class="feature nexo reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div>
-            <h3>Reserva online</h3>
-            <p>Link con tu marca. El cliente elige servicio, profesional y hora.</p>
-          </div>
-          <div class="feature nexo reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
-            <h3>Abonos Mercado Pago</h3>
-            <p>Seña al reservar. El resto se cierra en caja el día de la cita.</p>
-          </div>
-          <div class="feature nexo reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17l-2 3V7a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H7z"/></svg></div>
-            <h3>WhatsApp y SMS</h3>
-            <p>Confirmaciones, recordatorios y campañas sin copiar-pegar.</p>
-          </div>
-          <div class="feature nexo reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18M7 8h8a3 3 0 010 6H9a3 3 0 000 6h9"/></svg></div>
-            <h3>Caja y liquidación</h3>
-            <p>Cobros, gastos, comisiones y reportes listos para decidir.</p>
-          </div>
-          <div class="feature nexo reveal">
-            <div class="feature-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg></div>
-            <h3>Tu instancia</h3>
-            <p>Un local = un sistema. Tus clientes, tu dominio, tus datos.</p>
-          </div>
+          <div class="feature"><h3>Agenda</h3><p>Vista por profesional. Arrastrar citas. Roles dueña y recepción.</p></div>
+          <div class="feature"><h3>Reserva online</h3><p>Link con tu marca. El cliente elige servicio y hora.</p></div>
+          <div class="feature"><h3>Abonos</h3><p>Seña con Mercado Pago. El resto se cobra en el local.</p></div>
+          <div class="feature"><h3>WhatsApp / SMS</h3><p>Confirmaciones y recordatorios sin copiar-pegar.</p></div>
+          <div class="feature"><h3>Caja</h3><p>Cobros, gastos y reportes del día.</p></div>
+          <div class="feature"><h3>Tus datos</h3><p>Instancia propia. No se mezclan con otros locales.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════ MOCK ═══════════ -->
     <section class="section">
-      <div class="wrap" style="display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center">
-        <div class="reveal">
-          <p class="eyebrow nexo">En la práctica</p>
-          <h2 style="margin-bottom:14px">El día del local, en una pantalla</h2>
-          <p class="lead" style="margin:0">
-            Timeline por profesional, citas con color, cobros y el link de reserva que vive en tu Instagram.
-          </p>
-          <div class="btn-row" style="margin-top:22px">
-            <a class="btn btn-nexo" href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">Abrir demo pública</a>
-            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Entrar al trial</a>
-          </div>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">También sirve para</p>
+          <h2>Tres tipos de local</h2>
+          <p class="lead">El mismo Nexo, con la cara de cada negocio. Demos de ejemplo:</p>
         </div>
-        <div class="mock reveal" aria-hidden="true">
-          <div class="mock-bar">
-            <i></i><i></i><i></i>
-            <span class="url">nexo · vista día</span>
-          </div>
-          <div class="mock-body">
-            <div class="mock-kpis">
-              <div class="mock-kpi"><div class="lbl">Citas</div><div class="val teal">9</div></div>
-              <div class="mock-kpi"><div class="lbl">Equipo</div><div class="val">3</div></div>
-              <div class="mock-kpi"><div class="lbl">Caja</div><div class="val">$186k</div></div>
-            </div>
-            <div class="mock-row"><span class="dot"></span> 09:00 · Manicure gel <span class="meta">Camila</span></div>
-            <div class="mock-row"><span class="dot"></span> 11:00 · Corte + barba <span class="meta">Diego</span></div>
-            <div class="mock-row"><span class="dot warn"></span> 15:30 · Facial <span class="meta">Aura</span></div>
-          </div>
+        <div class="vert-row">
+          <a class="vert-card" href="/demos/luna/">
+            <div class="bar" style="background:#c2617a"></div>
+            <h3>Salón / uñas</h3>
+            <p>Demo Luna Nails</p>
+          </a>
+          <a class="vert-card" href="/demos/atelier/">
+            <div class="bar" style="background:#c9a227"></div>
+            <h3>Barbería</h3>
+            <p>Demo Atelier Norte</p>
+          </a>
+          <a class="vert-card" href="/demos/aura/">
+            <div class="bar" style="background:#5b8a72"></div>
+            <h3>Spa / estética</h3>
+            <p>Demo Aura Studio</p>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════ IMPLEMENTACIÓN ═══════════ -->
-    <section class="section alt">
+    <section class="section alt" id="precios">
       <div class="wrap">
-        <div class="section-head reveal">
-          <p class="eyebrow nexo">Implementación</p>
-          <h2>Listo en días, no en meses</h2>
-        </div>
-        <div class="steps">
-          <div class="step reveal">
-            <h3>Alta en 24 h</h3>
-            <p>Tu subdominio o tu `.cl`. Cargamos tu logo, equipo y servicios.</p>
-          </div>
-          <div class="step reveal">
-            <h3>Onboarding</h3>
-            <p>Agenda lista. Te acompañamos a configurar Mercado Pago y WhatsApp.</p>
-          </div>
-          <div class="step reveal">
-            <h3>Publicación</h3>
-            <p>Link en Instagram y Bio. El local empieza a recibir reservas con abono.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════ PRECIOS ═══════════ -->
-    <section class="section" id="precios">
-      <div class="wrap">
-        <div class="section-head center reveal">
-          <p class="eyebrow nexo">Planes Nexo</p>
-          <h2>Premium, sin pasarte la cuenta del mes</h2>
-          <p class="lead">
-            Precios en pesos chilenos. Fijo por local — crecer de sillas no multiplica la cuota.
-          </p>
+        <div class="section-head center">
+          <p class="eyebrow nexo">Precios</p>
+          <h2>Fijo por local. Sin sorpresas.</h2>
         </div>
         <div class="pricing">
-          <div class="price-card reveal">
+          <div class="price-card">
             <div class="plan">Prueba</div>
-            <h3>Trial 14 días</h3>
-            <p class="muted">Sin tarjeta · instancia propia</p>
+            <h3>Trial</h3>
             <div class="amount">$0 <small>/ 14 días</small></div>
             <ul>
-              <li>Panel completo Nexo</li>
-              <li>Agenda, clientes y caja</li>
-              <li>Link de reserva online</li>
-              <li>Onboarding guiado</li>
+              <li>Panel completo</li>
+              <li>Agenda y reservas</li>
+              <li>Sin tarjeta</li>
             </ul>
-            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener" style="width:100%">Abrir trial demo</a>
+            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener" style="width:100%">Abrir trial</a>
           </div>
-          <div class="price-card featured reveal">
+          <div class="price-card featured">
             <div class="plan">Mensual</div>
             <h3>Nexo Operación</h3>
-            <p class="muted">1 local · precio fijo (no por silla)</p>
             <div class="amount">$45.000 <small>/ mes</small></div>
             <ul>
-              <li>Hosting y respaldos diarios</li>
-              <li>Actualizaciones del producto</li>
-              <li>Soporte WhatsApp / email</li>
-              <li>Tu marca · tus datos · sin comisión por cita</li>
+              <li>1 local · cajeros ilimitados</li>
+              <li>Hosting y respaldos</li>
+              <li>Soporte ETEMEN</li>
+              <li>Sin comisión por cita</li>
             </ul>
             <a class="btn btn-nexo" href="/contacto/?producto=Nexo+Mensual" style="width:100%">Empezar</a>
           </div>
-          <div class="price-card reveal">
-            <div class="plan">Setup</div>
-            <h3>Puesta en marcha</h3>
-            <p class="muted">Pago único · o $0 con plan anual</p>
-            <div class="amount">$100.000 <small>/ una vez</small></div>
+          <div class="price-card">
+            <div class="plan">Una vez</div>
+            <h3>Setup</h3>
+            <div class="amount">$100.000</div>
             <ul>
-              <li>Carga de servicios y equipo</li>
-              <li>Marca, logo y colores</li>
-              <li>Capacitación (30–45 min)</li>
-              <li>Opcional: dominio y migraciones</li>
+              <li>Carga de servicios</li>
+              <li>Marca y logo</li>
+              <li>Capacitación corta</li>
             </ul>
-            <a class="btn btn-ghost" href="/contacto/?producto=Nexo+Setup" style="width:100%">Consultar setup</a>
+            <a class="btn btn-ghost" href="/contacto/?producto=Nexo+Setup" style="width:100%">Consultar</a>
           </div>
         </div>
-
-        <div class="bento" style="margin-top:36px">
-          <article class="bento-card nexo reveal" style="grid-column:span 12">
-            <span class="tag tag-nexo">Cómo se diferencia</span>
-            <h3>Diseñado para beneficiar al local, no a una app intermedia</h3>
-            <p style="max-width:42em">
-              Muchas apps de agenda mezclan cuota baja con comisiones por clientes nuevos
-              o cobros por profesional. Nexo es otra cosa:
-            </p>
-            <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 20px">
-              <li>Precio <strong>fijo por local</strong></li>
-              <li><strong>Sin % sobre tus citas</strong></li>
-              <li>Reserva con <strong>tu marca y tu link</strong></li>
-              <li>Instancia propia: <strong>tus datos se quedan contigo</strong></li>
-              <li>Implementación con <strong>ETEMEN en Chile</strong></li>
-              <li>Referencia: menos que <strong>un par de servicios al mes</strong></li>
-            </ul>
-            <p class="muted" style="margin:16px 0 0;font-size:0.9rem">
-              Plan anual: <strong style="color:var(--cream)">$450.000</strong> (≈ 10 meses) ·
-              Setup gratis o con descuento al contratar 12 meses.
-            </p>
-          </article>
-        </div>
+        <p class="muted" style="text-align:center;margin-top:20px">Anual $450.000 (≈ 10 meses). Precios en CLP.</p>
       </div>
     </section>
 
-    <section class="section tight">
+    <section class="section">
       <div class="wrap">
-        <div class="principle reveal">
-          <blockquote>“Todo tu local, conectado.”</blockquote>
-          <cite>— Nexo · un producto de ETEMEN</cite>
+        <div class="section-head">
+          <p class="eyebrow">Otras plataformas ETEMEN</p>
+          <h2>¿No es un salón?</h2>
+        </div>
+        <div class="products" style="grid-template-columns:1fr 1fr">
+          <a class="product mm" href="/minimarket/" style="text-decoration:none">
+            <span class="who">Almacenes de barrio</span>
+            <h3>Minimarket</h3>
+            <p>Caja POS, stock, barras y fiado. Desde $19.900/mes.</p>
+            <span class="meta">Ver Minimarket →</span>
+          </a>
+          <a class="product indago" href="https://www.indago.cl" target="_blank" rel="noopener" style="text-decoration:none">
+            <span class="who">Comparar precios</span>
+            <h3>indago</h3>
+            <p>Comparador de precios en Chile. Gratis en indago.cl.</p>
+            <span class="meta">Abrir indago ↗</span>
+          </a>
         </div>
       </div>
     </section>
 
     <section class="cta-band">
       <div class="wrap">
-        <div class="cta-box nexo reveal">
+        <div class="cta-box nexo">
           <div>
-            <h2>15 minutos para ver si Nexo calza</h2>
-            <p>Contanos cómo atienden hoy. Sin compromiso. también tenemos Minimarket para almacenes.</p>
+            <h2>¿Nexo calza con tu local?</h2>
+            <p>15 minutos. Sin compromiso.</p>
           </div>
           <div class="btn-row">
-            <a class="btn btn-nexo" href="/contacto/?producto=Nexo">Contactar ETEMEN</a>
-            <a class="btn btn-ghost" href="/demos/">Ver demos</a>
-            <a class="btn btn-ghost" href="/minimarket/">Ver Minimarket</a>
+            <a class="btn btn-nexo" href="/contacto/?producto=Nexo">Contactar</a>
+            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Probar trial</a>
           </div>
         </div>
       </div>
@@ -555,36 +196,31 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="/" class="logo">
-            <img class="logo-mark logo-icon" src="/assets/logos/etemen-icon.jpg" alt="ETEMEN" width="40" height="40">
-            <div class="logo-wordmark">
-              <span class="name" style="font-size:1rem">ETEMEN</span>
-              <span class="tagline">Fundamento Sólido</span>
-            </div>
+            <img class="logo-icon" src="/assets/logos/etemen-icon.jpg" alt="" width="32" height="32">
+            <div class="logo-wordmark"><span class="name">ETEMEN</span></div>
           </a>
-          <p>Nexo, Minimarket e indago — productos de ETEMEN. Hecho en Chile.</p>
+          <p>Nexo es un producto de ETEMEN. Chile.</p>
         </div>
         <div>
           <h4>Nexo</h4>
-          <a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial demo</a>
-          <a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">App pública</a>
-          <a href="/demos/">Webs salones</a>
+          <a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial</a>
+          <a href="/demos/">Demos</a>
         </div>
         <div>
-          <h4>Plataformas</h4>
+          <h4>Productos</h4>
           <a href="/nexus/">Nexo</a>
           <a href="/minimarket/">Minimarket</a>
           <a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a>
         </div>
         <div>
-          <h4>ETEMEN</h4>
-          <a href="/">Inicio</a>
-          <a href="/portafolio/">Portafolio</a>
-          <a href="/contacto/">Contacto</a>
+          <h4>Contacto</h4>
+          <a href="/contacto/">Formulario</a>
+          <a href="mailto:hola@etemen.cl">hola@etemen.cl</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© <span id="y"></span> ETEMEN Studio · Nexo</span>
-        <span>Hecho en Chile</span>
+        <span>© <span id="y"></span> ETEMEN · Nexo</span>
+        <span>Chile</span>
       </div>
     </div>
   </footer>

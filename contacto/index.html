@@ -3,38 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contacto — ETEMEN Studio</title>
-  <meta name="description" content="Escribe a ETEMEN Studio por Nexo, Minimarket, indago u otros productos. Chile.">
-  <meta name="theme-color" content="#070B14">
+  <title>Contacto — ETEMEN</title>
+  <meta name="description" content="Contactá a ETEMEN por Nexo, Minimarket o indago. Chile.">
+  <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="https://forja-web-ur0v.onrender.com/contacto/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/logos/etemen-logo.png">
 </head>
 <body>
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="/" class="logo" aria-label="ETEMEN Studio">
-        <img class="logo-mark logo-icon" src="/assets/logos/etemen-icon.jpg" alt="ETEMEN" width="40" height="40">
+      <a href="/" class="logo" aria-label="ETEMEN">
+        <img class="logo-icon" src="/assets/logos/etemen-icon.jpg" alt="" width="32" height="32">
         <div class="logo-wordmark">
           <span class="name">ETEMEN</span>
-          <span class="tagline">Fundamento Sólido</span>
+          <span class="tagline">Estudio</span>
         </div>
       </a>
       <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
-        <a href="/portafolio/">Portafolio</a>
         <a href="/nexus/">Nexo</a>
         <a href="/minimarket/">Minimarket</a>
-        <a href="/demos/">Demos</a>
         <a href="/contacto/" class="active nav-cta">Contacto</a>
       </nav>
-      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
 
@@ -43,13 +38,13 @@
       <div class="wrap">
         <p class="eyebrow">Contacto</p>
         <h1>Hablemos.</h1>
-        <p class="lead">Nexo (salones), Minimarket (almacenes), indago, o una idea nueva. Respondemos lo antes posible.</p>
+        <p class="lead">Elegí el producto y contanos tu caso. Respondemos lo antes posible.</p>
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
+    <section class="section" style="padding-top:8px">
       <div class="wrap contact-grid">
-        <div class="contact-card reveal">
+        <div class="contact-card">
           <form data-contact-form data-mailto="hola@etemen.cl">
             <label for="nombre">Nombre</label>
             <input id="nombre" name="nombre" type="text" required autocomplete="name" placeholder="Tu nombre">
@@ -59,46 +54,37 @@
 
             <label for="producto">Tema</label>
             <select id="producto" name="producto">
-              <option value="Nexo">Nexo — sistema para locales</option>
-              <option value="Nexo Trial">Nexo — pedir trial</option>
-              <option value="Nexo Mensual">Nexo — plan mensual</option>
-              <option value="Nexo Setup">Nexo — setup</option>
+              <option value="Nexo">Nexo — salones / barberías / spa</option>
+              <option value="Nexo Trial">Nexo — trial</option>
               <option value="Minimarket">Minimarket — almacén de barrio</option>
-              <option value="Minimarket Trial">Minimarket — pedir trial</option>
-              <option value="Minimarket Mensual">Minimarket — plan $19.900/mes</option>
-              <option value="Minimarket Setup">Minimarket — setup</option>
+              <option value="Minimarket Trial">Minimarket — trial</option>
               <option value="indago">indago</option>
-              <option value="General">Consulta general ETEMEN</option>
-              <option value="Otro">Otro</option>
+              <option value="General">Consulta general</option>
             </select>
 
             <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" name="mensaje" required placeholder="Cuéntanos de tu local o proyecto…"></textarea>
+            <textarea id="mensaje" name="mensaje" required placeholder="Contanos en 2–3 líneas…"></textarea>
 
-            <button class="btn btn-primary" type="submit">Enviar mensaje</button>
-            <p class="muted" style="margin-top:12px;font-size:0.82rem">
-              Se abre tu correo con el mensaje listo para enviar a ETEMEN.
+            <button class="btn btn-primary" type="submit" style="margin-top:18px">Enviar</button>
+            <p class="muted" style="margin-top:12px;font-size:.82rem">
+              Se abre tu correo con el mensaje listo para hola@etemen.cl
             </p>
           </form>
         </div>
-        <div class="contact-aside reveal">
-          <h3>Probar ya</h3>
-          <p><a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial Nexo</a> — demo 14 días</p>
-          <p><a href="https://nexus-erz6.onrender.com/inicio" target="_blank" rel="noopener">App demo pública</a></p>
-          <p><a href="/demos/">Webs de salones demo</a></p>
 
+        <aside class="contact-aside">
           <h3>Productos</h3>
-          <p><a href="/nexus/">Nexo</a> — operación de locales</p>
-          <p><a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a> — comparador de precios</p>
+          <p><a href="/nexus/">Nexo</a> — salones y spa</p>
+          <p><a href="/minimarket/">Minimarket</a> — almacenes</p>
+          <p><a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a> — precios</p>
 
-          <h3>En vivo</h3>
-          <p><a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">ysabelaragonnw.cl</a></p>
-          <p><a href="https://www.indago.cl" target="_blank" rel="noopener">indago.cl</a></p>
+          <h3>Probar</h3>
+          <p><a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial Nexo</a></p>
+          <p><a href="/demos/">Demos de salones</a></p>
 
           <h3>Email</h3>
           <p><a href="mailto:hola@etemen.cl">hola@etemen.cl</a></p>
-          <p class="muted" style="margin-top:8px;font-size:0.85rem">Contacto oficial ETEMEN Studio.</p>
-        </div>
+        </aside>
       </div>
     </section>
   </main>
@@ -107,20 +93,25 @@
     <div class="wrap">
       <div class="footer-bottom" style="border:0;padding-top:0">
         <span>© <span id="y"></span> ETEMEN Studio</span>
-        <a href="/">Volver al inicio</a>
+        <a href="/">Inicio</a>
       </div>
     </div>
   </footer>
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
-    const params = new URLSearchParams(location.search);
-    const p = params.get("producto");
-    if (p) {
-      const sel = document.getElementById("producto");
-      const opt = Array.from(sel.options).find(o => o.value.toLowerCase() === p.toLowerCase()
-        || o.value.toLowerCase().includes(p.toLowerCase()));
-      if (opt) sel.value = opt.value;
-    }
+    // Prefill product from ?producto=
+    (function(){
+      var p = new URLSearchParams(location.search).get("producto");
+      if (!p) return;
+      var sel = document.getElementById("producto");
+      if (!sel) return;
+      var want = p.replace(/\+/g, " ");
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === want || sel.options[i].value.indexOf(want.split(" ")[0]) === 0) {
+          sel.selectedIndex = i; break;
+        }
+      }
+    })();
   </script>
   <script src="/js/main.js"></script>
 </body>

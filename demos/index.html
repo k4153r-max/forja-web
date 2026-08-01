@@ -3,109 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Demos multi-vertical — Nexo · ETEMEN Studio</title>
-  <meta name="description" content="Webs de prueba de locales ficticios impulsados por Nexo: uñas, barbería y spa. Mismo producto, distinta vertical.">
+  <title>Demos Nexo — ETEMEN</title>
+  <meta name="description" content="Demos de locales ficticios con Nexo: salón, barbería y spa.">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#070B14">
+  <meta name="theme-color" content="#0a0b0f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <div class="live-strip">
-    <div class="wrap">
-      <span class="pulse">Demos ficticios · no son locales reales</span>
-      <div class="links">
-        <a href="/nexus/">Producto Nexo</a>
-        <a href="https://nexus-trial-demo.onrender.com/reservar" target="_blank" rel="noopener">Reservar (app real)</a>
-      </div>
-    </div>
-  </div>
-
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="/" class="logo" aria-label="ETEMEN Studio">
-        <img class="logo-mark logo-icon" src="/assets/logos/etemen-icon.jpg" alt="ETEMEN" width="40" height="40">
-        <div class="logo-wordmark">
-          <span class="name">ETEMEN</span>
-          <span class="tagline">Fundamento Sólido</span>
-        </div>
+      <a href="/" class="logo" aria-label="ETEMEN">
+        <img class="logo-icon" src="/assets/logos/etemen-icon.jpg" alt="" width="32" height="32">
+        <div class="logo-wordmark"><span class="name">ETEMEN</span></div>
       </a>
-      <nav class="nav-links" aria-label="Principal">
+      <nav class="nav-links">
         <a href="/">Inicio</a>
         <a href="/nexus/">Nexo</a>
+        <a href="/minimarket/">Minimarket</a>
         <a href="/demos/" class="active">Demos</a>
-        <a href="/contacto/?producto=Nexo" class="nav-cta">Quiero Nexo</a>
+        <a href="/contacto/?producto=Nexo" class="nav-cta">Contacto</a>
       </nav>
-      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <main>
     <section class="page-hero">
       <div class="wrap">
-        <p class="eyebrow nexo">Multi-vertical</p>
-        <h1>Tres locales. Tres verticales.<br><span class="grad-nexo">Un solo Nexo.</span></h1>
+        <p class="eyebrow nexo">Demos Nexo</p>
+        <h1>Tres locales de ejemplo.</h1>
         <p class="lead">
-          Cada demo es la <strong>cara pública</strong> de un negocio ficticio
-          (marca, servicios, tono). La reserva apunta a la app Nexo de prueba.
-          En el panel, el glosario y el catálogo cambian según la vertical:
-          <strong>Barbero</strong>, <strong>Terapeuta</strong> o profesional de salón.
+          No son negocios reales. Muestran cómo se ve la cara pública de un local con Nexo.
+          La reserva apunta a la app de prueba.
         </p>
       </div>
     </section>
 
     <section class="section" style="padding-top:8px">
       <div class="wrap">
-        <div class="bento">
-          <a class="bento-card reveal" href="/demos/luna/" style="text-decoration:none;color:inherit">
-            <div style="height:8px;border-radius:999px;background:linear-gradient(90deg,#fdf6f8,#c2617a);margin-bottom:18px"></div>
-            <span class="tag tag-etemen" style="background:rgba(194,97,122,.15);color:#e8a0b0">Uñas · salón</span>
+        <div class="vert-row">
+          <a class="vert-card" href="/demos/luna/">
+            <div class="bar" style="background:#c2617a"></div>
             <h3>Luna Nails</h3>
-            <p>Salón de uñas premium. Soft gel, nail art y estética clásica Nexo.</p>
-            <span class="link" style="color:#e8a0b0">Abrir demo →</span>
+            <p>Salón de uñas · soft gel y nail art</p>
           </a>
-          <a class="bento-card reveal" href="/demos/atelier/" style="text-decoration:none;color:inherit">
-            <div style="height:8px;border-radius:999px;background:linear-gradient(90deg,#1a211e,#c9a227);margin-bottom:18px"></div>
-            <span class="tag tag-etemen" style="background:rgba(201,162,39,.15);color:#e8c547">Barbería</span>
+          <a class="vert-card" href="/demos/atelier/">
+            <div class="bar" style="background:#c9a227"></div>
             <h3>Atelier Norte</h3>
-            <p>Barbería + grooming. Fades, barba, sillones. Glosario: Barbero / Barbería.</p>
-            <span class="link" style="color:#e8c547">Abrir demo →</span>
+            <p>Barbería · cortes y barba</p>
           </a>
-          <a class="bento-card wide reveal" href="/demos/aura/" style="text-decoration:none;color:inherit">
-            <div style="height:8px;border-radius:999px;background:linear-gradient(90deg,#e8f0eb,#5b8a72);margin-bottom:18px;max-width:280px"></div>
-            <span class="tag tag-nexo">Spa · estética</span>
+          <a class="vert-card" href="/demos/aura/">
+            <div class="bar" style="background:#5b8a72"></div>
             <h3>Aura Studio</h3>
-            <p>Spa y bienestar. Faciales, masajes, rituales. Glosario: Terapeuta / Centro. Prueba multi-vertical de Nexo.</p>
-            <span class="link">Abrir demo →</span>
+            <p>Spa · faciales y masajes</p>
           </a>
         </div>
 
-        <div class="reveal" style="margin-top:36px;padding:28px 24px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(0,201,167,.04)">
-          <h2 style="font-size:1.15rem;margin-bottom:10px">App real · perfiles de instancia</h2>
-          <p style="color:var(--muted);font-size:.95rem;line-height:1.55;margin-bottom:16px;max-width:52ch">
-            En un trial de Nexo podés levantar el panel ya cargado con la vertical correcta
-            (equipo, servicios, glosario y especialidades de demo):
-          </p>
-          <div style="display:grid;gap:10px;font-size:.88rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">
-            <div><span style="color:var(--nexo)">INSTANCE_PROFILE=barberia</span> <span style="color:var(--muted)">→ Atelier Norte</span></div>
-            <div><span style="color:var(--nexo)">INSTANCE_PROFILE=spa</span> <span style="color:var(--muted)">→ Aura Studio</span></div>
-            <div><span style="color:var(--nexo)">INSTANCE_PROFILE=blank</span> <span style="color:var(--muted)">→ Nexo genérico + onboarding</span></div>
-          </div>
-        </div>
-
-        <div class="cta-box nexo reveal" style="margin-top:40px">
+        <div class="cta-box" style="margin-top:32px">
           <div>
-            <h2>¿Tu local es barbería, spa o salón?</h2>
-            <p>Nexo se adapta al negocio. ETEMEN implementa marca, agenda y reserva online.</p>
+            <h2>¿Querés esto para tu local?</h2>
+            <p>Nexo es el sistema. ETEMEN lo implementa.</p>
           </div>
           <div class="btn-row">
-            <a class="btn btn-nexo" href="/contacto/?producto=Nexo">Hablar con ETEMEN</a>
-            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial panel →</a>
+            <a class="btn btn-nexo" href="/nexus/">Ver Nexo</a>
+            <a class="btn btn-ghost" href="/contacto/?producto=Nexo">Contacto</a>
           </div>
         </div>
       </div>
@@ -115,8 +79,8 @@
   <footer class="footer">
     <div class="wrap">
       <div class="footer-bottom" style="border:0;padding-top:0">
-        <span>© <span id="y"></span> ETEMEN Studio · demos Nexo multi-vertical</span>
-        <a href="/nexus/">Volver a Nexo</a>
+        <span>© <span id="y"></span> ETEMEN · demos Nexo</span>
+        <a href="/nexus/">Nexo</a>
       </div>
     </div>
   </footer>

@@ -3,50 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portafolio — ETEMEN Studio</title>
-  <meta name="description" content="Portafolio de ETEMEN Studio: indago.cl, Ysabel Aragón NW, Nexo y demos en producción.">
-  <meta name="theme-color" content="#070B14">
+  <title>Portafolio — ETEMEN</title>
+  <meta name="description" content="Trabajo en producción: Nexo, Minimarket, indago y Ysabel Aragón NW.">
+  <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="https://forja-web-ur0v.onrender.com/portafolio/">
-  <meta property="og:title" content="Portafolio — ETEMEN Studio">
-  <meta property="og:description" content="Proyectos reales en producción: indago, Ysabel Aragón NW y Nexo.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/logos/etemen-logo.png">
 </head>
 <body>
-  <div class="live-strip">
-    <div class="wrap">
-      <span class="pulse">Trabajo en producción</span>
-      <div class="links">
-        <a href="https://www.indago.cl" target="_blank" rel="noopener">indago.cl</a>
-        <a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">ysabelaragonnw.cl</a>
-      </div>
-    </div>
-  </div>
-
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="/" class="logo" aria-label="ETEMEN Studio">
-        <img class="logo-mark logo-icon" src="/assets/logos/etemen-icon.jpg" alt="ETEMEN" width="40" height="40">
-        <div class="logo-wordmark">
-          <span class="name">ETEMEN</span>
-          <span class="tagline">Fundamento Sólido</span>
-        </div>
+      <a href="/" class="logo" aria-label="ETEMEN">
+        <img class="logo-icon" src="/assets/logos/etemen-icon.jpg" alt="" width="32" height="32">
+        <div class="logo-wordmark"><span class="name">ETEMEN</span></div>
       </a>
-      <nav class="nav-links" aria-label="Principal">
+      <nav class="nav-links">
         <a href="/">Inicio</a>
-        <a href="/#productos">Productos</a>
-        <a href="/portafolio/" class="active">Portafolio</a>
         <a href="/nexus/">Nexo</a>
-        <a href="/demos/">Demos</a>
-        <a href="/contacto/" class="nav-cta">Hablemos</a>
+        <a href="/minimarket/">Minimarket</a>
+        <a href="/portafolio/" class="active">Portafolio</a>
+        <a href="/contacto/" class="nav-cta">Contacto</a>
       </nav>
-      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
 
@@ -54,102 +34,46 @@
     <section class="page-hero">
       <div class="wrap">
         <p class="eyebrow">Portafolio</p>
-        <h1>Trabajo que ya está <span class="grad-text">en el mundo.</span></h1>
-        <p class="lead">
-          Sitios y productos en producción, con dominio propio.
-          ETEMEN no solo diseña: opera y mantiene.
-        </p>
+        <h1>Trabajo en producción.</h1>
+        <p class="lead">Proyectos que la gente usa hoy. Sin mockups de relleno.</p>
       </div>
     </section>
 
-    <section class="section" style="padding-top:24px">
+    <section class="section" style="padding-top:8px">
       <div class="wrap">
-        <div class="portfolio-grid">
-          <a class="portfolio-card indago reveal" href="https://www.indago.cl" target="_blank" rel="noopener">
-            <div class="shot">
-              <img class="shot-cover" src="/assets/portfolio/indago-og.jpg" alt="Captura indago" width="640" height="400" loading="lazy">
-              <img class="shot-logo" src="/assets/portfolio/indago-logo.png" alt="Logo indago" width="200" height="60">
+        <div class="products" style="grid-template-columns:1fr 1fr">
+          <article class="product nexo">
+            <span class="who">Producto</span>
+            <h3>Nexo</h3>
+            <p>Sistema de operación para salones. En producción con locales reales.</p>
+            <div class="actions">
+              <a class="btn btn-nexo btn-sm" href="/nexus/">Ver Nexo</a>
             </div>
-            <div class="body">
-              <div class="tags">
-                <span class="pill live">En vivo</span>
-                <span class="pill">Producto propio</span>
-                <span class="pill">B2C</span>
-              </div>
-              <h3>indago</h3>
-              <p>Comparador de precios en Chile. Scraping multi-tienda, catálogo, matching y experiencia web para comprar mejor.</p>
-              <span class="url">www.indago.cl ↗</span>
+          </article>
+          <article class="product mm">
+            <span class="who">Producto</span>
+            <h3>Minimarket</h3>
+            <p>Caja, stock y fiado. Piloto en almacén de barrio (La Parissiene).</p>
+            <div class="actions">
+              <a class="btn btn-mm btn-sm" href="/minimarket/">Ver Minimarket</a>
             </div>
-          </a>
-
-          <a class="portfolio-card ysabel reveal" href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">
-            <div class="shot">
-              <img class="shot-cover" src="/assets/portfolio/ysabel-og.jpg" alt="Captura Ysabel Aragón NW" width="640" height="400" loading="lazy">
-              <img class="shot-logo" src="/assets/portfolio/ysabel-logo.webp" alt="Logo Ysabel Aragón NW" width="120" height="120">
+          </article>
+          <article class="product indago">
+            <span class="who">Producto</span>
+            <h3>indago</h3>
+            <p>Comparador de precios Chile.</p>
+            <div class="actions">
+              <a class="btn btn-ghost btn-sm" href="https://www.indago.cl" target="_blank" rel="noopener">indago.cl ↗</a>
             </div>
-            <div class="body">
-              <div class="tags">
-                <span class="pill live">En vivo</span>
-                <span class="pill">Cliente · Nexo</span>
-                <span class="pill">Dominio propio</span>
-              </div>
-              <h3>Ysabel Aragón NW</h3>
-              <p>Web del salón + panel de operación y reservas online. Caso real de Nexo en uso diario.</p>
-              <span class="url">www.ysabelaragonnw.cl ↗</span>
+          </article>
+          <article class="product">
+            <span class="who">Caso cliente</span>
+            <h3>Ysabel Aragón NW</h3>
+            <p>Web + sistema de salón en operación diaria.</p>
+            <div class="actions">
+              <a class="btn btn-ghost btn-sm" href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">Ver sitio ↗</a>
             </div>
-          </a>
-
-          <a class="portfolio-card nexo reveal" href="/nexus/">
-            <div class="shot">
-              <div class="shot-fallback"></div>
-              <img class="shot-logo" src="/assets/logos/nexo-wordmark.jpg" alt="Nexo" width="240" height="100" style="border-radius:12px;background:#fff;padding:12px 16px">
-            </div>
-            <div class="body">
-              <div class="tags">
-                <span class="pill live">Producto</span>
-                <span class="pill">B2B SaaS</span>
-                <span class="pill">Chile</span>
-              </div>
-              <h3>Nexo</h3>
-              <p>Sistema de operación multi-vertical para salones y locales. Agenda, caja, reservas, roles y trial.</p>
-              <span class="url">Ver producto →</span>
-            </div>
-          </a>
-
-          <a class="portfolio-card nexo reveal" href="/demos/">
-            <div class="shot">
-              <div class="shot-fallback"></div>
-              <div style="position:relative;z-index:2;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-                <span style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#c2617a,#fdf6f8)"></span>
-                <span style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#1a211e,#c9a227)"></span>
-                <span style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#5b8a72,#e8f0eb)"></span>
-              </div>
-            </div>
-            <div class="body">
-              <div class="tags">
-                <span class="pill">Demos</span>
-                <span class="pill">3 marcas ficticias</span>
-              </div>
-              <h3>Webs demo de salones</h3>
-              <p>Luna Nails, Atelier Norte y Aura Studio: cara pública con distinta vertical, misma potencia Nexo.</p>
-              <span class="url">Abrir demos →</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="cta-band">
-      <div class="wrap">
-        <div class="cta-box reveal">
-          <div>
-            <h2>¿El próximo proyecto es el tuyo?</h2>
-            <p>Nexo para locales, indago, o algo nuevo con fundamentos sólidos.</p>
-          </div>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="/contacto/">Contactar ETEMEN</a>
-            <a class="btn btn-ghost" href="/nexus/">Ver Nexo</a>
-          </div>
+          </article>
         </div>
       </div>
     </section>
@@ -158,8 +82,8 @@
   <footer class="footer">
     <div class="wrap">
       <div class="footer-bottom" style="border:0;padding-top:0">
-        <span>© <span id="y"></span> ETEMEN Studio</span>
-        <a href="/">Volver al inicio</a>
+        <span>© <span id="y"></span> ETEMEN</span>
+        <a href="/">Inicio</a>
       </div>
     </div>
   </footer>
