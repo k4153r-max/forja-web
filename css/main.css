@@ -177,6 +177,19 @@ h3 { font-size: 1.1rem; letter-spacing: -.02em; }
 }
 .hero h1 { max-width: 14em; margin-bottom: 16px; }
 .hero .lead { margin-bottom: 8px; }
+.hero .hero-promise {
+  font-size: 1.15rem;
+  color: rgba(242,242,240,.78);
+  max-width: 32em;
+  margin-bottom: 14px;
+}
+.hero .hero-sub {
+  font-size: .95rem;
+  color: var(--muted);
+  max-width: 36em;
+  margin-bottom: 8px;
+}
+.hero .hero-sub strong { color: rgba(242,242,240,.88); font-weight: 650; }
 .hero-note { margin-top: 16px; font-size: .82rem; color: var(--muted); }
 
 /* ── Product cards ── */
