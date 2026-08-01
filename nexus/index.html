@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nexo — Sistema para salones, barberías y spa | ETEMEN</title>
-  <meta name="description" content="Nexo: agenda, reservas online con abono, caja y WhatsApp. Para salones, barberías y spa. $45.000/mes. Trial 14 días. Producto de ETEMEN.">
+  <title>Nexo — El sistema de tu local | ETEMEN</title>
+  <meta name="description" content="Nexo: un producto, varias ramas. Servicios (salón, barbería, spa) y comercio (almacén, ferretería, botillería). ETEMEN, Chile.">
   <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="https://forja-web-ur0v.onrender.com/nexus/">
   <meta property="og:title" content="Nexo — Todo tu local, conectado">
-  <meta property="og:description" content="Agenda, reservas, caja y WhatsApp para locales de servicio.">
+  <meta property="og:description" content="Agenda o caja. Un nexo. Varias ramas.">
   <meta property="og:image" content="https://forja-web-ur0v.onrender.com/assets/logos/nexo-wordmark.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,6 @@
       <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="/nexus/" class="active">Nexo</a>
-        <a href="/minimarket/">Minimarket</a>
         <a href="/contacto/?producto=Nexo" class="nav-cta">Pedir trial</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -43,38 +42,55 @@
           <img class="mark" src="/assets/logos/nexo-icon.jpg" width="56" height="56" alt="">
           <img class="wordmark" src="/assets/logos/nexo-wordmark.jpg" alt="Nexo" height="48">
         </div>
-        <p class="eyebrow nexo">Para salones · barberías · spa</p>
-        <h1>Todo tu local, conectado.</h1>
+        <p class="eyebrow nexo">Un producto · varias ramas</p>
+        <h1>Todo es un nexo.</h1>
         <p class="lead">
-          Un solo sistema: agenda, reservas online con abono, caja, equipo y WhatsApp.
-          Con tu marca. Sin marketplace. Sin comisión por cita.
+          Nexo es el sistema de tu local. La <strong>rama</strong> define el rubro:
+          agenda y reservas para servicios, o caja y stock para comercio.
+          Misma marca. Mismo estándar. Sin marketplace.
         </p>
         <div class="btn-row">
-          <a class="btn btn-nexo" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Probar 14 días gratis</a>
+          <a class="btn btn-nexo" href="#ramas">Ver ramas</a>
+          <a class="btn btn-ghost" href="/contacto/?producto=Nexo">Pedir trial</a>
           <a class="btn btn-ghost" href="#precios">Precios</a>
-          <a class="btn btn-ghost" href="/contacto/?producto=Nexo">Contacto</a>
         </div>
         <div class="chip-row">
-          <span class="chip nexo">$45.000 / mes</span>
-          <span class="chip">Setup $100.000</span>
-          <span class="chip">1 local = 1 instancia</span>
+          <span class="chip nexo">Servicios desde $45.000</span>
+          <span class="chip">Comercio desde $19.900</span>
+          <span class="chip">Trial 14 días</span>
         </div>
       </div>
     </section>
 
-    <section class="section alt">
+    <section class="section alt" id="ramas">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Qué incluye</p>
-          <h2>Lo esencial del día a día</h2>
+          <p class="eyebrow nexo">Ramas</p>
+          <h2>Elige la cara de Nexo para tu negocio</h2>
+          <p class="lead">No son productos distintos. Son perfiles del mismo Nexo.</p>
         </div>
-        <div class="features">
-          <div class="feature"><h3>Agenda</h3><p>Vista por profesional. Arrastrar citas. Roles dueña y recepción.</p></div>
-          <div class="feature"><h3>Reserva online</h3><p>Link con tu marca. El cliente elige servicio y hora.</p></div>
-          <div class="feature"><h3>Abonos</h3><p>Seña con Mercado Pago. El resto se cobra en el local.</p></div>
-          <div class="feature"><h3>WhatsApp / SMS</h3><p>Confirmaciones y recordatorios sin copiar-pegar.</p></div>
-          <div class="feature"><h3>Caja</h3><p>Cobros, gastos y reportes del día.</p></div>
-          <div class="feature"><h3>Tus datos</h3><p>Instancia propia. No se mezclan con otros locales.</p></div>
+
+        <div class="products" style="grid-template-columns:1fr 1fr;gap:16px">
+          <article class="product nexo">
+            <span class="who">Familia servicios</span>
+            <h3>Nexo · Servicios</h3>
+            <p>Agenda por profesional, reserva online con abono, WhatsApp, caja del salón. Para salones, barberías y spa.</p>
+            <span class="meta">Desde $45.000 / mes · setup $100.000</span>
+            <div class="actions">
+              <a class="btn btn-nexo btn-sm" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Probar servicios</a>
+              <a class="btn btn-ghost btn-sm" href="/demos/">Demos</a>
+            </div>
+          </article>
+          <article class="product mm">
+            <span class="who">Familia comercio</span>
+            <h3>Nexo · Comercio</h3>
+            <p>Caja POS, stock, lectora de barras, tickets y fiado / cuentas. Para almacenes, ferreterías y botillerías.</p>
+            <span class="meta">Desde $19.900 / mes · setup desde $39.000</span>
+            <div class="actions">
+              <a class="btn btn-mm btn-sm" href="/minimarket/">Ver comercio</a>
+              <a class="btn btn-ghost btn-sm" href="https://bodega-trial-ferreteria-demo.onrender.com/login" target="_blank" rel="noopener">Demo ferretería</a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -82,9 +98,8 @@
     <section class="section">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">También sirve para</p>
-          <h2>Tres tipos de local</h2>
-          <p class="lead">El mismo Nexo, con la cara de cada negocio. Demos de ejemplo:</p>
+          <p class="eyebrow">Nexo · Servicios</p>
+          <h2>Tres demos de locales</h2>
         </div>
         <div class="vert-row">
           <a class="vert-card" href="/demos/luna/">
@@ -106,72 +121,76 @@
       </div>
     </section>
 
-    <section class="section alt" id="precios">
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow mm">Nexo · Comercio</p>
+          <h2>Tres rubros de mostrador</h2>
+        </div>
+        <div class="vert-row">
+          <a class="vert-card" href="/minimarket/#verticales">
+            <div class="bar" style="background:#e08a4a"></div>
+            <h3>Almacén</h3>
+            <p>Abarrotes, fiado del barrio</p>
+          </a>
+          <a class="vert-card" href="https://bodega-trial-ferreteria-demo.onrender.com/login" target="_blank" rel="noopener">
+            <div class="bar" style="background:#e36c12"></div>
+            <h3>Ferretería</h3>
+            <p>Demo live · PIN 1234 / 0000</p>
+          </a>
+          <a class="vert-card" href="/contacto/?producto=Nexo+Botilleria">
+            <div class="bar" style="background:#5b7a9e"></div>
+            <h3>Botillería</h3>
+            <p>Alta rotación · trial a pedido</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="precios">
       <div class="wrap">
         <div class="section-head center">
           <p class="eyebrow nexo">Precios</p>
-          <h2>Fijo por local. Sin sorpresas.</h2>
+          <h2>Por local. Por rama.</h2>
         </div>
         <div class="pricing">
+          <div class="price-card featured">
+            <div class="plan">Servicios</div>
+            <h3>Nexo · Servicios</h3>
+            <div class="amount">$45.000 <small>/ mes</small></div>
+            <ul>
+              <li>Agenda + reservas + abonos</li>
+              <li>WhatsApp / SMS</li>
+              <li>Caja del salón</li>
+              <li>Setup $100.000</li>
+            </ul>
+            <a class="btn btn-nexo" href="/contacto/?producto=Nexo+Servicios" style="width:100%">Pedir trial</a>
+          </div>
+          <div class="price-card featured mm">
+            <div class="plan">Comercio</div>
+            <h3>Nexo · Comercio</h3>
+            <div class="amount">$19.900 <small>/ mes</small></div>
+            <ul>
+              <li>Caja POS + barras + tickets</li>
+              <li>Stock y fiado / cuentas</li>
+              <li>Almacén · ferretería · boti</li>
+              <li>Setup desde $39.000</li>
+            </ul>
+            <a class="btn btn-mm" href="/contacto/?producto=Nexo+Comercio" style="width:100%">Pedir trial</a>
+          </div>
           <div class="price-card">
             <div class="plan">Prueba</div>
             <h3>Trial</h3>
             <div class="amount">$0 <small>/ 14 días</small></div>
             <ul>
-              <li>Panel completo</li>
-              <li>Agenda y reservas</li>
+              <li>Rama que elijas</li>
               <li>Sin tarjeta</li>
+              <li>Datos se conservan</li>
             </ul>
-            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener" style="width:100%">Abrir trial</a>
-          </div>
-          <div class="price-card featured">
-            <div class="plan">Mensual</div>
-            <h3>Nexo Operación</h3>
-            <div class="amount">$45.000 <small>/ mes</small></div>
-            <ul>
-              <li>1 local · cajeros ilimitados</li>
-              <li>Hosting y respaldos</li>
-              <li>Soporte ETEMEN</li>
-              <li>Sin comisión por cita</li>
-            </ul>
-            <a class="btn btn-nexo" href="/contacto/?producto=Nexo+Mensual" style="width:100%">Empezar</a>
-          </div>
-          <div class="price-card">
-            <div class="plan">Una vez</div>
-            <h3>Setup</h3>
-            <div class="amount">$100.000</div>
-            <ul>
-              <li>Carga de servicios</li>
-              <li>Marca y logo</li>
-              <li>Capacitación corta</li>
-            </ul>
-            <a class="btn btn-ghost" href="/contacto/?producto=Nexo+Setup" style="width:100%">Consultar</a>
+            <a class="btn btn-ghost" href="/contacto/?producto=Nexo+Trial" style="width:100%">Pedir trial</a>
           </div>
         </div>
-        <p class="muted" style="text-align:center;margin-top:20px">Anual $450.000 (≈ 10 meses). Precios en CLP.</p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Otras plataformas ETEMEN</p>
-          <h2>¿No es un salón?</h2>
-        </div>
-        <div class="products" style="grid-template-columns:1fr 1fr">
-          <a class="product mm" href="/minimarket/" style="text-decoration:none">
-            <span class="who">Almacenes de barrio</span>
-            <h3>Minimarket</h3>
-            <p>Caja POS, stock, barras y fiado. Desde $19.900/mes.</p>
-            <span class="meta">Ver Minimarket →</span>
-          </a>
-          <a class="product indago" href="https://www.indago.cl" target="_blank" rel="noopener" style="text-decoration:none">
-            <span class="who">Comparar precios</span>
-            <h3>indago</h3>
-            <p>Comparador de precios en Chile. Gratis en indago.cl.</p>
-            <span class="meta">Abrir indago ↗</span>
-          </a>
-        </div>
+        <p class="muted" style="text-align:center;margin-top:20px">Precios en CLP. 1 local = 1 instancia. indago es gratis y aparte.</p>
       </div>
     </section>
 
@@ -179,12 +198,12 @@
       <div class="wrap">
         <div class="cta-box nexo">
           <div>
-            <h2>¿Nexo calza con tu local?</h2>
+            <h2>¿Qué nexo necesita tu local?</h2>
             <p>15 minutos. Sin compromiso.</p>
           </div>
           <div class="btn-row">
             <a class="btn btn-nexo" href="/contacto/?producto=Nexo">Contactar</a>
-            <a class="btn btn-ghost" href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Probar trial</a>
+            <a class="btn btn-ghost" href="https://www.indago.cl" target="_blank" rel="noopener">indago ↗</a>
           </div>
         </div>
       </div>
@@ -203,13 +222,13 @@
         </div>
         <div>
           <h4>Nexo</h4>
-          <a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Trial</a>
-          <a href="/demos/">Demos</a>
+          <a href="#ramas">Ramas</a>
+          <a href="/demos/">Demos servicios</a>
+          <a href="/minimarket/">Comercio</a>
         </div>
         <div>
           <h4>Productos</h4>
           <a href="/nexus/">Nexo</a>
-          <a href="/minimarket/">Minimarket</a>
           <a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a>
         </div>
         <div>
