@@ -265,6 +265,35 @@
             <a class="btn btn-ghost" href="#categorias" style="width:100%">Volver al mapa</a>
           </div>
         </div>
+
+        <!-- Calculadora Interactiva de ROI / Recuperación de No-Shows -->
+        <div style="margin-top:40px;background:var(--surface-1, #12141a);border:1px solid var(--border, rgba(255,255,255,.1));border-radius:16px;padding:28px;max-width:720px;margin-left:auto;margin-right:auto">
+          <h3 style="margin-bottom:8px;font-size:1.2rem;color:#fff;text-align:center">🧮 Calculadora de Retorno de Inversión (ROI)</h3>
+          <p style="font-size:.9rem;color:var(--text-2, #8a8f9d);text-align:center;margin-bottom:24px">Descubre cuánto dinero recuperas al mes reduciendo inasistencias con los recordatorios de Nexo.</p>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+            <div>
+              <label style="display:block;font-size:.85rem;color:var(--text-2);margin-bottom:6px">Servicios al mes: <strong id="val-servicios" style="color:#fff">120</strong></label>
+              <input type="range" id="input-servicios" min="20" max="500" value="120" style="width:100%">
+            </div>
+            <div>
+              <label style="display:block;font-size:.85rem;color:var(--text-2);margin-bottom:6px">Valor promedio servicio: <strong id="val-precio" style="color:#fff">$18.000</strong></label>
+              <input type="range" id="input-precio" min="5000" max="60000" step="1000" value="18000" style="width:100%">
+            </div>
+          </div>
+
+          <div style="background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.3);padding:18px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+            <div>
+              <div style="font-size:.85rem;color:var(--text-2)">Citas recuperadas estimadas (-70% no-shows):</div>
+              <div style="font-size:1.6rem;font-weight:800;color:#3b82f6" id="res-citas">8 citas/mes</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:.85rem;color:var(--text-2)">Ingreso adicional recuperado:</div>
+              <div style="font-size:1.6rem;font-weight:800;color:#22c55e" id="res-dinero">$144.000 / mes</div>
+            </div>
+          </div>
+          <p style="font-size:.78rem;color:var(--text-2);text-align:center;margin-top:12px">Nexo se paga solo desde la 3ra cita recuperada del mes.</p>
+        </div>
       </div>
     </section>
 
@@ -320,5 +349,30 @@
   </footer>
   <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
   <script src="/js/main.js"></script>
+  <script>
+  (function(){
+    const inSvc = document.getElementById('input-servicios');
+    const inPrc = document.getElementById('input-precio');
+    const lblSvc = document.getElementById('val-servicios');
+    const lblPrc = document.getElementById('val-precio');
+    const resCitas = document.getElementById('res-citas');
+    const resDinero = document.getElementById('res-dinero');
+    if(!inSvc || !inPrc) return;
+    function calc(){
+      const svc = parseInt(inSvc.value, 10) || 0;
+      const prc = parseInt(inPrc.value, 10) || 0;
+      lblSvc.textContent = svc;
+      lblPrc.textContent = '$' + prc.toLocaleString('es-CL');
+      const estimNoShows = Math.round(svc * 0.10); // 10% inasistencia promedio
+      const recuperadas = Math.round(estimNoShows * 0.70); // 70% recuperadas
+      const dinero = recuperadas * prc;
+      resCitas.textContent = recuperadas + ' citas/mes';
+      resDinero.textContent = '$' + dinero.toLocaleString('es-CL') + ' / mes';
+    }
+    inSvc.addEventListener('input', calc);
+    inPrc.addEventListener('input', calc);
+    calc();
+  })();
+  </script>
 </body>
 </html>
