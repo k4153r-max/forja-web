@@ -10,8 +10,9 @@ Sitio principal del holding **ETEMEN Studio** y del producto **Nexo**.
 
 ## Marca
 
-- Holding: **ETEMEN Studio** (*Etemenanki* — fundamento sólido)
+- Holding: **ETEMEN** (del *Etemenanki*: «la casa del fundamento del cielo y la tierra»)
 - Lema: *Fundamento sólido. Productos extraordinarios.*
+- Nav tagline: **Fundamento** (no “Estudio”)
 - Design system: `css/main.css` v5 “Ziggurat”
 - Logo: `assets/logos/etemen-mark*.svg` + lockups · ver `assets/logos/BRAND.md`
 
