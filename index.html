@@ -17,6 +17,7 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
+
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
       <a href="/" class="logo" aria-label="ETEMEN">
@@ -36,60 +37,24 @@
   </header>
 
   <main>
+
+    <!-- ── HERO ── -->
     <section class="hero">
       <div class="wrap">
         <p class="eyebrow">ETEMEN · Chile</p>
-        <h1>Transformamos tus ideas<br>en realidad.</h1>
+        <h1>Transformamos<br>tus ideas<br>en realidad.</h1>
         <p class="lead hero-promise">
-          De la idea al producto en producción.
           Software que se usa de verdad — con base firme y precio claro.
         </p>
-        <p class="lead hero-sub">
-          <strong>Fundamento sólido. Productos extraordinarios.</strong>
-          ETEMEN viene de <em>Etemenanki</em>:
-          <em>«la casa del fundamento del cielo y la tierra»</em>.
-        </p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="#productos">Ver productos</a>
-          <a class="btn btn-ghost" href="#nombre">El nombre</a>
+          <a class="btn btn-primary" href="/nexo/">Ver Nexo</a>
           <a class="btn btn-ghost" href="/contacto/">Hablar con nosotros</a>
         </div>
+        <p class="hero-note">2 productos en producción · clientes reales · Chile</p>
       </div>
     </section>
 
-    <section class="section alt" id="nombre">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">El nombre</p>
-          <h2>Por qué ETEMEN</h2>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <h3>Origen</h3>
-            <p>
-              Del <strong>Etemenanki</strong>, el zigurat de Babilonia.
-              El nombre se traduce como
-              <em>«la casa del fundamento del cielo y la tierra»</em>.
-            </p>
-          </div>
-          <div class="step">
-            <h3>Lema</h3>
-            <p>
-              <strong>Fundamento sólido. Productos extraordinarios.</strong>
-              Primero la base; después lo que se ve y se usa todos los días.
-            </p>
-          </div>
-          <div class="step">
-            <h3>Qué hacemos</h3>
-            <p>
-              <strong>Nexo</strong> — el sistema del local (servicios y comercio).
-              <strong>indago</strong> — comparar precios en Chile. Sin humo.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- ── PRODUCTOS ── -->
     <section class="section" id="productos">
       <div class="wrap">
         <div class="section-head">
@@ -98,13 +63,13 @@
           <p class="lead">Nexo para operar el local. indago para decidir dónde comprar.</p>
         </div>
 
-        <div class="products" style="grid-template-columns:1.2fr .8fr">
+        <div class="products">
           <article class="product nexo">
-            <span class="who">Un nexo para tu negocio</span>
+            <span class="who">Para negocios y locales</span>
             <h3>Nexo</h3>
             <p>
-              Un solo sistema. Categorías: salón, barbería, spa, <strong>almacén</strong>,
-              <strong>ferretería</strong> y <strong>botillería</strong>. Todo se elige desde Nexo.
+              Un solo sistema para salón, barbería, spa, almacén, ferretería y botillería.
+              Agenda, caja, inventario y clientes — todo desde Nexo.
             </p>
             <span class="meta">Servicios desde $45.000 · Comercio desde $19.900 · Trial 14 días</span>
             <div class="actions">
@@ -116,7 +81,7 @@
           <article class="product indago">
             <span class="who">Para personas que compran</span>
             <h3>indago</h3>
-            <p>Comparador de precios en Chile. Encuentra dónde sale más barato.</p>
+            <p>Comparador de precios en Chile. Más de 50 tiendas. Encuentra dónde sale más barato en segundos.</p>
             <span class="meta">Gratis · indago.cl</span>
             <div class="actions">
               <a class="btn btn-ghost btn-sm" href="https://www.indago.cl" target="_blank" rel="noopener">Abrir indago ↗</a>
@@ -126,7 +91,49 @@
       </div>
     </section>
 
-    <section class="section alt">
+    <!-- ── PORTAFOLIO / PRUEBA SOCIAL ── -->
+    <section class="section alt" id="portafolio">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">En producción hoy</p>
+          <h2>No son demos. Son negocios reales.</h2>
+          <p class="lead">Cada proyecto corre con clientes reales, todos los días.</p>
+        </div>
+
+        <div class="bento">
+          <article class="bento-card wide">
+            <span class="tag tag-nexo">Nexo · Salón</span>
+            <h3>Ysabel Aragón NW</h3>
+            <p>Salón de belleza en Puente Alto. Agenda online, control de caja, gestión de clientes y pagos con Mercado Pago — todo en Nexo.</p>
+            <div class="bento-stats">
+              <span>Agenda online</span>
+              <span>Pagos integrados</span>
+              <span>WhatsApp automático</span>
+            </div>
+            <div class="actions" style="margin-top:14px">
+              <a class="btn btn-ghost btn-sm" href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">Ver sitio ↗</a>
+            </div>
+          </article>
+
+          <article class="bento-card">
+            <span class="tag" style="background:var(--indago-soft);color:var(--indago)">Producto propio</span>
+            <h3>indago.cl</h3>
+            <p>+50 tiendas scrapeadas, comparación de precios en tiempo real, alertas, blog y canal Telegram activo.</p>
+            <div class="bento-stats">
+              <span>+8.000 productos</span>
+              <span>+50 tiendas</span>
+              <span>Canal Telegram</span>
+            </div>
+            <div class="actions" style="margin-top:14px">
+              <a class="btn btn-ghost btn-sm" href="https://www.indago.cl" target="_blank" rel="noopener">Ver sitio ↗</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MÉTODO ── -->
+    <section class="section" id="metodo">
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Cómo trabajamos</p>
@@ -149,20 +156,55 @@
       </div>
     </section>
 
+    <!-- ── ORIGEN ── -->
+    <section class="section alt" id="nombre">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">El nombre</p>
+          <h2>Por qué ETEMEN</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <h3>Origen</h3>
+            <p>
+              Del <strong>Etemenanki</strong>, el zigurat de Babilonia.
+              El nombre significa <em>«la casa del fundamento del cielo y la tierra»</em>.
+            </p>
+          </div>
+          <div class="step">
+            <h3>Lema</h3>
+            <p>
+              <strong>Fundamento sólido. Productos extraordinarios.</strong>
+              Primero la base; después lo que se ve y se usa todos los días.
+            </p>
+          </div>
+          <div class="step">
+            <h3>Qué hacemos</h3>
+            <p>
+              <strong>Nexo</strong> — el sistema del local.
+              <strong>indago</strong> — comparar precios en Chile. Sin humo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ── -->
     <section class="cta-band">
       <div class="wrap">
         <div class="cta-box">
           <div>
-            <h2>¿Tienes una idea de negocio o un local?</h2>
-            <p>La transformamos en realidad con Nexo — o te orientamos en minutos, sin compromiso.</p>
+            <h2>¿Tienes un local o una idea?</h2>
+            <p>La transformamos en realidad — o te orientamos en minutos, sin compromiso.</p>
           </div>
           <div class="btn-row">
-            <a class="btn btn-primary" href="/contacto/?producto=Nexo">Escribir a ETEMEN</a>
+            <a class="btn btn-primary" href="/contacto/">Escribir a ETEMEN</a>
             <a class="btn btn-ghost" href="mailto:hola@etemen.cl">hola@etemen.cl</a>
           </div>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="footer">
@@ -202,6 +244,7 @@
       </div>
     </div>
   </footer>
+
   <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
   <script src="/js/main.js"></script>
 </body>
