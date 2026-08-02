@@ -1,10 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="ETEMEN">
-  <!-- Spine -->
-  <rect x="9" y="9" width="8" height="45" fill="#F3EEE6"/>
-  <!-- Top bar: shortest — cima del zigurat -->
-  <rect x="9" y="9" width="20" height="9" fill="#F3EEE6"/>
-  <!-- Middle bar: medium — segunda terraza -->
-  <rect x="9" y="27" width="32" height="9" fill="#F3EEE6"/>
-  <!-- Bottom bar: widest, copper — el fundamento -->
-  <rect x="9" y="45" width="44" height="9" fill="#D9A870"/>
+  <!-- Cima -->
+  <rect x="25" y="10" width="14" height="10" fill="#F3EEE6"/>
+  <!-- Terraza -->
+  <rect x="17" y="27" width="30" height="10" fill="#F3EEE6"/>
+  <!-- Fundamento -->
+  <rect x="9" y="44" width="46" height="10" fill="#D9A870"/>
 </svg>
