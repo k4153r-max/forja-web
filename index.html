@@ -28,6 +28,27 @@
     .status-hero-badge:hover{background:rgba(74,222,128,.14);border-color:rgba(74,222,128,.35)}
     .status-hero-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse-green 2s infinite}
     @keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}50%{box-shadow:0 0 0 5px rgba(74,222,128,0)}}
+    .testimonial-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:36px 40px;max-width:720px;margin:0 auto}
+    .testimonial-card blockquote{font-size:1.1rem;line-height:1.75;color:#F3EEE6;margin:0 0 28px;font-style:italic;position:relative;padding-left:20px}
+    .testimonial-card blockquote::before{content:'\201C';position:absolute;left:0;top:-.1em;font-size:2.5rem;line-height:1;color:#C4894A;font-style:normal}
+    .testimonial-author{display:flex;align-items:center;gap:14px}
+    .testimonial-avatar{width:44px;height:44px;border-radius:50%;background:#C4894A;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.05em}
+    .testimonial-author strong{display:block;font-size:.9rem;color:#F3EEE6}
+    .testimonial-author span{font-size:.76rem;opacity:.5;color:#F3EEE6}
+    .founder-inner{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start;max-width:760px;margin:0 auto}
+    .founder-avatar{width:88px;height:88px;border-radius:50%;background:#C4894A;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:#fff;flex-shrink:0;border:3px solid rgba(196,137,74,.25)}
+    .founder-text .eyebrow{margin-bottom:.4rem}
+    .founder-text h2{margin:.2rem 0 1rem}
+    .founder-text p{opacity:.7;line-height:1.75;margin-bottom:.75rem}
+    @media(max-width:600px){.founder-inner{grid-template-columns:1fr;gap:20px}.founder-avatar{width:68px;height:68px;font-size:1.5rem}.testimonial-card{padding:24px 20px}}
+    .faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:4px}
+    .faq-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
+    .faq-item summary{padding:18px 22px;cursor:pointer;font-weight:600;font-size:.95rem;color:#F3EEE6;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;user-select:none}
+    .faq-item summary::after{content:'+';font-size:1.3rem;color:#C4894A;flex-shrink:0;transition:transform .2s;line-height:1}
+    .faq-item[open] summary::after{transform:rotate(45deg)}
+    .faq-item p{padding:0 22px 18px;opacity:.65;line-height:1.7;margin:0;font-size:.9rem}
+    .faq-item summary::-webkit-details-marker{display:none}
+    .garantia{font-size:.78rem;opacity:.35;margin-top:18px;text-align:center;letter-spacing:.03em}
   </style>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
@@ -68,7 +89,7 @@
           <a class="btn btn-primary" href="/nexo/">Ver Nexo</a>
           <a class="btn btn-ghost" href="/contacto/">Hablar con nosotros</a>
         </div>
-        <p class="hero-note">2 productos en producción · clientes reales · Chile</p>
+        <p class="hero-note">+6 meses en producción · 2 productos activos · soporte en Chile</p>
       </div>
     </section>
 
@@ -150,6 +171,44 @@
       </div>
     </section>
 
+    <!-- ── TESTIMONIO ── -->
+    <section class="section" id="testimonio">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Clientes</p>
+          <h2>Lo que dicen quienes lo usan.</h2>
+        </div>
+        <div class="testimonial-card">
+          <blockquote>
+            Antes anotaba todo a mano y siempre había líos con las horas. Ahora las clientas reservan solas, me llega el aviso al celular y yo me preocupo de atenderlas bien. El sistema de verdad funciona, y cuando tengo dudas me responden al tiro.
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">YA</div>
+            <div>
+              <strong>Ysabel Aragón</strong>
+              <span>Dueña · Salón Ysabel Aragón NW · Puente Alto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOUNDER ── -->
+    <section class="section alt" id="founder">
+      <div class="wrap">
+        <div class="founder-inner">
+          <div class="founder-avatar">A</div>
+          <div class="founder-text">
+            <p class="eyebrow">Quién está detrás</p>
+            <h2>Hola, soy Antonio.</h2>
+            <p>Construyo software para negocios reales en Chile. ETEMEN nació de ver que muchos locales manejaban todo por WhatsApp y cuadernos — cosas que deberían estar automatizadas.</p>
+            <p>Si contratas ETEMEN, hablas directamente conmigo. Sin intermediarios, sin agencias, sin sorpresas.</p>
+            <a href="/contacto/" class="btn btn-ghost btn-sm" style="margin-top:18px;display:inline-flex">Escribirme →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ── MÉTODO ── -->
     <section class="section" id="metodo">
       <div class="wrap">
@@ -207,6 +266,38 @@
       </div>
     </section>
 
+    <!-- ── FAQ ── -->
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Preguntas frecuentes</p>
+          <h2>Lo que suelen preguntar.</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>¿Cuánto tiempo tarda en estar listo?</summary>
+            <p>Depende del proyecto. Un local nuevo en Nexo puede estar operativo en 48 horas. Un desarrollo a medida toma entre 2 y 4 semanas.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Qué pasa si algo falla?</summary>
+            <p>Respondemos en menos de 24 horas. Los sistemas tienen monitoreo activo y alertas automáticas las 24/7.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Puedo probar Nexo antes de contratar?</summary>
+            <p>Sí. Hay un trial de 14 días sin tarjeta de crédito. Lo configuras con tu local, lo pruebas y decides.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿El precio mensual incluye soporte?</summary>
+            <p>Sí. El plan incluye soporte y actualizaciones. Sin costos extra ni sorpresas al final del mes.</p>
+          </details>
+          <details class="faq-item">
+            <summary>¿Trabajan solo en Chile?</summary>
+            <p>Por ahora sí. Los pagos, el soporte y el software están pensados para el mercado chileno.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- ── CTA ── -->
     <section class="cta-band">
       <div class="wrap">
@@ -219,6 +310,7 @@
             <a class="btn btn-primary" href="/contacto/">Escribir a ETEMEN</a>
             <a class="btn btn-ghost" href="mailto:hola@etemen.cl">hola@etemen.cl</a>
           </div>
+          <p class="garantia">Si algo falla, lo resolvemos en menos de 24 horas. Sin excusas.</p>
         </div>
       </div>
     </section>
