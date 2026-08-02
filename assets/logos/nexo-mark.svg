@@ -1,7 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="14" fill="#0e0c0a"/>
-  <path d="M18 42c6-2 10-10 14-14s10-8 14-6" stroke="#2dd4bf" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="18" cy="44" r="5" fill="#2dd4bf"/>
-  <circle cx="46" cy="20" r="5" fill="#2dd4bf"/>
-  <circle cx="32" cy="28" r="3.5" fill="#5eead4"/>
+  <!-- Fondo -->
+  <rect width="64" height="64" rx="14" fill="#080a0e"/>
+  <!-- Borde tipo PCB -->
+  <rect x="1.5" y="1.5" width="61" height="61" rx="12.5" stroke="#00c9a7" stroke-width="1.2" stroke-opacity="0.35"/>
+
+  <!-- Trazo vertical izquierdo -->
+  <line x1="16" y1="12" x2="16" y2="52" stroke="#00c9a7" stroke-width="5" stroke-linecap="butt"/>
+  <!-- Trazo vertical derecho -->
+  <line x1="48" y1="12" x2="48" y2="52" stroke="#00c9a7" stroke-width="5" stroke-linecap="butt"/>
+  <!-- Diagonal (la N) -->
+  <line x1="16" y1="12" x2="48" y2="52" stroke="#00c9a7" stroke-width="3.5" stroke-linecap="butt" opacity="0.9"/>
+
+  <!-- Pads activos rellenos: donde la diagonal conecta con las verticales -->
+  <circle cx="16" cy="12" r="6.5" fill="#00c9a7"/>
+  <circle cx="48" cy="52" r="6.5" fill="#00c9a7"/>
+
+  <!-- Pads pasivos (anillos): extremos sin diagonal -->
+  <circle cx="16" cy="52" r="5" stroke="#00c9a7" stroke-width="2.5" fill="#080a0e"/>
+  <circle cx="48" cy="12" r="5" stroke="#00c9a7" stroke-width="2.5" fill="#080a0e"/>
+
+  <!-- Vía central (through-hole PCB style) -->
+  <circle cx="32" cy="32" r="3.5" stroke="#00c9a7" stroke-width="2" fill="#080a0e"/>
+
+  <!-- Traza lateral — sugiere interconexión -->
+  <line x1="48" y1="32" x2="56" y2="32" stroke="#00c9a7" stroke-width="2" stroke-linecap="butt" opacity="0.35"/>
+  <circle cx="57" cy="32" r="2" fill="#00c9a7" opacity="0.35"/>
 </svg>
