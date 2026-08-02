@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ETEMEN — Transformamos tus ideas en realidad</title>
-  <meta name="description" content="ETEMEN: transformamos tus ideas en realidad. Nexo e indago. Del Etemenanki: la casa del fundamento del cielo y la tierra. Chile.">
+  <title>ETEMEN — Software con base firme</title>
+  <meta name="description" content="ETEMEN: software con base firme para negocios reales en Chile. Nexo e indago. Precio claro, soporte directo y sistemas monitoreados.">
   <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="https://etemen.cl/">
-  <meta property="og:title" content="ETEMEN — Transformamos tus ideas en realidad">
-  <meta property="og:description" content="Transformamos tus ideas en realidad. Nexo e indago. Fundamento sólido.">
+  <meta property="og:title" content="ETEMEN — Software con base firme">
+  <meta property="og:description" content="Construimos y operamos productos que se usan todos los días. Nexo e indago. Fundamento sólido.">
   <meta property="og:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="/css/main-v5.css">
   <style>
     html,body{overflow-x:hidden}
-    h1{font-size:clamp(1.9rem,8.5vw,5rem)!important;word-break:break-word}
+    h1{font-size:clamp(1.9rem,8.5vw,4.2rem)!important;word-break:break-word}
     @media(max-width:600px){
       h1{font-size:clamp(1.6rem,7.5vw,2.2rem)!important}
       .hero{padding:52px 0 40px}
@@ -28,6 +28,30 @@
     .status-hero-badge:hover{background:rgba(74,222,128,.14);border-color:rgba(74,222,128,.35)}
     .status-hero-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse-green 2s infinite}
     @keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}50%{box-shadow:0 0 0 5px rgba(74,222,128,0)}}
+
+    .trust-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:40px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+    .trust-item{background:var(--surface);padding:18px 16px;text-align:center}
+    .trust-item strong{display:block;font-family:var(--display);font-size:1.05rem;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:4px}
+    .trust-item span{font-size:.75rem;color:var(--muted);letter-spacing:.02em}
+    @media(max-width:700px){.trust-bar{grid-template-columns:1fr 1fr}}
+
+    .ops-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media(max-width:800px){.ops-grid{grid-template-columns:1fr}}
+    .ops-card{padding:22px 20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+    .ops-card .ops-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+    .ops-card h3{margin-bottom:8px;font-size:1.05rem}
+    .ops-card p{color:var(--muted);font-size:.9rem;line-height:1.6;margin:0}
+
+    .evidence{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+    @media(max-width:800px){.evidence{grid-template-columns:1fr}}
+    .case-card{padding:28px 24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);display:flex;flex-direction:column;gap:12px}
+    .case-card .tag{display:inline-flex;align-self:flex-start;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--nexo-soft);color:var(--nexo)}
+    .case-card .tag.indago{background:var(--indago-soft);color:var(--indago)}
+    .case-card h3{font-size:1.35rem;margin:0}
+    .case-card p{color:var(--muted);font-size:.92rem;line-height:1.6;margin:0;flex:1}
+    .case-facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+    .case-facts span{font-size:.78rem;font-weight:650;padding:6px 10px;border-radius:8px;border:1px solid var(--line);color:rgba(255,255,255,.72)}
+
     .testimonial-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:36px 40px;max-width:720px;margin:0 auto}
     .testimonial-card blockquote{font-size:1.1rem;line-height:1.75;color:#F3EEE6;margin:0 0 28px;font-style:italic;position:relative;padding-left:20px}
     .testimonial-card blockquote::before{content:'\201C';position:absolute;left:0;top:-.1em;font-size:2.5rem;line-height:1;color:#C4894A;font-style:normal}
@@ -35,13 +59,17 @@
     .testimonial-avatar{width:44px;height:44px;border-radius:50%;background:#C4894A;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.05em}
     .testimonial-author strong{display:block;font-size:.9rem;color:#F3EEE6}
     .testimonial-author span{font-size:.76rem;opacity:.5;color:#F3EEE6}
+
     .founder-inner{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start;max-width:760px;margin:0 auto}
-    .founder-avatar{width:88px;height:88px;border-radius:50%;background:#0B1220;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:3px solid rgba(196,137,74,.35);overflow:hidden}
-    .founder-avatar img{width:52px;height:52px;object-fit:contain}
+    .founder-avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(145deg,#1B2A4A,#0B1220);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:3px solid rgba(196,137,74,.4);font-family:var(--display);font-weight:800;font-size:1.6rem;color:#C4894A;letter-spacing:.04em}
     .founder-text .eyebrow{margin-bottom:.4rem}
     .founder-text h2{margin:.2rem 0 1rem}
     .founder-text p{opacity:.7;line-height:1.75;margin-bottom:.75rem}
-    @media(max-width:600px){.founder-inner{grid-template-columns:1fr;gap:20px}.founder-avatar{width:68px;height:68px;font-size:1.5rem}.testimonial-card{padding:24px 20px}}
+    .founder-commitments{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+    .founder-commitments li{font-size:.88rem;color:rgba(242,242,240,.72);padding-left:18px;position:relative}
+    .founder-commitments li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+    @media(max-width:600px){.founder-inner{grid-template-columns:1fr;gap:20px}.founder-avatar{width:72px;height:72px;font-size:1.25rem}.testimonial-card{padding:24px 20px}}
+
     .faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:4px}
     .faq-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
     .faq-item summary{padding:18px 22px;cursor:pointer;font-weight:600;font-size:.95rem;color:#F3EEE6;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;user-select:none}
@@ -49,7 +77,14 @@
     .faq-item[open] summary::after{transform:rotate(45deg)}
     .faq-item p{padding:0 22px 18px;opacity:.65;line-height:1.7;margin:0;font-size:.9rem}
     .faq-item summary::-webkit-details-marker{display:none}
-    .garantia{font-size:.78rem;opacity:.35;margin-top:18px;text-align:center;letter-spacing:.03em}
+    .garantia{font-size:.78rem;opacity:.4;margin-top:18px;text-align:center;letter-spacing:.03em}
+
+    .channels{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:0 auto}
+    @media(max-width:560px){.channels{grid-template-columns:1fr}}
+    .channel{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-align:left}
+    .channel .ch-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    .channel strong{display:block;font-size:1rem;color:#fff;margin-bottom:6px}
+    .channel p{font-size:.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5}
   </style>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
@@ -80,17 +115,37 @@
       <div class="wrap">
         <p class="eyebrow">ETEMEN · Chile</p>
         <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener" class="status-hero-badge">
-          <span class="status-hero-dot"></span>Todos los sistemas operativos
+          <span class="status-hero-dot"></span>Sistemas operativos
         </a>
-        <h1>Transformamos tus ideas en realidad.</h1>
+        <h1>Software con base firme para negocios reales.</h1>
         <p class="lead hero-promise">
-          Software que se usa de verdad — con base firme y precio claro.
+          Construimos y operamos productos que se usan todos los días.
+          Precio claro, soporte directo y responsabilidad sobre lo que corre en producción.
         </p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="/nexo/">Ver Nexo</a>
-          <a class="btn btn-ghost" href="/contacto/">Hablar con nosotros</a>
+          <a class="btn btn-primary" href="/nexo/">Conocer Nexo</a>
+          <a class="btn btn-ghost" href="/contacto/">Solicitar información</a>
         </div>
-        <p class="hero-note">+6 meses en producción · 2 productos activos · soporte en Chile</p>
+        <p class="hero-note">Sin intermediarios · Sin costos ocultos · Respuesta en menos de 24 horas</p>
+
+        <div class="trust-bar" aria-label="Indicadores de confianza">
+          <div class="trust-item">
+            <strong>+6 meses</strong>
+            <span>en producción continua</span>
+          </div>
+          <div class="trust-item">
+            <strong>2 productos</strong>
+            <span>activos y monitoreados</span>
+          </div>
+          <div class="trust-item">
+            <strong>14 días</strong>
+            <span>trial sin tarjeta</span>
+          </div>
+          <div class="trust-item">
+            <strong>&lt; 24 h</strong>
+            <span>tiempo de respuesta</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -100,7 +155,7 @@
         <div class="section-head">
           <p class="eyebrow">Productos</p>
           <h2>Dos productos. Un fundamento.</h2>
-          <p class="lead">Nexo para operar el local. indago para decidir dónde comprar.</p>
+          <p class="lead">Nexo opera el local. indago informa la decisión de compra. Ambos bajo el mismo estándar de calidad.</p>
         </div>
 
         <div class="products">
@@ -108,21 +163,21 @@
             <span class="who">Para negocios y locales</span>
             <h3>Nexo</h3>
             <p>
-              Un solo sistema para salón, barbería, spa, almacén, ferretería y botillería.
-              Agenda, caja, inventario y clientes — todo desde Nexo.
+              Sistema operativo del local: agenda y reservas, o caja e inventario,
+              según el rubro. Una plataforma, datos propios, precio fijo por local.
             </p>
             <span class="meta">Servicios desde $45.000 · Comercio desde $19.900 · Trial 14 días</span>
             <div class="actions">
-              <a class="btn btn-nexo btn-sm" href="/nexo/">Entrar a Nexo</a>
+              <a class="btn btn-nexo btn-sm" href="/nexo/">Documentación y precios</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/#categorias">Ver categorías</a>
             </div>
           </article>
 
           <article class="product indago">
-            <span class="who">Para personas que compran</span>
+            <span class="who">Para quienes comparan precios</span>
             <h3>indago</h3>
-            <p>Comparador de precios en Chile. Más de 50 tiendas. Encuentra dónde sale más barato en segundos.</p>
-            <span class="meta">Gratis · indago.cl</span>
+            <p>Comparador de precios en Chile. Más de 50 tiendas. Información clara para decidir dónde comprar.</p>
+            <span class="meta">Gratis · indago.cl · En operación</span>
             <div class="actions">
               <a class="btn btn-ghost btn-sm" href="https://www.indago.cl" target="_blank" rel="noopener">Abrir indago ↗</a>
             </div>
@@ -131,41 +186,87 @@
       </div>
     </section>
 
-    <!-- ── PORTAFOLIO / PRUEBA SOCIAL ── -->
-    <section class="section alt" id="portafolio">
+    <!-- ── OPERACIÓN ── -->
+    <section class="section alt" id="operacion">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">En producción hoy</p>
-          <h2>No son demos. Son negocios reales.</h2>
-          <p class="lead">Cada proyecto corre con clientes reales, todos los días.</p>
+          <p class="eyebrow">Operación</p>
+          <h2>Cómo sostenemos lo que entregamos.</h2>
+          <p class="lead">Confianza no es promesa de marketing. Es cómo se opera el software día a día.</p>
         </div>
 
-        <div class="bento">
-          <article class="bento-card wide">
-            <span class="tag tag-nexo">Nexo · Salón</span>
+        <div class="ops-grid">
+          <article class="ops-card">
+            <div class="ops-label">Monitoreo</div>
+            <h3>Sistemas bajo observación</h3>
+            <p>
+              Monitoreo activo cada 5 minutos y página de estado pública.
+              Si algo se degrada, lo vemos antes de que sea una sorpresa.
+            </p>
+          </article>
+          <article class="ops-card">
+            <div class="ops-label">Datos</div>
+            <h3>Tu local, tus datos</h3>
+            <p>
+              Cada cliente de Nexo opera en su propia instancia.
+              La información del negocio no se mezcla con la de otros locales.
+            </p>
+          </article>
+          <article class="ops-card">
+            <div class="ops-label">Responsabilidad</div>
+            <h3>Quién construye, responde</h3>
+            <p>
+              Sin call center ni rebotes entre áreas.
+              Hablas con quien diseña, despliega y mantiene el sistema.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EN PRODUCCIÓN ── -->
+    <section class="section" id="casos">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">En producción</p>
+          <h2>Trabajo que ya está en uso.</h2>
+          <p class="lead">No son demos de vitrina. Son sistemas que operan con clientes reales.</p>
+        </div>
+
+        <div class="evidence">
+          <article class="case-card">
+            <span class="tag">Nexo · Servicios</span>
             <h3>Ysabel Aragón NW</h3>
-            <p>Salón de belleza en Puente Alto. Agenda online, control de caja, gestión de clientes y pagos con Mercado Pago — todo en Nexo.</p>
-            <div class="bento-stats">
+            <p>
+              Salón de belleza en Puente Alto. Agenda online, control de caja,
+              gestión de clientes y pagos con Mercado Pago — operando de forma continua
+              sobre Nexo.
+            </p>
+            <div class="case-facts">
               <span>Agenda online</span>
               <span>Pagos integrados</span>
-              <span>WhatsApp automático</span>
+              <span>WhatsApp operativo</span>
+              <span>En producción</span>
             </div>
-            <div class="actions" style="margin-top:14px">
-              <a class="btn btn-ghost btn-sm" href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">Ver sitio ↗</a>
+            <div class="actions" style="margin-top:8px">
+              <a class="btn btn-ghost btn-sm" href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">Ver sitio en vivo ↗</a>
             </div>
           </article>
 
-          <article class="bento-card">
-            <span class="tag" style="background:var(--indago-soft);color:var(--indago)">Producto propio</span>
+          <article class="case-card">
+            <span class="tag indago">Producto propio</span>
             <h3>indago.cl</h3>
-            <p>+50 tiendas scrapeadas, comparación de precios en tiempo real, alertas, blog y canal Telegram activo.</p>
-            <div class="bento-stats">
+            <p>
+              Comparador de precios con cobertura nacional:
+              scrapeo continuo, alertas, blog y canal Telegram.
+            </p>
+            <div class="case-facts">
               <span>+8.000 productos</span>
               <span>+50 tiendas</span>
-              <span>Canal Telegram</span>
+              <span>Canal activo</span>
             </div>
-            <div class="actions" style="margin-top:14px">
-              <a class="btn btn-ghost btn-sm" href="https://www.indago.cl" target="_blank" rel="noopener">Ver sitio ↗</a>
+            <div class="actions" style="margin-top:8px">
+              <a class="btn btn-ghost btn-sm" href="https://www.indago.cl" target="_blank" rel="noopener">Ver indago ↗</a>
             </div>
           </article>
         </div>
@@ -173,11 +274,11 @@
     </section>
 
     <!-- ── TESTIMONIO ── -->
-    <section class="section" id="testimonio">
+    <section class="section alt" id="testimonio">
       <div class="wrap">
-        <div class="section-head">
+        <div class="section-head center">
           <p class="eyebrow">Clientes</p>
-          <h2>Lo que dicen quienes lo usan.</h2>
+          <h2>Lo que dice quien lo opera a diario.</h2>
         </div>
         <div class="testimonial-card">
           <blockquote>
@@ -195,68 +296,93 @@
     </section>
 
     <!-- ── FOUNDER ── -->
-    <section class="section alt" id="founder">
+    <section class="section" id="founder">
       <div class="wrap">
         <div class="founder-inner">
-          <div class="founder-avatar">
-            <img src="/assets/logos/etemen-mark-v2.svg" alt="ETEMEN" width="52" height="52">
-          </div>
+          <div class="founder-avatar" aria-hidden="true">A</div>
           <div class="founder-text">
-            <p class="eyebrow">Quién está detrás</p>
-            <h2>Hola, soy Antonio.</h2>
-            <p>Construyo software para negocios reales en Chile. ETEMEN nació de ver que muchos locales manejaban todo por WhatsApp y cuadernos — cosas que deberían estar automatizadas.</p>
-            <p>Si contratas ETEMEN, hablas directamente conmigo. Sin intermediarios, sin agencias, sin sorpresas.</p>
-            <a href="/contacto/" class="btn btn-ghost btn-sm" style="margin-top:18px;display:inline-flex">Escribirme →</a>
+            <p class="eyebrow">Responsable</p>
+            <h2>Antonio · fundador de ETEMEN</h2>
+            <p>
+              Construyo software para negocios reales en Chile.
+              ETEMEN nació de ver locales que dependían de cuadernos y chats
+              para procesos que deberían ser estables y auditables.
+            </p>
+            <p>
+              Si contratas ETEMEN, el canal es directo: diseño, despliegue y soporte
+              sin capas intermedias ni agencias.
+            </p>
+            <ul class="founder-commitments">
+              <li>Precio fijo por local — sin sorpresas de facturación</li>
+              <li>Respuesta a incidencias en menos de 24 horas</li>
+              <li>Trial de 14 días para validar en tu operación real</li>
+            </ul>
+            <a href="/contacto/" class="btn btn-ghost btn-sm" style="margin-top:22px;display:inline-flex">Escribir a ETEMEN →</a>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ── FAQ ── -->
-    <section class="section" id="faq">
+    <section class="section alt" id="faq">
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Preguntas frecuentes</p>
-          <h2>Lo que suelen preguntar.</h2>
+          <h2>Información clara, sin letra chica.</h2>
         </div>
         <div class="faq-list">
           <details class="faq-item">
-            <summary>¿Cuánto tiempo tarda en estar listo?</summary>
-            <p>Depende del proyecto. Un local nuevo en Nexo puede estar operativo en 48 horas. Un desarrollo a medida toma entre 2 y 4 semanas.</p>
+            <summary>¿Cuánto tarda en estar operativo un local?</summary>
+            <p>Un local nuevo en Nexo puede quedar operativo en 48 horas, según la categoría y la información del negocio. Un desarrollo a medida se estima entre 2 y 4 semanas.</p>
           </details>
           <details class="faq-item">
-            <summary>¿Qué pasa si algo falla?</summary>
-            <p>Respondemos en menos de 24 horas. Los sistemas tienen monitoreo activo y alertas automáticas las 24/7.</p>
+            <summary>¿Qué ocurre si el sistema falla?</summary>
+            <p>Hay monitoreo continuo y alertas automáticas. El compromiso de respuesta es de menos de 24 horas. El estado de los sistemas es público.</p>
           </details>
           <details class="faq-item">
-            <summary>¿Puedo probar Nexo antes de contratar?</summary>
-            <p>Sí. Hay un trial de 14 días sin tarjeta de crédito. Lo configuras con tu local, lo pruebas y decides.</p>
+            <summary>¿Puedo evaluar Nexo antes de contratar?</summary>
+            <p>Sí. Trial de 14 días sin tarjeta de crédito. Configuras tu local, operas con datos de prueba o reales, y decides con información completa.</p>
           </details>
           <details class="faq-item">
-            <summary>¿El precio mensual incluye soporte?</summary>
-            <p>Sí. El plan incluye soporte y actualizaciones. Sin costos extra ni sorpresas al final del mes.</p>
+            <summary>¿El plan mensual incluye soporte?</summary>
+            <p>Sí. Soporte y actualizaciones están incluidos en el plan. No hay cargos variables por consulta ni sorpresas al cierre de mes.</p>
           </details>
           <details class="faq-item">
-            <summary>¿Trabajan solo en Chile?</summary>
-            <p>Por ahora sí. Los pagos, el soporte y el software están pensados para el mercado chileno.</p>
+            <summary>¿Dónde operan?</summary>
+            <p>Por ahora en Chile. Precios, pagos, soporte y el diseño del producto están pensados para el mercado local.</p>
           </details>
         </div>
       </div>
     </section>
 
     <!-- ── CTA ── -->
-    <section class="cta-band">
+    <section class="cta-band" id="contacto-cta">
       <div class="wrap">
         <div class="cta-box">
           <div>
-            <h2>¿Tienes un local o una idea?</h2>
-            <p>La transformamos en realidad — o te orientamos en minutos, sin compromiso.</p>
+            <h2>¿Evaluamos si Nexo aplica a tu local?</h2>
+            <p>
+              Cuéntanos el rubro y el tamaño de la operación.
+              Te respondemos con una orientación concreta — sin compromiso y con plazos claros.
+            </p>
           </div>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="/contacto/">Escribir a ETEMEN</a>
-            <a class="btn btn-ghost" href="mailto:hola@etemen.cl">hola@etemen.cl</a>
+
+          <div class="channels" style="margin-top:28px;width:100%;max-width:100%">
+            <div class="channel">
+              <div class="ch-label">Canal principal</div>
+              <strong>Formulario o correo</strong>
+              <p>Para solicitudes de trial, cotización o consulta formal. Registro y seguimiento del mensaje.</p>
+              <a class="btn btn-primary btn-sm" href="/contacto/">Ir a contacto</a>
+            </div>
+            <div class="channel">
+              <div class="ch-label">Correo directo</div>
+              <strong>hola@etemen.cl</strong>
+              <p>Respuesta en menos de 24 horas hábiles. Ideal si prefieres escribir desde tu propio correo.</p>
+              <a class="btn btn-ghost btn-sm" href="mailto:hola@etemen.cl">Enviar correo</a>
+            </div>
           </div>
-          <p class="garantia">Si algo falla, lo resolvemos en menos de 24 horas. Sin excusas.</p>
+
+          <p class="garantia">Si algo falla en un sistema en producción, lo priorizamos. Compromiso de respuesta en menos de 24 horas.</p>
         </div>
       </div>
     </section>
@@ -272,9 +398,8 @@
             <div class="logo-wordmark"><span class="name">ETEMEN</span></div>
           </a>
           <p>
-            <strong>Transformamos tus ideas en realidad.</strong><br>
+            <strong>Fundamento sólido. Productos extraordinarios.</strong><br>
             Del Etemenanki: <em>la casa del fundamento del cielo y la tierra</em>.
-            · Fundamento sólido. Productos extraordinarios.
           </p>
         </div>
         <div>
@@ -283,22 +408,21 @@
           <a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a>
         </div>
         <div>
-          <h4>Recursos</h4>
-          <a href="/demos/">Demos</a>
-          <a href="/portafolio/">Portafolio</a>
+          <h4>Empresa</h4>
+          <a href="#casos">En producción</a>
+          <a href="#operacion">Operación</a>
           <a href="/contacto/">Contacto</a>
         </div>
         <div>
-          <h4>En vivo</h4>
-          <a href="https://www.indago.cl" target="_blank" rel="noopener">indago.cl</a>
-          <a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">ysabelaragonnw.cl</a>
+          <h4>Estado</h4>
           <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener">Estado del sistema ↗</a>
+          <a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">ysabelaragonnw.cl</a>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span id="y"></span> ETEMEN</span>
         <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener" class="status-badge">
-          <span class="status-dot"></span>Todos los sistemas operativos
+          <span class="status-dot"></span>Sistemas operativos
         </a>
         <span>Chile</span>
       </div>

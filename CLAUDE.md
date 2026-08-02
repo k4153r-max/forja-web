@@ -39,16 +39,17 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 - **Favicon**: `assets/favicon.svg` — bloque cobre rx=4, 32x32
 - Todas las páginas usan `etemen-mark-v2.svg` en navbar y footer
 
-## Estructura home (index.html)
+## Estructura home (index.html) — tono confianza / solidez
 1. Nav
-2. Hero — status badge verde pulsante → stats.uptimerobot.com/z6bYAoGxq6
+2. Hero — "Software con base firme…" + status badge + trust-bar (métricas)
 3. Productos — Nexo + indago
-4. Portafolio — Ysabel Aragón NW + indago.cl
-5. Testimonio — Ysabel Aragón
-6. Founder — "Hola, soy Antonio" + logo ETEMEN
-7. FAQ — 5 preguntas con `<details>` acordeón
-8. CTA — con garantía 24h
-9. Footer — status badge + link estado del sistema
+4. Operación — monitoreo · datos propios · responsabilidad directa
+5. En producción — Ysabel Aragón NW + indago.cl (evidencia)
+6. Testimonio — Ysabel Aragón
+7. Founder — Antonio + compromisos (precio fijo, 24h, trial)
+8. FAQ — 5 preguntas, sin letra chica
+9. CTA — canales formales (formulario + hola@etemen.cl)
+10. Footer — status badge + link estado del sistema
 
 ## Monitoreo
 - UptimeRobot: 5 monitores, check cada 5 min — ver memory reference_monitoreo
