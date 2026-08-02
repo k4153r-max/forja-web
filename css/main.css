@@ -673,3 +673,49 @@ h3 { font-size: 1.1rem; letter-spacing: -.02em; }
 /* ── Misc ── */
 .reveal { opacity: 1; transform: none; }
 .page-hero .lead { margin-top: 8px; }
+
+/* ══════════════════════════════════════
+   MÓVIL — ajustes globales ≤ 600px
+   ══════════════════════════════════════ */
+@media (max-width: 600px) {
+
+  /* Tipografía */
+  h1 { font-size: clamp(2.2rem, 11vw, 2.8rem); }
+  h2 { font-size: clamp(1.3rem, 5.5vw, 1.6rem); }
+
+  /* Secciones — menos aire vertical */
+  .section { padding: 48px 0; }
+  .cta-band { padding: 36px 0 56px; }
+
+  /* Hero */
+  .hero { padding: 56px 0 44px; }
+  .hero h1 { max-width: 100%; line-height: 1.08; }
+  .hero .hero-promise { font-size: 1rem; }
+
+  /* Botones — ancho completo en móvil */
+  .btn-row { flex-direction: column; }
+  .btn-row .btn { width: 100%; justify-content: center; }
+
+  /* CTA box — apilado */
+  .cta-box {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px 18px;
+  }
+  .cta-box .btn-row { width: 100%; margin-top: 16px; }
+
+  /* Steps — una columna con menos padding */
+  .step { padding: 16px; }
+
+  /* Product cards */
+  .product { min-height: unset; padding: 18px 16px; }
+
+  /* Bento */
+  .bento-card { padding: 18px 16px; }
+  .bento-stats { gap: 6px; }
+  .bento-stats span { font-size: .7rem; }
+
+  /* Footer */
+  .footer { padding: 32px 0 20px; }
+  .footer-grid { gap: 20px; }
+}
