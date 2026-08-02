@@ -21,6 +21,9 @@
       h1{font-size:clamp(1.6rem,7.5vw,2.2rem)!important}
       .hero{padding:52px 0 40px}
     }
+    .status-badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;letter-spacing:.04em;color:inherit;opacity:.55;text-decoration:none;transition:opacity .2s}
+    .status-badge:hover{opacity:1}
+    .status-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade8088}
   </style>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
@@ -244,10 +247,14 @@
           <h4>En vivo</h4>
           <a href="https://www.indago.cl" target="_blank" rel="noopener">indago.cl</a>
           <a href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">ysabelaragonnw.cl</a>
+          <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener">Estado del sistema ↗</a>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span id="y"></span> ETEMEN</span>
+        <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener" class="status-badge">
+          <span class="status-dot"></span>Todos los sistemas operativos
+        </a>
         <span>Chile</span>
       </div>
     </div>
