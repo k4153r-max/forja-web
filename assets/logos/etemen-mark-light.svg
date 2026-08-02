@@ -1,7 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80" fill="none" role="img" aria-label="ETEMEN">
-  <!-- E geometric -->
-  <path fill="#FFFFFF" d="M10 4h40v11H24v8h22v11H24v8h26v11H10V4z"/>
-  <!-- Cimientos (zigurat) -->
-  <path fill="#C4894A" d="M14 58l18 8 18-8-4-2.4-14 6.2-14-6.2-4 2.4z"/>
-  <path fill="#D9A870" d="M8 62.5l24 11 24-11-4.5-2.6-19.5 9-19.5-9-4.5 2.6z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="ETEMEN">
+  <!-- Spine -->
+  <rect x="9" y="9" width="8" height="45" fill="#F3EEE6"/>
+  <!-- Top bar: shortest — cima del zigurat -->
+  <rect x="9" y="9" width="20" height="9" fill="#F3EEE6"/>
+  <!-- Middle bar: medium — segunda terraza -->
+  <rect x="9" y="27" width="32" height="9" fill="#F3EEE6"/>
+  <!-- Bottom bar: widest, copper — el fundamento -->
+  <rect x="9" y="45" width="44" height="9" fill="#D9A870"/>
 </svg>
