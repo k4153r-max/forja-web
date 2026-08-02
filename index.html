@@ -24,6 +24,10 @@
     .status-badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;letter-spacing:.04em;color:inherit;opacity:.55;text-decoration:none;transition:opacity .2s}
     .status-badge:hover{opacity:1}
     .status-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade8088}
+    .status-hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);font-size:.75rem;letter-spacing:.06em;color:#4ade80;text-decoration:none;margin-bottom:20px;transition:background .2s,border-color .2s}
+    .status-hero-badge:hover{background:rgba(74,222,128,.14);border-color:rgba(74,222,128,.35)}
+    .status-hero-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse-green 2s infinite}
+    @keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}50%{box-shadow:0 0 0 5px rgba(74,222,128,0)}}
   </style>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
@@ -53,6 +57,9 @@
     <section class="hero">
       <div class="wrap">
         <p class="eyebrow">ETEMEN · Chile</p>
+        <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener" class="status-hero-badge">
+          <span class="status-hero-dot"></span>Todos los sistemas operativos
+        </a>
         <h1>Transformamos tus ideas en realidad.</h1>
         <p class="lead hero-promise">
           Software que se usa de verdad — con base firme y precio claro.
