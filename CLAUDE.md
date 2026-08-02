@@ -1,0 +1,56 @@
+# forja-web — etemen.cl
+
+Sitio estático del estudio ETEMEN. HTML/CSS/JS puro, sin framework.
+
+## Deploy
+- **Plataforma**: Render (plan free, servicio estático)
+- **URL producción**: https://etemen.cl
+- **Service ID**: `srv-d9ifoibeo5us739sr680`
+- **Auto-deploy no confiable** — disparar manualmente vía API:
+  ```powershell
+  Invoke-RestMethod -Uri "https://api.render.com/v1/services/srv-d9ifoibeo5us739sr680/deploys" -Method POST -Headers @{ "Authorization" = "Bearer rnd_USREVf2EstA8kQQGARaRvtEwCeqG"; "Accept" = "application/json" }
+  ```
+- Cloudflare está delante — cachea CSS y SVGs agresivamente
+  - Fix CSS: renombrar archivo (`main-v5.css`, `main-v6.css`) y actualizar `<link>` en HTML
+  - Fix SVG: renombrar archivo (`etemen-mark-v2.svg`, `v3`...) y actualizar `src` en HTML
+  - Fix crítico: poner CSS en `<style>` inline en el `<head>` — HTML siempre es fresco
+
+## Estructura de páginas
+```
+index.html          → etemen.cl (landing principal)
+nexo/index.html     → etemen.cl/nexo/
+contacto/index.html → etemen.cl/contacto/
+portafolio/         → etemen.cl/portafolio/
+demos/              → etemen.cl/demos/ (atelier, aura, luna)
+```
+
+## CSS
+- Archivo: `css/main-v5.css`
+- Tipografías: Syne (display) + Plus Jakarta Sans (UI) — Google Fonts
+- Paleta:
+  - Navy: `#1B2A4A`
+  - Copper: `#C4894A`
+  - Cream: `#F3EEE6`
+  - Obsidian: `#080a0e`
+
+## Logos
+- **ETEMEN mark**: `assets/logos/etemen-mark-v2.svg` — bloque cobre rx=8, E en espacio negativo
+- **Nexo mark**: `assets/logos/nexo-mark.svg` — curva bezier, nodo origen → nodo destino
+- **Favicon**: `assets/favicon.svg` — bloque cobre rx=4, 32x32
+- Todas las páginas usan `etemen-mark-v2.svg` en navbar y footer
+
+## Estructura home (index.html)
+1. Nav
+2. Hero — status badge verde pulsante → stats.uptimerobot.com/z6bYAoGxq6
+3. Productos — Nexo + indago
+4. Portafolio — Ysabel Aragón NW + indago.cl
+5. Testimonio — Ysabel Aragón
+6. Founder — "Hola, soy Antonio" + logo ETEMEN
+7. FAQ — 5 preguntas con `<details>` acordeón
+8. CTA — con garantía 24h
+9. Footer — status badge + link estado del sistema
+
+## Monitoreo
+- UptimeRobot: 5 monitores, check cada 5 min — ver memory reference_monitoreo
+- Status page: https://stats.uptimerobot.com/z6bYAoGxq6
+- cron-job.org: keep-alive solo para nexo-demo y indago-api (Render web services)
