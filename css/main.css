@@ -680,7 +680,7 @@ h3 { font-size: 1.1rem; letter-spacing: -.02em; }
 @media (max-width: 600px) {
 
   /* Tipografía */
-  h1 { font-size: clamp(2.2rem, 11vw, 2.8rem); }
+  h1 { font-size: clamp(1.9rem, 9vw, 2.4rem); }
   h2 { font-size: clamp(1.3rem, 5.5vw, 1.6rem); }
 
   /* Secciones — menos aire vertical */
@@ -689,7 +689,7 @@ h3 { font-size: 1.1rem; letter-spacing: -.02em; }
 
   /* Hero */
   .hero { padding: 56px 0 44px; }
-  .hero h1 { max-width: 100%; line-height: 1.08; }
+  .hero h1 { max-width: 100%; line-height: 1.1; }
   .hero .hero-promise { font-size: 1rem; }
 
   /* Botones — ancho completo en móvil */
