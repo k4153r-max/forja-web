@@ -686,6 +686,69 @@ body.theme-taller .demo-ribbon .badge {
   background: rgba(13,15,20,.18); color: #0d0f14;
 }
 
+body.theme-almacen {
+  --d-bg: #0f1218;
+  --d-bg-2: #161b24;
+  --d-ink: #f8fafc;
+  --d-muted: #94a3b8;
+  --d-brand: #e08a4a;
+  --d-brand-2: #c87435;
+  --d-card: #1c222e;
+  --d-line: #2d3748;
+  --d-brand-soft: rgba(224, 138, 74, 0.14);
+  --d-ok: #22c55e;
+  --d-ok-bg: #143022;
+  --d-shadow: 0 1px 0 rgba(255,255,255,.03) inset, 0 16px 40px rgba(0,0,0,.45);
+  --d-nexo: #e08a4a;
+}
+body.theme-almacen .d-header { background: color-mix(in srgb, var(--d-bg) 90%, transparent); }
+body.theme-almacen .d-btn-line { border-color: #2d3748; color: var(--d-ink); }
+body.theme-almacen .demo-ribbon { background: #e08a4a; color: #0f1218; }
+body.theme-almacen .demo-ribbon a { color: #0f1218; }
+body.theme-almacen .demo-ribbon .badge { background: rgba(15,18,24,.18); color: #0f1218; }
+
+body.theme-ferreteria {
+  --d-bg: #0e1014;
+  --d-bg-2: #151820;
+  --d-ink: #f1f5f9;
+  --d-muted: #94a3b8;
+  --d-brand: #e36c12;
+  --d-brand-2: #c45a0a;
+  --d-card: #1a202c;
+  --d-line: #2d3748;
+  --d-brand-soft: rgba(227, 108, 18, 0.14);
+  --d-ok: #22c55e;
+  --d-ok-bg: #143022;
+  --d-shadow: 0 1px 0 rgba(255,255,255,.03) inset, 0 16px 40px rgba(0,0,0,.45);
+  --d-nexo: #e36c12;
+}
+body.theme-ferreteria .d-header { background: color-mix(in srgb, var(--d-bg) 90%, transparent); }
+body.theme-ferreteria .d-btn-line { border-color: #2d3748; color: var(--d-ink); }
+body.theme-ferreteria .demo-ribbon { background: #e36c12; color: #0e1014; }
+body.theme-ferreteria .demo-ribbon a { color: #0e1014; }
+body.theme-ferreteria .demo-ribbon .badge { background: rgba(14,16,20,.18); color: #0e1014; }
+
+body.theme-botilleria {
+  --d-bg: #0b111e;
+  --d-bg-2: #111a2e;
+  --d-ink: #f1f5f9;
+  --d-muted: #94a3b8;
+  --d-brand: #3b82f6;
+  --d-brand-2: #2563eb;
+  --d-card: #172238;
+  --d-line: #263654;
+  --d-brand-soft: rgba(59, 130, 246, 0.14);
+  --d-ok: #22c55e;
+  --d-ok-bg: #143022;
+  --d-shadow: 0 1px 0 rgba(255,255,255,.03) inset, 0 16px 40px rgba(0,0,0,.45);
+  --d-nexo: #3b82f6;
+}
+body.theme-botilleria .d-header { background: color-mix(in srgb, var(--d-bg) 90%, transparent); }
+body.theme-botilleria .d-btn-line { border-color: #263654; color: var(--d-ink); }
+body.theme-botilleria .demo-ribbon { background: #3b82f6; color: #0b111e; }
+body.theme-botilleria .demo-ribbon a { color: #0b111e; }
+body.theme-botilleria .demo-ribbon .badge { background: rgba(11,17,30,.18); color: #0b111e; }
+
 /* Responsive */
 @media (max-width: 900px) {
   .d-hero, .svc-grid, .team-grid, .rev-grid, .info-grid, .stats, .mood {
