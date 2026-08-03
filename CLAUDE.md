@@ -52,6 +52,9 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 10. Footer — status badge + link estado del sistema
 
 ## Monitoreo
-- UptimeRobot: 5 monitores, check cada 5 min — ver memory reference_monitoreo
-- Status page: https://stats.uptimerobot.com/z6bYAoGxq6
-- cron-job.org: keep-alive solo para nexo-demo y indago-api (Render web services)
+- UptimeRobot: 5 monitores, check cada 5 min — status page https://stats.uptimerobot.com/z6bYAoGxq6
+- **cron-job.org** keep-alive (cada 1 min, TZ America/Santiago) — verificado 2026-08-02:
+  - `8117675` Indago API → `https://indago-api.onrender.com/health` (enabled, OK)
+  - `8203623` Nexo demo → `https://nexus-trial-demo.onrender.com/health` (enabled, OK)
+  - API: `https://api.cron-job.org/` Bearer key en Console → Settings (**no commitear**)
+  - Nexo `/health` debe ser público en repo `nexus` (si 302 a login, el cron falla status 4)
