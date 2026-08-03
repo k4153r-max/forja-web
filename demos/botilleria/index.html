@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>La Esquina Fría — Botillería & Licores · Demo Nexo Comercio</title>
-  <meta name="description" content="Demo de botillería con Nexo Comercio. Control de pack, alta rotación, caja de noche y cervezas en frío.">
+  <title>La Esquina Fría — Botillería & Licores · Demo Interactiva Nexo Comercio</title>
+  <meta name="description" content="Demo en video interactivo de botillería con Nexo Comercio. Control de packs, nocturno y stock helado.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0b111e">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,8 +15,8 @@
 </head>
 <body class="theme-botilleria">
   <div class="demo-ribbon">
-    <span class="badge">Demo Nexo Comercio</span>
-    <span>La Esquina Fría · Demo interactiva en vivo</span>
+    <span class="badge">Demo Interactiva en Video</span>
+    <span>La Esquina Fría · Demostración visual de producto</span>
     <span class="sep">·</span>
     <a href="/demos/">Todas las demos</a>
     <span class="sep">·</span>
@@ -27,10 +27,10 @@
     <div class="wrap d-nav">
       <a href="/demos/botilleria/" class="d-brand"><span class="mark" style="background:#3b82f6;color:#fff">🍷</span> La Esquina Fría</a>
       <nav class="d-nav-links" aria-label="Principal">
+        <a href="#video-demo">Video Demostrativo</a>
         <a href="#rubros">Cervezas & Licores</a>
-        <a href="#pos">Venta de Noche & POS</a>
-        <a href="#info">Horario & Ubicación</a>
-        <a class="d-btn d-btn-fill d-btn-sm" href="https://bodega-trial-botilleria-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#3b82f6;color:#fff;border:none">Entrar al POS Botillería →</a>
+        <a href="#pos">Funciones POS</a>
+        <a class="d-btn d-btn-fill d-btn-sm" href="/contacto/?producto=Nexo+Botilleria" style="background:#3b82f6;color:#fff;border:none">Pedir Trial 3 Días →</a>
       </nav>
       <button class="d-nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -41,15 +41,15 @@
   <main>
     <section class="wrap d-hero">
       <div>
-        <p class="d-kicker" style="color:#3b82f6">Nexo Comercio · Botillería & Licores</p>
+        <p class="d-kicker" style="color:#3b82f6">Demostración en Video · Botillería & Licores</p>
         <h1>Frío al instante.<br><em style="color:#3b82f6;font-style:normal">Caja rápida para horas de alta demanda.</em></h1>
         <p class="sub">
-          Demo de botillería. Control de stock por packs, promociones de fin de semana, cerveza helada,
-          pisco, destilados, bebidas y hielo con cobro en segundos en <strong>Nexo Comercio</strong>.
+          Mira en video cómo opera <strong>Nexo Comercio</strong> en horas de flujo nocturno: packs armados de pisco + bebida + hielo en 1 click,
+          cobro ultrarrápido y cuadre de caja nocturno.
         </p>
         <div class="d-hero-actions">
-          <a class="d-btn d-btn-fill" href="https://bodega-trial-botilleria-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#3b82f6;color:#fff;border:none">Probar POS Botillería (PIN 1234) →</a>
-          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Botilleria">Solicitar Trial 3 Días</a>
+          <a class="d-btn d-btn-fill" href="#video-demo" style="background:#3b82f6;color:#fff;border:none">▶️ Ver Video Demostrativo</a>
+          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Botilleria">Pedir Trial Gratis (3 Días)</a>
         </div>
         <div class="d-hero-meta">
           <div><strong>❄️ Alta Rotación</strong><span>Venta rápida de noche sin demoras</span></div>
@@ -57,33 +57,35 @@
           <div><strong>🔒 Cuadre de Caja</strong><span>Control estricto de turno nocturno</span></div>
         </div>
       </div>
-      <aside class="d-hero-card" style="background:#172238;border:1px solid #263654">
-        <div class="card-head">
-          <h3>Ventas en Mostrador Hoy</h3>
+
+      <!-- REPRODUCTOR / WALKTHROUGH INTERACTIVO EN VIDEO -->
+      <aside class="d-hero-card" id="video-demo" style="background:#172238;border:1px solid #263654;padding:20px">
+        <div class="card-head" style="margin-bottom:14px">
+          <h3 style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;box-shadow:0 0 8px #ef4444"></span>
+            Video Demo: Nexo Botillería
+          </h3>
           <span class="live" style="background:rgba(59,130,246,0.2);color:#3b82f6">Turno Noche</span>
         </div>
-        <div class="slot" style="border-bottom:1px solid #263654">
+
+        <div id="demo-scene-content" style="background:#090d18;border:1px solid #263654;border-radius:12px;padding:18px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between">
           <div>
-            <b>Pisco Mistral 35° 750ml + Bebida 1.5L + Bolsa Hielo</b>
-            <div class="who" style="color:#94a3b8">Pack Oferta · Débito</div>
+            <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#3b82f6;letter-spacing:.08em;margin-bottom:6px">Escena 1 · Ventanilla Nocturna</div>
+            <h4 style="font-size:16px;color:#fff;margin:0 0 8px">🍷 Venta de Packs Promocionales en 1 Click</h4>
+            <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">El cajero presiona el botón del pack <strong>Pisco Mistral + Bebida 1.5L + Bolsa Hielo</strong>: Nexo agrega los 3 ítems y descuenta automáticamente del stock helado.</p>
+            <div style="background:rgba(59,130,246,0.1);border:1px dashed #3b82f6;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+              💡 <strong>Resultado:</strong> Despacho inmediato sin escribir ni buscar cada ítem por separado.
+            </div>
           </div>
-          <span class="tag free" style="background:rgba(34,197,94,0.2);color:#4ade80">$11.900</span>
         </div>
-        <div class="slot" style="border-bottom:1px solid #263654">
-          <div>
-            <b>Pack Cerveza Corona 330cc (x6)</b>
-            <div class="who" style="color:#94a3b8">Venta Rápida · Efectivo</div>
-          </div>
-          <span class="tag free" style="background:rgba(34,197,94,0.2);color:#4ade80">$7.500</span>
+
+        <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding-bottom:4px">
+          <button type="button" onclick="loadSceneBotilleria(1)" id="scb-btn-1" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#3b82f6;color:#fff;border:none;cursor:pointer">1. Combo 1-Click</button>
+          <button type="button" onclick="loadSceneBotilleria(2)" id="scb-btn-2" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#141822;color:#94a3b8;border:1px solid #263654;cursor:pointer">2. Vuelto Noche</button>
+          <button type="button" onclick="loadSceneBotilleria(3)" id="scb-btn-3" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#141822;color:#94a3b8;border:1px solid #263654;cursor:pointer">3. Cuadre Turno</button>
         </div>
-        <div class="slot">
-          <div>
-            <b>Vino Casillero del Diablo Reserva 750ml</b>
-            <div class="who" style="color:#94a3b8">Efectivo · Vuelto rápido</div>
-          </div>
-          <span class="tag free" style="background:rgba(34,197,94,0.2);color:#4ade80">$5.200</span>
-        </div>
-        <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px;background:#3b82f6;color:#fff;border:none;text-align:center" href="https://bodega-trial-botilleria-demo.onrender.com/login" target="_blank" rel="noopener">Abrir POS Botillería (PIN Admin: 1234 / Cajero: 0000) →</a>
+
+        <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px;background:#3b82f6;color:#fff;border:none;text-align:center" href="/contacto/?producto=Nexo+Botilleria">Solicitar Trial Gratis para tu Botillería (3 Días) →</a>
       </aside>
     </section>
 
@@ -94,60 +96,12 @@
       <div class="mood-tile" style="background:linear-gradient(145deg,#1e293b,#60a5fa)"><span>Hielo & Snacks</span></div>
     </div>
 
-    <div class="wrap stats">
-      <div class="stat"><strong>POS Nocturno</strong><span>Resistente y veloz</span></div>
-      <div class="stat"><strong>Combos</strong><span>Packs armados en 1 pantalla</span></div>
-      <div class="stat"><strong>Stock Real</strong><span>Litros y botellas cuadradas</span></div>
-      <div class="stat"><strong>Cierre Turno</strong><span>Reporte instantáneo de ingresos</span></div>
-    </div>
-
-    <section class="d-section alt" id="rubros">
-      <div class="wrap">
-        <h2 class="d-title">Categorías de Botillería</h2>
-        <div class="svc-grid">
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Cervezas Nacionales e Importadas</h3>
-              <span class="price">$1.200 – $8.900</span>
-            </div>
-            <p>Latas, botellas retornables, packs x6, x12 y cervezas artesanales en frío.</p>
-            <span class="dur">Alta rotación en refrigerador</span>
-          </div>
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Piscos & Destilados</h3>
-              <span class="price">$5.900 – $28.000</span>
-            </div>
-            <p>Pisco 35° y 40°, ron, vodka, gin, whisky e licores digestivos.</p>
-            <span class="dur">Stock por unidades</span>
-          </div>
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Vinos & Espumantes</h3>
-              <span class="price">$3.500 – $18.900</span>
-            </div>
-            <p>Reserva, gran reserva, cepas variadas (Cabernet, Carmenere, Sauvignon) y champagne.</p>
-            <span class="dur">Cuidado de stock</span>
-          </div>
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Hielo & Bebidas / Energéticas</h3>
-              <span class="price">$800 – $2.500</span>
-            </div>
-            <p>Bolsas de hielo en rollo 1kg y 3kg, bebidas gaseosas 1.5L/2L y energéticas sachet.</p>
-            <span class="dur">Complemento perfecto</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="d-section alt" style="text-align:center">
       <div class="wrap">
-        <h2>¿Tienes una Botillería?</h2>
-        <p class="d-sub" style="margin-bottom:24px">Prueba Nexo Comercio gratis por 3 días. Controla tu caja nocturna con agilidad.</p>
+        <h2>¿Quieres Probar Nexo en tu Botillería?</h2>
+        <p class="d-sub" style="margin-bottom:24px">Te activamos un Trial Privado de 3 días para tu local.</p>
         <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-          <a class="d-btn d-btn-fill" href="https://bodega-trial-botilleria-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#3b82f6;color:#fff;border:none;padding:12px 24px">Probar POS Botillería Live (PIN 1234 / 0000) →</a>
-          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Botilleria">Solicitar Trial 3 Días</a>
+          <a class="d-btn d-btn-fill" href="/contacto/?producto=Nexo+Botilleria" style="background:#3b82f6;color:#fff;border:none;padding:12px 24px">Pedir Trial Gratis (3 Días) →</a>
         </div>
       </div>
     </section>
@@ -155,10 +109,61 @@
 
   <footer class="d-footer">
     <div class="wrap">
-      <p>© La Esquina Fría · Demo impulsada por <strong>Nexo Comercio</strong></p>
+      <p>© La Esquina Fría · Demo en Video impulsada por <strong>Nexo Comercio</strong></p>
     </div>
   </footer>
 
-  <script src="/js/demos.js"></script>
+  <script>
+  function loadSceneBotilleria(num) {
+    const btn1 = document.getElementById('scb-btn-1');
+    const btn2 = document.getElementById('scb-btn-2');
+    const btn3 = document.getElementById('scb-btn-3');
+    const content = document.getElementById('demo-scene-content');
+
+    [btn1, btn2, btn3].forEach(b => {
+      b.style.background = '#141822';
+      b.style.color = '#94a3b8';
+      b.style.border = '1px solid #263654';
+    });
+
+    if (num === 1) {
+      btn1.style.background = '#3b82f6';
+      btn1.style.color = '#fff';
+      btn1.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#3b82f6;letter-spacing:.08em;margin-bottom:6px">Escena 1 · Ventanilla Nocturna</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">🍷 Venta de Packs Promocionales en 1 Click</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">El cajero presiona el botón del pack <strong>Pisco Mistral + Bebida 1.5L + Bolsa Hielo</strong>: Nexo agrega los 3 ítems y descuenta automáticamente del stock helado.</p>
+        <div style="background:rgba(59,130,246,0.1);border:1px dashed #3b82f6;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Despacho inmediato sin escribir ni buscar cada ítem por separado.
+        </div>
+      `;
+    } else if (num === 2) {
+      btn2.style.background = '#3b82f6';
+      btn2.style.color = '#fff';
+      btn2.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#3b82f6;letter-spacing:.08em;margin-bottom:6px">Escena 2 · Cobro al Paso</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">💵 Vuelto Rápido para Evitar Filas de Noche</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">En compras de $7.500 con billete de $20.000, los botones de billetes en pantalla muestran en tamaño gigante <strong>Vuelto: $12.500</strong>.</p>
+        <div style="background:rgba(59,130,246,0.1);border:1px dashed #3b82f6;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Atención fluida en horas de mayor flujo de clientes.
+        </div>
+      `;
+    } else if (num === 3) {
+      btn3.style.background = '#3b82f6';
+      btn3.style.color = '#fff';
+      btn3.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#3b82f6;letter-spacing:.08em;margin-bottom:6px">Escena 3 · Cierre de Turno</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">🔒 Cuadre de Caja Nocturno</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">Al terminar la noche, se genera el reporte de ventas por cajero, total de efectivo recibido y desglose de pagos por débito.</p>
+        <div style="background:rgba(59,130,246,0.1);border:1px dashed #3b82f6;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Control total de ingresos sin descuadres de inventario.
+        </div>
+      `;
+    }
+  }
+  </script>
 </body>
 </html>

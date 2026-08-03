@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Almacén El Barrio — Minimarket & Abarrotes · Demo Nexo Comercio</title>
-  <meta name="description" content="Demo de almacén de barrio con Nexo Comercio. Caja POS rápida, fiado, panadería y abarrotes.">
+  <title>Almacén El Barrio — Minimarket & Abarrotes · Demo Interactiva Nexo Comercio</title>
+  <meta name="description" content="Demo en video interactivo de almacén con Nexo Comercio. POS rápido, fiado del barrio, vuelto en 1-click.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0f1218">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,8 +15,8 @@
 </head>
 <body class="theme-almacen">
   <div class="demo-ribbon">
-    <span class="badge">Demo Nexo Comercio</span>
-    <span>Almacén El Barrio · Demo interactiva en vivo</span>
+    <span class="badge">Demo Interactiva en Video</span>
+    <span>Almacén El Barrio · Demostración visual de producto</span>
     <span class="sep">·</span>
     <a href="/demos/">Todas las demos</a>
     <span class="sep">·</span>
@@ -27,11 +27,10 @@
     <div class="wrap d-nav">
       <a href="/demos/almacen/" class="d-brand"><span class="mark" style="background:#e08a4a;color:#fff">🛒</span> Almacén El Barrio</a>
       <nav class="d-nav-links" aria-label="Principal">
+        <a href="#video-demo">Video Demostrativo</a>
         <a href="#rubros">Catálogo & Stock</a>
-        <a href="#pos">Venta Rápida & POS</a>
-        <a href="#fiado">Cuentas & Fiado</a>
-        <a href="#info">Horario & Ubicación</a>
-        <a class="d-btn d-btn-fill d-btn-sm" href="https://bodega-trial-almacen-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#e08a4a;color:#fff;border:none">Entrar al POS (Demo Live) →</a>
+        <a href="#pos">Funciones POS</a>
+        <a class="d-btn d-btn-fill d-btn-sm" href="/contacto/?producto=Nexo+Almacen" style="background:#e08a4a;color:#fff;border:none">Pedir Trial 3 Días →</a>
       </nav>
       <button class="d-nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -42,15 +41,15 @@
   <main>
     <section class="wrap d-hero">
       <div>
-        <p class="d-kicker" style="color:#e08a4a">Nexo Comercio · Almacén & Minimarket</p>
+        <p class="d-kicker" style="color:#e08a4a">Demostración en Video · Almacén & Minimarket</p>
         <h1>Caja rápida del barrio.<br><em style="color:#e08a4a;font-style:normal">Sin filas en el mostrador.</em></h1>
         <p class="sub">
-          Demo de minimarket clásico. Venta al vuelo en 3 segundos, código de barras, vuelto rápido,
-          fiado del barrio registrado por vecino y cierre de caja automático en <strong>Nexo Comercio</strong>.
+          Mira en video cómo funciona <strong>Nexo Comercio</strong> en un almacén real: cobro al vuelo en 3 segundos,
+          vuelto calculado al instante, registro de fiado por vecino y cierre de caja automático.
         </p>
         <div class="d-hero-actions">
-          <a class="d-btn d-btn-fill" href="https://bodega-trial-almacen-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#e08a4a;color:#fff;border:none">Probar POS Almacén (PIN 1234) →</a>
-          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Almacen">Solicitar Trial 3 Días</a>
+          <a class="d-btn d-btn-fill" href="#video-demo" style="background:#e08a4a;color:#fff;border:none">▶️ Ver Video Demostrativo</a>
+          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Almacen">Pedir Trial Gratis (3 Días)</a>
         </div>
         <div class="d-hero-meta">
           <div><strong>⚡ Venta Rápida</strong><span>Cobro al instante sin catálogo obligatorio</span></div>
@@ -58,33 +57,37 @@
           <div><strong>💵 Cierre Caja</strong><span>Vuelto rápido y reporte de ganancias</span></div>
         </div>
       </div>
-      <aside class="d-hero-card" style="background:#1c222e;border:1px solid #2d3748">
-        <div class="card-head">
-          <h3>Ventas Recientes en Mostrador</h3>
-          <span class="live" style="background:rgba(224,138,74,0.2);color:#e08a4a">POS Activo</span>
+
+      <!-- REPRODUCTOR / WALKTHROUGH INTERACTIVO EN VIDEO -->
+      <aside class="d-hero-card" id="video-demo" style="background:#1c222e;border:1px solid #2d3748;padding:20px">
+        <div class="card-head" style="margin-bottom:14px">
+          <h3 style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;box-shadow:0 0 8px #ef4444"></span>
+            Video Demo: Nexo Almacén
+          </h3>
+          <span class="live" style="background:rgba(224,138,74,0.2);color:#e08a4a">Simulador Live</span>
         </div>
-        <div class="slot" style="border-bottom:1px solid #2d3748">
-          <div>
-            <b>Coca Cola 2L + Hallullas x6</b>
-            <div class="who" style="color:#94a3b8">Efectivo · Vuelto $2.000 (calculado)</div>
+
+        <!-- VISUALIZADOR DE ESCENARIOS INTERACTIVOS -->
+        <div id="video-display-screen" style="background:#0a0c10;border:1px solid #2d3748;border-radius:12px;padding:18px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between">
+          <div id="demo-scene-content">
+            <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#e08a4a;letter-spacing:.08em;margin-bottom:6px">Escena 1 · Cobro en Mostrador</div>
+            <h4 style="font-size:16px;color:#fff;margin:0 0 8px">⚡ Venta Rápida & Botones de Vuelto</h4>
+            <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">El cajero digita <strong>$3.500</strong> en el POS, presiona el botón billete <strong>$10.000</strong> y Nexo calcula inmediatamente <strong>Vuelto: $6.500</strong> en pantalla gigante.</p>
+            <div style="background:rgba(224,138,74,0.1);border:1px dashed #e08a4a;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+              💡 <strong>Resultado:</strong> Cobro realizado en 3.2 segundos. Cero errores de cambio.
+            </div>
           </div>
-          <span class="tag free" style="background:rgba(34,197,94,0.2);color:#4ade80">$3.000</span>
         </div>
-        <div class="slot" style="border-bottom:1px solid #2d3748">
-          <div>
-            <b>Pan marraqueta + Leche entera</b>
-            <div class="who" style="color:#94a3b8">Débito Redelcom / Transbank</div>
-          </div>
-          <span class="tag free" style="background:rgba(34,197,94,0.2);color:#4ade80">$1.700</span>
+
+        <!-- SELECTOR DE CAPÍTULOS DE VIDEO DEMO -->
+        <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding-bottom:4px">
+          <button type="button" onclick="loadScene(1)" id="sc-btn-1" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#e08a4a;color:#fff;border:none;cursor:pointer">1. Venta Rápida</button>
+          <button type="button" onclick="loadScene(2)" id="sc-btn-2" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#141822;color:#94a3b8;border:1px solid #2d3748;cursor:pointer">2. Fiado Vecinos</button>
+          <button type="button" onclick="loadScene(3)" id="sc-btn-3" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#141822;color:#94a3b8;border:1px solid #2d3748;cursor:pointer">3. Cierre Caja</button>
         </div>
-        <div class="slot">
-          <div>
-            <b>Fiado Vecina Donya Rosa</b>
-            <div class="who" style="color:#94a3b8">Abarrotes + Aceite (Anotado a cuenta)</div>
-          </div>
-          <span class="tag" style="background:rgba(224,138,74,0.2);color:#e08a4a">Fiado $3.700</span>
-        </div>
-        <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px;background:#e08a4a;color:#fff;border:none;text-align:center" href="https://bodega-trial-almacen-demo.onrender.com/login" target="_blank" rel="noopener">Abrir Caja POS (PIN Admin: 1234 / Cajero: 0000) →</a>
+
+        <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px;background:#e08a4a;color:#fff;border:none;text-align:center" href="/contacto/?producto=Nexo+Almacen">Solicitar Trial Gratis para tu Almacén (3 Días) →</a>
       </aside>
     </section>
 
@@ -93,13 +96,6 @@
       <div class="mood-tile" style="background:linear-gradient(145deg,#161b24,#c87435)"><span>Panadería</span></div>
       <div class="mood-tile" style="background:linear-gradient(145deg,#0f1218,#e08a4a 140%)"><span>Lácteos</span></div>
       <div class="mood-tile" style="background:linear-gradient(145deg,#1e293b,#f59e0b)"><span>Bebidas</span></div>
-    </div>
-
-    <div class="wrap stats">
-      <div class="stat"><strong>POS 3 sec</strong><span>Cobro ultra rápido</span></div>
-      <div class="stat"><strong>Fiado</strong><span>Control de deuda por vecino</span></div>
-      <div class="stat"><strong>Códigos EAN</strong><span>Pistola de barras o touch</span></div>
-      <div class="stat"><strong>Reorden</strong><span>Alertas de stock crítico</span></div>
     </div>
 
     <section class="d-section alt" id="rubros">
@@ -139,57 +135,16 @@
             <p>Leches 1L, yogurts, quesos laminados, mantequillas y huevos por docena.</p>
             <span class="dur">Control de fecha y rotación</span>
           </div>
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Snacks & Golosinas</h3>
-              <span class="price">$400 – $1.100</span>
-            </div>
-            <p>Papas fritas, galletas, chocolates, alfajores y caramelos de mostrador.</p>
-            <span class="dur">Venta rápida al paso</span>
-          </div>
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Limpieza & Higiene</h3>
-              <span class="price">$900 – $2.200</span>
-            </div>
-            <p>Detergentes, cloro, lavaloza, papel higiénico x4, jabones y desinfectantes.</p>
-            <span class="dur">Reposición programada</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="d-section" id="pos">
-      <div class="wrap">
-        <h2 class="d-title">Funcionalidades del POS de Almacén</h2>
-        <div class="svc-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
-          <div class="svc-card">
-            <h3>⚡ Venta Rápida al Vuelo</h3>
-            <p>Ingresa un monto directo sin necesidad de buscar el producto en el catálogo cuando hay prisa.</p>
-          </div>
-          <div class="svc-card">
-            <h3>💵 Botones de Vuelto Rápido</h3>
-            <p>Calcula automáticamente el vuelto al presionar billetes de $1k, $2k, $5k, $10k o $20k.</p>
-          </div>
-          <div class="svc-card">
-            <h3>📓 Módulo de Fiado</h3>
-            <p>Registra deudas asociadas a vecinos recurrentes y acepta abonos parciales en caja.</p>
-          </div>
-          <div class="svc-card">
-            <h3>📊 Cierre de Caja & Márgenes</h3>
-            <p>Cuadra el efectivo del turno y consulta el valor total de inventario y margen de ganancia por ítem.</p>
-          </div>
         </div>
       </div>
     </section>
 
     <section class="d-section alt" style="text-align:center">
       <div class="wrap">
-        <h2>¿Tienes un Almacén o Minimarket?</h2>
-        <p class="d-sub" style="margin-bottom:24px">Prueba Nexo Comercio gratis por 3 días. Controla tu mostrador fácilmente.</p>
+        <h2>¿Quieres Probar Nexo en tu Almacén?</h2>
+        <p class="d-sub" style="margin-bottom:24px">Te configuramos un Trial Privado de 3 días con el catálogo de tu negocio.</p>
         <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-          <a class="d-btn d-btn-fill" href="https://bodega-trial-almacen-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#e08a4a;color:#fff;border:none;padding:12px 24px">Probar POS Almacén Live (PIN 1234 / 0000) →</a>
-          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Almacen">Solicitar Trial 3 Días</a>
+          <a class="d-btn d-btn-fill" href="/contacto/?producto=Nexo+Almacen" style="background:#e08a4a;color:#fff;border:none;padding:12px 24px">Pedir Trial Gratis (3 Días) →</a>
         </div>
       </div>
     </section>
@@ -197,10 +152,61 @@
 
   <footer class="d-footer">
     <div class="wrap">
-      <p>© Almacén El Barrio · Demo impulsada por <strong>Nexo Comercio</strong></p>
+      <p>© Almacén El Barrio · Demo en Video impulsada por <strong>Nexo Comercio</strong></p>
     </div>
   </footer>
 
-  <script src="/js/demos.js"></script>
+  <script>
+  function loadScene(num) {
+    const btn1 = document.getElementById('sc-btn-1');
+    const btn2 = document.getElementById('sc-btn-2');
+    const btn3 = document.getElementById('sc-btn-3');
+    const content = document.getElementById('demo-scene-content');
+
+    [btn1, btn2, btn3].forEach(b => {
+      b.style.background = '#141822';
+      b.style.color = '#94a3b8';
+      b.style.border = '1px solid #2d3748';
+    });
+
+    if (num === 1) {
+      btn1.style.background = '#e08a4a';
+      btn1.style.color = '#fff';
+      btn1.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#e08a4a;letter-spacing:.08em;margin-bottom:6px">Escena 1 · Cobro en Mostrador</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">⚡ Venta Rápida & Botones de Vuelto</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">El cajero digita <strong>$3.500</strong> en el POS, presiona el botón billete <strong>$10.000</strong> y Nexo calcula inmediatamente <strong>Vuelto: $6.500</strong> en pantalla gigante.</p>
+        <div style="background:rgba(224,138,74,0.1);border:1px dashed #e08a4a;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Cobro realizado en 3.2 segundos. Cero errores de cambio.
+        </div>
+      `;
+    } else if (num === 2) {
+      btn2.style.background = '#e08a4a';
+      btn2.style.color = '#fff';
+      btn2.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#e08a4a;letter-spacing:.08em;margin-bottom:6px">Escena 2 · Cuaderno Digital de Barrio</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">📓 Registro de Fiado por Vecino</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">Llega un vecino recurrente: el cajero selecciona el perfil de cliente y registra el consumo a su libreta digital con 1 click.</p>
+        <div style="background:rgba(224,138,74,0.1);border:1px dashed #e08a4a;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Cuentas claras sin cuadernos de papel que se pierden.
+        </div>
+      `;
+    } else if (num === 3) {
+      btn3.style.background = '#e08a4a';
+      btn3.style.color = '#fff';
+      btn3.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#e08a4a;letter-spacing:.08em;margin-bottom:6px">Escena 3 · Fin de Turno</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">📊 Cierre de Caja & Reporte de Ganancia</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">Al cerrar la jornada, Nexo compara el total de ventas en efectivo y tarjeta con el inventario descontado y entrega el margen exacto en pesos.</p>
+        <div style="background:rgba(224,138,74,0.1);border:1px dashed #e08a4a;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Cuadre de caja en menos de 2 minutos al cerrar el almacén.
+        </div>
+      `;
+    }
+  }
+  </script>
 </body>
 </html>

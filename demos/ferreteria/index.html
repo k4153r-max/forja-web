@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Herramientas del Sur — Ferretería & Materiales · Demo Nexo Comercio</title>
-  <meta name="description" content="Demo de ferretería con Nexo Comercio. Skin industrial, cuentas de maestros, fijaciones y código SKU.">
+  <title>Herramientas del Sur — Ferretería & Materiales · Demo Interactiva Nexo Comercio</title>
+  <meta name="description" content="Demo en video interactivo de ferretería con Nexo Comercio. Skin industrial, cuentas de maestros, SKU y stock.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0e1014">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,8 +15,8 @@
 </head>
 <body class="theme-ferreteria">
   <div class="demo-ribbon">
-    <span class="badge">Demo Nexo Comercio</span>
-    <span>Herramientas del Sur · Demo interactiva en vivo</span>
+    <span class="badge">Demo Interactiva en Video</span>
+    <span>Herramientas del Sur · Demostración visual de producto</span>
     <span class="sep">·</span>
     <a href="/demos/">Todas las demos</a>
     <span class="sep">·</span>
@@ -27,11 +27,10 @@
     <div class="wrap d-nav">
       <a href="/demos/ferreteria/" class="d-brand"><span class="mark" style="background:#e36c12;color:#fff">🔨</span> Herramientas del Sur</a>
       <nav class="d-nav-links" aria-label="Principal">
+        <a href="#video-demo">Video Demostrativo</a>
         <a href="#rubros">Herramientas & Materiales</a>
         <a href="#maestros">Cuentas de Maestros</a>
-        <a href="#pos">Skin Industrial POS</a>
-        <a href="#info">Horario & Ubicación</a>
-        <a class="d-btn d-btn-fill d-btn-sm" href="https://bodega-trial-ferreteria-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#e36c12;color:#fff;border:none">Entrar al POS Ferretero →</a>
+        <a class="d-btn d-btn-fill d-btn-sm" href="/contacto/?producto=Nexo+Ferreteria" style="background:#e36c12;color:#fff;border:none">Pedir Trial 3 Días →</a>
       </nav>
       <button class="d-nav-toggle" type="button" aria-label="Menú" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -42,15 +41,15 @@
   <main>
     <section class="wrap d-hero">
       <div>
-        <p class="d-kicker" style="color:#e36c12">Nexo Comercio · Ferretería & Mostrador Industrial</p>
+        <p class="d-kicker" style="color:#e36c12">Demostración en Video · Ferretería & Mostrador Industrial</p>
         <h1>Materiales al grano.<br><em style="color:#e36c12;font-style:normal">Control total de stock y cuentas.</em></h1>
         <p class="sub">
-          Demo de ferretería industrial. Búsqueda por SKU, pernos, fijaciones, pinturas y cuentas corrientes
-          para maestros y contratistas impulsado por <strong>Nexo Comercio</strong>.
+          Mira en video el mostrador industrial de <strong>Nexo Comercio</strong>: búsqueda ágil por SKU y fijaciones,
+          cuentas corrientes para maestros contratistas y sugerido automático de compras.
         </p>
         <div class="d-hero-actions">
-          <a class="d-btn d-btn-fill" href="https://bodega-trial-ferreteria-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#e36c12;color:#fff;border:none">Probar POS Ferretería (PIN 1234) →</a>
-          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Ferreteria">Solicitar Trial 3 Días</a>
+          <a class="d-btn d-btn-fill" href="#video-demo" style="background:#e36c12;color:#fff;border:none">▶️ Ver Video Demostrativo</a>
+          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Ferreteria">Pedir Trial Gratis (3 Días)</a>
         </div>
         <div class="d-hero-meta">
           <div><strong>⚙️ Búsqueda SKU</strong><span>Fijaciones, medidas y unidades</span></div>
@@ -58,33 +57,35 @@
           <div><strong>📦 Stock en Bodega</strong><span>Alertas de reorden automático</span></div>
         </div>
       </div>
-      <aside class="d-hero-card" style="background:#1a202c;border:1px solid #2d3748">
-        <div class="card-head">
-          <h3>Mostrador Ferretero Hoy</h3>
+
+      <!-- REPRODUCTOR / WALKTHROUGH INTERACTIVO EN VIDEO -->
+      <aside class="d-hero-card" id="video-demo" style="background:#1a202c;border:1px solid #2d3748;padding:20px">
+        <div class="card-head" style="margin-bottom:14px">
+          <h3 style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;box-shadow:0 0 8px #ef4444"></span>
+            Video Demo: Nexo Ferretería
+          </h3>
           <span class="live" style="background:rgba(227,108,18,0.2);color:#e36c12">Skin Industrial</span>
         </div>
-        <div class="slot" style="border-bottom:1px solid #2d3748">
+
+        <div id="demo-scene-content" style="background:#0b0d12;border:1px solid #2d3748;border-radius:12px;padding:18px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between">
           <div>
-            <b>Taladro Percutor 750W + Set Brocas</b>
-            <div class="who" style="color:#94a3b8">Maestro Silva · Cuenta Corriente</div>
+            <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#e36c12;letter-spacing:.08em;margin-bottom:6px">Escena 1 · Mostrador Ferretero</div>
+            <h4 style="font-size:16px;color:#fff;margin:0 0 8px">⚙️ Búsqueda por SKU & Medidas de Fijación</h4>
+            <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">El vendedor teclea <code>autoperforante 1 5/8</code> y Nexo lista instantáneamente el precio por unidad, caja de 500 y ubicación exacta en estantería.</p>
+            <div style="background:rgba(227,108,18,0.1);border:1px dashed #e36c12;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+              💡 <strong>Resultado:</strong> Búsqueda de materiales en menos de 2 segundos sin ir a la bodega a revisar.
+            </div>
           </div>
-          <span class="tag free" style="background:rgba(34,197,94,0.2);color:#4ade80">$48.900</span>
         </div>
-        <div class="slot" style="border-bottom:1px solid #2d3748">
-          <div>
-            <b>Tornillos Drywall 1 5/8 (x500)</b>
-            <div class="who" style="color:#94a3b8">Venta Directa · Efectivo</div>
-          </div>
-          <span class="tag free" style="background:rgba(34,197,94,0.2);color:#4ade80">$6.500</span>
+
+        <div style="display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding-bottom:4px">
+          <button type="button" onclick="loadSceneFerreteria(1)" id="scf-btn-1" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#e36c12;color:#fff;border:none;cursor:pointer">1. Búsqueda SKU</button>
+          <button type="button" onclick="loadSceneFerreteria(2)" id="scf-btn-2" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#141822;color:#94a3b8;border:1px solid #2d3748;cursor:pointer">2. Cuentas Maestros</button>
+          <button type="button" onclick="loadSceneFerreteria(3)" id="scf-btn-3" style="flex:1;padding:6px;font-size:11px;font-weight:700;border-radius:6px;background:#141822;color:#94a3b8;border:1px solid #2d3748;cursor:pointer">3. Sugerido Stock</button>
         </div>
-        <div class="slot">
-          <div>
-            <b>Esmalte al Agua 1 Galón + Rodillo</b>
-            <div class="who" style="color:#94a3b8">Contratista González · Abonado</div>
-          </div>
-          <span class="tag" style="background:rgba(227,108,18,0.2);color:#e36c12">Saldo $12.000</span>
-        </div>
-        <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px;background:#e36c12;color:#fff;border:none;text-align:center" href="https://bodega-trial-ferreteria-demo.onrender.com/login" target="_blank" rel="noopener">Abrir POS Ferretería (PIN Admin: 1234 / Cajero: 0000) →</a>
+
+        <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px;background:#e36c12;color:#fff;border:none;text-align:center" href="/contacto/?producto=Nexo+Ferreteria">Solicitar Trial Gratis para tu Ferretería (3 Días) →</a>
       </aside>
     </section>
 
@@ -95,60 +96,12 @@
       <div class="mood-tile" style="background:linear-gradient(145deg,#1e293b,#f59e0b)"><span>Electricidad</span></div>
     </div>
 
-    <div class="wrap stats">
-      <div class="stat"><strong>SKU Búsqueda</strong><span>Filtro por código o medida</span></div>
-      <div class="stat"><strong>Maestros</strong><span>Ficha de crédito y fiado</span></div>
-      <div class="stat"><strong>Caja Rápida</strong><span>Billetes y cálculo vuelto</span></div>
-      <div class="stat"><strong>Márgenes</strong><span>Margen real $ y % en pantalla</span></div>
-    </div>
-
-    <section class="d-section alt" id="rubros">
-      <div class="wrap">
-        <h2 class="d-title">Categorías de Ferretería</h2>
-        <div class="svc-grid">
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Fijaciones & Pernos</h3>
-              <span class="price">$15 – $12.000</span>
-            </div>
-            <p>Tornillos autoperforantes, golillas, tacos expansivos, pernos coche y tarugos nylon.</p>
-            <span class="dur">Venta por unidad o caja</span>
-          </div>
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Herramientas Manuales & Eléctricas</h3>
-              <span class="price">$3.500 – $89.000</span>
-            </div>
-            <p>Taladros, esmeriles, alicates, martillos, huinchas de medir y sets de llaves.</p>
-            <span class="dur">Garantía e inventario SKU</span>
-          </div>
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Pinturas & Adhesivos</h3>
-              <span class="price">$2.900 – $34.000</span>
-            </div>
-            <p>Esmaltes al agua, óleo, brochas, rodillos, lija de agua, pasta muro y siliconas.</p>
-            <span class="dur">Diversidad de formatos</span>
-          </div>
-          <div class="svc-card">
-            <div class="svc-head">
-              <h3>Electricidad & Gasfitería</h3>
-              <span class="price">$800 – $18.000</span>
-            </div>
-            <p>Cables, enchufes, automáticos, tubos PVC, llaves de paso y teflón.</p>
-            <span class="dur">Insumos técnicos</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="d-section alt" style="text-align:center">
       <div class="wrap">
-        <h2>¿Tienes una Ferretería o Casa de Materiales?</h2>
-        <p class="d-sub" style="margin-bottom:24px">Prueba Nexo Comercio gratis por 3 días. Administra tu mostrador con precisión.</p>
+        <h2>¿Quieres Probar Nexo en tu Ferretería?</h2>
+        <p class="d-sub" style="margin-bottom:24px">Te preparamos una instancia de Trial Privado de 3 días para tu local.</p>
         <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-          <a class="d-btn d-btn-fill" href="https://bodega-trial-ferreteria-demo.onrender.com/login" target="_blank" rel="noopener" style="background:#e36c12;color:#fff;border:none;padding:12px 24px">Probar POS Ferretería Live (PIN 1234 / 0000) →</a>
-          <a class="d-btn d-btn-line" href="/contacto/?producto=Nexo+Ferreteria">Solicitar Trial 3 Días</a>
+          <a class="d-btn d-btn-fill" href="/contacto/?producto=Nexo+Ferreteria" style="background:#e36c12;color:#fff;border:none;padding:12px 24px">Pedir Trial Gratis (3 Días) →</a>
         </div>
       </div>
     </section>
@@ -156,10 +109,61 @@
 
   <footer class="d-footer">
     <div class="wrap">
-      <p>© Herramientas del Sur · Demo impulsada por <strong>Nexo Comercio</strong></p>
+      <p>© Herramientas del Sur · Demo en Video impulsada por <strong>Nexo Comercio</strong></p>
     </div>
   </footer>
 
-  <script src="/js/demos.js"></script>
+  <script>
+  function loadSceneFerreteria(num) {
+    const btn1 = document.getElementById('scf-btn-1');
+    const btn2 = document.getElementById('scf-btn-2');
+    const btn3 = document.getElementById('scf-btn-3');
+    const content = document.getElementById('demo-scene-content');
+
+    [btn1, btn2, btn3].forEach(b => {
+      b.style.background = '#141822';
+      b.style.color = '#94a3b8';
+      b.style.border = '1px solid #2d3748';
+    });
+
+    if (num === 1) {
+      btn1.style.background = '#e36c12';
+      btn1.style.color = '#fff';
+      btn1.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#e36c12;letter-spacing:.08em;margin-bottom:6px">Escena 1 · Mostrador Ferretero</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">⚙️ Búsqueda por SKU & Medidas de Fijación</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">El vendedor teclea <code>autoperforante 1 5/8</code> y Nexo lista instantáneamente el precio por unidad, caja de 500 y ubicación exacta en estantería.</p>
+        <div style="background:rgba(227,108,18,0.1);border:1px dashed #e36c12;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Búsqueda de materiales en menos de 2 segundos sin ir a la bodega a revisar.
+        </div>
+      `;
+    } else if (num === 2) {
+      btn2.style.background = '#e36c12';
+      btn2.style.color = '#fff';
+      btn2.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#e36c12;letter-spacing:.08em;margin-bottom:6px">Escena 2 · Cuenta Corriente</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">👷 Crédito a Maestros & Estado de Cuenta</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">El maestro retira materiales para su obra: se carga a su cuenta con límite de crédito prefijado y se imprime el ticket de retiro.</p>
+        <div style="background:rgba(227,108,18,0.1);border:1px dashed #e36c12;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Control riguroso de deudas sin pérdidas por desorden en vales.
+        </div>
+      `;
+    } else if (num === 3) {
+      btn3.style.background = '#e36c12';
+      btn3.style.color = '#fff';
+      btn3.style.border = 'none';
+      content.innerHTML = `
+        <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#e36c12;letter-spacing:.08em;margin-bottom:6px">Escena 3 · Control de Inventario</div>
+        <h4 style="font-size:16px;color:#fff;margin:0 0 8px">📦 Reporte de Reorden & Stock Crítico</h4>
+        <p style="font-size:12.5px;color:#94a3b8;margin:0 0 12px">El sistema marca en rojo las brochas de 2" y galones de esmalte con stock bajo el mínimo e indica el costo estimado de reposición.</p>
+        <div style="background:rgba(227,108,18,0.1);border:1px dashed #e36c12;padding:10px;border-radius:8px;font-size:12px;color:#fff">
+          💡 <strong>Resultado:</strong> Cero quiebres de stock en los artículos de mayor salida.
+        </div>
+      `;
+    }
+  }
+  </script>
 </body>
 </html>
