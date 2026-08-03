@@ -658,6 +658,34 @@ body.theme-aura .mood-tile:nth-child(2) { background: linear-gradient(145deg, #e
 body.theme-aura .mood-tile:nth-child(3) { background: linear-gradient(145deg, #1c2420, #5b8a72 120%); }
 body.theme-aura .mood-tile:nth-child(4) { background: linear-gradient(145deg, #d5e0d9, #3f6b55); }
 
+body.theme-taller {
+  --d-bg: #0d0f14;
+  --d-bg-2: #141720;
+  --d-ink: #f1f5f9;
+  --d-muted: #94a3b8;
+  --d-brand: #f97316;
+  --d-brand-2: #ea580c;
+  --d-card: #161b26;
+  --d-line: #273042;
+  --d-brand-soft: rgba(249, 115, 22, 0.12);
+  --d-ok: #22c55e;
+  --d-ok-bg: #143022;
+  --d-shadow: 0 1px 0 rgba(255,255,255,.03) inset, 0 16px 40px rgba(0,0,0,.45);
+  --d-nexo: #f97316;
+}
+body.theme-taller .d-header {
+  background: color-mix(in srgb, var(--d-bg) 90%, transparent);
+}
+body.theme-taller .d-btn-line { border-color: #273042; color: var(--d-ink); }
+body.theme-taller .demo-ribbon {
+  background: #f97316;
+  color: #0d0f14;
+}
+body.theme-taller .demo-ribbon a { color: #0d0f14; }
+body.theme-taller .demo-ribbon .badge {
+  background: rgba(13,15,20,.18); color: #0d0f14;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .d-hero, .svc-grid, .team-grid, .rev-grid, .info-grid, .stats, .mood {
