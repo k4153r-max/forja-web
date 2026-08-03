@@ -58,31 +58,32 @@
           <div><strong>1-Click WA</strong><span>Avisos de vehículo listo</span></div>
         </div>
       </div>
-      <aside class="d-hero-card" id="agenda" style="background:#161b26;border:1px solid #273042">
-        <div class="card-head">
-          <h3>Vehículos en Taller Hoy</h3>
-          <span class="live" style="background:rgba(249,115,22,0.2);color:#f97316">En tiempo real</span>
+      <!-- REPRODUCTOR / WALKTHROUGH INTERACTIVO EN VIDEO CON IMAGEN REAL -->
+      <aside class="d-hero-card" id="agenda" style="background:#161b26;border:1px solid #273042;padding:20px">
+        <div class="card-head" style="margin-bottom:12px">
+          <h3 style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;box-shadow:0 0 8px #ef4444"></span>
+            Video Demo: Nexo Taller (En Vivo)
+          </h3>
+          <span class="live" style="background:rgba(249,115,22,0.2);color:#f97316">DEMO HD</span>
         </div>
-        <div class="slot" style="border-bottom:1px solid #273042">
-          <div>
-            <b style="font-family:monospace;background:#000;color:#fbbf24;padding:1px 5px;border-radius:4px;border:1px solid #fbbf24">🇨🇱 AA·BB·12</b>
-            <div class="who" style="color:#94a3b8">Toyota RAV4 2021 · Mantención 50k</div>
+
+        <!-- MARCO DE VIDEO ANIMADO CON CAPTURA REAL DE PRODUCTO -->
+        <div class="video-player-frame">
+          <img src="/assets/demos/taller.jpg" alt="Demostración Real Tablero Kanban Taller Ruta Norte Nexo" class="video-player-img">
+          <div class="video-player-overlay">
+            <div class="video-player-top">
+              <span class="video-rec-badge"><span class="video-rec-dot"></span> 🔴 REPRODUCIENDO DEMO REAL</span>
+              <span style="font-size:10px;color:#fff;background:rgba(0,0,0,0.6);padding:2px 6px;border-radius:4px">Nexo Taller v2.4</span>
+            </div>
+            <div class="video-player-controls">
+              <span>▶ 01:45 / 03:10</span>
+              <div class="video-progress-bar">
+                <div class="video-progress-fill" style="background:#f97316"></div>
+              </div>
+              <span>HD 1080p</span>
+            </div>
           </div>
-          <span class="tag" style="background:rgba(168,85,247,0.2);color:#c084fc">En Taller</span>
-        </div>
-        <div class="slot" style="border-bottom:1px solid #273042">
-          <div>
-            <b style="font-family:monospace;background:#000;color:#fbbf24;padding:1px 5px;border-radius:4px;border:1px solid #fbbf24">🇨🇱 CD·EF·34</b>
-            <div class="who" style="color:#94a3b8">Chevrolet Sail · Escáner + Batería</div>
-          </div>
-          <span class="tag" style="background:rgba(59,130,246,0.2);color:#60a5fa">Diagnóstico</span>
-        </div>
-        <div class="slot">
-          <div>
-            <b style="font-family:monospace;background:#000;color:#fbbf24;padding:1px 5px;border-radius:4px;border:1px solid #fbbf24">🇨🇱 HG·JK·56</b>
-            <div class="who" style="color:#94a3b8">Nissan Qashqai · Cambio de Aceite</div>
-          </div>
-          <span class="tag free" style="background:rgba(34,197,94,0.2);color:#4ade80">Listo Retiro</span>
         </div>
         <a class="d-btn d-btn-fill d-btn-block" style="margin-top:16px;background:#f97316;color:#fff;border:none;text-align:center" href="https://nexus-trial-taller.onrender.com/login" target="_blank" rel="noopener">Ingresar al Panel de Taller (PIN: DemoTaller14) →</a>
       </aside>
