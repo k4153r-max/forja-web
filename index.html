@@ -13,79 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main-v5.css">
-  <style>
-    html,body{overflow-x:hidden}
-    h1{font-size:clamp(1.9rem,8.5vw,4.2rem)!important;word-break:break-word}
-    @media(max-width:600px){
-      h1{font-size:clamp(1.6rem,7.5vw,2.2rem)!important}
-      .hero{padding:52px 0 40px}
-    }
-    .status-badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;letter-spacing:.04em;color:inherit;opacity:.55;text-decoration:none;transition:opacity .2s}
-    .status-badge:hover{opacity:1}
-    .status-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade8088}
-    .status-hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);font-size:.75rem;letter-spacing:.06em;color:#4ade80;text-decoration:none;margin-bottom:20px;transition:background .2s,border-color .2s}
-    .status-hero-badge:hover{background:rgba(74,222,128,.14);border-color:rgba(74,222,128,.35)}
-    .status-hero-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse-green 2s infinite}
-    @keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}50%{box-shadow:0 0 0 5px rgba(74,222,128,0)}}
-
-    .trust-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:40px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-    .trust-item{background:var(--surface);padding:18px 16px;text-align:center}
-    .trust-item strong{display:block;font-family:var(--display);font-size:1.05rem;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:4px}
-    .trust-item span{font-size:.75rem;color:var(--muted);letter-spacing:.02em}
-    @media(max-width:700px){.trust-bar{grid-template-columns:1fr 1fr}}
-
-    .ops-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    @media(max-width:800px){.ops-grid{grid-template-columns:1fr}}
-    .ops-card{padding:22px 20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
-    .ops-card .ops-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-    .ops-card h3{margin-bottom:8px;font-size:1.05rem}
-    .ops-card p{color:var(--muted);font-size:.9rem;line-height:1.6;margin:0}
-
-    .evidence{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
-    @media(max-width:800px){.evidence{grid-template-columns:1fr}}
-    .case-card{padding:28px 24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);display:flex;flex-direction:column;gap:12px}
-    .case-card .tag{display:inline-flex;align-self:flex-start;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--nexo-soft);color:var(--nexo)}
-    .case-card .tag.indago{background:var(--indago-soft);color:var(--indago)}
-    .case-card h3{font-size:1.35rem;margin:0}
-    .case-card p{color:var(--muted);font-size:.92rem;line-height:1.6;margin:0;flex:1}
-    .case-facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-    .case-facts span{font-size:.78rem;font-weight:650;padding:6px 10px;border-radius:8px;border:1px solid var(--line);color:rgba(255,255,255,.72)}
-
-    .testimonial-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:36px 40px;max-width:720px;margin:0 auto}
-    .testimonial-card blockquote{font-size:1.1rem;line-height:1.75;color:#F3EEE6;margin:0 0 28px;font-style:italic;position:relative;padding-left:20px}
-    .testimonial-card blockquote::before{content:'\201C';position:absolute;left:0;top:-.1em;font-size:2.5rem;line-height:1;color:#C4894A;font-style:normal}
-    .testimonial-author{display:flex;align-items:center;gap:14px}
-    .testimonial-avatar{width:44px;height:44px;border-radius:50%;background:#C4894A;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.05em}
-    .testimonial-author strong{display:block;font-size:.9rem;color:#F3EEE6}
-    .testimonial-author span{font-size:.76rem;opacity:.5;color:#F3EEE6}
-
-    .founder-inner{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start;max-width:760px;margin:0 auto}
-    .founder-avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(145deg,#1B2A4A,#0B1220);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:3px solid rgba(196,137,74,.4);font-family:var(--display);font-weight:800;font-size:1.6rem;color:#C4894A;letter-spacing:.04em}
-    .founder-text .eyebrow{margin-bottom:.4rem}
-    .founder-text h2{margin:.2rem 0 1rem}
-    .founder-text p{opacity:.7;line-height:1.75;margin-bottom:.75rem}
-    .founder-commitments{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
-    .founder-commitments li{font-size:.88rem;color:rgba(242,242,240,.72);padding-left:18px;position:relative}
-    .founder-commitments li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
-    @media(max-width:600px){.founder-inner{grid-template-columns:1fr;gap:20px}.founder-avatar{width:72px;height:72px;font-size:1.25rem}.testimonial-card{padding:24px 20px}}
-
-    .faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:4px}
-    .faq-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
-    .faq-item summary{padding:18px 22px;cursor:pointer;font-weight:600;font-size:.95rem;color:#F3EEE6;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;user-select:none}
-    .faq-item summary::after{content:'+';font-size:1.3rem;color:#C4894A;flex-shrink:0;transition:transform .2s;line-height:1}
-    .faq-item[open] summary::after{transform:rotate(45deg)}
-    .faq-item p{padding:0 22px 18px;opacity:.65;line-height:1.7;margin:0;font-size:.9rem}
-    .faq-item summary::-webkit-details-marker{display:none}
-    .garantia{font-size:.78rem;opacity:.4;margin-top:18px;text-align:center;letter-spacing:.03em}
-
-    .channels{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px;margin:0 auto}
-    @media(max-width:560px){.channels{grid-template-columns:1fr}}
-    .channel{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-align:left}
-    .channel .ch-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-    .channel strong{display:block;font-size:1rem;color:#fff;margin-bottom:6px}
-    .channel p{font-size:.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5}
-  </style>
+  <link rel="stylesheet" href="/css/main-v6.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -93,7 +21,7 @@
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
       <a href="/" class="logo" aria-label="ETEMEN">
-        <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="32" height="32">
+        <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="ETEMEN Logo" width="34" height="34">
         <div class="logo-wordmark">
           <span class="name">ETEMEN</span>
           <span class="tagline">Fundamento</span>
@@ -114,9 +42,13 @@
     <section class="hero">
       <div class="wrap">
         <p class="eyebrow">ETEMEN · Chile</p>
-        <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener" class="status-hero-badge">
-          <span class="status-hero-dot"></span>Sistemas operativos
-        </a>
+        <div>
+          <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener" class="telemetry-bar" title="Ver monitoreo público de uptime">
+            <span class="telemetry-status"><span class="telemetry-dot"></span>SISTEMAS OPERATIVOS</span>
+            <span style="opacity:0.35">|</span>
+            <span>UPTIME 99.98% · MONITOREO ACTIVO</span>
+          </a>
+        </div>
         <h1>Software con base firme para negocios reales.</h1>
         <p class="lead hero-promise">
           Construimos y operamos productos que se usan todos los días.
@@ -126,7 +58,7 @@
           <a class="btn btn-primary" href="/nexo/">Conocer Nexo</a>
           <a class="btn btn-ghost" href="/contacto/">Solicitar información</a>
         </div>
-        <p class="hero-note">Sin intermediarios · Sin costos ocultos · Respuesta en menos de 24 horas</p>
+        <p class="hero-note">◆ Sin intermediarios · Sin costos ocultos · Respuesta en menos de 24 horas</p>
 
         <div class="trust-bar" aria-label="Indicadores de confianza">
           <div class="trust-item">
@@ -139,11 +71,11 @@
           </div>
           <div class="trust-item">
             <strong>14 días</strong>
-            <span>trial sin tarjeta</span>
+            <span>trial sin tarjeta de crédito</span>
           </div>
           <div class="trust-item">
             <strong>&lt; 24 h</strong>
-            <span>tiempo de respuesta</span>
+            <span>tiempo de respuesta directo</span>
           </div>
         </div>
       </div>
@@ -197,6 +129,7 @@
 
         <div class="ops-grid">
           <article class="ops-card">
+            <span class="ops-num">01</span>
             <div class="ops-label">Monitoreo</div>
             <h3>Sistemas bajo observación</h3>
             <p>
@@ -205,6 +138,7 @@
             </p>
           </article>
           <article class="ops-card">
+            <span class="ops-num">02</span>
             <div class="ops-label">Datos</div>
             <h3>Tu local, tus datos</h3>
             <p>
@@ -213,6 +147,7 @@
             </p>
           </article>
           <article class="ops-card">
+            <span class="ops-num">03</span>
             <div class="ops-label">Responsabilidad</div>
             <h3>Quién construye, responde</h3>
             <p>
