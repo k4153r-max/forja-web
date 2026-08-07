@@ -204,45 +204,53 @@ function internalReader(b) {
     </div></main>`;
   }
   return `<main class="page reader-page"><div class="wrap">
-    <div class="crumb"><a href="${link('catalogo')}">Biblioteca</a> / <a href="${link('libro', '&libro=' + b.id)}">${b.title}</a> / Leer</div>
-    <div class="reader-card" id="reader-card">
-      <header class="reader-head">
-        <div class="reader-title">
-          <span class="eyebrow">Lector Umbral · texto completo</span>
-          <h1 class="reader-h1">${b.title}</h1>
-          <p class="reader-sub">${b.author} · ${b.year} · ${b.genre || b.type}</p>
-        </div>
+    <div class="reader-stage theme-paper" id="reader-stage">
+      <header class="reader-topbar" id="reader-topbar">
+        <a class="back" href="${link('libro', '&libro=' + b.id)}" title="Volver a la ficha">← Salir</a>
+        <div class="meta-mini"><strong>${b.title}</strong> · ${b.author}</div>
         <div class="reader-tools">
           <button type="button" id="fr-toc" class="rtool" title="Índice" aria-label="Índice">☰</button>
+          <button type="button" id="fr-settings" class="rtool" title="Ajustes de lectura" aria-label="Ajustes">Aa</button>
+          <button type="button" id="fr-mode" class="rtool" title="Modo scroll o páginas" aria-label="Modo de lectura">↕</button>
           <button type="button" id="fr-minus" class="rtool" aria-label="Disminuir letra">A−</button>
           <span class="rtool-size" id="rtool-size">100%</span>
           <button type="button" id="fr-plus" class="rtool" aria-label="Aumentar letra">A+</button>
-          <button type="button" id="fr-theme" class="rtool" aria-label="Cambiar tema" title="Papel / noche / sepia">◐</button>
         </div>
       </header>
-      <div class="reader-shell">
+      <div class="reader-settings" id="reader-settings" hidden>
+        <label>Interlineado <input type="range" id="fr-lh" min="145" max="210" value="178"></label>
+        <label>Ancho <input type="range" id="fr-width" min="28" max="46" value="38"></label>
+        <div class="theme-pills" role="group" aria-label="Tema">
+          <button type="button" class="theme-pill active" data-theme="paper" title="Papel" aria-label="Tema papel"></button>
+          <button type="button" class="theme-pill" data-theme="sepia" title="Sepia" aria-label="Tema sepia"></button>
+          <button type="button" class="theme-pill" data-theme="mist" title="Niebla" aria-label="Tema niebla"></button>
+          <button type="button" class="theme-pill" data-theme="night" title="Noche" aria-label="Tema noche"></button>
+        </div>
+      </div>
+      <div class="reader-shell" id="reader-shell">
         <aside class="reader-toc" id="reader-toc" hidden>
           <div class="toc-head">Índice</div>
-          <div class="toc-list" id="toc-list"><p class="toc-empty">Se genera al cargar el texto…</p></div>
+          <div class="toc-list" id="toc-list"><p class="toc-empty">Se genera al cargar…</p></div>
         </aside>
-        <article class="reader-body" id="reader-text"><p class="reader-loading">Cargando texto completo…</p></article>
+        <article class="reader-body mode-pages" id="reader-text" style="--read-size:1.125rem;--read-lh:1.78;--read-measure:38rem">
+          <p class="reader-loading">Preparando una lectura cómoda…</p>
+        </article>
       </div>
       <div class="read-ctrl" id="read-ctrl" hidden>
-        <button type="button" class="read-btn" id="read-prev" aria-label="Página anterior">‹</button>
+        <button type="button" class="read-btn" id="read-prev" aria-label="Anterior">‹</button>
         <div class="read-mid">
-          <div class="read-progress" id="read-bar"><span id="read-fill"></span></div>
+          <div class="read-progress" id="read-bar"><span class="read-fill" id="read-fill"></span></div>
           <span class="read-meta" id="read-meta"></span>
         </div>
-        <button type="button" class="read-btn" id="read-next" aria-label="Página siguiente">›</button>
-        <span class="read-hint">← → páginas · progreso guardado</span>
+        <button type="button" class="read-btn" id="read-next" aria-label="Siguiente">›</button>
       </div>
-      <footer class="reader-foot">
-        <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Estudiar con la guía →</a>
-        <a class="simple-btn" href="${audioUrl(b)}" target="_blank" rel="noopener">▶ Escuchar</a>
+      <div class="reader-foot-links">
+        <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Guía de estudio</a>
+        <a class="simple-btn" href="${audioUrl(b)}" target="_blank" rel="noopener">Audiolibro</a>
         <button type="button" class="simple-btn" id="read-reset">Reiniciar progreso</button>
-      </footer>
+      </div>
+      <p class="reader-credit">Dominio público · lectura en Umbral · tipografía optimizada para pantallas</p>
     </div>
-    <p class="reader-credit">Dominio público · lectura en Umbral · fuente Project Gutenberg / ediciones abiertas</p>
   </div></main>`;
 }
 
@@ -401,10 +409,15 @@ function how() {
   </div></main>`;
 }
 
-/* ── Lector: páginas, TOC, localStorage ── */
+/* ── Lector cómodo: tipografía, temas, scroll/páginas, progreso ── */
 function leerLoader(b) {
   const art = document.getElementById('reader-text');
   if (!art) return;
+  document.body.classList.add('reading-mode');
+  const stage = document.getElementById('reader-stage');
+  const shell = document.getElementById('reader-shell');
+  const topbar = document.getElementById('reader-topbar');
+  const settings = document.getElementById('reader-settings');
   const ctrl = document.getElementById('read-ctrl');
   const prevBtn = document.getElementById('read-prev');
   const nextBtn = document.getElementById('read-next');
@@ -412,11 +425,16 @@ function leerLoader(b) {
   const fill = document.getElementById('read-fill');
   const tocList = document.getElementById('toc-list');
   const tocPanel = document.getElementById('reader-toc');
-  const storageKey = 'umbral-read:' + b.id;
+  const storageKey = 'umbral-read-v2:' + b.id;
   let pages = [];
-  let toc = [];
+  let rawParas = [];
   let idx = 0;
   let fr = 100;
+  let lh = 178;
+  let measure = 38;
+  let theme = 'paper';
+  let mode = 'scroll'; // scroll es más cómodo en web
+  let chromeTimer = null;
 
   function esc(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -427,47 +445,111 @@ function leerLoader(b) {
     const u = t.replace(/[.,;:!?¡¿"'()\-—–]/g, '').trim();
     return u.length > 3 && u.length < 70 && /^[A-ZÁÉÍÓÚÑÜ0-9][A-ZÁÉÍÓÚÑÜ0-9\s.,;:!?¡¿\-—']+$/.test(u);
   }
+  function applyChrome() {
+    const base = 1.125 * (fr / 100);
+    art.style.setProperty('--read-size', base.toFixed(3) + 'rem');
+    art.style.setProperty('--read-lh', (lh / 100).toFixed(2));
+    art.style.setProperty('--read-measure', measure + 'rem');
+    const sz = document.getElementById('rtool-size');
+    if (sz) sz.textContent = fr + '%';
+    if (stage) {
+      stage.className = 'reader-stage theme-' + theme;
+    }
+    art.classList.toggle('mode-scroll', mode === 'scroll');
+    art.classList.toggle('mode-pages', mode === 'pages');
+    document.getElementById('fr-mode')?.classList.toggle('active', mode === 'scroll');
+    document.querySelectorAll('.theme-pill').forEach(p => {
+      p.classList.toggle('active', p.dataset.theme === theme);
+    });
+    const lhEl = document.getElementById('fr-lh');
+    const wEl = document.getElementById('fr-width');
+    if (lhEl) lhEl.value = String(lh);
+    if (wEl) wEl.value = String(measure);
+  }
   function save() {
     try {
-      localStorage.setItem(storageKey, JSON.stringify({ page: idx, fr, theme: document.getElementById('reader-card')?.className || '' }));
+      localStorage.setItem(storageKey, JSON.stringify({ page: idx, fr, lh, measure, theme, mode, scrollY: window.scrollY }));
     } catch (_) {}
   }
   function loadSaved() {
-    try {
-      return JSON.parse(localStorage.getItem(storageKey) || 'null');
-    } catch (_) {
-      return null;
-    }
+    try { return JSON.parse(localStorage.getItem(storageKey) || 'null'); }
+    catch (_) { return null; }
   }
-  function render(i) {
+  function paraToHtml(t, withDrop) {
+    if (isHead(t)) return '<h3 class="p-h">' + esc(t) + '</h3>';
+    return '<p' + (withDrop ? ' class="firstbit"' : '') + '>' + esc(t) + '</p>';
+  }
+  function renderPage(i) {
     idx = Math.max(0, Math.min(pages.length - 1, i));
     const seg = pages[idx];
     let h = '';
     if (idx === 0) {
       h += '<div class="p-cover"><h2 class="p-chapter">' + esc(b.title) + '</h2><p class="p-author">' + esc(b.author) + ' · ' + esc(String(b.year)) + '</p></div>';
     }
+    let firstP = true;
     for (const q of seg) {
       const t = q.trim();
-      h += isHead(t) ? ('<h3 class="p-h">' + esc(t) + '</h3>') : ('<p>' + esc(t) + '</p>');
+      if (!isHead(t) && firstP && idx === 0) {
+        h += paraToHtml(t, true);
+        firstP = false;
+      } else {
+        h += paraToHtml(t, false);
+        if (!isHead(t)) firstP = false;
+      }
     }
-    if (idx === 0 && h.indexOf('<p>') > -1) h = h.replace('<p>', '<p class="firstbit">');
     art.innerHTML = h;
-    metaEl.textContent = (idx + 1) + ' / ' + pages.length;
-    fill.style.width = pages.length > 1 ? Math.round(((idx + 1) / pages.length) * 100) + '%' : '100%';
-    prevBtn.disabled = idx === 0;
-    nextBtn.disabled = idx === pages.length - 1;
-    art.scrollTop = 0;
-    window.scrollTo({ top: Math.max(0, document.getElementById('reader-card').offsetTop - 12), behavior: 'smooth' });
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     save();
   }
-  function buildToc(rawParas) {
-    toc = [];
+  function renderScroll() {
+    let h = '<div class="p-cover"><h2 class="p-chapter">' + esc(b.title) + '</h2><p class="p-author">' + esc(b.author) + ' · ' + esc(String(b.year)) + '</p></div>';
+    let firstP = true;
+    let acc = 0;
+    pages.forEach((seg, pi) => {
+      if (pi > 0) h += '<hr class="page-break" data-page="' + pi + '">';
+      for (const q of seg) {
+        const t = q.trim();
+        if (!isHead(t) && firstP) {
+          h += paraToHtml(t, true);
+          firstP = false;
+        } else {
+          h += paraToHtml(t, false);
+          if (!isHead(t)) firstP = false;
+        }
+      }
+      acc += seg.length;
+    });
+    art.innerHTML = h;
+    updateProgress();
+    save();
+  }
+  function updateProgress() {
+    if (!pages.length) return;
+    if (mode === 'pages') {
+      metaEl.textContent = (idx + 1) + ' / ' + pages.length;
+      fill.style.width = pages.length > 1 ? Math.round(((idx + 1) / pages.length) * 100) + '%' : '100%';
+      prevBtn.disabled = idx === 0;
+      nextBtn.disabled = idx === pages.length - 1;
+      prevBtn.style.visibility = 'visible';
+      nextBtn.style.visibility = 'visible';
+    } else {
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const pct = Math.min(100, Math.round((window.scrollY / max) * 100));
+      metaEl.textContent = pct + '% leído';
+      fill.style.width = pct + '%';
+      prevBtn.style.visibility = 'hidden';
+      nextBtn.style.visibility = 'hidden';
+    }
+  }
+  function buildToc() {
+    const toc = [];
     rawParas.forEach((p, pi) => {
       if (isHead(p.trim())) toc.push({ title: p.trim().slice(0, 80), para: pi });
     });
     if (!tocList) return;
     if (!toc.length) {
-      tocList.innerHTML = '<p class="toc-empty">Sin capítulos detectados. Usa las flechas para avanzar.</p>';
+      tocList.innerHTML = '<p class="toc-empty">Sin capítulos detectados. Desplázate o usa las flechas.</p>';
       return;
     }
     tocList.innerHTML = toc.map((t, i) =>
@@ -476,34 +558,41 @@ function leerLoader(b) {
     tocList.querySelectorAll('.toc-item').forEach(btn => {
       btn.addEventListener('click', () => {
         const para = parseInt(btn.dataset.para, 10);
-        let pageFor = 0;
-        let count = 0;
-        for (let p = 0; p < pages.length; p++) {
-          count += pages[p].length;
-          if (count > para) { pageFor = p; break; }
-          pageFor = p;
-        }
-        // map para index → page by walking
         let acc = 0;
+        let pageFor = 0;
         for (let p = 0; p < pages.length; p++) {
           if (para >= acc && para < acc + pages[p].length) { pageFor = p; break; }
           acc += pages[p].length;
+          pageFor = p;
         }
-        render(pageFor);
-        if (tocPanel) tocPanel.hidden = true;
+        if (mode === 'pages') {
+          renderPage(pageFor);
+        } else {
+          const el = art.querySelector('[data-page="' + pageFor + '"]') || art.querySelectorAll('.p-h')[0];
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        if (window.innerWidth < 860 && tocPanel) {
+          tocPanel.hidden = true;
+          shell?.classList.remove('with-toc');
+        }
       });
     });
+  }
+  function showContent() {
+    if (mode === 'scroll') renderScroll();
+    else renderPage(idx);
   }
 
   fetch('textos/' + encodeURIComponent(b.id) + '.txt')
     .then(r => { if (!r.ok) throw new Error(String(r.status)); return r.text(); })
     .then(t => {
-      const raw = t.replace(/\r\n/g, '\n').split(/\n{2,}/).map(x => x.trim()).filter(x => x.length);
+      rawParas = t.replace(/\r\n/g, '\n').split(/\n{2,}/).map(x => x.trim()).filter(x => x.length);
       pages = [];
       let cur = [];
       let sum = 0;
-      const CHARS = 3200;
-      for (const p of raw) {
+      const CHARS = 2800;
+      for (const p of rawParas) {
         if (cur.length && sum + p.length > CHARS) {
           pages.push(cur);
           cur = [];
@@ -517,62 +606,99 @@ function leerLoader(b) {
         art.innerHTML = '<p class="reader-loading">No se encontró el texto completo de este título.</p>';
         return;
       }
-      buildToc(raw);
-      ctrl.hidden = false;
       const saved = loadSaved();
-      if (saved && typeof saved.fr === 'number') {
-        fr = saved.fr;
-        art.style.fontSize = fr + '%';
-        const sz = document.getElementById('rtool-size');
-        if (sz) sz.textContent = fr + '%';
+      if (saved) {
+        if (typeof saved.fr === 'number') fr = saved.fr;
+        if (typeof saved.lh === 'number') lh = saved.lh;
+        if (typeof saved.measure === 'number') measure = saved.measure;
+        if (saved.theme) theme = saved.theme;
+        if (saved.mode === 'pages' || saved.mode === 'scroll') mode = saved.mode;
+        if (typeof saved.page === 'number') idx = saved.page;
       }
-      if (saved && saved.theme && document.getElementById('reader-card')) {
-        const c = document.getElementById('reader-card');
-        ['dark', 'sepia'].forEach(st => c.classList.remove(st));
-        if (saved.theme.includes('dark')) c.classList.add('dark');
-        else if (saved.theme.includes('sepia')) c.classList.add('sepia');
+      applyChrome();
+      buildToc();
+      ctrl.hidden = false;
+      showContent();
+      if (mode === 'scroll' && saved && typeof saved.scrollY === 'number') {
+        requestAnimationFrame(() => window.scrollTo(0, saved.scrollY));
       }
-      const start = saved && typeof saved.page === 'number' ? saved.page : 0;
-      render(start);
     })
     .catch(() => {
-      art.innerHTML = '<p class="reader-loading">No se pudo cargar el texto. Comprueba la conexión o vuelve al catálogo.</p>';
+      art.innerHTML = '<p class="reader-loading">No se pudo cargar el texto. Comprueba la conexión.</p>';
     });
 
-  prevBtn.addEventListener('click', () => render(idx - 1));
-  nextBtn.addEventListener('click', () => render(idx + 1));
+  prevBtn?.addEventListener('click', () => { if (mode === 'pages') renderPage(idx - 1); });
+  nextBtn?.addEventListener('click', () => { if (mode === 'pages') renderPage(idx + 1); });
   document.addEventListener('keydown', function kd(e) {
     if (view !== 'leer') return;
-    if (e.key === 'ArrowRight') { render(idx + 1); e.preventDefault(); }
-    else if (e.key === 'ArrowLeft') { render(idx - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight' && mode === 'pages') { renderPage(idx + 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' && mode === 'pages') { renderPage(idx - 1); e.preventDefault(); }
+    else if (e.key === 'Escape') {
+      location.href = link('libro', '&libro=' + b.id);
+    }
   });
-  function applyFr() {
-    art.style.fontSize = fr + '%';
-    const sz = document.getElementById('rtool-size');
-    if (sz) sz.textContent = fr + '%';
-    save();
-  }
-  document.getElementById('fr-minus')?.addEventListener('click', () => { fr = Math.max(70, fr - 10); applyFr(); });
-  document.getElementById('fr-plus')?.addEventListener('click', () => { fr = Math.min(160, fr + 10); applyFr(); });
-  const themeBtn = document.getElementById('fr-theme');
-  let thIdx = 0;
-  const thStates = ['', 'dark', 'sepia'];
-  themeBtn?.addEventListener('click', () => {
-    const c = document.getElementById('reader-card');
-    if (!c) return;
-    thStates.forEach(st => st && c.classList.remove(st));
-    thIdx = (thIdx + 1) % thStates.length;
-    if (thStates[thIdx]) c.classList.add(thStates[thIdx]);
+  window.addEventListener('scroll', () => {
+    if (view !== 'leer') return;
+    updateProgress();
+    if (mode === 'scroll') save();
+    // auto-hide chrome al bajar
+    if (!topbar || !ctrl) return;
+    clearTimeout(chromeTimer);
+    topbar.classList.remove('is-hidden');
+    ctrl.classList.remove('is-hidden');
+    chromeTimer = setTimeout(() => {
+      if (window.scrollY > 80) {
+        topbar.classList.add('is-hidden');
+        ctrl.classList.add('is-hidden');
+      }
+    }, 1800);
+  }, { passive: true });
+  // mostrar chrome al mover el mouse cerca del borde
+  document.addEventListener('mousemove', e => {
+    if (view !== 'leer' || !topbar || !ctrl) return;
+    if (e.clientY < 70 || e.clientY > window.innerHeight - 80) {
+      topbar.classList.remove('is-hidden');
+      ctrl.classList.remove('is-hidden');
+    }
+  });
+
+  document.getElementById('fr-minus')?.addEventListener('click', () => { fr = Math.max(80, fr - 10); applyChrome(); save(); });
+  document.getElementById('fr-plus')?.addEventListener('click', () => { fr = Math.min(150, fr + 10); applyChrome(); save(); });
+  document.getElementById('fr-lh')?.addEventListener('input', e => { lh = parseInt(e.target.value, 10) || 178; applyChrome(); save(); });
+  document.getElementById('fr-width')?.addEventListener('input', e => { measure = parseInt(e.target.value, 10) || 38; applyChrome(); save(); });
+  document.getElementById('fr-settings')?.addEventListener('click', () => {
+    if (!settings) return;
+    const open = settings.hasAttribute('hidden');
+    if (open) { settings.removeAttribute('hidden'); settings.classList.add('open'); }
+    else { settings.setAttribute('hidden', ''); settings.classList.remove('open'); }
+    document.getElementById('fr-settings')?.classList.toggle('active', open);
+  });
+  document.getElementById('fr-mode')?.addEventListener('click', () => {
+    mode = mode === 'scroll' ? 'pages' : 'scroll';
+    applyChrome();
+    showContent();
     save();
   });
   document.getElementById('fr-toc')?.addEventListener('click', () => {
-    if (tocPanel) tocPanel.hidden = !tocPanel.hidden;
+    if (!tocPanel || !shell) return;
+    const open = tocPanel.hidden;
+    tocPanel.hidden = !open;
+    shell.classList.toggle('with-toc', open);
+    document.getElementById('fr-toc')?.classList.toggle('active', open);
+  });
+  document.querySelectorAll('.theme-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      theme = pill.dataset.theme || 'paper';
+      applyChrome();
+      save();
+    });
   });
   document.getElementById('read-reset')?.addEventListener('click', () => {
     try { localStorage.removeItem(storageKey); } catch (_) {}
-    fr = 100;
-    applyFr();
-    render(0);
+    fr = 100; lh = 178; measure = 38; theme = 'paper'; mode = 'scroll'; idx = 0;
+    applyChrome();
+    showContent();
+    window.scrollTo(0, 0);
   });
 }
 
@@ -620,6 +746,7 @@ function bindCatalogue() {
 
 function render() {
   const b = books.find(x => x.id === selected) || books[0];
+  document.body.classList.remove('reading-mode');
   const page =
     view === 'catalogo' ? catalogue() :
     view === 'libro' ? bookPage(b) :
