@@ -56,12 +56,24 @@
       const email = (data.get("email") || "").toString().trim();
       const producto = (data.get("producto") || "General").toString();
       const mensaje = (data.get("mensaje") || "").toString().trim();
+      const to = form.dataset.mailto || "hola@etemen.cl";
       const subject = encodeURIComponent(`[ETEMEN] ${producto} — ${nombre || "Consulta"}`);
       const body = encodeURIComponent(
         `Nombre: ${nombre}\nEmail: ${email}\nProducto: ${producto}\n\n${mensaje}`
       );
-      const to = form.dataset.mailto || "hola@etemen.cl";
-      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      const href = `mailto:${to}?subject=${subject}&body=${body}`;
+      // Fallback visible si el cliente de correo no abre
+      let note = form.querySelector("[data-mailto-fallback]");
+      if (!note) {
+        note = document.createElement("p");
+        note.className = "contact-hint";
+        note.setAttribute("data-mailto-fallback", "1");
+        form.appendChild(note);
+      }
+      note.innerHTML =
+        `Si no se abrió tu correo, escribe a <a href="mailto:${to}">${to}</a>` +
+        ` con el asunto <strong>[ETEMEN] ${producto}</strong>.`;
+      window.location.href = href;
     });
   }
 })();

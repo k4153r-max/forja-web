@@ -4,12 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portafolio — ETEMEN</title>
-  <meta name="description" content="Trabajo en producción: Nexo e indago. Chile.">
+  <meta name="description" content="Trabajo en producción de ETEMEN: Nexo, Umbral e indago. Casos reales en Chile.">
   <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="https://etemen.cl/portafolio/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://etemen.cl/portafolio/">
+  <meta property="og:site_name" content="ETEMEN">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:title" content="Portafolio — ETEMEN">
+  <meta property="og:description" content="Productos y casos en producción: Nexo, Umbral, indago y Ysabel Aragón NW.">
+  <meta property="og:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Portafolio — ETEMEN">
+  <meta name="twitter:description" content="Productos y casos en producción de ETEMEN en Chile.">
+  <meta name="twitter:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main-v6.css">
+  <link rel="stylesheet" href="/css/main-v7.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -17,13 +28,15 @@
     <div class="wrap nav-inner">
       <a href="/" class="logo" aria-label="ETEMEN">
         <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="32" height="32">
-        <div class="logo-wordmark"><span class="name">ETEMEN</span></div>
+        <div class="logo-wordmark">
+          <span class="name">ETEMEN</span>
+          <span class="tagline">Fundamento</span>
+        </div>
       </a>
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="/nexo/">Nexo</a>
         <a href="/umbral/">Umbral</a>
-        <a href="/portafolio/" class="active">Portafolio</a>
         <a href="/contacto/" class="nav-cta">Contacto</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -35,56 +48,48 @@
       <div class="wrap">
         <p class="eyebrow">Portafolio</p>
         <h1>Trabajo en producción.</h1>
-        <p class="lead">Proyectos que la gente usa hoy. Sin mockups de relleno.</p>
+        <p class="lead">Productos y casos que la gente usa hoy. Sin mockups de relleno.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:8px">
       <div class="wrap">
-        <div class="products" style="grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))">
+        <div class="products">
           <article class="product nexo">
             <span class="who">Producto</span>
             <h3>Nexo</h3>
             <p>
-              Sistema para locales: servicios (salón, barbería, spa) y comercio
-              (almacén, ferretería, botillería). Un producto, varias ramas.
+              Sistema para locales: servicios (salón, barbería, spa, taller) y comercio
+              (almacén, ferretería, botillería). Un producto, varias categorías.
             </p>
             <div class="actions">
               <a class="btn btn-nexo btn-sm" href="/nexo/">Ver Nexo</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/#comercio">Comercio</a>
             </div>
           </article>
-          <article class="product umbral" style="background: rgba(196,137,74,0.06); border-color: rgba(196,137,74,0.25);">
-            <span class="who" style="color: #C4894A;">Producto</span>
+          <article class="product umbral">
+            <span class="who">Producto</span>
             <h3>Umbral</h3>
             <p>Biblioteca digital y lector limpio para clásicos del dominio público y lectura escolar PAES.</p>
             <div class="actions">
-              <a class="btn btn-sm" style="background: #C4894A; color: #fff;" href="/umbral/">Ver Umbral</a>
-              <a class="btn btn-ghost btn-sm" href="/biblioteca/">Abrir Lector ↗</a>
+              <a class="btn btn-umbral btn-sm" href="/umbral/">Ver Umbral</a>
+              <a class="btn btn-ghost btn-sm" href="/biblioteca/">Abrir lector ↗</a>
             </div>
           </article>
           <article class="product indago">
             <span class="who">Producto</span>
             <h3>indago</h3>
-            <p>Comparador de precios Chile. Gratis.</p>
+            <p>Comparador de precios Chile. Gratis · en operación.</p>
             <div class="actions">
               <a class="btn btn-ghost btn-sm" href="https://www.indago.cl" target="_blank" rel="noopener">indago.cl ↗</a>
             </div>
           </article>
-          <article class="product">
+          <article class="product nexo">
             <span class="who">Caso cliente · Nexo Servicios</span>
             <h3>Ysabel Aragón NW</h3>
-            <p>Web + sistema de salón en operación diaria.</p>
+            <p>Web + sistema de salón en operación diaria en Puente Alto.</p>
             <div class="actions">
               <a class="btn btn-ghost btn-sm" href="https://www.ysabelaragonnw.cl" target="_blank" rel="noopener">Ver sitio ↗</a>
-            </div>
-          </article>
-          <article class="product mm">
-            <span class="who">Caso piloto · Nexo Comercio</span>
-            <h3>La Parissiene</h3>
-            <p>Almacén de barrio con caja, stock y fiado.</p>
-            <div class="actions">
-              <a class="btn btn-mm btn-sm" href="/nexo/#comercio">Ver en Nexo</a>
             </div>
           </article>
         </div>
@@ -94,12 +99,14 @@
 
   <footer class="footer">
     <div class="wrap">
-      <div class="footer-bottom" style="border:0;padding-top:0">
+      <div class="footer-bottom footer-links-row">
         <span>© <span id="y"></span> ETEMEN</span>
-        <a href="/">Inicio</a>
-        <a href="/nexo/">Nexo</a>
-        <a href="/umbral/">Umbral</a>
-        <a href="/contacto/">Contacto</a>
+        <span>
+          <a href="/">Inicio</a>
+          · <a href="/nexo/">Nexo</a>
+          · <a href="/umbral/">Umbral</a>
+          · <a href="/contacto/">Contacto</a>
+        </span>
       </div>
     </div>
   </footer>

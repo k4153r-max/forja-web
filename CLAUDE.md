@@ -11,7 +11,7 @@ Sitio estático del estudio ETEMEN. HTML/CSS/JS puro, sin framework.
   Invoke-RestMethod -Uri "https://api.render.com/v1/services/srv-d9ifoibeo5us739sr680/deploys" -Method POST -Headers @{ "Authorization" = "Bearer rnd_USREVf2EstA8kQQGARaRvtEwCeqG"; "Accept" = "application/json" }
   ```
 - Cloudflare está delante — cachea CSS y SVGs agresivamente
-  - Fix CSS: renombrar archivo (`main-v5.css`, `main-v6.css`) y actualizar `<link>` en HTML
+  - Fix CSS: renombrar archivo (`main-v7.css`, `main-v8.css`…) y actualizar `<link>` en HTML
   - Fix SVG: renombrar archivo (`etemen-mark-v2.svg`, `v3`...) y actualizar `src` en HTML
   - Fix crítico: poner CSS en `<style>` inline en el `<head>` — HTML siempre es fresco
 
@@ -25,13 +25,14 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 ```
 
 ## CSS
-- Archivo: `css/main-v5.css`
+- Archivo: `css/main-v7.css` (cache-bust: renombrar al cambiar estilos globales)
 - Tipografías: Syne (display) + Plus Jakarta Sans (UI) — Google Fonts
 - Paleta:
-  - Navy: `#1B2A4A`
+  - Navy / obsidian: `#07090e` · `#0e1424`
   - Copper: `#C4894A`
   - Cream: `#F3EEE6`
-  - Obsidian: `#080a0e`
+  - Nexo: `#00c9a7` · Umbral: `#d95d39` · Comercio: `#e08a4a`
+- **Trial unificado:** 3 días gratis en todo el sitio
 
 ## Logos
 - **ETEMEN mark**: `assets/logos/etemen-mark-v2.svg` — bloque cobre rx=8, E en espacio negativo

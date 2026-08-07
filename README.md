@@ -13,19 +13,22 @@ Sitio principal del holding **ETEMEN Studio** y del producto **Nexo**.
 - Holding: **ETEMEN** (del *Etemenanki*: «la casa del fundamento del cielo y la tierra»)
 - Lema: *Fundamento sólido. Productos extraordinarios.*
 - Nav tagline: **Fundamento** (no “Estudio”)
-- Design system: `css/main.css` v5 “Ziggurat”
+- Design system: `css/main-v7.css` “Etemenanki / Fundamento”
 - Logo: `assets/logos/etemen-mark*.svg` + lockups · ver `assets/logos/BRAND.md`
+- Trial Nexo: **3 días** (unificado en home, nexo, demos y contacto)
 
 ## Estructura
 
 ```
 forja-web/
-  index.html           → ETEMEN Studio (home)
-  nexus/index.html     → Landing Nexo
-  demos/               → Hub + webs de prueba de salones
-    luna/ atelier/ aura/
+  index.html           → ETEMEN (home)
+  nexo/                → Landing Nexo
+  umbral/              → Landing Umbral
+  biblioteca/          → App Umbral (lector)
+  demos/               → Hub + micrositios por rubro
   contacto/            → Contacto
-  css/main.css · demos.css
+  portafolio/          → Portafolio
+  css/main-v7.css · demos.css
   js/main.js
   assets/
 ```
@@ -48,6 +51,7 @@ Abre http://localhost:5500
 
 ## Configurar después
 
-- [ ] Correo real en `contacto/index.html` (`hola@etemen.cl`)
-- [ ] Dominio `etemen.cl` / `etemen.studio`
-- [ ] OG image propia con el monograma nuevo
+- [x] Correo `hola@etemen.cl` en contacto
+- [x] Dominio `etemen.cl`
+- [ ] OG image dedicada por producto (hoy: logo ETEMEN / nexo-icon)
+- [ ] Backend de formulario (hoy: mailto + fallback)

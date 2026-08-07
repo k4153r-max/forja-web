@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contacto — ETEMEN</title>
-  <meta name="description" content="Contacta a ETEMEN por Nexo o indago. Chile.">
+  <meta name="description" content="Contacta a ETEMEN por Nexo, Umbral o indago. Trial de 3 días, respuesta en menos de 24 horas. Chile.">
   <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="https://etemen.cl/contacto/">
   <meta property="og:type" content="website">
@@ -12,21 +12,20 @@
   <meta property="og:site_name" content="ETEMEN">
   <meta property="og:locale" content="es_CL">
   <meta property="og:title" content="Contacto — ETEMEN">
-  <meta property="og:description" content="Contacta a ETEMEN para solicitar tu trial de Nexo o consultas de software en Chile. Respuesta en menos de 24 horas.">
+  <meta property="og:description" content="Solicita trial de Nexo, consulta Umbral o escribe a ETEMEN. Respuesta en menos de 24 horas hábiles.">
   <meta property="og:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contacto — ETEMEN">
-  <meta name="twitter:description" content="Contacta a ETEMEN para solicitar tu trial de Nexo o consultas de software en Chile.">
+  <meta name="twitter:description" content="Solicita trial de Nexo, consulta Umbral o escribe a ETEMEN. Chile.">
   <meta name="twitter:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
 
-  <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     "name": "Contacto ETEMEN",
     "url": "https://etemen.cl/contacto/",
-    "description": "Página de contacto oficial de ETEMEN para consultas sobre Nexo e indago en Chile.",
+    "description": "Página de contacto oficial de ETEMEN para consultas sobre Nexo, Umbral e indago en Chile.",
     "mainEntity": {
       "@type": "Organization",
       "name": "ETEMEN",
@@ -38,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main-v6.css">
+  <link rel="stylesheet" href="/css/main-v7.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -65,10 +64,10 @@
     <section class="page-hero">
       <div class="wrap">
         <p class="eyebrow">Contacto</p>
-        <h1>Hablemos.</h1>
+        <h1>Cuéntanos tu caso.</h1>
         <p class="lead">
-          Transformamos tus ideas en realidad.
-          Elige el producto y cuéntanos tu caso. Respondemos lo antes posible.
+          Trial de Nexo, consulta de Umbral o una pregunta general.
+          Respuesta en menos de 24 horas hábiles — sin intermediarios.
         </p>
       </div>
     </section>
@@ -85,40 +84,52 @@
 
             <label for="producto">Tema</label>
             <select id="producto" name="producto">
-              <option value="Umbral">Umbral (Biblioteca Digital / Plus)</option>
+              <option value="General" selected>Consulta general</option>
+              <option value="Nexo Trial">Nexo — pedir trial (3 días)</option>
               <option value="Nexo">Nexo — general</option>
               <option value="Nexo Servicios">Nexo · Servicios (salón / barbería / spa)</option>
               <option value="Nexo Taller">Nexo · Taller mecánico</option>
               <option value="Nexo Comercio">Nexo · Comercio (almacén / ferretería / boti)</option>
               <option value="Nexo Ferreteria">Nexo · Ferretería</option>
-              <option value="Nexo Trial">Nexo — trial</option>
+              <option value="Nexo Almacen">Nexo · Almacén</option>
+              <option value="Nexo Botilleria">Nexo · Botillería</option>
+              <option value="Umbral">Umbral (Biblioteca Digital / Plus)</option>
               <option value="indago">indago</option>
-              <option value="General">Consulta general</option>
             </select>
 
             <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" name="mensaje" required placeholder="Cuéntanos en 2–3 líneas…"></textarea>
+            <textarea id="mensaje" name="mensaje" required placeholder="Rubro, tamaño del local y qué necesitas (2–3 líneas)…"></textarea>
 
-            <button class="btn btn-primary" type="submit" style="margin-top:18px">Enviar</button>
-            <p class="muted" style="margin-top:12px;font-size:.82rem">
-              Se abre tu correo con el mensaje listo para hola@etemen.cl
+            <button class="btn btn-primary" type="submit" style="margin-top:18px">Preparar correo</button>
+            <p class="contact-hint">
+              Se abre tu cliente de correo con el mensaje listo para <strong>hola@etemen.cl</strong>.
+              Si no tienes correo configurado en este equipo, escribe directo al canal de la derecha.
             </p>
           </form>
         </div>
 
         <aside class="contact-aside">
+          <h3>Canales</h3>
+          <div class="contact-channels">
+            <a class="contact-channel" href="mailto:hola@etemen.cl">
+              <strong>hola@etemen.cl</strong>
+              <span>Canal principal · &lt; 24 h hábiles</span>
+            </a>
+            <a class="contact-channel" href="mailto:hola@etemen.cl?subject=%5BETEMEN%5D%20Trial%20Nexo%203%20d%C3%ADas">
+              <strong>Pedir trial Nexo</strong>
+              <span>3 días gratis · sin tarjeta</span>
+            </a>
+          </div>
+
           <h3>Productos</h3>
           <p><a href="/nexo/#categorias">Nexo</a> — todas las categorías</p>
-          <p><a href="/nexo/#comercio">Comercio</a> — almacén · ferretería · boti</p>
-          <p><a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a> — precios</p>
+          <p><a href="/umbral/">Umbral</a> — biblioteca digital</p>
+          <p><a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a> — comparador de precios</p>
 
-          <h3>Probar</h3>
+          <h3>Probar demos</h3>
           <p><a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Nexo · Servicios</a></p>
           <p><a href="https://bodega-trial-ferreteria-demo.onrender.com/login" target="_blank" rel="noopener">Nexo · Ferretería</a></p>
-          <p><a href="/demos/">Demos</a></p>
-
-          <h3>Email</h3>
-          <p><a href="mailto:hola@etemen.cl">hola@etemen.cl</a></p>
+          <p><a href="/demos/">Hub de demos</a></p>
         </aside>
       </div>
     </section>
@@ -126,15 +137,19 @@
 
   <footer class="footer">
     <div class="wrap">
-      <div class="footer-bottom" style="border:0;padding-top:0">
+      <div class="footer-bottom footer-links-row">
         <span>© <span id="y"></span> ETEMEN</span>
-        <a href="/">Inicio</a>
+        <span>
+          <a href="/">Inicio</a>
+          · <a href="/nexo/">Nexo</a>
+          · <a href="/umbral/">Umbral</a>
+          · <a href="/portafolio/">Portafolio</a>
+        </span>
       </div>
     </div>
   </footer>
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
-    // Prefill product from ?producto=
     (function(){
       var p = new URLSearchParams(location.search).get("producto");
       if (!p) return;

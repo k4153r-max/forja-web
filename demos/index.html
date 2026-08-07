@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Demos Nexo — ETEMEN</title>
-  <meta name="description" content="Demos de locales ficticios con Nexo: salón, barbería y spa.">
+  <meta name="description" content="Demos de locales de ejemplo con Nexo: salón, barbería, spa, taller, almacén, ferretería y botillería.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0a0b0f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/main-v7.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -17,13 +17,15 @@
     <div class="wrap nav-inner">
       <a href="/" class="logo" aria-label="ETEMEN">
         <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="32" height="32">
-        <div class="logo-wordmark"><span class="name">ETEMEN</span></div>
+        <div class="logo-wordmark">
+          <span class="name">ETEMEN</span>
+          <span class="tagline">Fundamento</span>
+        </div>
       </a>
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="/nexo/">Nexo</a>
-        <a href="/nexo/#comercio">Comercio</a>
-        <a href="/demos/" class="active">Demos</a>
+        <a href="/umbral/">Umbral</a>
         <a href="/contacto/?producto=Nexo" class="nav-cta">Contacto</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -36,7 +38,8 @@
         <p class="eyebrow nexo">Demos de producto</p>
         <h1>Locales de ejemplo.</h1>
         <p class="lead">
-          No son negocios reales. Muestran cómo se ve cada producto ETEMEN en un rubro concreto.
+          No son negocios reales. Muestran cómo se ve Nexo en cada rubro.
+          Para operar con tu propia instancia: trial de 3 días.
         </p>
       </div>
     </section>
@@ -44,7 +47,7 @@
     <section class="section" style="padding-top:8px">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow nexo">Nexo · servicios</p>
+          <p class="eyebrow nexo">Nexo · Servicios</p>
           <h2>Agenda y reservas</h2>
         </div>
         <div class="vert-row">
@@ -73,7 +76,7 @@
         <div class="section-head" style="margin-top:40px">
           <p class="eyebrow mm">Nexo · Comercio</p>
           <h2>Almacén · ferretería · botillería</h2>
-          <p class="lead">Categorías de Nexo (no productos aparte). Todo el mapa está en la página Nexo.</p>
+          <p class="lead">Demostraciones en video interactivo. El trial privado se solicita por contacto.</p>
         </div>
         <div class="vert-row">
           <a class="vert-card" href="/demos/almacen/">
@@ -93,14 +96,14 @@
           </a>
         </div>
 
-        <div class="cta-box" style="margin-top:32px">
+        <div class="cta-box compact" style="margin-top:32px">
           <div>
-            <h2>Todo está en Nexo</h2>
-            <p>Servicios y comercio. ETEMEN lo implementa. indago es aparte.</p>
+            <h2>¿Listo para tu propio trial?</h2>
+            <p>3 días gratis · sin tarjeta. Te configuramos la categoría de tu local.</p>
           </div>
           <div class="btn-row">
-            <a class="btn btn-nexo" href="/nexo/#categorias">Mapa de categorías</a>
-            <a class="btn btn-ghost" href="/contacto/?producto=Nexo">Contacto</a>
+            <a class="btn btn-nexo" href="/contacto/?producto=Nexo+Trial">Pedir trial</a>
+            <a class="btn btn-ghost" href="/nexo/#categorias">Mapa de categorías</a>
           </div>
         </div>
       </div>
@@ -109,9 +112,13 @@
 
   <footer class="footer">
     <div class="wrap">
-      <div class="footer-bottom" style="border:0;padding-top:0">
+      <div class="footer-bottom footer-links-row">
         <span>© <span id="y"></span> ETEMEN · demos Nexo</span>
-        <a href="/nexo/">Nexo</a>
+        <span>
+          <a href="/nexo/">Nexo</a>
+          · <a href="/umbral/">Umbral</a>
+          · <a href="/contacto/">Contacto</a>
+        </span>
       </div>
     </div>
   </footer>
