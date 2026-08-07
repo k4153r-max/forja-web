@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Prototipo de Umbral, biblioteca digital chilena de clásicos y guías de lectura.">
-  <title>Umbral — Biblioteca para leer mejor</title>
+  <meta name="description" content="Umbral: lee clásicos, ensayos, historia, revistas educativas e investigación en español. Lector propio sin anuncios.">
+  <title>Umbral — Lector y biblioteca digital</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap');
 :root{--bg:#f5f1e8;--bg2:#ece6d7;--panel:#fbf8f0;--ink:#20292b;--ink2:#4c5655;--spruce:#22342f;--cris:#a9602f;--gold:#a4772a;--line:rgba(32,41,43,.14);--serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Inter',ui-sans-serif,system-ui,'Segoe UI',sans-serif}
@@ -65,6 +65,7 @@ nav{height:74px;display:flex;align-items:center;background:rgba(243,241,232,.82)
 .book small{font-size:.62rem;letter-spacing:.12em;font-weight:800;text-transform:uppercase;opacity:.85}
 .book-title{font:600 2.15rem/.98 var(--serif);letter-spacing:-.05em;max-width:9.5ch;font-variation-settings:'opsz' 120}
 .book-footer{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;font-weight:700}
+.book-badge{position:absolute;right:14px;top:14px;z-index:2;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border-radius:99px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.2)}
 .circle{border:1px solid currentColor;width:29px;height:29px;border-radius:50%;display:grid;place-items:center;font-weight:800;transition:transform .2s}
 .book:hover .circle{transform:rotate(45deg)}
 .blue{background:#2e6765;color:#f6ecd8}.red{background:#c24f31;color:#fff7e8}.yellow{background:#dfa93c;color:#22302a}.purple{background:#5d568f;color:#faf5ee}.brown{background:#7c563c;color:#fff5e6}.pink{background:#9d4a5e;color:#fff6ec}.navy{background:#33436b;color:#f4efe5}.green{background:#758b5c;color:#f3efe0}
@@ -125,7 +126,20 @@ nav{height:74px;display:flex;align-items:center;background:rgba(243,241,232,.82)
 .form input{min-width:0;flex:1;border:0;background:transparent;padding:8px 15px;font:inherit;outline:0}
 .form button{border:0;border-radius:99px;background:var(--spruce);color:#f5f1e8;font:inherit;font-weight:750;padding:8px 18px;cursor:pointer}
 /* ---- READER (libro inmersivo) ---- */
-.reader-card{position:relative;width:min(880px,100%);margin:34px auto 46px;background:var(--panel);border:1px solid #e5dbca;border-radius:16px;box-shadow:0 30px 80px -34px rgba(32,41,43,.4);overflow:hidden}
+.reader-page .wrap{max-width:1100px}
+.reader-shell{display:grid;grid-template-columns:1fr;gap:0}
+.reader-toc{border-bottom:1px solid var(--line);background:#f3ecdf;max-height:240px;overflow:auto;padding:12px 18px 16px}
+.reader-toc .toc-head{font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--cris);margin-bottom:10px}
+.toc-list{display:grid;gap:4px}
+.toc-item{text-align:left;border:0;background:transparent;padding:8px 10px;border-radius:8px;cursor:pointer;font:650 .82rem/1.35 var(--sans);color:var(--ink2)}
+.toc-item:hover{background:rgba(169,96,47,.12);color:var(--ink)}
+.toc-empty{font-size:.82rem;color:var(--ink2);margin:0}
+.reader-card{position:relative;width:min(960px,100%);margin:34px auto 46px;background:var(--panel);border:1px solid #e5dbca;border-radius:16px;box-shadow:0 30px 80px -34px rgba(32,41,43,.4);overflow:hidden}
+.reader-card.dark .reader-toc{background:#1a211e;border-color:rgba(245,241,232,.08)}
+.reader-card.dark .toc-item{color:#b8c4b8}
+.reader-card.dark .toc-item:hover{background:rgba(255,255,255,.06);color:#f2eadc}
+.reader-card.sepia .reader-toc{background:#e8d9b8}
+.reader-loading{text-align:center;color:var(--ink2);padding:40px 12px}
 .reader-card:before{content:"";position:absolute;top:0;left:16px;right:16px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent)}
 .reader-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;flex-wrap:wrap;padding:32px 42px 20px;background:linear-gradient(180deg,#faf6ec,#f3ecdb)}
 .reader-title{min-width:220px}
