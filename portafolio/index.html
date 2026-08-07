@@ -9,7 +9,7 @@
   <link rel="canonical" href="https://etemen.cl/portafolio/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/main-v6.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -22,6 +22,7 @@
       <nav class="nav-links">
         <a href="/">Inicio</a>
         <a href="/nexo/">Nexo</a>
+        <a href="/umbral/">Umbral</a>
         <a href="/portafolio/" class="active">Portafolio</a>
         <a href="/contacto/" class="nav-cta">Contacto</a>
       </nav>
@@ -40,7 +41,7 @@
 
     <section class="section" style="padding-top:8px">
       <div class="wrap">
-        <div class="products" style="grid-template-columns:1fr 1fr">
+        <div class="products" style="grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))">
           <article class="product nexo">
             <span class="who">Producto</span>
             <h3>Nexo</h3>
@@ -51,6 +52,15 @@
             <div class="actions">
               <a class="btn btn-nexo btn-sm" href="/nexo/">Ver Nexo</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/#comercio">Comercio</a>
+            </div>
+          </article>
+          <article class="product umbral" style="background: rgba(196,137,74,0.06); border-color: rgba(196,137,74,0.25);">
+            <span class="who" style="color: #C4894A;">Producto</span>
+            <h3>Umbral</h3>
+            <p>Biblioteca digital y lector limpio para clásicos del dominio público y lectura escolar PAES.</p>
+            <div class="actions">
+              <a class="btn btn-sm" style="background: #C4894A; color: #fff;" href="/umbral/">Ver Umbral</a>
+              <a class="btn btn-ghost btn-sm" href="/biblioteca/">Abrir Lector ↗</a>
             </div>
           </article>
           <article class="product indago">
@@ -87,6 +97,9 @@
       <div class="footer-bottom" style="border:0;padding-top:0">
         <span>© <span id="y"></span> ETEMEN</span>
         <a href="/">Inicio</a>
+        <a href="/nexo/">Nexo</a>
+        <a href="/umbral/">Umbral</a>
+        <a href="/contacto/">Contacto</a>
       </div>
     </div>
   </footer>
