@@ -1,58 +1,4 @@
-/* Umbral — catálogo + lector in-sitio */
-const books = [
-  /* ── Lectura completa en Umbral ── */
-  { id: 'quijote', title: 'Don Quijote de la Mancha', author: 'Miguel de Cervantes', type: 'Novela', genre: 'Clásico', place: 'Universal', color: 'red', year: '1605', hasText: true, desc: 'La novela fundacional en español: humor, aventura e imaginación que aún conversa con el presente.' },
-  { id: 'lazarillo', title: 'Lazarillo de Tormes', author: 'Anónimo', type: 'Novela', genre: 'Clásico', place: 'Universal', color: 'yellow', year: '1554', hasText: true, desc: 'Un joven sobrevive cambiando de amo en una crítica ingeniosa a la sociedad de su tiempo.' },
-  { id: 'buscon', title: 'El Buscón', author: 'Francisco de Quevedo', type: 'Novela', genre: 'Clásico', place: 'Universal', color: 'navy', year: '1626', hasText: true, desc: 'Picaresca barroca: ingenio, hambre y sátira social en la España del Siglo de Oro.' },
-  { id: 'niebla', title: 'Niebla', author: 'Miguel de Unamuno', type: 'Novela', genre: 'Clásico', place: 'Universal', color: 'navy', year: '1914', hasText: true, desc: 'Una nivola inquieta que juega con la identidad, la ficción y la libertad de sus personajes.' },
-  { id: 'azul', title: 'Azul...', author: 'Rubén Darío', type: 'Poesía', genre: 'Poesía', place: 'Latinoamérica', color: 'blue', year: '1888', hasText: true, desc: 'Poemas y cuentos que abren el modernismo hispanoamericano con una mirada musical y visual.' },
-  { id: 'platero', title: 'Platero y yo', author: 'Juan Ramón Jiménez', type: 'Prosa poética', genre: 'Poesía', place: 'Universal', color: 'green', year: '1917', hasText: true, desc: 'Elegía lírica al burro Platero: infancia, paisaje andaluz y ternura en prosa poética.' },
-  { id: 'cuentos-amor', title: 'Cuentos de amor, de locura y de muerte', author: 'Horacio Quiroga', type: 'Cuentos', genre: 'Cuentos', place: 'Latinoamérica', color: 'purple', year: '1917', hasText: true, desc: 'Relatos breves, tensos y memorables, entre la naturaleza, el deseo y el peligro.' },
-  { id: 'tradiciones', title: 'Tradiciones peruanas', author: 'Ricardo Palma', type: 'Relatos', genre: 'Cuentos', place: 'Latinoamérica', color: 'brown', year: '1872', hasText: true, desc: 'Historias breves que mezclan memoria, humor e imaginación del pasado peruano.' },
-  { id: 'isla-tesoro', title: 'La isla del tesoro', author: 'R. L. Stevenson', type: 'Aventura', genre: 'Aventura', place: 'Universal', color: 'green', year: '1883', hasText: true, desc: 'Un mapa, un tesoro y una tripulación donde nadie parece ser exactamente quien dice ser.' },
-  { id: 'jekyll-hyde', title: 'Jekyll y Hyde', author: 'R. L. Stevenson', type: 'Misterio', genre: 'Misterio', place: 'Universal', color: 'navy', year: '1886', hasText: true, desc: 'Un experimento libera la parte más oscura de un hombre respetable.' },
-  { id: 'marianela', title: 'Marianela', author: 'Benito Pérez Galdós', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'pink', year: '1878', hasText: true, desc: 'Amor, ceguera y desigualdad en la España realista de Galdós.' },
-  { id: 'misericordia', title: 'Misericordia', author: 'Benito Pérez Galdós', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'brown', year: '1897', hasText: true, desc: 'Madrid popular, fe y supervivencia en una de las grandes novelas del realismo español.' },
-  { id: 'fortunata-jacinta', title: 'Fortunata y Jacinta', author: 'Benito Pérez Galdós', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'red', year: '1887', hasText: true, desc: 'Dos historias de casadas: clase, deseo y la vida madrileña del siglo XIX.' },
-  { id: 'desheredada', title: 'La desheredada', author: 'Benito Pérez Galdós', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'purple', year: '1881', hasText: true, desc: 'Una joven cree merecer un título nobiliario; Galdós disecciona ilusión y realidad social.' },
-  { id: 'tormento', title: 'Tormento', author: 'Benito Pérez Galdós', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'pink', year: '1884', hasText: true, desc: 'Secretos, matrimonio y presión social en el Madrid galdosiano.' },
-  { id: 'fontana-oro', title: 'La Fontana de Oro', author: 'Benito Pérez Galdós', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'navy', year: '1870', hasText: true, desc: 'Primera novela de Galdós: política y pasiones en el Madrid liberal.' },
-  { id: 'trafalgar', title: 'Trafalgar', author: 'Benito Pérez Galdós', type: 'Novela histórica', genre: 'Historia', place: 'Universal', color: 'blue', year: '1873', hasText: true, desc: 'La batalla naval contada desde la mirada de un joven marinero: primer Episodio Nacional.' },
-  { id: 'pepita-jimenez', title: 'Pepita Jiménez', author: 'Juan Valera', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'yellow', year: '1874', hasText: true, desc: 'Amor, vocación y letras en una novela de elegancia clásica andaluza.' },
-  { id: 'juanita-larga', title: 'Juanita la Larga', author: 'Juan Valera', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'green', year: '1895', hasText: true, desc: 'Costumbres de pueblo, ingenio y un romance que desafía la hipocresía social.' },
-  { id: 'algo-de-todo', title: 'Algo de todo', author: 'Juan Valera', type: 'Ensayo', genre: 'Ensayo', place: 'Universal', color: 'brown', year: '1883', hasText: true, desc: 'Artículos literarios y de costumbres: pensamiento en prosa clara del XIX español.' },
-  { id: 'pazos-ulloa', title: 'Los pazos de Ulloa', author: 'Emilia Pardo Bazán', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'green', year: '1886', hasText: true, desc: 'Galicia rural, poder y naturalismo: una de las grandes novelas del XIX español.' },
-  { id: 'la-tribuna', title: 'La Tribuna', author: 'Emilia Pardo Bazán', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'red', year: '1883', hasText: true, desc: 'Obreras de fábrica, política y emancipación en la Coruña del Sexenio Democrático.' },
-  { id: 'zalacain', title: 'Zalacaín el aventurero', author: 'Pío Baroja', type: 'Novela', genre: 'Aventura', place: 'Universal', color: 'yellow', year: '1909', hasText: true, desc: 'Aventura vasca en la última guerra carlista: ritmo, humor y frontera.' },
-  { id: 'antonio-azorin', title: 'Antonio Azorín', author: 'Azorín', type: 'Novela', genre: 'Ensayo', place: 'Universal', color: 'navy', year: '1903', hasText: true, desc: 'Prosa del 98: paisaje, tiempo y mirada reflexiva sobre España.' },
-  { id: 'viajes-espana', title: 'Viajes por España', author: 'Pedro A. de Alarcón', type: 'Viajes', genre: 'Ensayo', place: 'Universal', color: 'blue', year: '1883', hasText: true, desc: 'Crónicas de viaje: ciudades, caminos y observación del paisaje español.' },
-  { id: 'facundo', title: 'Facundo', author: 'Domingo F. Sarmiento', type: 'Ensayo', genre: 'Ensayo', place: 'Latinoamérica', color: 'red', year: '1845', hasText: true, desc: 'Civilización y barbarie: ensayo fundacional de la prosa política latinoamericana.' },
-  { id: 'ariel', title: 'Ariel', author: 'José Enrique Rodó', type: 'Ensayo', genre: 'Ensayo', place: 'Latinoamérica', color: 'blue', year: '1900', hasText: true, desc: 'Ensayo modernista sobre juventud, idealismo y el destino cultural de América.' },
-  { id: 'amistad-funesta', title: 'Amistad funesta', author: 'José Martí', type: 'Novela', genre: 'Novela', place: 'Latinoamérica', color: 'pink', year: '1885', hasText: true, desc: 'Única novela de Martí: pasiones, honor y sociedad en el fin de siglo.' },
-  { id: 'edad-de-oro', title: 'La Edad de Oro', author: 'José Martí', type: 'Revista', genre: 'Revista', place: 'Latinoamérica', color: 'yellow', year: '1889', hasText: true, desc: 'Revista mensual de recreo e instrucción para niñas y niños de América: cuentos, historia y ciencia amable.' },
-  { id: 'biografia-bolivar', title: 'Biografía del libertador Simón Bolívar', author: 'Lorenzo Campano', type: 'Biografía', genre: 'Historia', place: 'Latinoamérica', color: 'red', year: 's. XIX', hasText: true, desc: 'Relato histórico de la independencia de América del Sur y la figura de Bolívar.' },
-  { id: 'historia-judios-espana', title: 'Historia de los judíos en España', author: 'Adolfo de Castro', type: 'Historia', genre: 'Historia', place: 'Universal', color: 'brown', year: '1847', hasText: true, desc: 'Investigación histórica sobre la presencia y destino de las comunidades judías en España.' },
-  { id: 'hiroshima-nagasaki', title: 'Los bombardeos atómicos de Hiroshima y Nagasaki', author: 'U.S. Manhattan District', type: 'Informe', genre: 'Investigación', place: 'Universal', color: 'navy', year: '1946', hasText: true, desc: 'Informe técnico-histórico en español sobre los efectos de las bombas atómicas. Lectura de estudio e historia del siglo XX.' },
-  { id: 'tupac-amaru', title: 'Relación histórica de la rebelión de Túpac Amaru', author: 'Anónimo / crónicas', type: 'Historia', genre: 'Historia', place: 'Latinoamérica', color: 'brown', year: '1780', hasText: true, desc: 'Documentos y relato de la gran rebelión indígena en el Perú colonial.' },
-  { id: 'mindanao-geografia', title: 'Mindanao: su historia y geografía', author: 'José Nieto Aguilar', type: 'Geografía', genre: 'Educativo', place: 'Universal', color: 'green', year: 's. XIX–XX', hasText: true, desc: 'Tratado de historia y geografía de Mindanao: lectura educativa y de consulta.' },
-  { id: 'filosofia-fundamental', title: 'Filosofía fundamental (Tomo I)', author: 'Jaime Balmes', type: 'Filosofía', genre: 'Educativo', place: 'Universal', color: 'purple', year: '1846', hasText: true, desc: 'Curso clásico de filosofía: lógica, metafísica y criterio. Ideal para estudio formal.' },
-  { id: 'filosofia-fundamental-2', title: 'Filosofía fundamental (Tomo II)', author: 'Jaime Balmes', type: 'Filosofía', genre: 'Educativo', place: 'Universal', color: 'purple', year: '1846', hasText: true, desc: 'Continuación del sistema filosófico de Balmes: profundidad y claridad argumentativa.' },
-
-  /* ── Fichas / guías (texto íntegro en preparación) ── */
-  { id: 'sub-terra', title: 'Sub terra', author: 'Baldomero Lillo', type: 'Relatos', genre: 'Cuentos', place: 'Chile', color: 'blue', year: '1904', hasText: false, desc: 'Relatos del carbón, la pobreza y la dignidad humana en el Chile minero.' },
-  { id: 'sub-sole', title: 'Sub sole', author: 'Baldomero Lillo', type: 'Relatos', genre: 'Cuentos', place: 'Chile', color: 'green', year: '1907', hasText: false, desc: 'Mundo rural, naturaleza y desigualdad en relatos chilenos.' },
-  { id: 'martin-rivas', title: 'Martín Rivas', author: 'Alberto Blest Gana', type: 'Novela', genre: 'Novela', place: 'Chile', color: 'red', year: '1862', hasText: false, desc: 'Ambición, amor y clase en el Santiago del siglo XIX.' },
-  { id: 'juana-lucero', title: 'Juana Lucero', author: "Augusto D'Halmar", type: 'Novela', genre: 'Novela', place: 'Chile', color: 'yellow', year: '1902', hasText: false, desc: 'Una joven enfrenta una ciudad marcada por las apariencias y la desigualdad.' },
-  { id: 'frankenstein', title: 'Frankenstein', author: 'Mary Shelley', type: 'Gótico', genre: 'Misterio', place: 'Universal', color: 'brown', year: '1818', hasText: false, desc: 'La criatura abandonada y la pregunta ética sobre crear vida.' },
-  { id: 'dracula', title: 'Drácula', author: 'Bram Stoker', type: 'Gótico', genre: 'Misterio', place: 'Universal', color: 'pink', year: '1897', hasText: false, desc: 'Cartas y diarios en la persecución del vampiro más famoso.' },
-  { id: 'dorian-gray', title: 'El retrato de Dorian Gray', author: 'Oscar Wilde', type: 'Novela', genre: 'Novela', place: 'Universal', color: 'blue', year: '1890', hasText: false, desc: 'Belleza, moral y el precio de las decisiones.' },
-  { id: 'gigante-egoista', title: 'El gigante egoísta', author: 'Oscar Wilde', type: 'Cuento', genre: 'Cuentos', place: 'Universal', color: 'yellow', year: '1888', hasText: false, desc: 'Un jardín solo florece cuando se aprende a compartir.' },
-  { id: 'arte-guerra', title: 'El arte de la guerra', author: 'Sun Tzu', type: 'Pensamiento', genre: 'Ensayo', place: 'Universal', color: 'red', year: 'Antigüedad', hasText: false, desc: 'Estrategia, decisión y conflicto en aforismos clásicos.' },
-  { id: 'meditaciones', title: 'Meditaciones', author: 'Marco Aurelio', type: 'Pensamiento', genre: 'Ensayo', place: 'Universal', color: 'purple', year: 'Siglo II', hasText: false, desc: 'Notas sobre disciplina, tiempo y cómo vivir con incertidumbre.' },
-  { id: 'leyendas', title: 'Leyendas', author: 'G. A. Bécquer', type: 'Cuentos', genre: 'Cuentos', place: 'Universal', color: 'purple', year: '1871', hasText: false, desc: 'Misterio, amor y apariciones del romanticismo español.' },
-  { id: 'poesia-mistral', title: 'Poesía chilena clásica', author: 'Selección editorial', type: 'Poesía', genre: 'Poesía', place: 'Chile', color: 'pink', year: 'Colección', hasText: false, desc: 'Ruta de lectura sobre voz poética, paisaje e identidad.' }
-];
-
+/* Umbral — app (catálogo en catalog.js) */
 const guides = [
   ['sub-terra', 'Sub terra: minería, naturalismo y desigualdad', 'Contexto social, narrador, símbolos y preguntas de análisis.'],
   ['martin-rivas', 'Martín Rivas: clase, ciudad y ascenso social', 'Personajes, conflicto central y lectura del Chile del siglo XIX.'],
@@ -70,10 +16,12 @@ const guides = [
   ['pazos-ulloa', 'Los pazos de Ulloa: naturalismo gallego', 'Poder rural, personajes y ambiente.']
 ];
 
-const GENRES = ['Todos', 'Clásico', 'Novela', 'Cuentos', 'Poesía', 'Ensayo', 'Historia', 'Investigación', 'Educativo', 'Revista', 'Aventura', 'Misterio'];
+const GENRES = ['Todos', 'Clásico', 'Novela', 'Cuentos', 'Poesía', 'Teatro', 'Ensayo', 'Historia', 'Investigación', 'Educativo', 'Revista', 'Aventura', 'Misterio'];
 const PLACES = ['todos', 'Chile', 'Latinoamérica', 'Universal'];
 
-const readableCount = () => books.filter(b => b.hasText).length;
+const readableCount = () => (typeof books !== 'undefined' ? books : []).filter(b => b.hasText).length;
+const chileCount = () => (typeof books !== 'undefined' ? books : []).filter(b => b.hasText && b.place === 'Chile').length;
+const oerCount = () => (typeof books !== 'undefined' ? books : []).filter(b => b.license && String(b.license).indexOf('CC') === 0).length;
 const q = new URLSearchParams(location.search);
 let view = q.get('vista') || 'inicio';
 let selected = q.get('libro') || 'quijote';
@@ -92,11 +40,12 @@ function nav() {
   return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><span class="mark"></span>Umbral</a><div class="nav-links"><a href="${link('catalogo')}">Biblioteca</a><a href="${link('guias')}">Guías PAES</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Recursos</a><a class="pill" href="${link('planes')}">Umbral Plus</a></div></div></nav>`;
 }
 function footer() {
-  return `<footer class="footer"><div class="wrap foot"><span>Umbral · Lectura dentro de la app</span><span>${readableCount()} obras con texto completo · dominio público</span></div></footer>`;
+  return `<footer class="footer"><div class="wrap foot"><span>Umbral · Lectura dentro de la app</span><span>${readableCount()} textos · ${chileCount()} Chile · ${oerCount()} OER CC</span></div></footer>`;
 }
 function bookCard(b) {
-  const badge = b.hasText ? 'Leer aquí' : 'Ficha';
-  return `<a class="book ${b.color}" href="${link('libro', '&libro=' + b.id)}"><small>${b.genre || b.type} · ${b.place}${b.hasText ? ' · ✓' : ''}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><i class="circle">${b.hasText ? '▶' : '↗'}</i></div><span class="book-badge">${badge}</span></a>`;
+  const badge = b.hasText ? (b.license && String(b.license).indexOf('CC') === 0 ? 'OER' : 'Leer') : 'Ficha';
+  const lic = b.license ? ` · ${b.license}` : '';
+  return `<a class="book ${b.color}" href="${link('libro', '&libro=' + b.id)}"><small>${b.genre || b.type} · ${b.place}${b.hasText ? ' · ✓' : ''}${lic}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><i class="circle">${b.hasText ? '▶' : '↗'}</i></div><span class="book-badge">${badge}</span></a>`;
 }
 
 function home() {
@@ -104,17 +53,18 @@ function home() {
   return `<main>
 <section class="hero"><div class="wrap">
   <span class="eyebrow">Biblioteca digital · lector propio</span>
-  <h1>Lee clásicos y textos abiertos <em>dentro</em> de Umbral.</h1>
-  <p class="lead">Literatura, ensayo, historia, revistas educativas e investigación en dominio público. Sin anuncios. Con progreso guardado y páginas cómodas.</p>
+  <h1>Lee clásicos, Chile y material de estudio <em>dentro</em> de Umbral.</h1>
+  <p class="lead">Dominio público (Gutenberg, Archive), clásicos chilenos y guías educativas CC BY. Sin anuncios. Lectura por hojas.</p>
   <div class="actions">
     <a class="button" href="${link('catalogo')}">Abrir biblioteca <span>→</span></a>
-    <a class="button alt" href="${link('leer', '&libro=edad-de-oro')}">Probar el lector (La Edad de Oro)</a>
+    <a class="button alt" href="${link('leer', '&libro=sub-terra')}">Leer Sub terra (Chile)</a>
+    <a class="button alt" href="${link('catalogo')}&filtro=Educativo">Material educativo CC</a>
   </div>
 </div></section>
 <section class="metrics"><div class="wrap">
-  <div class="metric"><b>${readableCount()}</b><span>obras con lectura completa en Umbral</span></div>
-  <div class="metric"><b>${books.length}</b><span>títulos en el catálogo (fichas + textos)</span></div>
-  <div class="metric"><b>0</b><span>anuncios que interrumpan tu lectura</span></div>
+  <div class="metric"><b>${readableCount()}</b><span>textos completos para leer aquí</span></div>
+  <div class="metric"><b>${chileCount()}</b><span>obras de Chile con texto</span></div>
+  <div class="metric"><b>${oerCount()}</b><span>guías OER · licencia CC BY 4.0</span></div>
 </div></section>
 <section class="section"><div class="wrap">
   <div class="head"><div><span class="eyebrow">Lectura inmediata</span><h2>Empieza por cualquiera de estas obras.</h2></div>
@@ -147,13 +97,14 @@ function catalogue() {
     <div class="crumb"><a href="${link('inicio')}">Umbral</a> / Biblioteca</div>
     <span class="eyebrow">Catálogo abierto</span>
     <h1 style="font-size:clamp(2.6rem,5.5vw,4.6rem);max-width:820px">Literatura, estudio e investigación en español.</h1>
-    <p class="lead">${withText.length} obras se leen completas dentro de Umbral. El resto mantiene ficha y guía mientras preparamos el texto.</p>
+    <p class="lead">${withText.length} textos completos · ${chileCount()} de Chile · ${oerCount()} OER (CC BY). Filtra por género, región o licencia.</p>
     <div class="filters" id="filters-genre">${genres}</div>
     <div class="filters" id="filters-place">${places}
       <button class="filter" data-filter="hasText" data-mode="text">Solo lectura completa</button>
+      <button class="filter" data-filter="oer" data-mode="license">Solo OER (CC)</button>
     </div>
     <div class="books" id="catalogue-books">${books.map(bookCard).join('')}</div>
-    <p class="catalogue-note">Textos de dominio público (Project Gutenberg y ediciones abiertas). Se limpia el preámbulo legal y se muestra el cuerpo de la obra. Fuentes externas se citan; no reutilices material con licencia restrictiva sin revisar.</p>
+    <p class="catalogue-note">Fuentes: Project Gutenberg (dominio público), Internet Archive (clásicos chilenos), material original Umbral bajo <strong>CC BY 4.0</strong>. Script de importación: <code>biblioteca/scripts/import-gutenberg.ps1</code>. Siempre revisa la licencia antes de reutilizar fuera de Umbral.</p>
   </div></main>`;
 }
 
@@ -173,7 +124,9 @@ function bookPage(b) {
           <span class="tag">${b.hasText ? 'Lectura completa en Umbral' : 'Ficha / guía'}</span>
           <span class="tag">${b.genre || b.type}</span>
           <span class="tag">${b.place}</span>
+          ${b.license ? `<span class="tag">${b.license}</span>` : ''}
         </div>
+        ${b.source ? `<p class="catalogue-note" style="margin-top:12px"><strong>Fuente:</strong> ${b.source}</p>` : ''}
         <div class="actions">
           ${readBtn}
           <a class="button alt" href="${link('guia', '&libro=' + b.id)}">Estudiar con la guía</a>
@@ -348,32 +301,33 @@ function checkout() {
 function resources() {
   return `<main class="page"><div class="wrap">
     <div class="crumb"><a href="${link('inicio')}">Umbral</a> / Recursos</div>
-    <span class="eyebrow">Fuentes abiertas</span>
+    <span class="eyebrow">Fuentes abiertas y legales</span>
     <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:780px">De dónde salen los textos.</h1>
     <section class="study">
       <article class="card">
         <h3>Project Gutenberg (ES)</h3>
-        <p>Clásicos en español de dominio público: Galdós, Unamuno, Martí, Sarmiento, Valera y más. Umbral descarga, limpia y pagina el texto para lectura cómoda.</p>
-        <a class="button" href="https://www.gutenberg.org/browse/languages/es" target="_blank" rel="noopener">Explorar Gutenberg ES →</a>
+        <p>Clásicos en español de dominio público. Umbral importa con el script <code>import-gutenberg.ps1</code>, limpia el preámbulo legal y pagina el texto.</p>
+        <a class="button" href="https://www.gutenberg.org/browse/languages/es" target="_blank" rel="noopener">Gutenberg ES →</a>
       </article>
       <aside class="card">
-        <h3>Memoria Chilena</h3>
-        <p>Contexto e imágenes de autores chilenos. Ideal para rutas sobre realismo y sociedad.</p>
-        <a class="button" href="https://www.memoriachilena.gob.cl/" target="_blank" rel="noopener">Abrir Memoria Chilena →</a>
+        <h3>Chile · Archive + Memoria</h3>
+        <p><em>Sub terra</em>, <em>Sub sole</em>, <em>Martín Rivas</em> y cuentos populares chilenos desde Internet Archive / dominio público. Contexto en Memoria Chilena.</p>
+        <a class="button" href="${link('catalogo')}&filtro=Chile">Ver obras de Chile →</a>
       </aside>
     </section>
     <section class="study">
       <article class="card">
-        <h3>LibriVox</h3>
-        <p>Audiolibros gratuitos en español, leídos por voluntarios.</p>
-        <a class="button" href="https://librivox.org/search?recorded_language=es" target="_blank" rel="noopener">Buscar en español →</a>
+        <h3>OER · Creative Commons</h3>
+        <p>${oerCount()} guías de estudio originales Umbral bajo <strong>CC BY 4.0</strong>: narrador, conflicto, símbolo, contexto, poesía, argumentación PAES y citas.</p>
+        <a class="button" href="${link('catalogo')}&filtro=Educativo">Abrir educativos →</a>
       </article>
       <aside class="card">
-        <h3>En Umbral ahora</h3>
-        <p><strong>${readableCount()} textos completos</strong> entre novela, cuento, ensayo, historia, revista educativa e investigación.</p>
-        <a class="button alt" href="${link('catalogo')}">Ir al catálogo</a>
+        <h3>Otras fuentes recomendadas</h3>
+        <p>Wikisource ES · Biblioteca Virtual Miguel de Cervantes · BNE (dominio público) · OpenStax / LibreTexts (OER, muchas en inglés) · LibriVox (audio).</p>
+        <a class="button alt" href="${link('leer','&libro=oer-cita')}">Leer guía de licencias →</a>
       </aside>
     </section>
+    <p class="catalogue-note">Catálogo actual: <strong>${readableCount()}</strong> textos legibles de ${books.length} fichas. No se copian libros con copyright vigente.</p>
   </div></main>`;
 }
 
@@ -830,11 +784,13 @@ function bindCatalogue() {
   let genre = 'Todos';
   let place = 'todos';
   let onlyText = false;
+  let onlyOer = false;
   function apply() {
     box.innerHTML = books.filter(b => {
       if (genre !== 'Todos' && (b.genre || b.type) !== genre && b.genre !== genre) return false;
       if (place !== 'todos' && b.place !== place) return false;
       if (onlyText && !b.hasText) return false;
+      if (onlyOer && !(b.license && String(b.license).indexOf('CC') === 0)) return false;
       return true;
     }).map(bookCard).join('') || '<p class="catalogue-note">No hay títulos con ese filtro.</p>';
   }
@@ -850,19 +806,25 @@ function bindCatalogue() {
         document.querySelectorAll('#filters-place .filter').forEach(x => x.classList.remove('active'));
         btn.classList.add('active');
         place = f;
-        onlyText = false;
       } else if (mode === 'text') {
         onlyText = !onlyText;
         btn.classList.toggle('active', onlyText);
+      } else if (mode === 'license') {
+        onlyOer = !onlyOer;
+        btn.classList.toggle('active', onlyOer);
       }
       apply();
     });
   });
-  // deep-link ?filtro=Educativo
   const filtro = new URLSearchParams(location.search).get('filtro');
   if (filtro) {
-    const btn = [...document.querySelectorAll('#filters-genre .filter')].find(b => b.dataset.filter === filtro);
-    if (btn) btn.click();
+    if (filtro === 'Chile') {
+      const btn = [...document.querySelectorAll('#filters-place .filter')].find(b => b.dataset.filter === 'Chile');
+      if (btn) btn.click();
+    } else {
+      const btn = [...document.querySelectorAll('#filters-genre .filter')].find(b => b.dataset.filter === filtro);
+      if (btn) btn.click();
+    }
   }
 }
 
