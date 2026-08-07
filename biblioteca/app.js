@@ -204,14 +204,14 @@ function internalReader(b) {
     </div></main>`;
   }
   return `<main class="page reader-page"><div class="wrap">
-    <div class="reader-stage theme-paper" id="reader-stage">
+    <div class="reader-stage theme-paper mode-book" id="reader-stage">
       <header class="reader-topbar" id="reader-topbar">
         <a class="back" href="${link('libro', '&libro=' + b.id)}" title="Volver a la ficha">← Salir</a>
         <div class="meta-mini"><strong>${b.title}</strong> · ${b.author}</div>
         <div class="reader-tools">
           <button type="button" id="fr-toc" class="rtool" title="Índice" aria-label="Índice">☰</button>
           <button type="button" id="fr-settings" class="rtool" title="Ajustes de lectura" aria-label="Ajustes">Aa</button>
-          <button type="button" id="fr-mode" class="rtool" title="Modo scroll o páginas" aria-label="Modo de lectura">↕</button>
+          <button type="button" id="fr-mode" class="rtool active" title="Libro o scroll" aria-label="Modo de lectura">📖</button>
           <button type="button" id="fr-minus" class="rtool" aria-label="Disminuir letra">A−</button>
           <span class="rtool-size" id="rtool-size">100%</span>
           <button type="button" id="fr-plus" class="rtool" aria-label="Aumentar letra">A+</button>
@@ -219,7 +219,7 @@ function internalReader(b) {
       </header>
       <div class="reader-settings" id="reader-settings" hidden>
         <label>Interlineado <input type="range" id="fr-lh" min="145" max="210" value="178"></label>
-        <label>Ancho <input type="range" id="fr-width" min="28" max="46" value="38"></label>
+        <label>Ancho hoja <input type="range" id="fr-width" min="28" max="46" value="38"></label>
         <div class="theme-pills" role="group" aria-label="Tema">
           <button type="button" class="theme-pill active" data-theme="paper" title="Papel" aria-label="Tema papel"></button>
           <button type="button" class="theme-pill" data-theme="sepia" title="Sepia" aria-label="Tema sepia"></button>
@@ -232,9 +232,27 @@ function internalReader(b) {
           <div class="toc-head">Índice</div>
           <div class="toc-list" id="toc-list"><p class="toc-empty">Se genera al cargar…</p></div>
         </aside>
-        <article class="reader-body mode-pages" id="reader-text" style="--read-size:1.125rem;--read-lh:1.78;--read-measure:38rem">
-          <p class="reader-loading">Preparando una lectura cómoda…</p>
-        </article>
+        <div>
+          <article class="reader-body mode-book" id="reader-text" style="--read-size:1.125rem;--read-lh:1.78;--read-measure:38rem">
+            <p class="reader-loading">Abriendo el libro…</p>
+          </article>
+          <div class="book-desk" id="book-desk" aria-label="Libro abierto">
+            <div class="book-open" id="book-open">
+              <button type="button" class="book-hit book-hit-left" id="book-hit-left" aria-label="Página anterior"></button>
+              <button type="button" class="book-hit book-hit-right" id="book-hit-right" aria-label="Página siguiente"></button>
+              <div class="book-leaf leaf-left">
+                <div class="leaf-inner" id="leaf-left"><p class="reader-loading">…</p></div>
+                <span class="leaf-num" id="leaf-num-l"></span>
+              </div>
+              <div class="book-spine" aria-hidden="true"></div>
+              <div class="book-leaf leaf-right">
+                <div class="leaf-inner" id="leaf-right"><p class="reader-loading">…</p></div>
+                <span class="leaf-num" id="leaf-num-r"></span>
+              </div>
+            </div>
+          </div>
+          <p class="book-hint" id="book-hint">Clic en el borde de la hoja · flechas ← → · desliza en móvil</p>
+        </div>
       </div>
       <div class="read-ctrl" id="read-ctrl" hidden>
         <button type="button" class="read-btn" id="read-prev" aria-label="Anterior">‹</button>
@@ -249,7 +267,7 @@ function internalReader(b) {
         <a class="simple-btn" href="${audioUrl(b)}" target="_blank" rel="noopener">Audiolibro</a>
         <button type="button" class="simple-btn" id="read-reset">Reiniciar progreso</button>
       </div>
-      <p class="reader-credit">Dominio público · lectura en Umbral · tipografía optimizada para pantallas</p>
+      <p class="reader-credit">Dominio público · lectura en hojas · Umbral</p>
     </div>
   </div></main>`;
 }
@@ -409,7 +427,7 @@ function how() {
   </div></main>`;
 }
 
-/* ── Lector cómodo: tipografía, temas, scroll/páginas, progreso ── */
+/* ── Lector: libro por hojas (default) + scroll opcional ── */
 function leerLoader(b) {
   const art = document.getElementById('reader-text');
   if (!art) return;
@@ -425,16 +443,24 @@ function leerLoader(b) {
   const fill = document.getElementById('read-fill');
   const tocList = document.getElementById('toc-list');
   const tocPanel = document.getElementById('reader-toc');
-  const storageKey = 'umbral-read-v2:' + b.id;
+  const bookOpen = document.getElementById('book-open');
+  const leafL = document.getElementById('leaf-left');
+  const leafR = document.getElementById('leaf-right');
+  const numL = document.getElementById('leaf-num-l');
+  const numR = document.getElementById('leaf-num-r');
+  const hint = document.getElementById('book-hint');
+  const storageKey = 'umbral-read-v3:' + b.id;
   let pages = [];
   let rawParas = [];
-  let idx = 0;
+  let idx = 0; // índice de hoja izquierda del pliego (par)
   let fr = 100;
   let lh = 178;
   let measure = 38;
   let theme = 'paper';
-  let mode = 'scroll'; // scroll es más cómodo en web
+  let mode = 'book'; // book | scroll
   let chromeTimer = null;
+  let flipping = false;
+  let touchX = null;
 
   function esc(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -445,19 +471,31 @@ function leerLoader(b) {
     const u = t.replace(/[.,;:!?¡¿"'()\-—–]/g, '').trim();
     return u.length > 3 && u.length < 70 && /^[A-ZÁÉÍÓÚÑÜ0-9][A-ZÁÉÍÓÚÑÜ0-9\s.,;:!?¡¿\-—']+$/.test(u);
   }
+  function isMobileBook() {
+    return window.innerWidth < 860;
+  }
+  function spreadStep() {
+    return isMobileBook() ? 1 : 2;
+  }
   function applyChrome() {
     const base = 1.125 * (fr / 100);
     art.style.setProperty('--read-size', base.toFixed(3) + 'rem');
     art.style.setProperty('--read-lh', (lh / 100).toFixed(2));
     art.style.setProperty('--read-measure', measure + 'rem');
+    if (bookOpen) {
+      bookOpen.style.setProperty('--read-size', base.toFixed(3) + 'rem');
+      bookOpen.style.setProperty('--read-lh', (lh / 100).toFixed(2));
+    }
     const sz = document.getElementById('rtool-size');
     if (sz) sz.textContent = fr + '%';
     if (stage) {
-      stage.className = 'reader-stage theme-' + theme;
+      stage.className = 'reader-stage theme-' + theme + ' mode-' + mode;
     }
     art.classList.toggle('mode-scroll', mode === 'scroll');
-    art.classList.toggle('mode-pages', mode === 'pages');
-    document.getElementById('fr-mode')?.classList.toggle('active', mode === 'scroll');
+    art.classList.toggle('mode-book', mode === 'book');
+    document.getElementById('fr-mode')?.classList.toggle('active', mode === 'book');
+    document.getElementById('fr-mode') && (document.getElementById('fr-mode').textContent = mode === 'book' ? '📖' : '↕');
+    if (hint) hint.hidden = mode !== 'book';
     document.querySelectorAll('.theme-pill').forEach(p => {
       p.classList.toggle('active', p.dataset.theme === theme);
     });
@@ -479,33 +517,89 @@ function leerLoader(b) {
     if (isHead(t)) return '<h3 class="p-h">' + esc(t) + '</h3>';
     return '<p' + (withDrop ? ' class="firstbit"' : '') + '>' + esc(t) + '</p>';
   }
-  function renderPage(i) {
-    idx = Math.max(0, Math.min(pages.length - 1, i));
-    const seg = pages[idx];
+  function pageHtml(pageIndex, isFirstOverall) {
+    if (pageIndex < 0 || pageIndex >= pages.length) {
+      return '<div class="leaf-empty">—</div>';
+    }
+    const seg = pages[pageIndex];
     let h = '';
-    if (idx === 0) {
+    if (pageIndex === 0 && isFirstOverall) {
       h += '<div class="p-cover"><h2 class="p-chapter">' + esc(b.title) + '</h2><p class="p-author">' + esc(b.author) + ' · ' + esc(String(b.year)) + '</p></div>';
     }
-    let firstP = true;
+    let firstP = pageIndex === 0;
     for (const q of seg) {
       const t = q.trim();
-      if (!isHead(t) && firstP && idx === 0) {
-        h += paraToHtml(t, true);
+      if (!isHead(t) && firstP) {
+        h += paraToHtml(t, pageIndex === 0);
         firstP = false;
       } else {
         h += paraToHtml(t, false);
         if (!isHead(t)) firstP = false;
       }
     }
-    art.innerHTML = h;
-    updateProgress();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    save();
+    return h || '<div class="leaf-empty">—</div>';
+  }
+  function animateFlip(dir) {
+    if (!bookOpen || flipping) return Promise.resolve();
+    flipping = true;
+    bookOpen.classList.remove('is-flipping-next', 'is-flipping-prev');
+    // force reflow
+    void bookOpen.offsetWidth;
+    bookOpen.classList.add(dir === 'next' ? 'is-flipping-next' : 'is-flipping-prev');
+    return new Promise(res => {
+      setTimeout(() => {
+        bookOpen.classList.remove('is-flipping-next', 'is-flipping-prev');
+        flipping = false;
+        res();
+      }, 480);
+    });
+  }
+  function renderBook(i, withAnim) {
+    const step = spreadStep();
+    const maxIdx = Math.max(0, pages.length - 1);
+    // en desktop idx es par (hoja izquierda)
+    if (step === 2) i = Math.floor(i / 2) * 2;
+    idx = Math.max(0, Math.min(maxIdx, i));
+
+    const paint = () => {
+      if (isMobileBook()) {
+        // una sola hoja (derecha visible)
+        if (leafL) leafL.innerHTML = '';
+        if (leafR) leafR.innerHTML = pageHtml(idx, true);
+        if (numL) numL.textContent = '';
+        if (numR) numR.textContent = String(idx + 1);
+      } else {
+        if (leafL) leafL.innerHTML = pageHtml(idx, true);
+        if (leafR) leafR.innerHTML = pageHtml(idx + 1, true);
+        if (numL) numL.textContent = pages[idx] ? String(idx + 1) : '';
+        if (numR) numR.textContent = pages[idx + 1] ? String(idx + 2) : '';
+      }
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      save();
+    };
+
+    if (withAnim) {
+      animateFlip(withAnim).then(paint);
+    } else {
+      paint();
+    }
+  }
+  function goNext() {
+    if (mode !== 'book' || flipping) return;
+    const step = spreadStep();
+    if (idx + step >= pages.length) return;
+    renderBook(idx + step, 'next');
+  }
+  function goPrev() {
+    if (mode !== 'book' || flipping) return;
+    const step = spreadStep();
+    if (idx <= 0) return;
+    renderBook(idx - step, 'prev');
   }
   function renderScroll() {
     let h = '<div class="p-cover"><h2 class="p-chapter">' + esc(b.title) + '</h2><p class="p-author">' + esc(b.author) + ' · ' + esc(String(b.year)) + '</p></div>';
     let firstP = true;
-    let acc = 0;
     pages.forEach((seg, pi) => {
       if (pi > 0) h += '<hr class="page-break" data-page="' + pi + '">';
       for (const q of seg) {
@@ -518,7 +612,6 @@ function leerLoader(b) {
           if (!isHead(t)) firstP = false;
         }
       }
-      acc += seg.length;
     });
     art.innerHTML = h;
     updateProgress();
@@ -526,13 +619,18 @@ function leerLoader(b) {
   }
   function updateProgress() {
     if (!pages.length) return;
-    if (mode === 'pages') {
-      metaEl.textContent = (idx + 1) + ' / ' + pages.length;
-      fill.style.width = pages.length > 1 ? Math.round(((idx + 1) / pages.length) * 100) + '%' : '100%';
-      prevBtn.disabled = idx === 0;
-      nextBtn.disabled = idx === pages.length - 1;
-      prevBtn.style.visibility = 'visible';
-      nextBtn.style.visibility = 'visible';
+    prevBtn.style.visibility = 'visible';
+    nextBtn.style.visibility = 'visible';
+    if (mode === 'book') {
+      const step = spreadStep();
+      const shown = isMobileBook() ? 1 : Math.min(2, pages.length - idx);
+      const end = Math.min(pages.length, idx + (isMobileBook() ? 1 : 2));
+      metaEl.textContent = isMobileBook()
+        ? (idx + 1) + ' / ' + pages.length
+        : (idx + 1) + (pages[idx + 1] ? '–' + (idx + 2) : '') + ' / ' + pages.length;
+      fill.style.width = pages.length > 1 ? Math.round((end / pages.length) * 100) + '%' : '100%';
+      prevBtn.disabled = idx <= 0;
+      nextBtn.disabled = idx + step >= pages.length;
     } else {
       const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const pct = Math.min(100, Math.round((window.scrollY / max) * 100));
@@ -549,7 +647,7 @@ function leerLoader(b) {
     });
     if (!tocList) return;
     if (!toc.length) {
-      tocList.innerHTML = '<p class="toc-empty">Sin capítulos detectados. Desplázate o usa las flechas.</p>';
+      tocList.innerHTML = '<p class="toc-empty">Sin capítulos detectados. Pasa las hojas con las flechas.</p>';
       return;
     }
     tocList.innerHTML = toc.map((t, i) =>
@@ -565,10 +663,10 @@ function leerLoader(b) {
           acc += pages[p].length;
           pageFor = p;
         }
-        if (mode === 'pages') {
-          renderPage(pageFor);
+        if (mode === 'book') {
+          renderBook(pageFor, false);
         } else {
-          const el = art.querySelector('[data-page="' + pageFor + '"]') || art.querySelectorAll('.p-h')[0];
+          const el = art.querySelector('[data-page="' + pageFor + '"]');
           if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           else window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -581,7 +679,7 @@ function leerLoader(b) {
   }
   function showContent() {
     if (mode === 'scroll') renderScroll();
-    else renderPage(idx);
+    else renderBook(idx, false);
   }
 
   fetch('textos/' + encodeURIComponent(b.id) + '.txt')
@@ -591,7 +689,8 @@ function leerLoader(b) {
       pages = [];
       let cur = [];
       let sum = 0;
-      const CHARS = 2800;
+      // hojas más cortas = sensación de libro real
+      const CHARS = isMobileBook() ? 1600 : 1400;
       for (const p of rawParas) {
         if (cur.length && sum + p.length > CHARS) {
           pages.push(cur);
@@ -612,7 +711,9 @@ function leerLoader(b) {
         if (typeof saved.lh === 'number') lh = saved.lh;
         if (typeof saved.measure === 'number') measure = saved.measure;
         if (saved.theme) theme = saved.theme;
-        if (saved.mode === 'pages' || saved.mode === 'scroll') mode = saved.mode;
+        if (saved.mode === 'book' || saved.mode === 'scroll') mode = saved.mode;
+        // migrar modes viejos
+        if (saved.mode === 'pages') mode = 'book';
         if (typeof saved.page === 'number') idx = saved.page;
       }
       applyChrome();
@@ -625,35 +726,56 @@ function leerLoader(b) {
     })
     .catch(() => {
       art.innerHTML = '<p class="reader-loading">No se pudo cargar el texto. Comprueba la conexión.</p>';
+      if (leafR) leafR.innerHTML = '<p class="reader-loading">No se pudo cargar el texto.</p>';
     });
 
-  prevBtn?.addEventListener('click', () => { if (mode === 'pages') renderPage(idx - 1); });
-  nextBtn?.addEventListener('click', () => { if (mode === 'pages') renderPage(idx + 1); });
+  prevBtn?.addEventListener('click', () => { if (mode === 'book') goPrev(); });
+  nextBtn?.addEventListener('click', () => { if (mode === 'book') goNext(); });
+  document.getElementById('book-hit-left')?.addEventListener('click', goPrev);
+  document.getElementById('book-hit-right')?.addEventListener('click', goNext);
+
   document.addEventListener('keydown', function kd(e) {
     if (view !== 'leer') return;
-    if (e.key === 'ArrowRight' && mode === 'pages') { renderPage(idx + 1); e.preventDefault(); }
-    else if (e.key === 'ArrowLeft' && mode === 'pages') { renderPage(idx - 1); e.preventDefault(); }
-    else if (e.key === 'Escape') {
-      location.href = link('libro', '&libro=' + b.id);
+    if (mode === 'book') {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goNext(); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goPrev(); e.preventDefault(); }
     }
+    if (e.key === 'Escape') location.href = link('libro', '&libro=' + b.id);
   });
+
+  // swipe en móvil
+  bookOpen?.addEventListener('touchstart', e => {
+    touchX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  bookOpen?.addEventListener('touchend', e => {
+    if (touchX == null || mode !== 'book') return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) < 48) return;
+    if (dx < 0) goNext();
+    else goPrev();
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    if (view === 'leer' && mode === 'book') renderBook(idx, false);
+  });
+
   window.addEventListener('scroll', () => {
     if (view !== 'leer') return;
     updateProgress();
     if (mode === 'scroll') save();
-    // auto-hide chrome al bajar
     if (!topbar || !ctrl) return;
     clearTimeout(chromeTimer);
     topbar.classList.remove('is-hidden');
     ctrl.classList.remove('is-hidden');
     chromeTimer = setTimeout(() => {
-      if (window.scrollY > 80) {
+      if (window.scrollY > 80 && mode === 'scroll') {
         topbar.classList.add('is-hidden');
         ctrl.classList.add('is-hidden');
       }
     }, 1800);
   }, { passive: true });
-  // mostrar chrome al mover el mouse cerca del borde
+
   document.addEventListener('mousemove', e => {
     if (view !== 'leer' || !topbar || !ctrl) return;
     if (e.clientY < 70 || e.clientY > window.innerHeight - 80) {
@@ -674,7 +796,7 @@ function leerLoader(b) {
     document.getElementById('fr-settings')?.classList.toggle('active', open);
   });
   document.getElementById('fr-mode')?.addEventListener('click', () => {
-    mode = mode === 'scroll' ? 'pages' : 'scroll';
+    mode = mode === 'book' ? 'scroll' : 'book';
     applyChrome();
     showContent();
     save();
@@ -695,7 +817,7 @@ function leerLoader(b) {
   });
   document.getElementById('read-reset')?.addEventListener('click', () => {
     try { localStorage.removeItem(storageKey); } catch (_) {}
-    fr = 100; lh = 178; measure = 38; theme = 'paper'; mode = 'scroll'; idx = 0;
+    fr = 100; lh = 178; measure = 38; theme = 'paper'; mode = 'book'; idx = 0;
     applyChrome();
     showContent();
     window.scrollTo(0, 0);
