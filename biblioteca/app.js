@@ -685,12 +685,34 @@ function leerLoader(b) {
   fetch('textos/' + encodeURIComponent(b.id) + '.txt')
     .then(r => { if (!r.ok) throw new Error(String(r.status)); return r.text(); })
     .then(t => {
-      rawParas = t.replace(/\r\n/g, '\n').split(/\n{2,}/).map(x => x.trim()).filter(x => x.length);
+      // Normalizar y partir en bloques; párrafos gigantes se fragmentan (evita "libros" de 1 hoja)
+      const CHARS = isMobileBook() ? 1600 : 1400;
+      const splitLong = (block) => {
+        if (block.length <= CHARS) return [block];
+        const out = [];
+        // preferir cortes por oración / salto de línea
+        const parts = block.split(/(?<=[\.\!\?…»"'])\s+|\n+/).map(s => s.trim()).filter(Boolean);
+        let buf = '';
+        const flush = () => { if (buf) { out.push(buf); buf = ''; } };
+        for (const part of parts.length ? parts : [block]) {
+          if ((buf + ' ' + part).trim().length > CHARS) {
+            flush();
+            if (part.length > CHARS) {
+              for (let i = 0; i < part.length; i += CHARS) out.push(part.slice(i, i + CHARS));
+            } else buf = part;
+          } else {
+            buf = buf ? (buf + ' ' + part) : part;
+          }
+        }
+        flush();
+        return out.length ? out : [block];
+      };
+      const blocks = t.replace(/\r\n/g, '\n').split(/\n{2,}/).map(x => x.trim()).filter(x => x.length);
+      rawParas = [];
+      for (const b0 of blocks) rawParas.push(...splitLong(b0));
       pages = [];
       let cur = [];
       let sum = 0;
-      // hojas más cortas = sensación de libro real
-      const CHARS = isMobileBook() ? 1600 : 1400;
       for (const p of rawParas) {
         if (cur.length && sum + p.length > CHARS) {
           pages.push(cur);
