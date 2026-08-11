@@ -1,0 +1,124 @@
+[
+  {
+    "id": "la-navidad-en-las-montanas",
+    "gutenberg": 10825,
+    "title": "La Navidad en las Montañas",
+    "author": "Altamirano",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\la-navidad-en-las-montanas.txt",
+    "kb": 184.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #10825"
+  },
+  {
+    "id": "la-regenta",
+    "gutenberg": 17073,
+    "title": "La Regenta",
+    "author": "Alas",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\la-regenta.txt",
+    "kb": 1792.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #17073"
+  },
+  {
+    "id": "su-unico-hijo",
+    "gutenberg": 17341,
+    "title": "Su único hijo",
+    "author": "Alas",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\su-unico-hijo.txt",
+    "kb": 516.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #17341"
+  },
+  {
+    "id": "memorias-de-un-vigilante",
+    "gutenberg": 19543,
+    "title": "Memorias de un vigilante",
+    "author": "Alvarez",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\memorias-de-un-vigilante.txt",
+    "kb": 141.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #19543"
+  },
+  {
+    "id": "el-sombrero-de-tres-picos-historia-verdadera-de",
+    "gutenberg": 29506,
+    "title": "El sombrero de tres picos\r\nHistoria verdadera de un sucedido que anda en romances escrita ahora tal y como pasó",
+    "status": "not-spanish"
+  },
+  {
+    "id": "el-capitan-veneno-the-hispanic-series",
+    "gutenberg": 29731,
+    "title": "El Capitán Veneno\nThe Hispanic Series",
+    "status": "not-spanish"
+  },
+  {
+    "id": "el-nino-de-la-bola-novela",
+    "gutenberg": 59154,
+    "title": "El Niño de la Bola: Novela",
+    "author": "Alarcón",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\el-nino-de-la-bola-novela.txt",
+    "kb": 440.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #59154"
+  },
+  {
+    "id": "cosas-que-fueron-cuadros-de-costumbres",
+    "gutenberg": 61244,
+    "title": "Cosas que fueron: Cuadros de costumbres",
+    "author": "Alarcón",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\cosas-que-fueron-cuadros-de-costumbres.txt",
+    "kb": 333.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #61244"
+  },
+  {
+    "id": "el-senor-y-los-demas-son-cuentos",
+    "gutenberg": 62361,
+    "title": "El Señor y los demás son Cuentos",
+    "author": "Alas",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\el-senor-y-los-demas-son-cuentos.txt",
+    "kb": 299.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #62361"
+  },
+  {
+    "id": "doctor-sutilis-cuentos",
+    "gutenberg": 64589,
+    "title": "Doctor Sutilis (Cuentos)",
+    "author": "Alas",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\doctor-sutilis-cuentos.txt",
+    "kb": 433.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #64589"
+  },
+  {
+    "id": "el-clavo",
+    "gutenberg": 67248,
+    "title": "El clavo",
+    "author": "Alarcón",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\el-clavo.txt",
+    "kb": 70.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #67248"
+  },
+  {
+    "id": "cuentos-de-fray-mocho",
+    "gutenberg": 75613,
+    "title": "Cuentos de Fray Mocho",
+    "author": "Alvarez",
+    "path": "C:\\Users\\Antonio\\Desktop\\Proyectos\\forja-web\\biblioteca\\scripts\\..\\textos\\cuentos-de-fray-mocho.txt",
+    "kb": 414.0,
+    "status": "ok",
+    "license": "Dominio público",
+    "source": "Project Gutenberg #75613"
+  }
+]

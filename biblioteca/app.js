@@ -19,6 +19,12 @@ const guides = [
 const GENRES = ['Todos', 'Clásico', 'Novela', 'Cuentos', 'Poesía', 'Teatro', 'Ensayo', 'Historia', 'Investigación', 'Educativo', 'Revista', 'Aventura', 'Misterio'];
 const PLACES = ['todos', 'Chile', 'Latinoamérica', 'Universal'];
 
+/** Afiliados Buscalibre (Chile). Tras aprobación, pega el ID en localStorage:
+ *  localStorage.setItem('hojear-bc-aff', 'TU_ID')
+ *  o define HOJEAR_BC_AFFILIATE_ID abajo. */
+const HOJEAR_BC_AFFILIATE_ID = (typeof localStorage !== 'undefined' && localStorage.getItem('hojear-bc-aff')) || '';
+const BC_SEARCH = 'https://www.buscalibre.cl/libros/search';
+
 const readableCount = () => (typeof books !== 'undefined' ? books : []).filter(b => b.hasText).length;
 const chileCount = () => (typeof books !== 'undefined' ? books : []).filter(b => b.hasText && b.place === 'Chile').length;
 const oerCount = () => (typeof books !== 'undefined' ? books : []).filter(b => b.license && String(b.license).indexOf('CC') === 0).length;
@@ -35,6 +41,19 @@ const audioUrl = b => {
   };
   return direct[b.id] || `https://librivox.org/search?title=${encodeURIComponent(b.title)}&recorded_language=es`;
 };
+/** Link de compra Buscalibre (edición física / moderna). */
+const buyUrl = b => {
+  if (b.buyUrl) return b.buyUrl;
+  const qstr = encodeURIComponent(`${b.title} ${b.author}`.trim());
+  let url = `${BC_SEARCH}?q=${qstr}`;
+  // Parámetro genérico; el panel de afiliados de Buscalibre puede dar links con tracking propio.
+  if (HOJEAR_BC_AFFILIATE_ID) {
+    url += `&afiliado=${encodeURIComponent(HOJEAR_BC_AFFILIATE_ID)}`;
+  }
+  return url;
+};
+const buyBtn = b =>
+  `<a class="button alt buy-bc" href="${buyUrl(b)}" target="_blank" rel="noopener sponsored">Comprar en Buscalibre ↗</a>`;
 
 function nav() {
   return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark-light.svg" width="30" height="30" alt="">Hojear</a><div class="nav-links"><a href="${link('catalogo')}">Biblioteca</a><a href="${link('guias')}">Guías PAES</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Recursos</a><a class="pill" href="${link('planes')}">Hojear Plus</a></div></div></nav>`;
@@ -131,10 +150,11 @@ function bookPage(b) {
           ${readBtn}
           <a class="button alt" href="${link('guia', '&libro=' + b.id)}">Estudiar con la guía</a>
           <a class="button alt" href="${audioUrl(b)}" target="_blank" rel="noopener">▶ Audiolibro (LibriVox)</a>
+          ${buyBtn(b)}
         </div>
         <p class="catalogue-note">${b.hasText
-          ? 'El lector guarda tu página, permite cambiar tamaño y tema, y muestra un índice de capítulos cuando el texto lo permite.'
-          : 'El texto íntegro de esta obra aún no está cargado en Hojear. Puedes usar la guía y recursos externos mientras tanto.'}</p>
+          ? 'El lector guarda tu página, permite cambiar tamaño y tema, y muestra un índice de capítulos cuando el texto lo permite. Si prefieres papel o una edición anotada, el enlace a Buscalibre abre la búsqueda del título (afiliado ETEMEN/Hojear cuando esté configurado).'
+          : 'El texto íntegro aún no está en Hojear (p. ej. traducción con copyright). Usa la guía, el audiolibro si existe, o compra una edición en Buscalibre.'}</p>
       </div>
     </section>
   </div></main>`;
@@ -261,6 +281,7 @@ function guidePage(b) {
         <p><strong>Género:</strong><br>${b.genre || b.type}</p>
         <p><strong>Origen:</strong><br>${b.place}</p>
         ${b.hasText ? `<a class="button" style="margin-top:10px" href="${link('leer', '&libro=' + b.id)}">Leer en Hojear →</a>` : `<a class="button alt" style="margin-top:10px" href="${link('libro', '&libro=' + b.id)}">Ver ficha →</a>`}
+        <div style="margin-top:12px">${buyBtn(b)}</div>
       </aside>
     </section>
   </div></main>`;
@@ -313,6 +334,18 @@ function resources() {
         <h3>Chile · Archive + Memoria</h3>
         <p><em>Sub terra</em>, <em>Sub sole</em>, <em>Martín Rivas</em> y cuentos populares chilenos desde Internet Archive / dominio público. Contexto en Memoria Chilena.</p>
         <a class="button" href="${link('catalogo')}&filtro=Chile">Ver obras de Chile →</a>
+      </aside>
+    </section>
+    <section class="study">
+      <article class="card">
+        <h3>Comprar en Buscalibre</h3>
+        <p>En cada ficha hay un botón <strong>Comprar en Buscalibre</strong> para ediciones físicas o anotadas (incluye libros modernos con copyright que no podemos hostear).</p>
+        <p class="catalogue-note">Hojear participa del <a href="https://www.buscalibre.cl/afiliados" target="_blank" rel="noopener">programa de afiliados de Buscalibre</a>. Si compras por esos enlaces, una comisión ayuda a mantener el proyecto. ${HOJEAR_BC_AFFILIATE_ID ? 'Afiliado activo.' : 'ID de afiliado pendiente de configurar tras aprobación.'}</p>
+        <a class="button" href="https://www.buscalibre.cl/" target="_blank" rel="noopener sponsored">Ir a Buscalibre →</a>
+      </article>
+      <aside class="card">
+        <h3>Otras fuentes libres</h3>
+        <p><a href="https://www.elejandria.com/" target="_blank" rel="noopener">Elejandría</a> · <a href="https://es.wikisource.org/" target="_blank" rel="noopener">Wikisource</a> · <a href="https://www.cervantesvirtual.com/" target="_blank" rel="noopener">Cervantes Virtual</a> · <a href="https://librivox.org/" target="_blank" rel="noopener">LibriVox</a> (audio).</p>
       </aside>
     </section>
     <section class="study">

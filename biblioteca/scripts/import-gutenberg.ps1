@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Importa ebooks en español de Project Gutenberg al catálogo de textos de Umbral.
+  Importa ebooks en español de Project Gutenberg al catálogo de textos de Hojear.
 
 .DESCRIPTION
   - Descarga el catálogo CSV de Gutenberg (o usa cache local).
@@ -28,7 +28,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$UserAgent = 'UmbralImport/1.0 (+https://etemen.cl; hola@etemen.cl; educational library)'
+$UserAgent = 'HojearImport/1.0 (+https://etemen.cl; hola@etemen.cl; educational library)'
 $Headers = @{ 'User-Agent' = $UserAgent }
 
 $GenrePatterns = @{
@@ -170,5 +170,5 @@ Write-Host "OK: $(($manifest | Where-Object status -eq 'ok').Count) | Existentes
 Write-Host "`n--- Pegable en app.js (revisar metadatos) ---"
 foreach ($m in ($manifest | Where-Object { $_.status -in 'ok','exists' })) {
   $genre = if ($Genre -eq 'Todos') { 'Clásico' } else { $Genre }
-  Write-Host "  { id: '$($m.id)', title: '$($m.title -replace "'","\'")', author: '$($m.author -replace "'","\'")', type: '$genre', genre: '$genre', place: 'Universal', color: 'navy', year: 'DP', hasText: true, license: 'Dominio público', source: 'Project Gutenberg #$($m.gutenberg)', desc: 'Texto en dominio público importado para lectura en Umbral.' },"
+  Write-Host "  { id: '$($m.id)', title: '$($m.title -replace "'","\'")', author: '$($m.author -replace "'","\'")', type: '$genre', genre: '$genre', place: 'Universal', color: 'navy', year: 'DP', hasText: true, license: 'Dominio público', source: 'Project Gutenberg #$($m.gutenberg)', desc: 'Texto en dominio público importado para lectura en Hojear.' },"
 }

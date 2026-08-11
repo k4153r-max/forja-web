@@ -29,6 +29,17 @@ Genera `_import-manifest.json` y un fragmento JS para revisar metadatos.
 | Project Gutenberg ES | Clásicos, ensayo, historia, filosofía |
 | Internet Archive (DP) | *Sub terra*, *Sub sole*, *Martín Rivas* |
 | Hojear OER CC BY 4.0 | Guías de estudio (`oer-*.txt`) |
+| Buscalibre (afiliados) | Botón “Comprar” en fichas — ediciones físicas/modernas |
+
+## Afiliado Buscalibre
+
+1. Regístrate: https://www.buscalibre.cl/afiliados  
+2. Cuando te aprueben, en la app (consola del navegador o config):
+   ```js
+   localStorage.setItem('hojear-bc-aff', 'TU_ID_O_CODIGO')
+   ```
+3. Los enlaces usan `https://www.buscalibre.cl/libros/search?q=...&afiliado=...`  
+   Si Buscalibre te da un formato de URL distinto, actualiza `buyUrl()` en `app.js`.
 
 ## Regenerar `catalog.js`
 
