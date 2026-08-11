@@ -31,7 +31,7 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
   - Navy / obsidian: `#07090e` · `#0e1424`
   - Copper: `#C4894A`
   - Cream: `#F3EEE6`
-  - Nexo: `#00c9a7` · Umbral: `#d95d39` · Comercio: `#e08a4a`
+  - Nexo: `#00c9a7` · Hojear: `#d95d39` · Comercio: `#e08a4a`
 - **Trial unificado:** 3 días gratis en todo el sitio
 
 ## Logos

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hojear — Biblioteca digital para leer mejor | ETEMEN</title>
+  <meta name="description" content="Hojear es la biblioteca digital chilena de obras clásicas en dominio público y guías de lectura PAES. Sin anuncios, sin distracciones. ETEMEN, Chile.">
+  <meta name="theme-color" content="#0a0b0f">
+  <link rel="canonical" href="https://etemen.cl/hojear/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://etemen.cl/hojear/">
+  <meta property="og:site_name" content="ETEMEN">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:title" content="Hojear — Biblioteca digital para leer mejor | ETEMEN">
+  <meta property="og:description" content="Biblioteca digital chilena de obras clásicas en dominio público, guías de estudio PAES y experiencia de lectura limpia sin distracciones.">
+  <meta property="og:image" content="https://etemen.cl/assets/logos/hojear-icon.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hojear — Biblioteca digital para leer mejor | ETEMEN">
+  <meta name="twitter:description" content="Clásicos en dominio público, guías de análisis literario y preparación PAES.">
+  <meta name="twitter:image" content="https://etemen.cl/assets/logos/hojear-icon.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Hojear",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web",
+    "description": "Biblioteca digital chilena de obras clásicas y guías de lectura PAES.",
+    "url": "https://etemen.cl/hojear/",
+    "image": "https://etemen.cl/assets/logos/hojear-icon.jpg",
+    "author": {
+      "@type": "Organization",
+      "name": "ETEMEN",
+      "url": "https://etemen.cl/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "name": "Hojear Plus",
+      "price": "3990",
+      "priceCurrency": "CLP"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&family=Georgia&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main-v7.css">
+  <link rel="icon" href="/assets/logos/hojear-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/logos/hojear-icon.jpg">
+  <style>
+    :root {
+      --hojear-accent: #d95d39;
+      --hojear-gold: #e7a83d;
+      --hojear-bg: #f7f2e9;
+      --hojear-dark: #172021;
+    }
+    .hojear-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px 6px 6px;
+      border-radius: 999px;
+      background: rgba(217, 93, 57, 0.12);
+      border: 1px solid rgba(217, 93, 57, 0.3);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #e06c4b;
+      margin-bottom: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .hojear-badge img {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: block;
+    }
+    .hojear-hero-mark {
+      width: min(96px, 22vw);
+      height: auto;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 36px rgba(217, 93, 57, 0.22);
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .btn-hojear {
+      background: var(--hojear-accent);
+      color: #fff;
+      border-color: var(--hojear-accent);
+      font-weight: 750;
+      box-shadow: 0 4px 18px rgba(217, 93, 57, 0.3);
+    }
+    .btn-hojear:hover {
+      background: #c24d2b;
+      border-color: #c24d2b;
+      color: #fff;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+    @media (max-width: 850px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(217, 93, 57, 0.4);
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(217, 93, 57, 0.1);
+      border: 1px solid rgba(217, 93, 57, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--hojear-accent);
+    }
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-family: var(--display);
+    }
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin: 0;
+      flex: 1;
+    }
+    .books-preview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 900px) {
+      .books-preview { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .books-preview { grid-template-columns: 1fr; }
+    }
+    .book-tile {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 180px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .book-tile:hover {
+      border-color: var(--hojear-gold);
+      transform: translateY(-4px);
+    }
+    .book-tile small {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--hojear-gold);
+    }
+    .book-tile h4 {
+      font-family: Georgia, serif;
+      font-size: 1.35rem;
+      margin: 8px 0;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .book-tile span {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .pricing-box {
+      background: linear-gradient(135deg, rgba(217, 93, 57, 0.08) 0%, rgba(10, 11, 15, 0.6) 100%);
+      border: 1px solid rgba(217, 93, 57, 0.3);
+      border-radius: 16px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 32px;
+      align-items: center;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      .pricing-box { grid-template-columns: 1fr; padding: 28px; }
+    }
+    .pricing-box h3 {
+      font-size: 1.8rem;
+      margin: 0 0 12px;
+      font-family: var(--display);
+    }
+    .pricing-box p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.96rem;
+      margin: 0 0 20px;
+    }
+    .price-tag {
+      font-family: var(--display);
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+    .price-tag span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="/" class="logo" aria-label="ETEMEN">
+        <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="ETEMEN Logo" width="34" height="34">
+        <div class="logo-wordmark">
+          <span class="name">ETEMEN</span>
+          <span class="tagline">Fundamento</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="/">Inicio</a>
+        <a href="/nexo/">Nexo</a>
+        <a href="/hojear/" class="active">Hojear</a>
+        <a href="/contacto/" class="nav-cta">Contacto</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ── HERO ── -->
+    <section class="hero">
+      <div class="wrap">
+        <img class="hojear-hero-mark" src="/assets/logos/hojear-mark.svg" width="96" height="96" alt="Hojear">
+        <div class="hojear-badge">
+          <img src="/assets/logos/hojear-icon.jpg" width="28" height="28" alt="">
+          Hojear · Biblioteca Digital Chilena
+        </div>
+        <h1>Obras clásicas, guías PAES y lectura sin distracciones.</h1>
+        <p class="lead hero-promise">
+          Hojear reúne literatura en dominio público y guías de análisis estructuradas. 
+          Diseñado para estudiantes, docentes y lectores que buscan entender el contexto y disfrutar la lectura sin anuncios.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-hojear btn-lg" href="/biblioteca/">Entrar a la biblioteca libre →</a>
+          <a class="btn btn-ghost btn-lg" href="/biblioteca/?vista=guias">Explorar guías PAES</a>
+        </div>
+        <p class="hero-note" style="margin-top:20px">◆ +35 obras con lectura completa · novela, ensayo, historia, revista e investigación · lector propio · sin anuncios</p>
+      </div>
+    </section>
+
+    <!-- ── CARACTERÍSTICAS PRINCIPALES ── -->
+    <section class="section" style="padding-top:40px">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow" style="color:var(--hojear-accent)">Pilares del proyecto</p>
+          <h2>Para descubrir historias y estudiar mejor.</h2>
+          <p class="lead">Combinamos textos de dominio público con recursos propios de análisis pedagógico.</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📖</div>
+            <h3>Colección en Dominio Público</h3>
+            <p>
+              Literatura hispana y universal, ensayos, historia, revistas educativas (como <em>La Edad de Oro</em> de Martí) e informes de estudio. Textos abiertos listos para leer dentro de Hojear.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3>Guías de Lectura PAES</h3>
+            <p>
+              Fichas de análisis estructuradas con contexto histórico, conflictos centrales, simbolismo y preguntas clave para la PAES de Competencia Lectora.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">👓</div>
+            <h3>Lector propio dentro de Hojear</h3>
+            <p>
+              Páginas, índice, temas papel/noche/sepia, tamaño de letra y progreso guardado en tu navegador. Sin anuncios ni saltos a sitios externos para leer el texto.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MUESTRA DE LIBROS ── -->
+    <section class="section" style="background:rgba(255,255,255,0.015); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow" style="color:var(--hojear-gold)">Colección destacada</p>
+          <h2>Títulos disponibles para lectura inmediata.</h2>
+          <p class="lead">Haz clic en cualquier obra para abrir la ficha de lectura o la guía de estudio.</p>
+        </div>
+
+        <div class="books-preview">
+          <a class="book-tile" href="/biblioteca/?vista=libro&libro=sub-terra">
+            <small>Relatos · Chile</small>
+            <h4>Sub terra</h4>
+            <span>Baldomero Lillo (1904)</span>
+          </a>
+
+          <a class="book-tile" href="/biblioteca/?vista=libro&libro=martin-rivas">
+            <small>Novela · Chile</small>
+            <h4>Martín Rivas</h4>
+            <span>Alberto Blest Gana (1862)</span>
+          </a>
+
+          <a class="book-tile" href="/biblioteca/?vista=libro&libro=frankenstein">
+            <small>Gótico · Universal</small>
+            <h4>Frankenstein</h4>
+            <span>Mary Shelley (1818)</span>
+          </a>
+
+          <a class="book-tile" href="/biblioteca/?vista=libro&libro=cuentos-amor">
+            <small>Cuentos · Latam</small>
+            <h4>Cuentos de amor, de locura...</h4>
+            <span>Horacio Quiroga (1917)</span>
+          </a>
+        </div>
+
+        <div style="text-align:center; margin-top:32px;">
+          <a class="btn btn-ghost" href="/biblioteca/?vista=catalogo">Ver los 20 títulos del catálogo →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── AUDIOLIBROS ── -->
+    <section class="section" style="padding-top:40px">
+      <div class="wrap" style="max-width:760px;">
+        <div class="section-head" style="text-align:left; margin-bottom:16px;">
+          <p class="eyebrow" style="color:var(--hojear-accent)">Escucha los clásicos</p>
+          <h2 style="font-size:2.4rem;">Audiolibros gratuitos en cada ficha.</h2>
+          <p class="lead" style="margin-left:0; max-width:none;">
+            Cada libro del catálogo incluye un botón <strong>▶ Escuchar audiolibro</strong> que enlaza a
+            grabaciones de dominio público de <a href="https://librivox.org/" target="_blank" rel="noopener" style="color:var(--hojear-accent); text-decoration:underline;">LibriVox</a>,
+            leídas por voluntarios y disponibles de forma libre. Lee, escucha o combina ambos en la misma obra.
+          </p>
+        </div>
+        <div class="book-tile" style="margin-top:8px; min-height:auto; padding:24px 26px; flex-direction:row; align-items:center; gap:14px; flex-wrap:wrap;">
+          <span style="font-size:1.6rem; line-height:1;">🎧</span>
+          <div style="flex:1; min-width:200px;">
+            <span style="font-size:0.68rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--hojear-gold);">Títulos con versión en audio</span>
+            <h4 style="font-size:1.15rem; margin:6px 0 0; font-family:Georgia, serif;">Drácula · Frankenstein · Quijote · Lazarillo … y más</h4>
+          </div>
+          <a class="btn btn-ghost" href="/biblioteca/?vista=catalogo">Ver fichas con audiolibro →</a>
+        </div>
+        <p class="catalogue-note" style="margin-top:16px;">Los audiolibros se abren en la fuente original (LibriVox / Internet Archive), en dominio público y de forma gratuita.</p>
+      </div>
+    </section>
+
+    <!-- ── SUSCRIPCIÓN Hojear Plus ── -->
+    <section class="section">
+      <div class="wrap">
+        <div class="pricing-box">
+          <div>
+            <h3>Hojear Plus</h3>
+            <p>
+              Acceso a guías de estudio completas, simulacros PAES interactivos, marcadores personalizados y nuevas colecciones mensuales.
+            </p>
+            <div class="price-tag">
+              $3.990 <span>/ mes</span>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <a class="btn btn-hojear btn-lg" href="/biblioteca/?vista=planes" style="width:100%; max-width:280px; display:inline-block;">Obtener Hojear Plus →</a>
+            <p style="font-size:0.78rem; color:var(--muted); margin-top:12px;">Pago seguro · Cancela cuando quieras</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA FINAL ── -->
+    <section class="section" style="padding-top:20px; padding-bottom:80px;">
+      <div class="wrap" style="text-align:center; max-width:680px;">
+        <h2>Comienza a leer sin barreras.</h2>
+        <p class="lead" style="margin-top:12px; margin-bottom:28px;">
+          Accede al catálogo completo de obras clásicas y guías de estudio desde cualquier dispositivo.
+        </p>
+        <a class="btn btn-hojear btn-lg" href="/biblioteca/">Abrir Biblioteca Hojear</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="ETEMEN">
+          <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="28" height="28">
+          <div class="logo-wordmark">
+            <span class="name">ETEMEN</span>
+            <span class="tagline">Fundamento</span>
+          </div>
+        </a>
+        <p class="footer-desc">Software con base firme para negocios y productos en Chile.</p>
+        <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener" class="status-badge" style="margin-top:10px">
+          <span class="status-dot"></span> Sistemas 100% Operativos
+        </a>
+      </div>
+      <div class="footer-links">
+        <div class="col">
+          <strong>Productos</strong>
+          <a href="/nexo/">Nexo (Local)</a>
+          <a href="/hojear/">Hojear (Biblioteca)</a>
+          <a href="https://indago.cl" target="_blank" rel="noopener">indago.cl</a>
+        </div>
+        <div class="col">
+          <strong>Estudio</strong>
+          <a href="/portafolio/">Portafolio</a>
+          <a href="/contacto/">Contacto</a>
+          <a href="/contacto/?producto=General">Soporte</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© 2026 ETEMEN. Todos los derechos reservados.</span>
+      <span>Chile</span>
+    </div>
+  </footer>
+</body>
+</html>

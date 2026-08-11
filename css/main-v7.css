@@ -1105,13 +1105,13 @@ h3 {
   .nav-toggle { display: flex; }
 }
 
-/* ── v7: componentes de producto, contacto, demos, Umbral ── */
+/* ── v7: componentes de producto, contacto, demos, Hojear ── */
 :root {
   --mm: #e08a4a;
   --mm-soft: rgba(224, 138, 74, 0.12);
-  --umbral: #d95d39;
-  --umbral-soft: rgba(217, 93, 57, 0.1);
-  --umbral-border: rgba(217, 93, 57, 0.28);
+  --hojear: #d95d39;
+  --hojear-soft: rgba(217, 93, 57, 0.1);
+  --hojear-border: rgba(217, 93, 57, 0.28);
   --radius: var(--radius-lg);
   --muted: var(--text-muted);
   --text: var(--text-primary);
@@ -1134,13 +1134,13 @@ h3 {
   color: #000;
   filter: brightness(1.05);
 }
-.btn-umbral {
-  background: linear-gradient(135deg, var(--umbral), #c24d2b);
+.btn-hojear {
+  background: linear-gradient(135deg, var(--hojear), #c24d2b);
   color: #fff;
   border: 1px solid rgba(217, 93, 57, 0.55);
   box-shadow: 0 4px 18px rgba(217, 93, 57, 0.28);
 }
-.btn-umbral:hover {
+.btn-hojear:hover {
   transform: translateY(-2px);
   background: #c24d2b;
   color: #fff;
@@ -1156,22 +1156,37 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.product.umbral {
-  background: rgba(217, 93, 57, 0.04);
-  border-color: var(--umbral-border);
+.product-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
 }
-.product.umbral .who { color: #e06c4b; }
-.product.umbral:hover {
+.product-brand h3 { margin: 0; }
+.product-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.product.hojear {
+  background: rgba(217, 93, 57, 0.04);
+  border-color: var(--hojear-border);
+}
+.product.hojear .who { color: #e06c4b; }
+.product.hojear:hover {
   border-color: rgba(217, 93, 57, 0.45);
   box-shadow: 0 12px 40px rgba(217, 93, 57, 0.1);
   transform: translateY(-3px);
 }
-.product.umbral:hover::before { background: var(--umbral); }
-.product.umbral .btn-umbral,
-.product.umbral .btn-primary-umbral {
-  background: var(--umbral);
+.product.hojear:hover::before { background: var(--hojear); }
+.product.hojear .btn-hojear,
+.product.hojear .btn-primary-hojear {
+  background: var(--hojear);
   color: #fff;
-  border-color: var(--umbral);
+  border-color: var(--hojear);
 }
 .product.mm .who { color: var(--mm); }
 .product.mm:hover {

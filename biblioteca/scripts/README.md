@@ -1,4 +1,4 @@
-# Scripts Umbral
+# Scripts Hojear
 
 ## `import-gutenberg.ps1`
 
@@ -28,7 +28,7 @@ Genera `_import-manifest.json` y un fragmento JS para revisar metadatos.
 |--------|-----|
 | Project Gutenberg ES | Clásicos, ensayo, historia, filosofía |
 | Internet Archive (DP) | *Sub terra*, *Sub sole*, *Martín Rivas* |
-| Umbral OER CC BY 4.0 | Guías de estudio (`oer-*.txt`) |
+| Hojear OER CC BY 4.0 | Guías de estudio (`oer-*.txt`) |
 
 ## Regenerar `catalog.js`
 

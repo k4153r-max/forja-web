@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="Hojear">
+  <!-- Fondo claro (papel) -->
+  <rect width="64" height="64" rx="14" fill="#f7f2e9"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="12.5" stroke="#d95d39" stroke-width="1.2" stroke-opacity="0.28"/>
+
+  <!-- Lomo -->
+  <path d="M32 16 v34" stroke="#22342f" stroke-width="2.2" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- Hoja izquierda -->
+  <path d="M30.5 18
+           C22 19 14 22 12 28
+           C14 36 20 42 30.5 48
+           Z"
+        fill="#ece4d6"/>
+  <path d="M16.5 28.5 h9.5 M16.5 32.5 h8 M16.5 36.5 h9 M16.5 40.5 h6.5"
+        stroke="#6b635a" stroke-width="1.1" stroke-linecap="round" opacity="0.45"/>
+
+  <!-- Hoja derecha en movimiento -->
+  <path d="M33.5 18
+           C42 17.5 50 20 53.5 26.5
+           C55 32 52 40 45 46
+           C40 49.5 35 49 33.5 48
+           Z"
+        fill="#d95d39"/>
+  <path d="M36 20.5
+           C43 20 49 22.5 51.5 27.5
+           C52.5 31.5 50.5 37.5 45.5 42.5
+           C41.5 45.5 37 46 35 45.5
+           L35 21 Z"
+        fill="#e8875a" opacity="0.5"/>
+  <path d="M38 28.5 h10 M38 32.5 h8.5 M38 36.5 h9.5 M38 40.5 h7"
+        stroke="#fff8f0" stroke-width="1.1" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Esquina doblada -->
+  <path d="M48 18.5 L54 24.5 L48 24.5 Z" fill="#22342f" opacity="0.12"/>
+  <path d="M48 18.5 L54 24.5 L48 24.5 Z" fill="#f7f2e9"/>
+  <path d="M48 18.5 L48 24.5 L54 24.5" stroke="#c24d2b" stroke-width="0.9" stroke-linejoin="round" fill="none" opacity="0.55"/>
+</svg>

@@ -1,4 +1,4 @@
-/* Umbral — app (catálogo en catalog.js) */
+/* Hojear — app (catálogo en catalog.js) */
 const guides = [
   ['sub-terra', 'Sub terra: minería, naturalismo y desigualdad', 'Contexto social, narrador, símbolos y preguntas de análisis.'],
   ['martin-rivas', 'Martín Rivas: clase, ciudad y ascenso social', 'Personajes, conflicto central y lectura del Chile del siglo XIX.'],
@@ -37,10 +37,10 @@ const audioUrl = b => {
 };
 
 function nav() {
-  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><span class="mark"></span>Umbral</a><div class="nav-links"><a href="${link('catalogo')}">Biblioteca</a><a href="${link('guias')}">Guías PAES</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Recursos</a><a class="pill" href="${link('planes')}">Umbral Plus</a></div></div></nav>`;
+  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark-light.svg" width="30" height="30" alt="">Hojear</a><div class="nav-links"><a href="${link('catalogo')}">Biblioteca</a><a href="${link('guias')}">Guías PAES</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Recursos</a><a class="pill" href="${link('planes')}">Hojear Plus</a></div></div></nav>`;
 }
 function footer() {
-  return `<footer class="footer"><div class="wrap foot"><span>Umbral · Lectura dentro de la app</span><span>${readableCount()} textos · ${chileCount()} Chile · ${oerCount()} OER CC</span></div></footer>`;
+  return `<footer class="footer"><div class="wrap foot"><span>Hojear · Lectura dentro de la app</span><span>${readableCount()} textos · ${chileCount()} Chile · ${oerCount()} OER CC</span></div></footer>`;
 }
 function bookCard(b) {
   const badge = b.hasText ? (b.license && String(b.license).indexOf('CC') === 0 ? 'OER' : 'Leer') : 'Ficha';
@@ -53,7 +53,7 @@ function home() {
   return `<main>
 <section class="hero"><div class="wrap">
   <span class="eyebrow">Biblioteca digital · lector propio</span>
-  <h1>Lee clásicos, Chile y material de estudio <em>dentro</em> de Umbral.</h1>
+  <h1>Lee clásicos, Chile y material de estudio <em>dentro</em> de Hojear.</h1>
   <p class="lead">Dominio público (Gutenberg, Archive), clásicos chilenos y guías educativas CC BY. Sin anuncios. Lectura por hojas.</p>
   <div class="actions">
     <a class="button" href="${link('catalogo')}">Abrir biblioteca <span>→</span></a>
@@ -79,7 +79,7 @@ function home() {
   <div class="steps">
     <div class="step"><b>01</b><div><strong>Elige un título</strong><span>Filtra por género, región o “con texto”.</span></div></div>
     <div class="step"><b>02</b><div><strong>Lee por páginas</strong><span>Flechas del teclado, barra de progreso e índice.</span></div></div>
-    <div class="step"><b>03</b><div><strong>Vuelve después</strong><span>Umbral recuerda en qué página estabas.</span></div></div>
+    <div class="step"><b>03</b><div><strong>Vuelve después</strong><span>Hojear recuerda en qué página estabas.</span></div></div>
   </div>
 </div></section>
 </main>`;
@@ -94,7 +94,7 @@ function catalogue() {
     `<button class="filter" data-filter="${p}" data-mode="place">${p === 'todos' ? 'Todas las regiones' : p}</button>`
   ).join('');
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Umbral</a> / Biblioteca</div>
+    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Biblioteca</div>
     <span class="eyebrow">Catálogo abierto</span>
     <h1 style="font-size:clamp(2.6rem,5.5vw,4.6rem);max-width:820px">Literatura, estudio e investigación en español.</h1>
     <p class="lead">${withText.length} textos completos · ${chileCount()} de Chile · ${oerCount()} OER (CC BY). Filtra por género, región o licencia.</p>
@@ -104,16 +104,16 @@ function catalogue() {
       <button class="filter" data-filter="oer" data-mode="license">Solo OER (CC)</button>
     </div>
     <div class="books" id="catalogue-books">${books.map(bookCard).join('')}</div>
-    <p class="catalogue-note">Fuentes: Project Gutenberg (dominio público), Internet Archive (clásicos chilenos), material original Umbral bajo <strong>CC BY 4.0</strong>. Script de importación: <code>biblioteca/scripts/import-gutenberg.ps1</code>. Siempre revisa la licencia antes de reutilizar fuera de Umbral.</p>
+    <p class="catalogue-note">Fuentes: Project Gutenberg (dominio público), Internet Archive (clásicos chilenos), material original Hojear bajo <strong>CC BY 4.0</strong>. Script de importación: <code>biblioteca/scripts/import-gutenberg.ps1</code>. Siempre revisa la licencia antes de reutilizar fuera de Hojear.</p>
   </div></main>`;
 }
 
 function bookPage(b) {
   const readBtn = b.hasText
-    ? `<a class="button" href="${link('leer', '&libro=' + b.id)}">Leer en Umbral →</a>`
+    ? `<a class="button" href="${link('leer', '&libro=' + b.id)}">Leer en Hojear →</a>`
     : `<a class="button alt" href="${link('guia', '&libro=' + b.id)}">Ver guía (texto en preparación)</a>`;
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Umbral</a> / <a href="${link('catalogo')}">Biblioteca</a> / ${b.title}</div>
+    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / <a href="${link('catalogo')}">Biblioteca</a> / ${b.title}</div>
     <section class="book-hero">
       <div class="cover ${b.color}"><small>${b.genre || b.type} · ${b.place}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><span>${b.year}</span></div></div>
       <div>
@@ -121,7 +121,7 @@ function bookPage(b) {
         <h1 style="font-size:clamp(2.8rem,5.5vw,4.8rem);margin-bottom:16px">${b.title}</h1>
         <p class="meta">${b.author} · ${b.year}<br>${b.desc}</p>
         <div>
-          <span class="tag">${b.hasText ? 'Lectura completa en Umbral' : 'Ficha / guía'}</span>
+          <span class="tag">${b.hasText ? 'Lectura completa en Hojear' : 'Ficha / guía'}</span>
           <span class="tag">${b.genre || b.type}</span>
           <span class="tag">${b.place}</span>
           ${b.license ? `<span class="tag">${b.license}</span>` : ''}
@@ -134,7 +134,7 @@ function bookPage(b) {
         </div>
         <p class="catalogue-note">${b.hasText
           ? 'El lector guarda tu página, permite cambiar tamaño y tema, y muestra un índice de capítulos cuando el texto lo permite.'
-          : 'El texto íntegro de esta obra aún no está cargado en Umbral. Puedes usar la guía y recursos externos mientras tanto.'}</p>
+          : 'El texto íntegro de esta obra aún no está cargado en Hojear. Puedes usar la guía y recursos externos mientras tanto.'}</p>
       </div>
     </section>
   </div></main>`;
@@ -147,7 +147,7 @@ function internalReader(b) {
       <div class="pend">
         <div class="pend-mark">⏳</div>
         <span class="eyebrow">En preparación</span>
-        <h2 class="pend-h1">Aún no hay texto completo de «${b.title}» en Umbral.</h2>
+        <h2 class="pend-h1">Aún no hay texto completo de «${b.title}» en Hojear.</h2>
         <p class="lead">Estamos sumando ediciones de dominio público. Mientras tanto usa la ficha y la guía.</p>
         <div class="actions pend-actions">
           <a class="button" href="${link('libro', '&libro=' + b.id)}">Volver a la ficha</a>
@@ -220,14 +220,14 @@ function internalReader(b) {
         <a class="simple-btn" href="${audioUrl(b)}" target="_blank" rel="noopener">Audiolibro</a>
         <button type="button" class="simple-btn" id="read-reset">Reiniciar progreso</button>
       </div>
-      <p class="reader-credit">Dominio público · lectura en hojas · Umbral</p>
+      <p class="reader-credit">Dominio público · lectura en hojas · Hojear</p>
     </div>
   </div></main>`;
 }
 
 function guideList() {
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Umbral</a> / Guías PAES</div>
+    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Guías PAES</div>
     <span class="eyebrow">Estudiar sin apagar la lectura</span>
     <h1 style="font-size:clamp(2.8rem,5.5vw,4.8rem);max-width:800px">Guías que te ayudan a pensar, no a copiar.</h1>
     <p class="lead">Contexto, personajes, ideas y práctica.</p>
@@ -240,7 +240,7 @@ function guideList() {
 
 function guidePage(b) {
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Umbral</a> / <a href="${link('guias')}">Guías</a> / ${b.title}</div>
+    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / <a href="${link('guias')}">Guías</a> / ${b.title}</div>
     <span class="eyebrow">Guía de lectura</span>
     <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:760px">${b.title}, para entenderla de verdad.</h1>
     <p class="lead">Estructura simple para clase, PAES o lectura personal.</p>
@@ -260,7 +260,7 @@ function guidePage(b) {
         <p><strong>Autor:</strong><br>${b.author}</p>
         <p><strong>Género:</strong><br>${b.genre || b.type}</p>
         <p><strong>Origen:</strong><br>${b.place}</p>
-        ${b.hasText ? `<a class="button" style="margin-top:10px" href="${link('leer', '&libro=' + b.id)}">Leer en Umbral →</a>` : `<a class="button alt" style="margin-top:10px" href="${link('libro', '&libro=' + b.id)}">Ver ficha →</a>`}
+        ${b.hasText ? `<a class="button" style="margin-top:10px" href="${link('leer', '&libro=' + b.id)}">Leer en Hojear →</a>` : `<a class="button alt" style="margin-top:10px" href="${link('libro', '&libro=' + b.id)}">Ver ficha →</a>`}
       </aside>
     </section>
   </div></main>`;
@@ -268,15 +268,15 @@ function guidePage(b) {
 
 function plans() {
   return `<main class="page"><div class="wrap">
-    <span class="eyebrow">Acceso Umbral</span>
+    <span class="eyebrow">Acceso Hojear</span>
     <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:760px">Lee libre. Profundiza cuando lo necesites.</h1>
     <section class="study">
-      <article class="card"><h3>Umbral Libre</h3>
+      <article class="card"><h3>Hojear Libre</h3>
         <p><strong style="font:800 2.4rem var(--serif);color:#172021">$0</strong></p>
         <p>Catálogo abierto, lector in-sitio, fichas y guías de muestra.</p>
         <a class="button alt" href="${link('catalogo')}">Explorar gratis</a>
       </article>
-      <aside class="card"><span class="eyebrow">Recomendado</span><h3>Umbral Plus</h3>
+      <aside class="card"><span class="eyebrow">Recomendado</span><h3>Hojear Plus</h3>
         <p><strong style="font:800 2.4rem var(--serif);color:#172021">$3.990</strong> · al mes</p>
         <p>Guías PAES completas, planes de lectura y colecciones nuevas.</p>
         <a class="button" href="${link('checkout')}">Continuar →</a>
@@ -287,26 +287,26 @@ function plans() {
 
 function checkout() {
   return `<main class="page"><div class="wrap signup">
-    <span class="eyebrow">Umbral Plus</span>
+    <span class="eyebrow">Hojear Plus</span>
     <h1 style="font-size:clamp(2.6rem,5vw,4rem)">Estás a un paso.</h1>
     <p class="lead" style="margin:auto">Al confirmar, recibes acceso Plus por correo.</p>
     <div class="card" style="margin-top:32px;text-align:left">
       <h3>Incluye</h3>
       <p>✓ Guías PAES · ✓ Planes de lectura · ✓ Colecciones nuevas</p>
-      <a class="button" href="/contacto/?producto=Umbral">Solicitar acceso →</a>
+      <a class="button" href="/contacto/?producto=Hojear">Solicitar acceso →</a>
     </div>
   </div></main>`;
 }
 
 function resources() {
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Umbral</a> / Recursos</div>
+    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Recursos</div>
     <span class="eyebrow">Fuentes abiertas y legales</span>
     <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:780px">De dónde salen los textos.</h1>
     <section class="study">
       <article class="card">
         <h3>Project Gutenberg (ES)</h3>
-        <p>Clásicos en español de dominio público. Umbral importa con el script <code>import-gutenberg.ps1</code>, limpia el preámbulo legal y pagina el texto.</p>
+        <p>Clásicos en español de dominio público. Hojear importa con el script <code>import-gutenberg.ps1</code>, limpia el preámbulo legal y pagina el texto.</p>
         <a class="button" href="https://www.gutenberg.org/browse/languages/es" target="_blank" rel="noopener">Gutenberg ES →</a>
       </article>
       <aside class="card">
@@ -318,7 +318,7 @@ function resources() {
     <section class="study">
       <article class="card">
         <h3>OER · Creative Commons</h3>
-        <p>${oerCount()} guías de estudio originales Umbral bajo <strong>CC BY 4.0</strong>: narrador, conflicto, símbolo, contexto, poesía, argumentación PAES y citas.</p>
+        <p>${oerCount()} guías de estudio originales Hojear bajo <strong>CC BY 4.0</strong>: narrador, conflicto, símbolo, contexto, poesía, argumentación PAES y citas.</p>
         <a class="button" href="${link('catalogo')}&filtro=Educativo">Abrir educativos →</a>
       </article>
       <aside class="card">
@@ -333,7 +333,7 @@ function resources() {
 
 function routes() {
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Umbral</a> / Rutas</div>
+    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Rutas</div>
     <span class="eyebrow">Elige por interés</span>
     <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:780px">Rutas listas para empezar a leer.</h1>
     <section class="study">
@@ -374,7 +374,7 @@ function how() {
     <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:760px">Gratis para entrar. Útil para volver.</h1>
     <section class="study">
       <article class="card"><h3>Plan gratuito</h3><p>Catálogo, lector y guías de muestra.</p>
-      <h3>Umbral Plus</h3><p>Guías completas, simulacros y packs mensuales.</p></article>
+      <h3>Hojear Plus</h3><p>Guías completas, simulacros y packs mensuales.</p></article>
       <aside class="card"><h3>La idea</h3><p>El dominio público atrae. Las guías y la experiencia son la membresía.</p>
       <a class="button" href="${link('unete')}">Lista de espera →</a></aside>
     </section>
@@ -403,7 +403,7 @@ function leerLoader(b) {
   const numL = document.getElementById('leaf-num-l');
   const numR = document.getElementById('leaf-num-r');
   const hint = document.getElementById('book-hint');
-  const storageKey = 'umbral-read-v3:' + b.id;
+  const storageKey = 'hojear-read-v1:' + b.id;
   let pages = [];
   let rawParas = [];
   let idx = 0; // índice de hoja izquierda del pliego (par)
@@ -464,8 +464,21 @@ function leerLoader(b) {
     } catch (_) {}
   }
   function loadSaved() {
-    try { return JSON.parse(localStorage.getItem(storageKey) || 'null'); }
-    catch (_) { return null; }
+    try {
+      const cur = localStorage.getItem(storageKey);
+      if (cur) return JSON.parse(cur);
+      // Migrar progreso de la marca anterior (Umbral)
+      const legacyKeys = ['umbral-read-v3:' + b.id, 'Umbral-read-v3:' + b.id];
+      for (const k of legacyKeys) {
+        const old = localStorage.getItem(k);
+        if (old) {
+          localStorage.setItem(storageKey, old);
+          try { localStorage.removeItem(k); } catch (_) {}
+          return JSON.parse(old);
+        }
+      }
+      return null;
+    } catch (_) { return null; }
   }
   function paraToHtml(t, withDrop) {
     if (isHead(t)) return '<h3 class="p-h">' + esc(t) + '</h3>';
@@ -845,13 +858,13 @@ function render() {
     view === 'como-funciona' ? how() :
     home();
   document.querySelector('#app').innerHTML = nav() + page + footer();
-  document.title = view === 'inicio' ? 'Umbral — Lector y biblioteca' : 'Umbral — ' + (b?.title || 'Biblioteca');
+  document.title = view === 'inicio' ? 'Hojear — Lector y biblioteca' : 'Hojear — ' + (b?.title || 'Biblioteca');
   if (view === 'leer') leerLoader(b);
   if (view === 'catalogo') bindCatalogue();
   const form = document.querySelector('#join-form');
   if (form) form.addEventListener('submit', e => {
     e.preventDefault();
-    document.querySelector('#form-message').textContent = '¡Listo! Revisa tu correo para confirmar tu suscripción a Umbral.';
+    document.querySelector('#form-message').textContent = '¡Listo! Revisa tu correo para confirmar tu suscripción a Hojear.';
   });
 }
 

@@ -23,8 +23,8 @@ Sitio principal del holding **ETEMEN Studio** y del producto **Nexo**.
 forja-web/
   index.html           → ETEMEN (home)
   nexo/                → Landing Nexo
-  umbral/              → Landing Umbral
-  biblioteca/          → App Umbral (lector)
+  hojear/              → Landing Hojear
+  biblioteca/          → App Hojear (lector)
   demos/               → Hub + micrositios por rubro
   contacto/            → Contacto
   portafolio/          → Portafolio

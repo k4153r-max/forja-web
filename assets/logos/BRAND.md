@@ -26,7 +26,17 @@
 | Archivo | Marca |
 |---------|--------|
 | `nexo-icon.jpg` / `nexo-wordmark.jpg` / `nexo-mark.svg` | Nexo |
+| `hojear-mark.svg` / `hojear-mark-light.svg` / `hojear-lockup.svg` / `hojear-icon.jpg` | **Hojear** (biblioteca digital; antes Umbral) |
 | (indago en `assets/portfolio/`) | indago |
+
+### Hojear — concepto del mark
+- **Libro abierto** + **hoja derecha en movimiento** = *hojear* (pasar páginas).
+- Color producto: terracotta `#d95d39` (no usar el teal de Nexo).
+- `hojear-mark.svg` → fondos oscuros / web ETEMEN.
+- `hojear-mark-light.svg` → fondos claros / app biblioteca.
+- `hojear-icon.jpg` → avatar redes / OG / apple-touch.
+- Landing: `etemen.cl/hojear/` · App: `etemen.cl/biblioteca/`
+- `/umbral/` redirige a `/hojear/` (legacy).
 
 ## Paleta ETEMEN
 
@@ -39,6 +49,7 @@
 | Copper light | `#D9A870` | Highlights, taglines |
 | Cream | `#F3EEE6` | Secciones claras |
 | Nexo teal | `#00C9A7` | Solo producto Nexo |
+| Hojear terracotta | `#D95D39` | Solo producto Hojear |
 | indago violet | `#8B7CF7` | Solo producto indago |
 
 ## Tipografía
@@ -49,7 +60,7 @@
 ## Reglas
 
 1. **ETEMEN** = holding / estudio (marca madre).
-2. **Nexo**, **indago** = productos con marca propia.
-3. No usar el logo full de ETEMEN como logo de Nexo.
+2. **Nexo**, **Hojear**, **indago** = productos con marca propia.
+3. No usar el logo full de ETEMEN como logo de Nexo o Hojear.
 4. En marketing público: no nombrar competidores.
 5. Nunca “Forja” en copy público (marca retirada).
