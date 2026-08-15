@@ -44,6 +44,9 @@ El form en producción usa `https://api.etemen.cl/api/contacto`.
 Para local, añade `data-api="http://127.0.0.1:8787/api/contacto"` al `<form>`.
 
 `GET /api/contacto/health` debe devolver `{ ok: true, db: true }` antes de depender del form.
+
+Bandeja interna: `GET/POST https://api.etemen.cl/api/contacto/inbox` con header `X-ETEMEN-PIN`.
+El PIN es el secreto `INBOX_PIN` del Worker. La UI está en `/visitas/`.
 Si el Worker no está desplegado, el HTML muestra el fallback a hola@etemen.cl.
 
 ## Aviso por correo

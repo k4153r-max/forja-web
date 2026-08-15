@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Visitas — ETEMEN</title>
+  <title>Operación — ETEMEN</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#0B0B0C">
   <link rel="stylesheet" href="/css/main-v9.css">
@@ -19,6 +19,11 @@
     .visitas-table th { color: var(--ink-mute); font-weight: 500; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
     .visitas-table td:last-child, .visitas-table th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
     .visitas-empty { color: var(--ink-dim); }
+    .visitas-msg { white-space: pre-wrap; max-width: 42ch; color: var(--ink-dim); }
+    .visitas-pin { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 12px 0 20px; }
+    .visitas-pin input { background: var(--carbon-2); border: 1px solid var(--rule-dim); color: var(--ink); padding: 8px 10px; min-width: 180px; }
+    .inbox-nuevo td { color: var(--ink); }
+    .inbox-actions button { background: none; border: 1px solid var(--rule-dim); color: var(--ink-dim); padding: 4px 8px; margin-left: 4px; cursor: pointer; font-size: .78rem; }
     @media (max-width: 640px) { .visitas-nums { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -44,8 +49,22 @@
   <main id="contenido" class="visitas-wrap">
     <div class="wrap">
       <p class="eyebrow">Interno</p>
-      <h1>Visitas</h1>
-      <p class="lead">Números reales del sitio. No se indexa.</p>
+      <h1>Operación</h1>
+      <p class="lead">Visitas y mensajes del form. No se indexa.</p>
+
+      <h2>Mensajes</h2>
+      <form class="visitas-pin" id="inbox-pin-form">
+        <label for="inbox-pin">PIN</label>
+        <input id="inbox-pin" name="pin" type="password" autocomplete="current-password" required>
+        <button class="btn btn-primary" type="submit">Abrir</button>
+        <span class="visitas-empty" id="inbox-pin-err" hidden>PIN incorrecto.</span>
+      </form>
+      <table class="visitas-table">
+        <thead><tr><th>Fecha</th><th>Quién</th><th>Producto</th><th>Mensaje</th><th></th></tr></thead>
+        <tbody id="v-inbox"><tr><td class="visitas-empty" colspan="5">Escribe el PIN para ver los mensajes.</td></tr></tbody>
+      </table>
+
+      <h2 style="margin-top:48px">Visitas</h2>
       <div class="visitas-nums">
         <div><b id="v-total">—</b><span>Total</span></div>
         <div><b id="v-hoy">—</b><span>Hoy</span></div>
@@ -75,6 +94,96 @@
   <script src="/js/visitas.js?v=2"></script>
   <script>
     (function () {
+      var API = "https://api.etemen.cl/api/contacto/inbox";
+      var PIN_KEY = "etemen-inbox-pin";
+      var esc = function (s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      };
+      var when = function (iso) {
+        if (!iso) return "—";
+        var d = new Date(String(iso).replace(" ", "T") + "Z");
+        if (isNaN(d.getTime())) d = new Date(iso);
+        return new Intl.DateTimeFormat("es-CL", {
+          timeZone: "America/Santiago",
+          day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit"
+        }).format(d);
+      };
+      var loadInbox = function (pin) {
+        var box = document.getElementById("v-inbox");
+        var err = document.getElementById("inbox-pin-err");
+        err.hidden = true;
+        fetch(API, { headers: { "X-ETEMEN-PIN": pin } })
+          .then(function (r) {
+            if (r.status === 401) throw new Error("pin");
+            return r.ok ? r.json() : null;
+          })
+          .then(function (d) {
+            if (!d || !d.ok) {
+              box.innerHTML = '<tr><td class="visitas-empty" colspan="5">No se pudo leer la bandeja.</td></tr>';
+              return;
+            }
+            try { sessionStorage.setItem(PIN_KEY, pin); } catch (_) {}
+            var rows = d.contactos || [];
+            if (!rows.length) {
+              box.innerHTML = '<tr><td class="visitas-empty" colspan="5">Todavía no hay mensajes.</td></tr>';
+              return;
+            }
+            box.innerHTML = rows.map(function (c) {
+              var who = "<strong>" + esc(c.nombre) + "</strong><br><a href=\"mailto:" + esc(c.correo) + "\">" + esc(c.correo) + "</a>";
+              if (c.empresa) who += "<br>" + esc(c.empresa);
+              if (c.rubro) who += " · " + esc(c.rubro);
+              var actions = "";
+              if (c.status === "nuevo") {
+                actions = "<button type=\"button\" data-id=\"" + c.id + "\" data-status=\"leido\">Leído</button>" +
+                  "<button type=\"button\" data-id=\"" + c.id + "\" data-status=\"hecho\">Hecho</button>";
+              } else if (c.status === "leido") {
+                actions = "<button type=\"button\" data-id=\"" + c.id + "\" data-status=\"hecho\">Hecho</button>";
+              } else {
+                actions = esc(c.status);
+              }
+              return "<tr class=\"inbox-" + esc(c.status) + "\"><td>" + esc(when(c.created_at)) +
+                "</td><td>" + who + "</td><td>" + esc(c.producto) +
+                "</td><td class=\"visitas-msg\">" + esc(c.mensaje) +
+                "</td><td class=\"inbox-actions\">" + actions + "</td></tr>";
+            }).join("");
+          })
+          .catch(function (e) {
+            if (e && e.message === "pin") {
+              err.hidden = false;
+              try { sessionStorage.removeItem(PIN_KEY); } catch (_) {}
+              box.innerHTML = '<tr><td class="visitas-empty" colspan="5">PIN incorrecto.</td></tr>';
+              return;
+            }
+            box.innerHTML = '<tr><td class="visitas-empty" colspan="5">No se pudo leer la bandeja.</td></tr>';
+          });
+      };
+      document.getElementById("inbox-pin-form").addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        loadInbox(document.getElementById("inbox-pin").value.trim());
+      });
+      document.getElementById("v-inbox").addEventListener("click", function (ev) {
+        var btn = ev.target.closest("button[data-id]");
+        if (!btn) return;
+        var pin = "";
+        try { pin = sessionStorage.getItem(PIN_KEY) || ""; } catch (_) {}
+        if (!pin) pin = document.getElementById("inbox-pin").value.trim();
+        fetch(API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-ETEMEN-PIN": pin },
+          body: JSON.stringify({ id: Number(btn.getAttribute("data-id")), status: btn.getAttribute("data-status") })
+        }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+          if (d && d.ok) loadInbox(pin);
+        });
+      });
+      try {
+        var saved = sessionStorage.getItem(PIN_KEY);
+        if (saved) {
+          document.getElementById("inbox-pin").value = saved;
+          loadInbox(saved);
+        }
+      } catch (_) {}
+
       var fmt = function (n) { return new Intl.NumberFormat("es-CL").format(n || 0); };
       fetch("https://api.etemen.cl/api/visita?resumen=1")
         .then(function (r) { return r.ok ? r.json() : null; })

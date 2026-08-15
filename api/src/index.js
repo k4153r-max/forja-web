@@ -240,7 +240,7 @@ const RUBROS = new Set([
 function cors(origin) {
   const headers = {
     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, X-ETEMEN-PIN",
   };
   if (origin && ALLOW.has(origin)) headers["Access-Control-Allow-Origin"] = origin;
   return headers;
@@ -477,6 +477,61 @@ async function handleVisita(request, env, url, origin) {
   }
 }
 
+function pinOk(given, expected) {
+  if (!expected || !given) return false;
+  const a = new TextEncoder().encode(String(given));
+  const b = new TextEncoder().encode(String(expected));
+  if (a.length !== b.length) return false;
+  let out = 0;
+  for (let i = 0; i < a.length; i++) out |= a[i] ^ b[i];
+  return out === 0;
+}
+
+function inboxPin(request, env) {
+  return (
+    request.headers.get("X-ETEMEN-PIN") ||
+    request.headers.get("x-etemen-pin") ||
+    ""
+  ).trim();
+}
+
+const INBOX_STATUS = new Set(["nuevo", "leido", "hecho", "spam"]);
+
+async function handleInbox(request, env, url, origin) {
+  if (!env.INBOX_PIN) return json({ ok: false, error: "no_pin" }, 503, origin);
+  if (!pinOk(inboxPin(request, env), env.INBOX_PIN)) {
+    return json({ ok: false, error: "pin" }, 401, origin);
+  }
+
+  if (request.method === "POST") {
+    const body = await readJson(request);
+    const id = Number(body.id);
+    const status = String(body.status || "").trim();
+    if (!id || !INBOX_STATUS.has(status)) return json({ ok: false, error: "invalid" }, 400, origin);
+    await env.DB.prepare("UPDATE contactos SET status = ? WHERE id = ?").bind(status, id).run();
+    return json({ ok: true, id, status }, 200, origin);
+  }
+
+  if (request.method !== "GET") return json({ ok: false }, 405, origin);
+
+  const spam = url.searchParams.get("spam") === "1";
+  const limit = Math.min(80, Math.max(1, Number(url.searchParams.get("limit")) || 40));
+  const where = spam ? "" : "WHERE status != 'spam'";
+  const rows = await env.DB.prepare(
+    `SELECT id, created_at, nombre, correo, empresa, rubro, producto, mensaje,
+            status, notify_ok, ack_ok
+     FROM contactos
+     ${where}
+     ORDER BY id DESC
+     LIMIT ?`
+  ).bind(limit).all();
+
+  return json({
+    ok: true,
+    contactos: (rows && rows.results) || [],
+  }, 200, origin);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -505,6 +560,13 @@ export default {
         db = true;
       } catch (_) {}
       return json({ ok: true, db }, 200, origin);
+    }
+
+    if (
+      url.pathname.endsWith("/inbox") ||
+      url.searchParams.get("inbox") === "1"
+    ) {
+      return handleInbox(request, env, url, origin);
     }
 
     if (request.method !== "POST") return json({ ok: false }, 405, origin);
