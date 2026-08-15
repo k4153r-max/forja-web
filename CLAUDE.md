@@ -53,6 +53,7 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 
 ## Monitoreo
 - UptimeRobot: 5 monitores, check cada 5 min — status page https://stats.uptimerobot.com/z6bYAoGxq6
+- Widget de uptime en nav (y hero de home): API pública `https://stats.uptimerobot.com/api/getMonitorList/z6bYAoGxq6`, promedio 30 días, CSS `main-v9.css`
 - **cron-job.org** keep-alive (cada 1 min, TZ America/Santiago) — verificado 2026-08-02:
   - `8117675` Indago API → `https://indago-api.onrender.com/health` (enabled, OK)
   - `8203623` Nexo demo → `https://nexus-trial-demo.onrender.com/health` (enabled, OK)
