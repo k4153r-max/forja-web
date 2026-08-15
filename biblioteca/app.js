@@ -16,14 +16,22 @@ const guides = [
   ['pazos-ulloa', 'Los pazos de Ulloa: naturalismo gallego', 'Poder rural, personajes y ambiente.']
 ];
 
-const GENRES = ['Todos', 'Clásico', 'Novela', 'Cuentos', 'Poesía', 'Teatro', 'Ensayo', 'Historia', 'Investigación', 'Educativo', 'Revista', 'Aventura', 'Misterio'];
-const PLACES = ['todos', 'Chile', 'Latinoamérica', 'Universal'];
+const GENRE_ORDER = ['Novela', 'Cuentos', 'Poesía', 'Teatro', 'Ensayo', 'Historia', 'Clásico', 'Aventura', 'Misterio', 'Educativo', 'Revista', 'Investigación'];
+const PLACES = ['Chile', 'Latinoamérica', 'Universal'];
 const LANG_LABEL = { es: 'Español', en: 'English', fr: 'Français', de: 'Deutsch', it: 'Italiano', pt: 'Português', la: 'Latín' };
 const bookLang = b => b.lang || 'es';
 const langsInCatalog = () => {
   const seen = new Set((typeof books !== 'undefined' ? books : []).map(bookLang));
-  return ['todos', ...Object.keys(LANG_LABEL).filter(k => seen.has(k))];
+  return Object.keys(LANG_LABEL).filter(k => seen.has(k));
 };
+const fold = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const bookHay = b => fold([b.title, b.author, b.genre, b.type, b.place, LANG_LABEL[bookLang(b)], b.desc, b.year].join(' '));
+const bookGenre = b => b.genre || b.type || 'Otros';
+const genresInCatalog = () => {
+  const seen = new Set((typeof books !== 'undefined' ? books : []).map(bookGenre));
+  return [...GENRE_ORDER.filter(g => seen.has(g)), ...[...seen].filter(g => !GENRE_ORDER.includes(g)).sort()];
+};
+const countWhere = pred => (typeof books !== 'undefined' ? books : []).filter(pred).length;
 
 /** Afiliados Buscalibre (Chile). Tras aprobación, pega el ID en localStorage:
  *  localStorage.setItem('hojear-bc-aff', 'TU_ID')
@@ -123,30 +131,49 @@ function home() {
 </main>`;
 }
 
+function salaBtn(mode, filter, title, n, extraClass = '') {
+  return `<button type="button" class="sala ${extraClass}" data-mode="${mode}" data-filter="${filter}" aria-pressed="false"><strong>${title}</strong><em>${n}</em></button>`;
+}
 function catalogue() {
-  const withText = books.filter(b => b.hasText);
-  const genres = GENRES.map(g =>
-    `<button class="filter${g === 'Todos' ? ' active' : ''}" data-filter="${g}" data-mode="genre">${g}</button>`
+  const langs = langsInCatalog().map(l =>
+    salaBtn('lang', l, LANG_LABEL[l], countWhere(b => bookLang(b) === l))
+  ).join('');
+  const genres = genresInCatalog().map(g =>
+    salaBtn('genre', g, g, countWhere(b => bookGenre(b) === g))
   ).join('');
   const places = PLACES.map(p =>
-    `<button class="filter" data-filter="${p}" data-mode="place">${p === 'todos' ? 'Todas las regiones' : p}</button>`
+    salaBtn('place', p, p, countWhere(b => b.place === p))
   ).join('');
-  const langs = langsInCatalog().map(l =>
-    `<button class="filter${l === 'todos' ? ' active' : ''}" data-filter="${l}" data-mode="lang">${l === 'todos' ? 'Todos los idiomas' : LANG_LABEL[l]}</button>`
-  ).join('');
-  return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Catálogo</div>
-    <span class="eyebrow">Catálogo abierto</span>
-    <h1 style="font-size:clamp(2.6rem,5.5vw,4.6rem);max-width:820px">Literatura y estudio. Varios idiomas.</h1>
-    <p class="lead">${withText.length} textos completos · ${chileCount()} de Chile · ${oerCount()} OER. Filtra por idioma, género o región.</p>
-    <div class="filters" id="filters-lang">${langs}</div>
-    <div class="filters" id="filters-genre">${genres}</div>
-    <div class="filters" id="filters-place">${places}
-      <button class="filter" data-filter="hasText" data-mode="text">Solo lectura completa</button>
-      <button class="filter" data-filter="oer" data-mode="license">Solo OER (CC)</button>
+  return `<main class="page cat"><div class="wrap">
+    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Biblioteca</div>
+    <span class="eyebrow">Cámara de libros</span>
+    <h1 class="cat-h1">Entra a una sala.<em>O busca.</em></h1>
+    <p class="lead">${readableCount()} textos para abrir aquí · ${chileCount()} de Chile · ${oerCount()} guías OER. Siete idiomas.</p>
+    <label class="cat-search">
+      <span class="visually-hidden">Buscar en la biblioteca</span>
+      <input id="cat-q" type="search" placeholder="Título, autor, lengua, lugar…" autocomplete="off" spellcheck="false">
+    </label>
+    <div class="sala-block">
+      <div class="sala-label">Lengua</div>
+      <div class="sala-row" id="filters-lang">${salaBtn('lang', 'todos', 'Todas', books.length, 'is-all active')}${langs}</div>
     </div>
-    <div class="books" id="catalogue-books">${books.map(bookCard).join('')}</div>
-    <p class="catalogue-note">Fuentes: Project Gutenberg (dominio público), Internet Archive (clásicos chilenos), material original Hojear bajo <strong>CC BY 4.0</strong>. Script de importación: <code>biblioteca/scripts/import-gutenberg.ps1</code>. Siempre revisa la licencia antes de reutilizar fuera de Hojear.</p>
+    <div class="sala-block">
+      <div class="sala-label">Forma</div>
+      <div class="sala-row" id="filters-genre">${salaBtn('genre', 'Todos', 'Todas', books.length, 'is-all active')}${genres}</div>
+    </div>
+    <div class="sala-block">
+      <div class="sala-label">Territorio y modo</div>
+      <div class="sala-row" id="filters-place">${salaBtn('place', 'todos', 'Todos', books.length, 'is-all active')}${places}${salaBtn('text', 'hasText', 'Abrir ahora', readableCount())}${salaBtn('license', 'oer', 'Estudiar · OER', oerCount())}</div>
+    </div>
+    <div class="cat-bar">
+      <p class="cat-count" id="cat-count"></p>
+      <div class="cat-sort" role="group" aria-label="Orden">
+        <button type="button" class="sort-btn active" data-sort="titulo">Título</button>
+        <button type="button" class="sort-btn" data-sort="autor">Autor</button>
+      </div>
+    </div>
+    <div id="catalogue-books"></div>
+    <p class="catalogue-note">Dominio público (Gutenberg, Internet Archive) y material Hojear en <strong>CC BY 4.0</strong>. Revisa la licencia si reutilizas fuera de aquí.</p>
   </div></main>`;
 }
 
@@ -870,61 +897,103 @@ function leerLoader(b) {
 
 function bindCatalogue() {
   const box = document.querySelector('#catalogue-books');
+  const countEl = document.querySelector('#cat-count');
+  const qEl = document.querySelector('#cat-q');
   if (!box) return;
-  let genre = 'Todos';
-  let place = 'todos';
-  let lang = 'todos';
-  let onlyText = false;
-  let onlyOer = false;
-  function apply() {
-    box.innerHTML = books.filter(b => {
-      if (genre !== 'Todos' && (b.genre || b.type) !== genre && b.genre !== genre) return false;
-      if (place !== 'todos' && b.place !== place) return false;
-      if (lang !== 'todos' && bookLang(b) !== lang) return false;
-      if (onlyText && !b.hasText) return false;
-      if (onlyOer && !(b.license && String(b.license).indexOf('CC') === 0)) return false;
-      return true;
-    }).map(bookCard).join('') || '<p class="catalogue-note">No hay títulos con ese filtro.</p>';
-  }
-  document.querySelectorAll('.filter').forEach(btn => {
+  const state = { genre: 'Todos', place: 'todos', lang: 'todos', onlyText: false, onlyOer: false, q: '', sort: 'titulo' };
+
+  const match = b => {
+    if (state.q && !bookHay(b).includes(fold(state.q))) return false;
+    if (state.genre !== 'Todos' && bookGenre(b) !== state.genre) return false;
+    if (state.place !== 'todos' && b.place !== state.place) return false;
+    if (state.lang !== 'todos' && bookLang(b) !== state.lang) return false;
+    if (state.onlyText && !b.hasText) return false;
+    if (state.onlyOer && !(b.license && String(b.license).indexOf('CC') === 0)) return false;
+    return true;
+  };
+  const sorter = (a, b) => {
+    const key = state.sort === 'autor' ? 'author' : 'title';
+    return String(a[key] || '').localeCompare(String(b[key] || ''), 'es', { sensitivity: 'base' });
+  };
+  const paintSalas = () => {
+    document.querySelectorAll('.sala').forEach(btn => {
+      const mode = btn.dataset.mode;
+      const f = btn.dataset.filter;
+      const on = mode === 'genre' ? state.genre === f
+        : mode === 'place' ? state.place === f
+        : mode === 'lang' ? state.lang === f
+        : mode === 'text' ? state.onlyText
+        : mode === 'license' ? state.onlyOer
+        : false;
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.sort === state.sort);
+    });
+  };
+  const apply = () => {
+    const list = books.filter(match).sort(sorter);
+    const group = state.genre === 'Todos' && !state.q;
+    if (!list.length) {
+      box.innerHTML = '<p class="catalogue-note">Nada en esta sala. Prueba otra o borra la búsqueda.</p>';
+    } else if (group) {
+      const map = new Map();
+      list.forEach(b => {
+        const k = bookGenre(b);
+        if (!map.has(k)) map.set(k, []);
+        map.get(k).push(b);
+      });
+      const order = [...GENRE_ORDER.filter(g => map.has(g)), ...[...map.keys()].filter(g => !GENRE_ORDER.includes(g))];
+      box.innerHTML = order.map(g => {
+        const items = map.get(g);
+        return `<section class="shelf"><div class="shelf-head"><h3>${g}</h3><span>${items.length}</span></div><div class="books">${items.map(bookCard).join('')}</div></section>`;
+      }).join('');
+    } else {
+      box.innerHTML = `<div class="books">${list.map(bookCard).join('')}</div>`;
+    }
+    const bits = [];
+    if (state.q) bits.push(`“${state.q.trim()}”`);
+    if (state.lang !== 'todos') bits.push(LANG_LABEL[state.lang]);
+    if (state.genre !== 'Todos') bits.push(state.genre);
+    if (state.place !== 'todos') bits.push(state.place);
+    if (state.onlyText) bits.push('abrir ahora');
+    if (state.onlyOer) bits.push('OER');
+    const where = bits.length ? bits.join(' · ') : 'toda la cámara';
+    if (countEl) countEl.textContent = `${list.length} ${list.length === 1 ? 'título' : 'títulos'} · ${where}`;
+    paintSalas();
+  };
+
+  document.querySelectorAll('.sala').forEach(btn => {
     btn.addEventListener('click', () => {
       const mode = btn.dataset.mode;
       const f = btn.dataset.filter;
-      if (mode === 'genre') {
-        document.querySelectorAll('#filters-genre .filter').forEach(x => x.classList.remove('active'));
-        btn.classList.add('active');
-        genre = f;
-      } else if (mode === 'place') {
-        document.querySelectorAll('#filters-place .filter').forEach(x => x.classList.remove('active'));
-        btn.classList.add('active');
-        place = f;
-      } else if (mode === 'lang') {
-        document.querySelectorAll('#filters-lang .filter').forEach(x => x.classList.remove('active'));
-        btn.classList.add('active');
-        lang = f;
-      } else if (mode === 'text') {
-        onlyText = !onlyText;
-        btn.classList.toggle('active', onlyText);
-      } else if (mode === 'license') {
-        onlyOer = !onlyOer;
-        btn.classList.toggle('active', onlyOer);
-      }
+      if (mode === 'genre') state.genre = f;
+      else if (mode === 'place') state.place = f;
+      else if (mode === 'lang') state.lang = f;
+      else if (mode === 'text') state.onlyText = !state.onlyText;
+      else if (mode === 'license') state.onlyOer = !state.onlyOer;
       apply();
     });
   });
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => { state.sort = btn.dataset.sort; apply(); });
+  });
+  let t = 0;
+  qEl?.addEventListener('input', () => {
+    clearTimeout(t);
+    t = setTimeout(() => { state.q = qEl.value.trim(); apply(); }, 80);
+  });
+
   const filtro = new URLSearchParams(location.search).get('filtro');
   if (filtro) {
-    if (filtro === 'Chile') {
-      const btn = [...document.querySelectorAll('#filters-place .filter')].find(b => b.dataset.filter === 'Chile');
-      if (btn) btn.click();
-    } else if (LANG_LABEL[filtro]) {
-      const btn = [...document.querySelectorAll('#filters-lang .filter')].find(b => b.dataset.filter === filtro);
-      if (btn) btn.click();
-    } else {
-      const btn = [...document.querySelectorAll('#filters-genre .filter')].find(b => b.dataset.filter === filtro);
-      if (btn) btn.click();
-    }
+    if (filtro === 'Chile' || filtro === 'Latinoamérica' || filtro === 'Universal') state.place = filtro;
+    else if (LANG_LABEL[filtro]) state.lang = filtro;
+    else if (filtro === 'hasText') state.onlyText = true;
+    else if (filtro === 'oer' || filtro === 'OER') state.onlyOer = true;
+    else state.genre = filtro;
   }
+  apply();
 }
 
 function render() {
