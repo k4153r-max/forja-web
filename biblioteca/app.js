@@ -56,10 +56,10 @@ const buyBtn = b =>
   `<a class="button alt buy-bc" href="${buyUrl(b)}" target="_blank" rel="noopener sponsored">Comprar en Buscalibre ↗</a>`;
 
 function nav() {
-  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark-light.svg" width="30" height="30" alt="">Hojear</a><div class="nav-links"><a href="${link('catalogo')}">Biblioteca</a><a href="${link('guias')}">Guías PAES</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Recursos</a><a class="pill" href="${link('planes')}">Hojear Plus</a></div></div></nav>`;
+  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark.svg" width="30" height="30" alt="">Hojear</a><div class="nav-links"><a href="${link('catalogo')}">Catálogo</a><a href="${link('guias')}">Guías</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Fuentes</a><a class="pill" href="/contacto/?producto=Hojear+Plus">Plus</a></div></div></nav>`;
 }
 function footer() {
-  return `<footer class="footer"><div class="wrap foot"><span>Hojear · Lectura dentro de la app</span><span>${readableCount()} textos · ${chileCount()} Chile · ${oerCount()} OER CC</span></div></footer>`;
+  return `<footer class="footer"><div class="wrap foot"><span>Hojear · cámara de lectura · ETEMEN</span><span>${readableCount()} textos · ${chileCount()} Chile · ${oerCount()} OER</span></div></footer>`;
 }
 function bookCard(b) {
   const badge = b.hasText ? (b.license && String(b.license).indexOf('CC') === 0 ? 'OER' : 'Leer') : 'Ficha';
@@ -71,13 +71,13 @@ function home() {
   const featured = books.filter(b => b.hasText).slice(0, 8);
   return `<main>
 <section class="hero"><div class="wrap">
-  <span class="eyebrow">Biblioteca digital · lector propio</span>
-  <h1>Lee clásicos, Chile y material de estudio <em>dentro</em> de Hojear.</h1>
-  <p class="lead">Dominio público (Gutenberg, Archive), clásicos chilenos y guías educativas CC BY. Sin anuncios. Lectura por hojas.</p>
+  <span class="eyebrow">Cámara de lectura</span>
+  <h1>No solo leas.<br><em>Entiende.</em></h1>
+  <p class="lead">117 textos en español. Hojas, silencio y método. Sin anuncios. El progreso se queda en tu navegador.</p>
   <div class="actions">
-    <a class="button" href="${link('catalogo')}">Abrir biblioteca <span>→</span></a>
-    <a class="button alt" href="${link('leer', '&libro=sub-terra')}">Leer Sub terra (Chile)</a>
-    <a class="button alt" href="${link('catalogo')}&filtro=Educativo">Material educativo CC</a>
+    <a class="button" href="${link('catalogo')}">Abrir el catálogo</a>
+    <a class="button alt" href="${link('leer', '&libro=sub-terra')}">Leer Sub terra</a>
+    <a class="button alt" href="${link('catalogo')}&filtro=Educativo">Guías de estudio</a>
   </div>
 </div></section>
 <section class="metrics"><div class="wrap">
@@ -91,10 +91,10 @@ function home() {
   <div class="books">${featured.map(bookCard).join('')}</div>
 </div></section>
 <section class="guide-band"><div class="wrap guide-grid">
-  <div><span class="eyebrow" style="color:#e7a83d">Cómo leer aquí</span>
+  <div><span class="eyebrow" style="color:#f0a06a">Cómo leer aquí</span>
   <h2>Un lector pensado para quedarse.</h2>
-  <p>Páginas numeradas, tamaño de letra, temas papel / noche / sepia, índice de capítulos y progreso que se guarda en tu navegador.</p>
-  <a class="button" style="background:#e7a83d;color:#172021" href="${link('catalogo')}&filtro=Educativo">Ver educativos e investigación →</a></div>
+  <p>Hojas, letra, temas papel / noche / sepia, índice y progreso. El chrome se esconde. El texto queda.</p>
+  <a class="button" href="${link('catalogo')}&filtro=Educativo">Ver educativos →</a></div>
   <div class="steps">
     <div class="step"><b>01</b><div><strong>Elige un título</strong><span>Filtra por género, región o “con texto”.</span></div></div>
     <div class="step"><b>02</b><div><strong>Lee por páginas</strong><span>Flechas del teclado, barra de progreso e índice.</span></div></div>
@@ -289,18 +289,18 @@ function guidePage(b) {
 
 function plans() {
   return `<main class="page"><div class="wrap">
-    <span class="eyebrow">Acceso Hojear</span>
-    <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:760px">Lee libre. Profundiza cuando lo necesites.</h1>
+    <span class="eyebrow">Acceso</span>
+    <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:760px">Lee libre. Plus llega después.</h1>
     <section class="study">
       <article class="card"><h3>Hojear Libre</h3>
-        <p><strong style="font:800 2.4rem var(--serif);color:#172021">$0</strong></p>
-        <p>Catálogo abierto, lector in-sitio, fichas y guías de muestra.</p>
-        <a class="button alt" href="${link('catalogo')}">Explorar gratis</a>
+        <p><strong style="font:500 2.4rem var(--serif);color:var(--gold)">$0</strong></p>
+        <p>Catálogo, lector y guías de muestra. Sin anuncios.</p>
+        <a class="button alt" href="${link('catalogo')}">Seguir leyendo</a>
       </article>
-      <aside class="card"><span class="eyebrow">Recomendado</span><h3>Hojear Plus</h3>
-        <p><strong style="font:800 2.4rem var(--serif);color:#172021">$3.990</strong> · al mes</p>
-        <p>Guías PAES completas, planes de lectura y colecciones nuevas.</p>
-        <a class="button" href="${link('checkout')}">Continuar →</a>
+      <aside class="card"><span class="eyebrow">Lista de espera</span><h3>Hojear Plus</h3>
+        <p><strong style="font:500 2.4rem var(--serif);color:var(--gold)">$3.990</strong> · al mes</p>
+        <p>Plus está definido. El cobro todavía no.</p>
+        <a class="button" href="/contacto/?producto=Hojear+Plus">Avisarme</a>
       </aside>
     </section>
   </div></main>`;
@@ -309,12 +309,10 @@ function plans() {
 function checkout() {
   return `<main class="page"><div class="wrap signup">
     <span class="eyebrow">Hojear Plus</span>
-    <h1 style="font-size:clamp(2.6rem,5vw,4rem)">Estás a un paso.</h1>
-    <p class="lead" style="margin:auto">Al confirmar, recibes acceso Plus por correo.</p>
+    <h1 style="font-size:clamp(2.6rem,5vw,4rem)">Aún no hay cobro.</h1>
+    <p class="lead" style="margin:auto">Déjanos un correo. Te avisamos cuando Plus esté disponible.</p>
     <div class="card" style="margin-top:32px;text-align:left">
-      <h3>Incluye</h3>
-      <p>✓ Guías PAES · ✓ Planes de lectura · ✓ Colecciones nuevas</p>
-      <a class="button" href="/contacto/?producto=Hojear">Solicitar acceso →</a>
+      <a class="button" href="/contacto/?producto=Hojear+Plus">Avisarme</a>
     </div>
   </div></main>`;
 }

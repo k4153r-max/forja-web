@@ -4,121 +4,149 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hojear — No solo leas. Entiende. | ETEMEN</title>
-  <meta name="description" content="Hojear es la plataforma de ETEMEN para leer y comprender: 117 textos en dominio público, guías PAES y lector propio. Sin anuncios.">
-  <meta name="theme-color" content="#0B0B0C">
+  <meta name="description" content="Hojear es una cámara de lectura: 117 textos en español, guías para comprender y un lector propio sin anuncios.">
+  <meta name="theme-color" content="#07060a">
   <link rel="canonical" href="https://etemen.cl/hojear/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://etemen.cl/hojear/">
-  <meta property="og:title" content="Hojear — No solo leas. Entiende. | ETEMEN">
-  <meta property="og:description" content="Lectura de clásicos y guías para comprender el texto. 117 textos · 122 fichas.">
+  <meta property="og:title" content="Hojear — No solo leas. Entiende.">
+  <meta property="og:description" content="Una cámara de lectura. 117 textos. Sin anuncios.">
   <meta property="og:image" content="https://etemen.cl/assets/logos/hojear-icon.jpg">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Hojear",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Web",
-    "url": "https://etemen.cl/hojear/",
-    "author": { "@type": "Organization", "name": "ETEMEN", "url": "https://etemen.cl/" }
-  }
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Hojear","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://etemen.cl/hojear/","author":{"@type":"Organization","name":"ETEMEN","url":"https://etemen.cl/"}}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main-v9.css">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/hojear-v1.css">
   <link rel="icon" href="/assets/logos/hojear-mark.svg" type="image/svg+xml">
 </head>
 <body>
-  <a class="skip-link" href="#contenido">Saltar al contenido</a>
-  <header class="nav" id="nav">
-    <div class="wrap nav-inner">
-      <a href="/" class="logo" aria-label="ETEMEN"><img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="28" height="28"><div class="logo-wordmark"><span class="name">ETEMEN</span><span class="tagline">Fundamento</span></div></a>
-      <nav class="nav-links" aria-label="Principal">
-        <a href="/">Inicio</a>
-        <a href="/nexo/">Nexo</a>
-        <a href="/hojear/" class="active">Hojear</a>
-        <a href="/portafolio/">Casos</a>
-        <a href="/contacto/" class="nav-cta">Contacto</a>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="hnav">
+    <div class="wrap">
+      <a class="brand" href="/hojear/"><img src="/assets/logos/hojear-mark.svg" alt="" width="28" height="28">Hojear</a>
+      <nav class="hnav-links" aria-label="Hojear">
+        <a href="/biblioteca/?vista=catalogo">Catálogo</a>
+        <a href="/biblioteca/?vista=guias">Guías</a>
+        <a href="/">ETEMEN</a>
+        <a class="ghost" href="/biblioteca/">Entrar a leer</a>
       </nav>
-      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
+
   <main id="contenido">
-    <section class="hero">
+    <section class="chamber">
+      <div class="chamber-light" id="chamber-light" aria-hidden="true"></div>
       <div class="wrap">
-        <div class="hero-frame">
-          <p class="hero-kicker">Hojear · Lectura y comprensión</p>
-          <h1>No solo leas. Entiende.</h1>
-          <p class="lead">Textos en dominio público y guías para leer con método. Lector propio, sin anuncios. 117 textos · 122 fichas.</p>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="/biblioteca/">Entrar a leer</a>
-            <a class="btn btn-ghost" href="/biblioteca/?vista=guias">Ver guías PAES</a>
+        <p class="kicker">Cámara de lectura · ETEMEN</p>
+        <h1>No solo leas.<em>Entiende.</em></h1>
+        <p class="lead">Un espacio para quedarse en el texto. Páginas, silencio y método. Sin anuncios, sin ruido, sin marketplace.</p>
+        <div class="actions">
+          <a class="btn btn-fill" href="/biblioteca/">Entrar a leer</a>
+          <a class="btn btn-line" href="/biblioteca/?vista=leer&amp;libro=sub-terra">Abrir Sub terra</a>
+        </div>
+        <div class="spread" aria-hidden="true">
+          <div class="spread-page l">
+            <strong>La página se abre.</strong>
+            <p>El lector recuerda dónde estabas. El índice espera. La letra se agranda si lo pides.</p>
+          </div>
+          <div class="spread-spine"></div>
+          <div class="spread-page r">
+            <strong>El sentido no es un extra.</strong>
+            <p>Guías de narrador, conflicto y símbolo. Leer y comprender en el mismo sitio.</p>
           </div>
         </div>
       </div>
     </section>
-    <section class="section">
+
+    <section>
+      <div class="wrap stats">
+        <div class="stat"><b>117</b><span>textos completos para leer aquí</span></div>
+        <div class="stat"><b>122</b><span>fichas · 5 aún en preparación</span></div>
+        <div class="stat"><b>8</b><span>guías OER para comprender</span></div>
+      </div>
+    </section>
+
+    <section class="block">
       <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Tres capas</p>
-          <h2>Leer. Comprender. Seguir.</h2>
+        <p class="kicker">Empieza ya</p>
+        <h2>Cuatro puertas. Un gesto.</h2>
+        <div class="plates">
+          <a class="plate" href="/biblioteca/?vista=leer&amp;libro=sub-terra">
+            <small>Chile · 1904</small>
+            <h3>Sub terra</h3>
+            <span>Baldomero Lillo</span>
+          </a>
+          <a class="plate" href="/biblioteca/?vista=leer&amp;libro=martin-rivas">
+            <small>Chile · 1862</small>
+            <h3>Martín Rivas</h3>
+            <span>Alberto Blest Gana</span>
+          </a>
+          <a class="plate" href="/biblioteca/?vista=leer&amp;libro=cuentos-amor">
+            <small>Latam · 1917</small>
+            <h3>Cuentos de amor, de locura y de muerte</h3>
+            <span>Horacio Quiroga</span>
+          </a>
+          <a class="plate" href="/biblioteca/?vista=leer&amp;libro=quijote">
+            <small>Clásico · 1605</small>
+            <h3>Don Quijote de la Mancha</h3>
+            <span>Miguel de Cervantes</span>
+          </a>
         </div>
-        <div class="ops-grid">
-          <article class="ops-card">
-            <span class="ops-num">01</span>
-            <h3>Colección abierta</h3>
-            <p>Clásicos en español, ensayo, historia y teatro. Textos completos dentro de Hojear.</p>
-          </article>
-          <article class="ops-card">
-            <span class="ops-num">02</span>
-            <h3>Guías de comprensión</h3>
-            <p>Material propio para narrador, conflicto, símbolo, contexto y argumentar con evidencia.</p>
-          </article>
-          <article class="ops-card">
-            <span class="ops-num">03</span>
-            <h3>Lector propio</h3>
-            <p>Páginas, índice, temas papel/noche/sepia y progreso en tu navegador.</p>
-          </article>
+        <div class="actions"><a class="btn btn-line" href="/biblioteca/?vista=catalogo">Ver el catálogo</a></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap how">
+        <div>
+          <p class="kicker">El lector</p>
+          <h2>Hecho para quedarse en la hoja.</h2>
+          <p class="lead">Hojas que se pasan. Temas papel, sepia, niebla y noche. Progreso que no se pierde. Algunas fichas enlazan audio en LibriVox.</p>
+        </div>
+        <div>
+          <div class="step"><b>01</b><strong>Elige</strong><p>Filtra por género, Chile o texto completo.</p></div>
+          <div class="step"><b>02</b><strong>Lee</strong><p>Clic en el borde, flechas del teclado o desliza.</p></div>
+          <div class="step"><b>03</b><strong>Comprende</strong><p>Abre la guía de la obra cuando quieras pensar, no copiar.</p></div>
         </div>
       </div>
     </section>
-    <section class="section">
+
+    <section class="block">
       <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Lectura inmediata</p>
-          <h2>Empieza por un texto completo.</h2>
+        <div class="plus">
+          <p class="kicker">Hojear Plus</p>
+          <p class="price">$3.990 / mes</p>
+          <p class="note">Plus está definido. El cobro todavía no. Te avisamos cuando esté disponible.</p>
+          <a class="btn btn-fill" href="/contacto/?producto=Hojear+Plus">Avisarme</a>
         </div>
-        <div class="demo-grid">
-          <a class="demo-card" href="/biblioteca/?vista=libro&amp;libro=sub-terra"><span class="tag">Chile</span><h3>Sub terra</h3><p>Baldomero Lillo</p></a>
-          <a class="demo-card" href="/biblioteca/?vista=libro&amp;libro=martin-rivas"><span class="tag">Chile</span><h3>Martín Rivas</h3><p>Alberto Blest Gana</p></a>
-          <a class="demo-card" href="/biblioteca/?vista=libro&amp;libro=cuentos-amor"><span class="tag">Latam</span><h3>Cuentos de amor, de locura y de muerte</h3><p>Horacio Quiroga</p></a>
-          <a class="demo-card" href="/biblioteca/?vista=libro&amp;libro=quijote"><span class="tag">Clásico</span><h3>Don Quijote de la Mancha</h3><p>Miguel de Cervantes</p></a>
-        </div>
-        <div class="btn-row"><a class="btn btn-ghost" href="/biblioteca/?vista=catalogo">Ver el catálogo</a></div>
-        <p class="hero-note">Algunas fichas enlazan LibriVox. No todo el catálogo tiene audio ni texto propio.</p>
-      </div>
-    </section>
-    <section class="section">
-      <div class="wrap">
-        <p class="eyebrow">Hojear Plus</p>
-        <h2>$3.990 / mes</h2>
-        <p class="lead">Plus está definido. El cobro todavía no. Déjanos tu correo y te avisamos cuando esté disponible.</p>
-        <a class="btn btn-primary" href="/contacto/?producto=Hojear+Plus">Avisarme cuando Plus esté disponible</a>
       </div>
     </section>
   </main>
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-grid">
-        <div><a href="/" class="logo"><img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="28" height="28"><div class="logo-wordmark"><span class="name">ETEMEN</span></div></a></div>
-        <div><h4>Productos</h4><a href="/nexo/">Nexo</a><a href="/hojear/">Hojear</a><a href="/indago/">indago</a></div>
-        <div><h4>Hojear</h4><a href="/biblioteca/">Entrar a leer</a><a href="/biblioteca/?vista=catalogo">Catálogo</a></div>
-        <div><h4>Empresa</h4><a href="/portafolio/">Casos</a><a href="/contacto/">Contacto</a></div>
-      </div>
-      <div class="footer-bottom"><span>© <span id="y"></span> ETEMEN · Chile</span></div>
-    </div>
+
+  <footer class="wrap foot">
+    <span>Hojear · un producto ETEMEN</span>
+    <span><a href="/">Inicio</a> · <a href="/biblioteca/">Lector</a> · <a href="/contacto/">Contacto</a></span>
   </footer>
-  <script src="/js/site.js?v=2"></script>
+  <script>
+    (function () {
+      var light = document.getElementById("chamber-light");
+      if (!light || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var x = 50, y = 38, tx = 50, ty = 38;
+      window.addEventListener("pointermove", function (e) {
+        tx = (e.clientX / window.innerWidth) * 100;
+        ty = (e.clientY / window.innerHeight) * 100;
+      }, { passive: true });
+      function tick() {
+        x += (tx - x) * 0.06;
+        y += (ty - y) * 0.06;
+        light.style.left = x + "%";
+        light.style.top = y + "%";
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+  </script>
 </body>
 </html>
