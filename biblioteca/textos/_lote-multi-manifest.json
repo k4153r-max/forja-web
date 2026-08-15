@@ -1,0 +1,327 @@
+[
+  {
+    "id": "pride-prejudice",
+    "lang": "en",
+    "gutenberg": 1342
+  },
+  {
+    "id": "frankenstein-en",
+    "lang": "en",
+    "gutenberg": 84
+  },
+  {
+    "id": "dracula-en",
+    "lang": "en",
+    "gutenberg": 345
+  },
+  {
+    "id": "alice-wonderland",
+    "lang": "en",
+    "gutenberg": 11
+  },
+  {
+    "id": "looking-glass",
+    "lang": "en",
+    "gutenberg": 12
+  },
+  {
+    "id": "sherlock-holmes",
+    "lang": "en",
+    "gutenberg": 1661
+  },
+  {
+    "id": "moby-dick",
+    "lang": "en",
+    "gutenberg": 2701
+  },
+  {
+    "id": "jane-eyre",
+    "lang": "en",
+    "gutenberg": 1260
+  },
+  {
+    "id": "wuthering-heights",
+    "lang": "en",
+    "gutenberg": 768
+  },
+  {
+    "id": "dorian-gray",
+    "lang": "en",
+    "gutenberg": 174
+  },
+  {
+    "id": "treasure-island-en",
+    "lang": "en",
+    "gutenberg": 120
+  },
+  {
+    "id": "jekyll-hyde-en",
+    "lang": "en",
+    "gutenberg": 43
+  },
+  {
+    "id": "christmas-carol",
+    "lang": "en",
+    "gutenberg": 46
+  },
+  {
+    "id": "tale-two-cities",
+    "lang": "en",
+    "gutenberg": 98
+  },
+  {
+    "id": "great-expectations",
+    "lang": "en",
+    "gutenberg": 1400
+  },
+  {
+    "id": "huckleberry-finn",
+    "lang": "en",
+    "gutenberg": 76
+  },
+  {
+    "id": "tom-sawyer",
+    "lang": "en",
+    "gutenberg": 74
+  },
+  {
+    "id": "wizard-of-oz",
+    "lang": "en",
+    "gutenberg": 55
+  },
+  {
+    "id": "war-of-the-worlds",
+    "lang": "en",
+    "gutenberg": 36
+  },
+  {
+    "id": "time-machine",
+    "lang": "en",
+    "gutenberg": 35
+  },
+  {
+    "id": "heart-of-darkness",
+    "lang": "en",
+    "gutenberg": 219
+  },
+  {
+    "id": "yellow-wallpaper",
+    "lang": "en",
+    "gutenberg": 1952
+  },
+  {
+    "id": "scarlet-letter",
+    "lang": "en",
+    "gutenberg": 25344
+  },
+  {
+    "id": "great-gatsby",
+    "lang": "en",
+    "gutenberg": 64317
+  },
+  {
+    "id": "peter-pan",
+    "lang": "en",
+    "gutenberg": 16
+  },
+  {
+    "id": "persuasion",
+    "lang": "en",
+    "gutenberg": 135
+  },
+  {
+    "id": "sense-sensibility",
+    "lang": "en",
+    "gutenberg": 161
+  },
+  {
+    "id": "being-earnest",
+    "lang": "en",
+    "gutenberg": 844
+  },
+  {
+    "id": "gulliver",
+    "lang": "en",
+    "gutenberg": 829
+  },
+  {
+    "id": "walden",
+    "lang": "en",
+    "gutenberg": 205
+  },
+  {
+    "id": "douglass-narrative",
+    "lang": "en",
+    "gutenberg": 23
+  },
+  {
+    "id": "metamorphosis-en",
+    "lang": "en",
+    "gutenberg": 5200
+  },
+  {
+    "id": "monte-cristo-en",
+    "lang": "en",
+    "gutenberg": 1184
+  },
+  {
+    "id": "quixote-en",
+    "lang": "en",
+    "gutenberg": 996
+  },
+  {
+    "id": "iliad-en",
+    "lang": "en",
+    "gutenberg": 6130
+  },
+  {
+    "id": "odyssey-en",
+    "lang": "en",
+    "gutenberg": 1727
+  },
+  {
+    "id": "republic-plato",
+    "lang": "en",
+    "gutenberg": 1497
+  },
+  {
+    "id": "little-women",
+    "lang": "en",
+    "gutenberg": 514
+  },
+  {
+    "id": "grimm-fairy-tales",
+    "lang": "en",
+    "gutenberg": 2591
+  },
+  {
+    "id": "dubliners",
+    "lang": "en",
+    "gutenberg": 2814
+  },
+  {
+    "id": "candide-fr",
+    "lang": "fr",
+    "gutenberg": 4650
+  },
+  {
+    "id": "madame-bovary",
+    "lang": "fr",
+    "gutenberg": 14155
+  },
+  {
+    "id": "notre-dame",
+    "lang": "fr",
+    "gutenberg": 17989
+  },
+  {
+    "id": "miserables-1",
+    "lang": "fr",
+    "gutenberg": 17489
+  },
+  {
+    "id": "monte-cristo-fr",
+    "lang": "fr",
+    "gutenberg": 1250
+  },
+  {
+    "id": "trois-mousquetaires",
+    "lang": "fr",
+    "gutenberg": 799
+  },
+  {
+    "id": "pere-goriot",
+    "lang": "fr",
+    "gutenberg": 2419
+  },
+  {
+    "id": "voyage-centre-terre",
+    "lang": "fr",
+    "gutenberg": 14287
+  },
+  {
+    "id": "vingt-mille-lieues",
+    "lang": "fr",
+    "gutenberg": 5097
+  },
+  {
+    "id": "faust-de",
+    "lang": "de",
+    "gutenberg": 2229
+  },
+  {
+    "id": "verwandlung-de",
+    "lang": "de",
+    "gutenberg": 4367
+  },
+  {
+    "id": "leiden-werther",
+    "lang": "de",
+    "gutenberg": 2407
+  },
+  {
+    "id": "nathan-weise",
+    "lang": "de",
+    "gutenberg": 6079
+  },
+  {
+    "id": "zarathustra",
+    "lang": "de",
+    "gutenberg": 21000
+  },
+  {
+    "id": "divina-commedia",
+    "lang": "it",
+    "gutenberg": 1012
+  },
+  {
+    "id": "pinocchio",
+    "lang": "it",
+    "gutenberg": 500
+  },
+  {
+    "id": "promessi-sposi",
+    "lang": "it",
+    "gutenberg": 35155
+  },
+  {
+    "id": "decameron",
+    "lang": "it",
+    "gutenberg": 47332
+  },
+  {
+    "id": "lusiadas",
+    "lang": "pt",
+    "gutenberg": 3333
+  },
+  {
+    "id": "dom-casmurro",
+    "lang": "pt",
+    "gutenberg": 55752
+  },
+  {
+    "id": "memorias-bras-cubas",
+    "lang": "pt",
+    "gutenberg": 54829
+  },
+  {
+    "id": "alienista",
+    "lang": "pt",
+    "gutenberg": 55682
+  },
+  {
+    "id": "bello-gallico",
+    "lang": "la",
+    "gutenberg": 10657
+  },
+  {
+    "id": "aeneid-la",
+    "lang": "la",
+    "gutenberg": 227
+  },
+  {
+    "id": "metamorphoses-ovid",
+    "lang": "la",
+    "gutenberg": 1974
+  }
+]

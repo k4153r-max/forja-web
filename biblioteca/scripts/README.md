@@ -22,6 +22,18 @@ cd biblioteca/scripts
 
 Genera `_import-manifest.json` y un fragmento JS para revisar metadatos.
 
+## `import-gutenberg-multi.py`
+
+Lote curado multilingual (ES ya estaba; añade EN, FR, DE, IT, PT, LA).
+
+```powershell
+python .\import-gutenberg-multi.py
+python .\fix-wrong-imports.py   # solo si un ID de Gutenberg salió equivocado
+python .\patch-catalog.py
+```
+
+Cada ficha lleva `lang:'es'|'en'|'fr'|'de'|'it'|'pt'|'la'`. El catálogo filtra por idioma.
+
 ## Fuentes usadas en el catálogo
 
 | Origen | Uso |

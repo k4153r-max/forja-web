@@ -18,6 +18,12 @@ const guides = [
 
 const GENRES = ['Todos', 'Clásico', 'Novela', 'Cuentos', 'Poesía', 'Teatro', 'Ensayo', 'Historia', 'Investigación', 'Educativo', 'Revista', 'Aventura', 'Misterio'];
 const PLACES = ['todos', 'Chile', 'Latinoamérica', 'Universal'];
+const LANG_LABEL = { es: 'Español', en: 'English', fr: 'Français', de: 'Deutsch', it: 'Italiano', pt: 'Português', la: 'Latín' };
+const bookLang = b => b.lang || 'es';
+const langsInCatalog = () => {
+  const seen = new Set((typeof books !== 'undefined' ? books : []).map(bookLang));
+  return ['todos', ...Object.keys(LANG_LABEL).filter(k => seen.has(k))];
+};
 
 /** Afiliados Buscalibre (Chile). Tras aprobación, pega el ID en localStorage:
  *  localStorage.setItem('hojear-bc-aff', 'TU_ID')
@@ -64,7 +70,7 @@ function footer() {
 function bookCard(b) {
   const badge = b.hasText ? (b.license && String(b.license).indexOf('CC') === 0 ? 'OER' : 'Leer') : 'Ficha';
   const lic = b.license ? ` · ${b.license}` : '';
-  return `<a class="book ${b.color}" href="${link('libro', '&libro=' + b.id)}"><small>${b.genre || b.type} · ${b.place}${b.hasText ? ' · ✓' : ''}${lic}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><i class="circle">${b.hasText ? '▶' : '↗'}</i></div><span class="book-badge">${badge}</span></a>`;
+  return `<a class="book ${b.color}" href="${link('libro', '&libro=' + b.id)}"><small>${b.genre || b.type} · ${LANG_LABEL[bookLang(b)] || bookLang(b)} · ${b.place}${b.hasText ? ' · ✓' : ''}${lic}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><i class="circle">${b.hasText ? '▶' : '↗'}</i></div><span class="book-badge">${badge}</span></a>`;
 }
 
 function home() {
@@ -73,7 +79,7 @@ function home() {
 <section class="hero"><div class="wrap">
   <span class="eyebrow">Cámara de lectura</span>
   <h1>No solo leas.<br><em>Entiende.</em></h1>
-  <p class="lead">117 textos en español. Hojas, silencio y método. Sin anuncios. El progreso se queda en tu navegador.</p>
+  <p class="lead">${readableCount()} textos en español, inglés, francés, alemán, italiano, portugués y latín. Hojas, silencio y método.</p>
   <div class="actions">
     <a class="button" href="${link('catalogo')}">Abrir el catálogo</a>
     <a class="button alt" href="${link('leer', '&libro=sub-terra')}">Leer Sub terra</a>
@@ -112,11 +118,15 @@ function catalogue() {
   const places = PLACES.map(p =>
     `<button class="filter" data-filter="${p}" data-mode="place">${p === 'todos' ? 'Todas las regiones' : p}</button>`
   ).join('');
+  const langs = langsInCatalog().map(l =>
+    `<button class="filter${l === 'todos' ? ' active' : ''}" data-filter="${l}" data-mode="lang">${l === 'todos' ? 'Todos los idiomas' : LANG_LABEL[l]}</button>`
+  ).join('');
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Biblioteca</div>
+    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Catálogo</div>
     <span class="eyebrow">Catálogo abierto</span>
-    <h1 style="font-size:clamp(2.6rem,5.5vw,4.6rem);max-width:820px">Literatura, estudio e investigación en español.</h1>
-    <p class="lead">${withText.length} textos completos · ${chileCount()} de Chile · ${oerCount()} OER (CC BY). Filtra por género, región o licencia.</p>
+    <h1 style="font-size:clamp(2.6rem,5.5vw,4.6rem);max-width:820px">Literatura y estudio. Varios idiomas.</h1>
+    <p class="lead">${withText.length} textos completos · ${chileCount()} de Chile · ${oerCount()} OER. Filtra por idioma, género o región.</p>
+    <div class="filters" id="filters-lang">${langs}</div>
     <div class="filters" id="filters-genre">${genres}</div>
     <div class="filters" id="filters-place">${places}
       <button class="filter" data-filter="hasText" data-mode="text">Solo lectura completa</button>
@@ -142,6 +152,7 @@ function bookPage(b) {
         <div>
           <span class="tag">${b.hasText ? 'Lectura completa en Hojear' : 'Ficha / guía'}</span>
           <span class="tag">${b.genre || b.type}</span>
+          <span class="tag">${LANG_LABEL[bookLang(b)] || bookLang(b)}</span>
           <span class="tag">${b.place}</span>
           ${b.license ? `<span class="tag">${b.license}</span>` : ''}
         </div>
@@ -849,12 +860,14 @@ function bindCatalogue() {
   if (!box) return;
   let genre = 'Todos';
   let place = 'todos';
+  let lang = 'todos';
   let onlyText = false;
   let onlyOer = false;
   function apply() {
     box.innerHTML = books.filter(b => {
       if (genre !== 'Todos' && (b.genre || b.type) !== genre && b.genre !== genre) return false;
       if (place !== 'todos' && b.place !== place) return false;
+      if (lang !== 'todos' && bookLang(b) !== lang) return false;
       if (onlyText && !b.hasText) return false;
       if (onlyOer && !(b.license && String(b.license).indexOf('CC') === 0)) return false;
       return true;
@@ -872,6 +885,10 @@ function bindCatalogue() {
         document.querySelectorAll('#filters-place .filter').forEach(x => x.classList.remove('active'));
         btn.classList.add('active');
         place = f;
+      } else if (mode === 'lang') {
+        document.querySelectorAll('#filters-lang .filter').forEach(x => x.classList.remove('active'));
+        btn.classList.add('active');
+        lang = f;
       } else if (mode === 'text') {
         onlyText = !onlyText;
         btn.classList.toggle('active', onlyText);
@@ -886,6 +903,9 @@ function bindCatalogue() {
   if (filtro) {
     if (filtro === 'Chile') {
       const btn = [...document.querySelectorAll('#filters-place .filter')].find(b => b.dataset.filter === 'Chile');
+      if (btn) btn.click();
+    } else if (LANG_LABEL[filtro]) {
+      const btn = [...document.querySelectorAll('#filters-lang .filter')].find(b => b.dataset.filter === filtro);
       if (btn) btn.click();
     } else {
       const btn = [...document.querySelectorAll('#filters-genre .filter')].find(b => b.dataset.filter === filtro);
