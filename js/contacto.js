@@ -15,10 +15,18 @@
     "indago",
   ];
 
+  const params = new URLSearchParams(location.search);
+  if (params.get("enviado") === "1") {
+    const card = document.querySelector(".contact-card");
+    if (card) {
+      card.innerHTML = `<div class="contact-success"><h2>Recibido.</h2><p>${SUCCESS}</p><p class="contact-hint">También te escribimos al correo que nos diste.</p></div>`;
+    }
+    return;
+  }
+
   const form = document.querySelector("[data-contact-form]");
   if (!form) return;
 
-  const params = new URLSearchParams(location.search);
   const productoSel = form.querySelector("[name=producto]");
   const rubroSel = form.querySelector("[name=rubro]");
   if (productoSel && params.get("producto")) {
@@ -69,18 +77,48 @@
         body: JSON.stringify(payload),
       });
       if (res.status === 201) {
-        let ack = false;
-        try {
-          const body = await res.json();
-          ack = !!(body && body.ack);
-        } catch (_) {}
-        const done = document.createElement("div");
-        done.className = "contact-success";
-        const extra = ack
-          ? `<p class="contact-hint">También te escribimos a ${payload.correo}.</p>`
-          : "";
-        done.innerHTML = `<h2>Recibido.</h2><p>${SUCCESS}</p>${extra}`;
-        form.replaceWith(done);
+        if (payload.empresa_web) {
+          const done = document.createElement("div");
+          done.className = "contact-success";
+          done.innerHTML = `<h2>Recibido.</h2><p>${SUCCESS}</p>`;
+          form.replaceWith(done);
+          return;
+        }
+        const first = payload.nombre.split(/\s+/)[0] || "";
+        const hello = first ? `Hola ${first},` : "Hola,";
+        const ack = [
+          hello,
+          "",
+          "Recibimos tu mensaje. Lo leemos y te escribimos en menos de 24 horas hábiles.",
+          "",
+          "No hace falta que respondas este correo. Si quieres agregar algo, responde acá o escribe a hola@etemen.cl.",
+          "",
+          "—",
+          "ETEMEN",
+          "Software con fundamento",
+          "https://etemen.cl",
+        ].join("\n");
+        const addHidden = (name, value) => {
+          let el = form.querySelector(`[name="${name}"]`);
+          if (!el) {
+            el = document.createElement("input");
+            el.type = "hidden";
+            el.name = name;
+            form.appendChild(el);
+          }
+          el.value = value;
+        };
+        addHidden("email", payload.correo);
+        addHidden("_replyto", payload.correo);
+        addHidden("_subject", "Recibimos tu mensaje — ETEMEN");
+        addHidden("_template", "box");
+        addHidden("_autoresponse", ack);
+        addHidden("_next", `${location.origin}/contacto/?enviado=1`);
+        addHidden("_honey", "");
+        form.action = "https://formsubmit.co/hola@etemen.cl";
+        form.method = "POST";
+        form.removeAttribute("data-contact-form");
+        form.submit();
         return;
       }
       if (res.status === 429) {

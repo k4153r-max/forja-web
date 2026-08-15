@@ -51,4 +51,8 @@ Si el Worker no está desplegado, el HTML muestra el fallback a hola@etemen.cl.
 Cada envío válido se guarda en D1 y se manda a Gmail con `EMAIL` (Email Routing).
 `hola@etemen.cl` también reenvía a ese destino. Reply-To = correo del visitante.
 
-El acuse al visitante usa `EMAIL_ACK` (sin destino fijo). Hoy Email Sending está **deshabilitado** en la cuenta (`10203 sending_disabled`). Cuando se habilite en Dashboard → Email Service → Onboard `etemen.cl` (o se ponga `RESEND_API_KEY`), el visitante recibe “Recibimos tu mensaje”.
+El acuse al visitante va por **FormSubmit** (gratis, sin Workers Paid):
+después de guardar en D1, el form hace POST nativo a `formsubmit.co/hola@etemen.cl`
+con `_autoresponse` ETEMEN y vuelve a `/contacto/?enviado=1`.
+
+La primera vez hay que activar el form: FormSubmit manda un link a `hola@etemen.cl` (cae en Gmail). Un clic y queda.
