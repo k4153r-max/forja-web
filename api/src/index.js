@@ -1,3 +1,5 @@
+import { EmailMessage } from "cloudflare:email";
+
 const ALLOW = new Set([
   "https://etemen.cl",
   "https://www.etemen.cl",
@@ -15,6 +17,83 @@ const PATH_REDIRECTS = [
   [/^\/minimarket(\/|$)/i, "https://etemen.cl/nexo/minimarkets/"],
   [/^\/bodega(\/|$)/i, "https://etemen.cl/nexo/"],
 ];
+
+function encodeSubject(s) {
+  const t = String(s || "").replace(/[\r\n]+/g, " ").slice(0, 180);
+  if (/^[\x20-\x7E]*$/.test(t)) return t;
+  const bytes = new TextEncoder().encode(t);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return `=?UTF-8?B?${btoa(bin)}?=`;
+}
+
+function contactRaw({ from, to, replyTo, subject, text }) {
+  const lines = [
+    `From: ${from}`,
+    `To: ${to}`,
+  ];
+  if (replyTo) lines.push(`Reply-To: ${replyTo}`);
+  lines.push(
+    `Subject: ${encodeSubject(subject)}`,
+    "MIME-Version: 1.0",
+    "Content-Type: text/plain; charset=utf-8",
+    "Content-Transfer-Encoding: 8bit",
+    "",
+    text
+  );
+  return lines.join("\r\n");
+}
+
+async function notifyContact(env, { nombre, correo, empresa, rubro, producto, mensaje }) {
+  const inbox = "godoyleytonantonio@gmail.com";
+  const fromAddr = "hola@etemen.cl";
+  const subject = `[ETEMEN] ${producto} — ${nombre}`;
+  const text = [
+    `Nombre: ${nombre}`,
+    `Correo: ${correo}`,
+    `Empresa: ${empresa || "—"}`,
+    `Rubro: ${rubro || "—"}`,
+    `Producto: ${producto}`,
+    "",
+    mensaje,
+    "",
+    "—",
+    "Enviado desde etemen.cl/contacto/",
+  ].join("\n");
+
+  if (env.EMAIL) {
+    const raw = contactRaw({
+      from: `ETEMEN <${fromAddr}>`,
+      to: inbox,
+      replyTo: correo,
+      subject,
+      text,
+    });
+    await env.EMAIL.send(new EmailMessage(fromAddr, inbox, raw));
+    return 1;
+  }
+
+  if (env.RESEND_API_KEY) {
+    const mail = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "ETEMEN <hola@etemen.cl>",
+        to: [env.NOTIFY_TO || inbox],
+        reply_to: correo,
+        subject,
+        text,
+      }),
+    });
+    if (!mail.ok) throw new Error("resend_" + mail.status);
+    return 1;
+  }
+
+  return 0;
+}
 
 function pathRedirect(url) {
   for (const [re, dest] of PATH_REDIRECTS) {
@@ -387,30 +466,16 @@ export default {
     ).bind(nombre, correo, empresa, rubro, producto, mensaje, ipHash, request.headers.get("User-Agent") || "", turnstileOk).run();
 
     let notifyOk = 0;
-    if (env.RESEND_API_KEY) {
-      try {
-        const mail = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${env.RESEND_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            from: "ETEMEN <hola@etemen.cl>",
-            to: [env.NOTIFY_TO || "hola@etemen.cl"],
-            subject: `[ETEMEN] ${producto} — ${nombre}`,
-            text: `Nombre: ${nombre}\nCorreo: ${correo}\nEmpresa: ${empresa}\nRubro: ${rubro}\nProducto: ${producto}\n\n${mensaje}`,
-          }),
-        });
-        notifyOk = mail.ok ? 1 : 0;
-      } catch (_) {
-        notifyOk = 0;
-      }
-      await env.DB.prepare(
-        "UPDATE contactos SET notify_ok = ? WHERE id = (SELECT MAX(id) FROM contactos WHERE correo = ?)"
-      ).bind(notifyOk, correo).run();
+    try {
+      notifyOk = await notifyContact(env, { nombre, correo, empresa, rubro, producto, mensaje });
+    } catch (err) {
+      console.log("notify_failed", String(err && err.message ? err.message : err));
+      notifyOk = 0;
     }
+    await env.DB.prepare(
+      "UPDATE contactos SET notify_ok = ? WHERE id = (SELECT MAX(id) FROM contactos WHERE correo = ?)"
+    ).bind(notifyOk, correo).run();
 
-    return json({ ok: true }, 201, origin);
+    return json({ ok: true, notify: notifyOk === 1 }, 201, origin);
   },
 };

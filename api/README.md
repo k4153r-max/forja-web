@@ -40,8 +40,13 @@ npx wrangler d1 execute etemen-contactos --file=schema.sql --local
 npx wrangler dev --port 8787
 ```
 
-En `contacto/index.html` el form usa `fetch("/api/contacto")` en producción.
+El form en producción usa `https://api.etemen.cl/api/contacto`.
 Para local, añade `data-api="http://127.0.0.1:8787/api/contacto"` al `<form>`.
 
 `GET /api/contacto/health` debe devolver `{ ok: true, db: true }` antes de depender del form.
 Si el Worker no está desplegado, el HTML muestra el fallback a hola@etemen.cl.
+
+## Aviso por correo
+
+Cada envío válido se guarda en D1 y se manda a Gmail con `send_email` (Email Routing).
+`hola@etemen.cl` también reenvía a ese destino. Reply-To = correo del visitante.
