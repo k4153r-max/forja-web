@@ -47,17 +47,17 @@ let view = q.get('vista') || 'inicio';
 let selected = q.get('libro') || 'quijote';
 
 const link = (vista, extra = '') => `?vista=${vista}${extra}`;
-const audioUrl = b => {
-  const direct = {
-    lazarillo: 'https://librivox.org/lazarillo-de-tormes/',
-    frankenstein: 'https://librivox.org/frankenstein-el-moderno-prometeo-by-mary-wollstonecraft-shelley/',
-    quijote: 'https://librivox.org/don-quijote-vol-1-by-miguel-de-cervantes-saavedra/',
-    platero: 'https://librivox.org/platero-y-yo-by-juan-ramon-jimenez/',
-    'dona-perfecta': 'https://librivox.org/dona-perfecta-by-benito-perez-galdos/',
-    corazon: 'https://librivox.org/cuore-by-edmondo-de-amicis/',
-    'martin-fierro': 'https://librivox.org/el-gaucho-martin-fierro-by-jose-hernandez/'
-  };
-  return direct[b.id] || `https://librivox.org/search?title=${encodeURIComponent(b.title)}&recorded_language=es`;
+const audioPack = id => (typeof hojearAudio !== 'undefined' && hojearAudio[id]) || null;
+const hasAudio = b => !!(audioPack(b && b.id) && audioPack(b.id).tracks && audioPack(b.id).tracks.length);
+const escapeHtml = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const fmtTime = sec => {
+  sec = Math.max(0, Math.floor(Number(sec) || 0));
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  const mm = h ? String(m).padStart(2, '0') : String(m);
+  const ss = String(s).padStart(2, '0');
+  return h ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
 };
 /** Link de compra Buscalibre (edición física / moderna). */
 const buyUrl = b => {
@@ -140,6 +140,7 @@ function catalogue() {
       ${chip('genre', 'Novela', 'Novela')}
       ${chip('genre', 'Cuentos', 'Cuentos')}
       ${chip('genre', 'Poesía', 'Poesía')}
+      ${chip('audio', 'audio', 'Con audio')}
     </div>
     <p class="cat-count" id="cat-count"></p>
     <div id="catalogue-books"></div>
@@ -159,7 +160,7 @@ function bookPage(b) {
         <p class="meta">${b.author}${b.year ? ' · ' + b.year : ''}<br>${b.desc || ''}</p>
         <div class="actions">
           ${readBtn}
-          <a class="button alt" href="${audioUrl(b)}" target="_blank" rel="noopener">Escuchar</a>
+          ${hasAudio(b) ? `<a class="button alt" href="${link('escuchar', '&libro=' + b.id)}">Escuchar</a>` : ''}
           ${buyBtn(b)}
         </div>
       </div>
@@ -210,6 +211,7 @@ function internalReader(b) {
           <div class="toc-list" id="toc-list"></div>
         </div>
         <div class="set-links">
+          ${hasAudio(b) ? `<a class="simple-btn" href="${link('escuchar', '&libro=' + b.id)}">Escuchar</a>` : ''}
           <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Guía</a>
           <button type="button" class="simple-btn" id="read-reset">Empezar de nuevo</button>
         </div>
@@ -347,8 +349,8 @@ function resources() {
       </article>
       <aside class="card">
         <h3>Escuchar</h3>
-        <p>Algunos títulos tienen audio en LibriVox.</p>
-        <a class="button alt" href="https://librivox.org/" target="_blank" rel="noopener">LibriVox</a>
+        <p>En varios clásicos el audio se oye aquí mismo, sin salir de Hojear.</p>
+        <a class="button alt" href="${link('escuchar', '&libro=lazarillo')}">Probar con Lazarillo</a>
       </aside>
     </section>
   </div></main>`;
@@ -814,7 +816,7 @@ function bindCatalogue() {
   const qEl = document.querySelector('#cat-q');
   if (!box) return;
   const params = new URLSearchParams(location.search);
-  const state = { genre: 'Todos', place: 'todos', lang: 'todos', onlyText: false, onlyOer: false, q: (params.get('q') || '').trim() };
+  const state = { genre: 'Todos', place: 'todos', lang: 'todos', onlyText: false, onlyOer: false, onlyAudio: false, q: (params.get('q') || '').trim() };
 
   const match = b => {
     if (state.q && !bookHay(b).includes(fold(state.q))) return false;
@@ -823,6 +825,7 @@ function bindCatalogue() {
     if (state.lang !== 'todos' && bookLang(b) !== state.lang) return false;
     if (state.onlyText && !b.hasText) return false;
     if (state.onlyOer && !(b.license && String(b.license).indexOf('CC') === 0)) return false;
+    if (state.onlyAudio && !hasAudio(b)) return false;
     return true;
   };
   const paint = () => {
@@ -830,12 +833,13 @@ function bindCatalogue() {
       const mode = btn.dataset.mode;
       const f = btn.dataset.filter;
       const on = mode === 'reset'
-        ? state.genre === 'Todos' && state.place === 'todos' && state.lang === 'todos' && !state.onlyText && !state.onlyOer
+        ? state.genre === 'Todos' && state.place === 'todos' && state.lang === 'todos' && !state.onlyText && !state.onlyOer && !state.onlyAudio
         : mode === 'genre' ? state.genre === f
         : mode === 'place' ? state.place === f
         : mode === 'lang' ? state.lang === f
         : mode === 'text' ? state.onlyText
         : mode === 'license' ? state.onlyOer
+        : mode === 'audio' ? state.onlyAudio
         : false;
       btn.classList.toggle('active', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
@@ -858,12 +862,13 @@ function bindCatalogue() {
       const f = btn.dataset.filter;
       if (mode === 'reset') {
         state.genre = 'Todos'; state.place = 'todos'; state.lang = 'todos';
-        state.onlyText = false; state.onlyOer = false;
+        state.onlyText = false; state.onlyOer = false; state.onlyAudio = false;
       } else if (mode === 'genre') state.genre = state.genre === f ? 'Todos' : f;
       else if (mode === 'place') state.place = state.place === f ? 'todos' : f;
       else if (mode === 'lang') state.lang = state.lang === f ? 'todos' : f;
       else if (mode === 'text') state.onlyText = !state.onlyText;
       else if (mode === 'license') state.onlyOer = !state.onlyOer;
+      else if (mode === 'audio') state.onlyAudio = !state.onlyAudio;
       apply();
     });
   });
@@ -881,12 +886,165 @@ function bindCatalogue() {
     if (filtro === 'Chile' || filtro === 'Latinoamérica' || filtro === 'Universal') state.place = filtro;
     else if (LANG_LABEL[filtro]) state.lang = filtro;
     else if (filtro === 'hasText') state.onlyText = true;
+    else if (filtro === 'audio') state.onlyAudio = true;
     else if (filtro === 'oer' || filtro === 'OER' || filtro === 'Educativo') {
       if (filtro === 'Educativo') state.genre = 'Educativo';
       else state.onlyOer = true;
     } else state.genre = filtro;
   }
   apply();
+}
+
+function listenPage(b) {
+  const pack = audioPack(b.id);
+  if (!pack) {
+    return `<main class="page"><div class="wrap">
+      <div class="crumb"><a href="${link('catalogo')}">Libros</a> / ${b.title}</div>
+      <span class="eyebrow">Audio</span>
+      <h1 style="font-size:clamp(2.4rem,5vw,4rem);max-width:760px">Este libro todavía no se puede escuchar aquí.</h1>
+      <p class="lead">Puedes leerlo, o elegir otro con audio.</p>
+      <div class="actions">
+        ${b.hasText ? `<a class="button" href="${link('leer', '&libro=' + b.id)}">Leer</a>` : ''}
+        <a class="button alt" href="${link('catalogo')}">Ver los libros</a>
+      </div>
+    </div></main>`;
+  }
+  const n = pack.tracks.length;
+  return `<main class="page listen-page"><div class="wrap">
+    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / <a href="${link('catalogo')}">Libros</a> / <a href="${link('libro', '&libro=' + b.id)}">${b.title}</a> / Escuchar</div>
+    <span class="eyebrow">Escuchar</span>
+    <h1 class="listen-h1">${b.title}</h1>
+    <p class="lead">${b.author}${b.year ? ' · ' + b.year : ''}</p>
+    <div class="au-box">
+      <audio id="au-el" preload="metadata"></audio>
+      <button type="button" class="au-play" id="au-play">Escuchar</button>
+      <p class="au-now" id="au-now"></p>
+      <input id="au-seek" class="au-seek" type="range" min="0" max="1000" value="0" aria-label="Avance">
+      <div class="au-times"><span id="au-cur">0:00</span><span id="au-dur">0:00</span></div>
+      <div class="au-skip">
+        <button type="button" class="button alt" id="au-prev">Anterior</button>
+        <button type="button" class="button alt" id="au-next">Siguiente</button>
+      </div>
+    </div>
+    <p class="au-count">${n} ${n === 1 ? 'capítulo' : 'capítulos'}</p>
+    <ol class="au-list" id="au-list"></ol>
+    <p class="catalogue-note">Se escucha aquí. Lectura libre de voluntarios (LibriVox).</p>
+    <div class="actions">
+      ${b.hasText ? `<a class="button" href="${link('leer', '&libro=' + b.id)}">Leer el libro</a>` : ''}
+      ${buyBtn(b)}
+    </div>
+  </div></main>`;
+}
+
+function bindListen(b) {
+  const pack = audioPack(b.id);
+  const audio = document.getElementById('au-el');
+  const playBtn = document.getElementById('au-play');
+  const seek = document.getElementById('au-seek');
+  const nowEl = document.getElementById('au-now');
+  const curEl = document.getElementById('au-cur');
+  const durEl = document.getElementById('au-dur');
+  const list = document.getElementById('au-list');
+  if (!pack || !audio || !playBtn || !list) return;
+  const tracks = pack.tracks;
+  const key = 'hojear-audio-v1:' + b.id;
+  let i = 0;
+  let seeking = false;
+
+  function paintList() {
+    list.innerHTML = tracks.map((tr, n) =>
+      `<li><button type="button" class="au-item${n === i ? ' active' : ''}" data-i="${n}"><span class="au-item-n">${n + 1}</span><span class="au-item-t">${escapeHtml(tr.t)}</span><span class="au-item-d">${fmtTime(tr.s)}</span></button></li>`
+    ).join('');
+    list.querySelectorAll('.au-item').forEach(btn => {
+      btn.addEventListener('click', () => load(parseInt(btn.dataset.i, 10), true));
+    });
+  }
+  function save() {
+    try { localStorage.setItem(key, JSON.stringify({ i, t: audio.currentTime || 0 })); } catch (_) {}
+  }
+  function label() {
+    const tr = tracks[i];
+    if (nowEl) nowEl.textContent = 'Capítulo ' + (i + 1) + ' de ' + tracks.length + ' · ' + tr.t;
+    paintList();
+  }
+  function syncPlay() {
+    playBtn.textContent = audio.paused ? 'Escuchar' : 'Pausa';
+  }
+  function load(n, autoplay) {
+    i = Math.max(0, Math.min(tracks.length - 1, n));
+    const tr = tracks[i];
+    audio.src = tr.u;
+    audio.load();
+    label();
+    if (durEl) durEl.textContent = fmtTime(tr.s);
+    if (autoplay) {
+      audio.play().catch(() => {});
+    }
+    save();
+  }
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || 'null');
+    if (saved && typeof saved.i === 'number') i = saved.i;
+    load(i, false);
+    if (saved && typeof saved.t === 'number' && saved.t > 2) {
+      const jump = () => { audio.currentTime = saved.t; audio.removeEventListener('loadedmetadata', jump); };
+      audio.addEventListener('loadedmetadata', jump);
+    }
+  } catch (_) {
+    load(0, false);
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) audio.play().catch(() => {});
+    else audio.pause();
+  });
+  document.getElementById('au-prev')?.addEventListener('click', () => {
+    if (audio.currentTime > 3) { audio.currentTime = 0; save(); }
+    else load(i - 1, true);
+  });
+  document.getElementById('au-next')?.addEventListener('click', () => load(i + 1, true));
+  audio.addEventListener('play', syncPlay);
+  audio.addEventListener('pause', syncPlay);
+  audio.addEventListener('ended', () => {
+    if (i + 1 < tracks.length) load(i + 1, true);
+    else { syncPlay(); save(); }
+  });
+  audio.addEventListener('timeupdate', () => {
+    if (seeking) return;
+    const d = audio.duration || tracks[i].s || 0;
+    if (seek && d) seek.value = String(Math.round((audio.currentTime / d) * 1000));
+    if (curEl) curEl.textContent = fmtTime(audio.currentTime);
+    if (durEl && d) durEl.textContent = fmtTime(d);
+  });
+  audio.addEventListener('pause', save);
+  let tick = 0;
+  audio.addEventListener('timeupdate', () => {
+    tick += 1;
+    if (tick % 8 === 0) save();
+  });
+  if (seek) {
+    seek.addEventListener('input', () => { seeking = true; });
+    seek.addEventListener('change', () => {
+      const d = audio.duration || tracks[i].s || 0;
+      if (d) audio.currentTime = (parseInt(seek.value, 10) / 1000) * d;
+      seeking = false;
+      save();
+    });
+  }
+  if (navigator.mediaSession) {
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: b.title,
+        artist: b.author,
+        album: 'Hojear'
+      });
+      navigator.mediaSession.setActionHandler('play', () => audio.play());
+      navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+      navigator.mediaSession.setActionHandler('previoustrack', () => load(i - 1, true));
+      navigator.mediaSession.setActionHandler('nexttrack', () => load(i + 1, true));
+    } catch (_) {}
+  }
 }
 
 function render() {
@@ -896,6 +1054,7 @@ function render() {
     view === 'catalogo' ? catalogue() :
     view === 'libro' ? bookPage(b) :
     view === 'leer' ? internalReader(b) :
+    view === 'escuchar' ? listenPage(b) :
     view === 'guias' ? guideList() :
     view === 'guia' ? guidePage(b) :
     view === 'planes' ? plans() :
@@ -907,10 +1066,11 @@ function render() {
     home();
   document.querySelector('#app').innerHTML = nav() + page + footer();
   document.body.classList.toggle('lib-mode', view === 'catalogo');
-  document.title = view === 'inicio' ? 'Hojear' : (view === 'catalogo' ? 'Libros — Hojear' : 'Hojear — ' + (b?.title || 'Libros'));
+  document.title = view === 'escuchar' ? 'Escuchar — ' + (b?.title || 'Hojear') : (view === 'inicio' ? 'Hojear' : (view === 'catalogo' ? 'Libros — Hojear' : 'Hojear — ' + (b?.title || 'Libros')));
   bindNav();
   if (view === 'leer') leerLoader(b);
   if (view === 'catalogo') bindCatalogue();
+  if (view === 'escuchar') bindListen(b);
   const form = document.querySelector('#join-form');
   if (form) form.addEventListener('submit', e => {
     e.preventDefault();
