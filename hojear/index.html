@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hojear — No solo leas. Entiende. | ETEMEN</title>
-  <meta name="description" content="Hojear es una cámara de lectura: 183 textos en siete idiomas, guías para comprender y un lector propio sin anuncios.">
+  <title>Hojear — Lee un libro gratis | ETEMEN</title>
+  <meta name="description" content="Lee clásicos gratis. Busca un título o un autor, ábrelo y lee. Sin anuncios.">
   <meta name="theme-color" content="#07060a">
   <link rel="canonical" href="https://etemen.cl/hojear/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://etemen.cl/hojear/">
-  <meta property="og:title" content="Hojear — No solo leas. Entiende.">
-  <meta property="og:description" content="Una cámara de lectura. 183 textos en siete idiomas. Sin anuncios.">
+  <meta property="og:title" content="Hojear — Lee un libro gratis">
+  <meta property="og:description" content="Busca un título, ábrelo y lee. Sin anuncios.">
   <meta property="og:image" content="https://etemen.cl/assets/logos/hojear-icon.jpg">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Hojear","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://etemen.cl/hojear/","author":{"@type":"Organization","name":"ETEMEN","url":"https://etemen.cl/"}}
@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/hojear-v2.css">
+  <link rel="stylesheet" href="/css/hojear-v2.css?v=20260815-14">
   <link rel="icon" href="/assets/logos/hojear-mark.svg" type="image/svg+xml">
 </head>
 <body>
@@ -28,10 +28,9 @@
       <a class="brand" href="/hojear/"><img src="/assets/logos/hojear-mark.svg" alt="" width="28" height="28">Hojear</a>
       <button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">Menú</button>
       <nav class="hnav-links" aria-label="Hojear">
-        <a href="/biblioteca/?vista=catalogo">Catálogo</a>
+        <a href="/biblioteca/?vista=catalogo">Libros</a>
         <a href="/biblioteca/?vista=guias">Guías</a>
-        <a href="/">ETEMEN</a>
-        <a class="ghost" href="/biblioteca/">Entrar a leer</a>
+        <a class="ghost" href="/contacto/?producto=Hojear+Plus">Plus</a>
       </nav>
     </div>
   </header>
@@ -40,76 +39,62 @@
     <section class="chamber">
       <div class="chamber-light" id="chamber-light" aria-hidden="true"></div>
       <div class="wrap">
-        <p class="kicker">Cámara de lectura · ETEMEN</p>
-        <h1>No solo leas.<em>Entiende.</em></h1>
-        <p class="lead">Un espacio para quedarse en el texto. Páginas, silencio y método. Sin anuncios, sin ruido, sin marketplace.</p>
+        <p class="kicker">Hojear</p>
+        <h1>Lee un libro.<em>Gratis.</em></h1>
+        <p class="lead">Busca un título o un autor. Ábrelo y lee. Sin anuncios.</p>
+        <form class="home-search" action="/biblioteca/" method="get">
+          <input type="hidden" name="vista" value="catalogo">
+          <label class="visually-hidden" for="home-q">Buscar un libro</label>
+          <input id="home-q" name="q" type="search" placeholder="Busca un título o un autor" autocomplete="off">
+          <button type="submit" class="btn btn-fill">Buscar</button>
+        </form>
         <div class="actions">
-          <a class="btn btn-fill" href="/biblioteca/">Entrar a leer</a>
-          <a class="btn btn-line" href="/biblioteca/?vista=leer&amp;libro=sub-terra">Abrir Sub terra</a>
+          <a class="btn btn-fill" href="/biblioteca/?vista=catalogo">Ver los libros</a>
+          <a class="btn btn-line" href="/biblioteca/?vista=leer&amp;libro=sub-terra">Empezar con Sub terra</a>
         </div>
-        <div class="spread" aria-hidden="true">
-          <div class="spread-page l">
-            <strong>La página se abre.</strong>
-            <p>El lector recuerda dónde estabas. El índice espera. La letra se agranda si lo pides.</p>
-          </div>
-          <div class="spread-spine"></div>
-          <div class="spread-page r">
-            <strong>El sentido no es un extra.</strong>
-            <p>Guías de narrador, conflicto y símbolo. Leer y comprender en el mismo sitio.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap stats">
-        <div class="stat"><b>183</b><span>textos completos para leer aquí</span></div>
-        <div class="stat"><b>7</b><span>idiomas · ES EN FR DE IT PT LA</span></div>
-        <div class="stat"><b>8</b><span>guías OER para comprender</span></div>
       </div>
     </section>
 
     <section class="block">
       <div class="wrap">
-        <p class="kicker">Empieza ya</p>
-        <h2>Cuatro puertas. Un gesto.</h2>
+        <p class="kicker">Para empezar</p>
+        <h2>Toca un libro y lee.</h2>
         <div class="plates">
           <a class="plate" href="/biblioteca/?vista=leer&amp;libro=sub-terra">
-            <small>Chile · 1904</small>
+            <small>Chile</small>
             <h3>Sub terra</h3>
             <span>Baldomero Lillo</span>
           </a>
           <a class="plate" href="/biblioteca/?vista=leer&amp;libro=martin-rivas">
-            <small>Chile · 1862</small>
+            <small>Chile</small>
             <h3>Martín Rivas</h3>
             <span>Alberto Blest Gana</span>
           </a>
           <a class="plate" href="/biblioteca/?vista=leer&amp;libro=cuentos-amor">
-            <small>Latam · 1917</small>
+            <small>Cuentos</small>
             <h3>Cuentos de amor, de locura y de muerte</h3>
             <span>Horacio Quiroga</span>
           </a>
           <a class="plate" href="/biblioteca/?vista=leer&amp;libro=quijote">
-            <small>Clásico · 1605</small>
+            <small>Novela</small>
             <h3>Don Quijote de la Mancha</h3>
             <span>Miguel de Cervantes</span>
           </a>
         </div>
-        <div class="actions"><a class="btn btn-line" href="/biblioteca/?vista=catalogo">Ver el catálogo</a></div>
+        <div class="actions"><a class="btn btn-line" href="/biblioteca/?vista=catalogo">Ver todos los libros</a></div>
       </div>
     </section>
 
     <section class="block">
-      <div class="wrap how">
+      <div class="wrap how how-simple">
         <div>
-          <p class="kicker">El lector</p>
-          <h2>Hecho para quedarse en la hoja.</h2>
-          <p class="lead">Hojas que se pasan. Temas papel, sepia, niebla y noche. Progreso que no se pierde. Algunas fichas enlazan audio en LibriVox.</p>
+          <p class="kicker">Cómo usar Hojear</p>
+          <h2>Tres pasos.</h2>
         </div>
         <div>
-          <div class="step"><b>01</b><strong>Elige</strong><p>Filtra por género, Chile o texto completo.</p></div>
-          <div class="step"><b>02</b><strong>Lee</strong><p>Clic en el borde, flechas del teclado o desliza.</p></div>
-          <div class="step"><b>03</b><strong>Comprende</strong><p>Abre la guía de la obra cuando quieras pensar, no copiar.</p></div>
+          <div class="step"><b>1</b><strong>Busca</strong><p>Escribe un título o un autor.</p></div>
+          <div class="step"><b>2</b><strong>Elige</strong><p>Toca el libro que quieres.</p></div>
+          <div class="step"><b>3</b><strong>Lee</strong><p>Pasa la página. Se guarda solo dónde ibas.</p></div>
         </div>
       </div>
     </section>
@@ -119,7 +104,7 @@
         <div class="plus">
           <p class="kicker">Hojear Plus</p>
           <p class="price">$3.990 / mes</p>
-          <p class="note">Plus está definido. El cobro todavía no. Te avisamos cuando esté disponible.</p>
+          <p class="note">Todavía no se cobra. Te avisamos cuando esté listo.</p>
           <a class="btn btn-fill" href="/contacto/?producto=Hojear+Plus">Avisarme</a>
         </div>
       </div>
@@ -127,8 +112,8 @@
   </main>
 
   <footer class="wrap foot">
-    <span>Hojear · un producto ETEMEN</span>
-    <span><a href="/">Inicio</a> · <a href="/biblioteca/">Lector</a> · <a href="/contacto/">Contacto</a></span>
+    <span>Hojear · ETEMEN</span>
+    <span><a href="/biblioteca/?vista=catalogo">Libros</a> · <a href="/biblioteca/?vista=guias">Guías</a> · <a href="/contacto/">Contacto</a></span>
   </footer>
   <script>
     (function () {

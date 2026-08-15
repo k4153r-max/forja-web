@@ -71,10 +71,10 @@ const buyUrl = b => {
   return url;
 };
 const buyBtn = b =>
-  `<a class="button alt buy-bc" href="${buyUrl(b)}" target="_blank" rel="noopener sponsored">Comprar en Buscalibre ↗</a>`;
+  `<a class="button alt buy-bc" href="${buyUrl(b)}" target="_blank" rel="noopener sponsored">Comprar el libro</a>`;
 
 function nav() {
-  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark.svg" width="30" height="30" alt="">Hojear</a><button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">Menú</button><div class="nav-links"><a href="${link('catalogo')}">Catálogo</a><a href="${link('guias')}">Guías</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Fuentes</a><a class="pill" href="/contacto/?producto=Hojear+Plus">Plus</a></div></div></nav>`;
+  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark.svg" width="30" height="30" alt="">Hojear</a><button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">Menú</button><div class="nav-links"><a href="${link('catalogo')}">Libros</a><a href="${link('guias')}">Guías</a><a class="pill" href="/contacto/?producto=Hojear+Plus">Plus</a></div></div></nav>`;
 }
 function bindNav() {
   const toggle = document.querySelector('.nav-toggle');
@@ -88,124 +88,80 @@ function bindNav() {
   });
 }
 function footer() {
-  return `<footer class="footer"><div class="wrap foot"><span>Hojear · cámara de lectura · ETEMEN</span><span>${readableCount()} textos · ${chileCount()} Chile · ${oerCount()} OER</span></div></footer>`;
+  return `<footer class="footer"><div class="wrap foot"><span>Hojear · ETEMEN</span><span><a href="${link('catalogo')}">Libros</a> · <a href="${link('guias')}">Guías</a> · <a href="/contacto/?producto=Hojear+Plus">Plus</a></span></div></footer>`;
 }
 function bookCard(b) {
-  const isOer = b.license && String(b.license).indexOf('CC') === 0;
-  const badge = !b.hasText ? 'Ficha' : isOer ? 'OER' : '';
-  const meta = [b.genre || b.type, LANG_LABEL[bookLang(b)] || bookLang(b), b.place].filter(Boolean).join(' · ');
-  const mark = badge ? ` · ${badge}` : '';
-  return `<a class="book ${b.color || 'brown'}" href="${link('libro', '&libro=' + b.id)}"><small>${meta}${mark}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><span>${b.year || ''}</span></div></a>`;
+  const dest = b.hasText ? link('leer', '&libro=' + b.id) : link('libro', '&libro=' + b.id);
+  return `<a class="book ${b.color || 'brown'}" href="${dest}"><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span></div></a>`;
 }
 
 function home() {
   const featured = books.filter(b => b.hasText).slice(0, 8);
   return `<main>
 <section class="hero"><div class="wrap">
-  <span class="eyebrow">Cámara de lectura</span>
-  <h1>No solo leas.<br><em>Entiende.</em></h1>
-  <p class="lead">${readableCount()} textos en español, inglés, francés, alemán, italiano, portugués y latín. Hojas, silencio y método.</p>
+  <span class="eyebrow">Hojear</span>
+  <h1>Lee un libro.<br><em>Gratis.</em></h1>
+  <p class="lead">Busca un título o un autor. Toca el libro y lee.</p>
+  <form class="home-search" action="" method="get">
+    <input type="hidden" name="vista" value="catalogo">
+    <label class="visually-hidden" for="home-q">Buscar un libro</label>
+    <input id="home-q" name="q" type="search" placeholder="Busca un título o un autor" autocomplete="off">
+    <button type="submit" class="button">Buscar</button>
+  </form>
   <div class="actions">
-    <a class="button" href="${link('catalogo')}">Abrir el catálogo</a>
-    <a class="button alt" href="${link('leer', '&libro=sub-terra')}">Leer Sub terra</a>
-    <a class="button alt" href="${link('catalogo')}&filtro=Educativo">Guías de estudio</a>
+    <a class="button" href="${link('catalogo')}">Ver los libros</a>
+    <a class="button alt" href="${link('leer', '&libro=sub-terra')}">Empezar con Sub terra</a>
   </div>
-</div></section>
-<section class="metrics"><div class="wrap">
-  <div class="metric"><b>${readableCount()}</b><span>textos completos para leer aquí</span></div>
-  <div class="metric"><b>${chileCount()}</b><span>obras de Chile con texto</span></div>
-  <div class="metric"><b>${oerCount()}</b><span>guías OER · licencia CC BY 4.0</span></div>
 </div></section>
 <section class="section"><div class="wrap">
-  <div class="head"><div><span class="eyebrow">Lectura inmediata</span><h2>Empieza por cualquiera de estas obras.</h2></div>
-  <a class="text-link" href="${link('catalogo')}">Ver catálogo completo →</a></div>
+  <div class="head"><div><span class="eyebrow">Para empezar</span><h2>Toca uno y lee.</h2></div>
+  <a class="text-link" href="${link('catalogo')}">Ver todos →</a></div>
   <div class="stack"><div class="books">${featured.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></div>
-</div></section>
-<section class="guide-band"><div class="wrap guide-grid">
-  <div><span class="eyebrow" style="color:#f0a06a">Cómo leer aquí</span>
-  <h2>Un lector pensado para quedarse.</h2>
-  <p>Hojas, letra, temas papel / noche / sepia, índice y progreso. El chrome se esconde. El texto queda.</p>
-  <a class="button" href="${link('catalogo')}&filtro=Educativo">Ver educativos →</a></div>
-  <div class="steps">
-    <div class="step"><b>01</b><div><strong>Elige un título</strong><span>Filtra por género, región o “con texto”.</span></div></div>
-    <div class="step"><b>02</b><div><strong>Lee por páginas</strong><span>Flechas del teclado, barra de progreso e índice.</span></div></div>
-    <div class="step"><b>03</b><div><strong>Vuelve después</strong><span>Hojear recuerda en qué página estabas.</span></div></div>
-  </div>
 </div></section>
 </main>`;
 }
 
-function cajon(mode, filter, title, n, extraClass = '') {
-  return `<button type="button" class="cajon ${extraClass}" data-mode="${mode}" data-filter="${filter}" aria-pressed="false"><strong>${title}</strong><em>${n}</em></button>`;
-}
-function cajonera(id, heading, inner) {
-  return `<div class="armario"><p class="armario-h">${heading}</p><div class="cajones" id="${id}">${inner}</div></div>`;
+function chip(mode, filter, title, extraClass = '') {
+  return `<button type="button" class="chip ${extraClass}" data-mode="${mode}" data-filter="${filter}" aria-pressed="false">${title}</button>`;
 }
 function catalogue() {
-  const langs = langsInCatalog().map(l =>
-    cajon('lang', l, LANG_LABEL[l], countWhere(b => bookLang(b) === l))
-  ).join('');
-  const genres = genresInCatalog().map(g =>
-    cajon('genre', g, g, countWhere(b => bookGenre(b) === g))
-  ).join('');
-  const places = PLACES.map(p =>
-    cajon('place', p, p, countWhere(b => b.place === p))
-  ).join('');
   return `<main class="page cat"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Biblioteca</div>
-    <span class="eyebrow">Casa de lectura</span>
-    <h1 class="cat-h1">El fichero</h1>
-    <p class="lead">Títulos de dominio público, ordenados como en una biblioteca antigua. ${readableCount()} para abrir aquí · ${chileCount()} de Chile · ${oerCount()} OER.</p>
+    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / Libros</div>
+    <h1 class="cat-h1">Libros</h1>
+    <p class="lead">Escribe un nombre o elige un grupo.</p>
     <label class="cat-search">
-      <span class="visually-hidden">Consultar el fichero</span>
-      <input id="cat-q" type="search" placeholder="Consultar por título o autor…" autocomplete="off" spellcheck="false">
+      <span class="visually-hidden">Buscar un libro</span>
+      <input id="cat-q" type="search" placeholder="Busca un título o un autor" autocomplete="off" spellcheck="false">
     </label>
-    <div class="fichero">
-      ${cajonera('filters-lang', 'Lengua', cajon('lang', 'todos', 'Todas', books.length, 'is-all active') + langs)}
-      ${cajonera('filters-genre', 'Forma', cajon('genre', 'Todos', 'Todas', books.length, 'is-all active') + genres)}
-      ${cajonera('filters-place', 'Territorio y modo', cajon('place', 'todos', 'Todos', books.length, 'is-all active') + places + cajon('text', 'hasText', 'Abrir ahora', readableCount()) + cajon('license', 'oer', 'Estudiar · OER', oerCount()))}
+    <div class="chips" id="filters-quick">
+      ${chip('reset', 'todos', 'Todos', 'active')}
+      ${chip('lang', 'es', 'En español')}
+      ${chip('place', 'Chile', 'Chile')}
+      ${chip('genre', 'Novela', 'Novela')}
+      ${chip('genre', 'Cuentos', 'Cuentos')}
+      ${chip('genre', 'Poesía', 'Poesía')}
     </div>
-    <div class="cat-bar">
-      <p class="cat-count" id="cat-count"></p>
-      <div class="cat-sort" role="group" aria-label="Orden">
-        <button type="button" class="sort-btn active" data-sort="titulo">Título</button>
-        <button type="button" class="sort-btn" data-sort="autor">Autor</button>
-      </div>
-    </div>
+    <p class="cat-count" id="cat-count"></p>
     <div id="catalogue-books"></div>
-    <p class="catalogue-note">Dominio público (Gutenberg, Internet Archive) y material Hojear en <strong>CC BY 4.0</strong>. Revisa la licencia si reutilizas fuera de aquí.</p>
   </div></main>`;
 }
 
 function bookPage(b) {
   const readBtn = b.hasText
-    ? `<a class="button" href="${link('leer', '&libro=' + b.id)}">Leer en Hojear →</a>`
-    : `<a class="button alt" href="${link('guia', '&libro=' + b.id)}">Ver guía (texto en preparación)</a>`;
+    ? `<a class="button" href="${link('leer', '&libro=' + b.id)}">Leer</a>`
+    : `<a class="button alt" href="${link('catalogo')}">Volver a los libros</a>`;
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / <a href="${link('catalogo')}">Biblioteca</a> / ${b.title}</div>
+    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / <a href="${link('catalogo')}">Libros</a> / ${b.title}</div>
     <section class="book-hero">
-      <div class="cover ${b.color}"><small>${b.genre || b.type} · ${b.place}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><span>${b.year}</span></div></div>
+      <div class="cover ${b.color}"><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span></div></div>
       <div>
-        <span class="eyebrow">${b.type} · ${b.genre || ''} · ${b.place}</span>
-        <h1 style="font-size:clamp(2.8rem,5.5vw,4.8rem);margin-bottom:16px">${b.title}</h1>
-        <p class="meta">${b.author} · ${b.year}<br>${b.desc}</p>
-        <div>
-          <span class="tag">${b.hasText ? 'Lectura completa en Hojear' : 'Ficha / guía'}</span>
-          <span class="tag">${b.genre || b.type}</span>
-          <span class="tag">${LANG_LABEL[bookLang(b)] || bookLang(b)}</span>
-          <span class="tag">${b.place}</span>
-          ${b.license ? `<span class="tag">${b.license}</span>` : ''}
-        </div>
-        ${b.source ? `<p class="catalogue-note" style="margin-top:12px"><strong>Fuente:</strong> ${b.source}</p>` : ''}
+        <h1 style="font-size:clamp(2.4rem,5vw,4rem);margin-bottom:12px">${b.title}</h1>
+        <p class="meta">${b.author}${b.year ? ' · ' + b.year : ''}<br>${b.desc || ''}</p>
         <div class="actions">
           ${readBtn}
-          <a class="button alt" href="${link('guia', '&libro=' + b.id)}">Estudiar con la guía</a>
-          <a class="button alt" href="${audioUrl(b)}" target="_blank" rel="noopener">▶ Audiolibro (LibriVox)</a>
+          <a class="button alt" href="${audioUrl(b)}" target="_blank" rel="noopener">Escuchar</a>
           ${buyBtn(b)}
         </div>
-        <p class="catalogue-note">${b.hasText
-          ? 'El lector guarda tu página, permite cambiar tamaño y tema, y muestra un índice de capítulos cuando el texto lo permite. Si prefieres papel o una edición anotada, el enlace a Buscalibre abre la búsqueda del título (afiliado ETEMEN/Hojear cuando esté configurado).'
-          : 'El texto íntegro aún no está en Hojear (p. ej. traducción con copyright). Usa la guía, el audiolibro si existe, o compra una edición en Buscalibre.'}</p>
       </div>
     </section>
   </div></main>`;
@@ -214,14 +170,14 @@ function bookPage(b) {
 function internalReader(b) {
   if (!b.hasText) {
     return `<main class="page"><div class="wrap">
-      <div class="crumb"><a href="${link('catalogo')}">Biblioteca</a> / ${b.title}</div>
+      <div class="crumb"><a href="${link('catalogo')}">Libros</a> / ${b.title}</div>
       <div class="pend">
         <div class="pend-mark">⏳</div>
-        <span class="eyebrow">En preparación</span>
-        <h2 class="pend-h1">Aún no hay texto completo de «${b.title}» en Hojear.</h2>
-        <p class="lead">Estamos sumando ediciones de dominio público. Mientras tanto usa la ficha y la guía.</p>
+        <span class="eyebrow">Aún no</span>
+        <h2 class="pend-h1">Este libro todavía no se puede leer aquí.</h2>
+        <p class="lead">Elige otro o abre la guía de «${b.title}».</p>
         <div class="actions pend-actions">
-          <a class="button" href="${link('libro', '&libro=' + b.id)}">Volver a la ficha</a>
+          <a class="button" href="${link('catalogo')}">Ver los libros</a>
           <a class="button alt" href="${link('guia', '&libro=' + b.id)}">Abrir guía</a>
         </div>
       </div>
@@ -230,7 +186,7 @@ function internalReader(b) {
   return `<main class="page reader-page"><div class="wrap">
     <div class="reader-stage theme-paper mode-book" id="reader-stage">
       <header class="reader-topbar" id="reader-topbar">
-        <a class="back" href="${link('libro', '&libro=' + b.id)}" title="Volver a la ficha">← Salir</a>
+        <a class="back" href="${link('libro', '&libro=' + b.id)}" title="Salir">← Salir</a>
         <div class="meta-mini"><strong>${b.title}</strong> · ${b.author}</div>
         <div class="reader-tools">
           <button type="button" id="fr-toc" class="rtool" title="Índice" aria-label="Índice">☰</button>
@@ -275,7 +231,7 @@ function internalReader(b) {
               </div>
             </div>
           </div>
-          <p class="book-hint" id="book-hint">Clic en el borde de la hoja · flechas ← → · desliza en móvil</p>
+          <p class="book-hint" id="book-hint">Toca el borde de la página para pasar</p>
         </div>
       </div>
       <div class="read-ctrl" id="read-ctrl" hidden>
@@ -287,21 +243,21 @@ function internalReader(b) {
         <button type="button" class="read-btn" id="read-next" aria-label="Siguiente">›</button>
       </div>
       <div class="reader-foot-links">
-        <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Guía de estudio</a>
+        <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Guía</a>
         <a class="simple-btn" href="${audioUrl(b)}" target="_blank" rel="noopener">Audiolibro</a>
         <button type="button" class="simple-btn" id="read-reset">Reiniciar progreso</button>
       </div>
-      <p class="reader-credit">Dominio público · lectura en hojas · Hojear</p>
+      <p class="reader-credit">Texto libre para leer · Hojear</p>
     </div>
   </div></main>`;
 }
 
 function guideList() {
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Guías PAES</div>
-    <span class="eyebrow">Estudiar sin apagar la lectura</span>
-    <h1 style="font-size:clamp(2.8rem,5.5vw,4.8rem);max-width:800px">Guías que te ayudan a pensar, no a copiar.</h1>
-    <p class="lead">Contexto, personajes, ideas y práctica.</p>
+    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / Guías</div>
+    <span class="eyebrow">Guías</span>
+    <h1 style="font-size:clamp(2.8rem,5.5vw,4.8rem);max-width:800px">Para entender el libro.</h1>
+    <p class="lead">Qué pasa, quién habla y qué preguntarte.</p>
     <div class="guide-list">${guides.map((g, i) =>
       `<article class="guide-card"><b>${String(i + 1).padStart(2, '0')}</b><div><h3>${g[1]}</h3><p>${g[2]}</p></div>
       <a class="simple-btn" href="${link('guia', '&libro=' + g[0])}">Abrir guía →</a></article>`
@@ -311,10 +267,10 @@ function guideList() {
 
 function guidePage(b) {
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / <a href="${link('guias')}">Guías</a> / ${b.title}</div>
-    <span class="eyebrow">Guía de lectura</span>
-    <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:760px">${b.title}, para entenderla de verdad.</h1>
-    <p class="lead">Estructura simple para clase, PAES o lectura personal.</p>
+    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / <a href="${link('guias')}">Guías</a> / ${b.title}</div>
+    <span class="eyebrow">Guía</span>
+    <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:760px">${b.title}</h1>
+    <p class="lead">Para entender el libro, no para copiar.</p>
     <section class="study">
       <article class="card">
         <h3>Antes de leer</h3>
@@ -327,11 +283,11 @@ function guidePage(b) {
         <div class="question">04 · ¿Qué cambia al final?</div>
       </article>
       <aside class="card">
-        <h3>En tu ficha</h3>
+        <h3>El libro</h3>
         <p><strong>Autor:</strong><br>${b.author}</p>
-        <p><strong>Género:</strong><br>${b.genre || b.type}</p>
-        <p><strong>Origen:</strong><br>${b.place}</p>
-        ${b.hasText ? `<a class="button" style="margin-top:10px" href="${link('leer', '&libro=' + b.id)}">Leer en Hojear →</a>` : `<a class="button alt" style="margin-top:10px" href="${link('libro', '&libro=' + b.id)}">Ver ficha →</a>`}
+        <p><strong>Tipo:</strong><br>${b.genre || b.type}</p>
+        <p><strong>De:</strong><br>${b.place}</p>
+        ${b.hasText ? `<a class="button" style="margin-top:10px" href="${link('leer', '&libro=' + b.id)}">Leer</a>` : `<a class="button alt" style="margin-top:10px" href="${link('catalogo')}">Ver los libros</a>`}
         <div style="margin-top:12px">${buyBtn(b)}</div>
       </aside>
     </section>
@@ -345,12 +301,12 @@ function plans() {
     <section class="study">
       <article class="card"><h3>Hojear Libre</h3>
         <p><strong style="font:500 2.4rem var(--serif);color:var(--gold)">$0</strong></p>
-        <p>Catálogo, lector y guías de muestra. Sin anuncios.</p>
-        <a class="button alt" href="${link('catalogo')}">Seguir leyendo</a>
+        <p>Libros, lector y guías. Sin anuncios.</p>
+        <a class="button alt" href="${link('catalogo')}">Ver los libros</a>
       </article>
       <aside class="card"><span class="eyebrow">Lista de espera</span><h3>Hojear Plus</h3>
         <p><strong style="font:500 2.4rem var(--serif);color:var(--gold)">$3.990</strong> · al mes</p>
-        <p>Plus está definido. El cobro todavía no.</p>
+        <p>Todavía no se cobra. Te avisamos cuando esté listo.</p>
         <a class="button" href="/contacto/?producto=Hojear+Plus">Avisarme</a>
       </aside>
     </section>
@@ -370,54 +326,41 @@ function checkout() {
 
 function resources() {
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Recursos</div>
-    <span class="eyebrow">Fuentes abiertas y legales</span>
-    <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:780px">De dónde salen los textos.</h1>
+    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / Fuentes</div>
+    <span class="eyebrow">Fuentes</span>
+    <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:780px">De dónde salen los libros.</h1>
     <section class="study">
       <article class="card">
-        <h3>Project Gutenberg (ES)</h3>
-        <p>Clásicos en español de dominio público. Hojear importa con el script <code>import-gutenberg.ps1</code>, limpia el preámbulo legal y pagina el texto.</p>
-        <a class="button" href="https://www.gutenberg.org/browse/languages/es" target="_blank" rel="noopener">Gutenberg ES →</a>
+        <h3>Libros libres</h3>
+        <p>Clásicos que ya se pueden publicar. Gutenberg, Wikisource y archivos públicos.</p>
+        <a class="button" href="${link('catalogo')}">Ver los libros</a>
       </article>
       <aside class="card">
-        <h3>Chile · Archive + Memoria</h3>
-        <p><em>Sub terra</em>, <em>Sub sole</em>, <em>Martín Rivas</em> y cuentos populares chilenos desde Internet Archive / dominio público. Contexto en Memoria Chilena.</p>
-        <a class="button" href="${link('catalogo')}&filtro=Chile">Ver obras de Chile →</a>
+        <h3>Chile</h3>
+        <p><em>Sub terra</em>, <em>Martín Rivas</em> y otros textos chilenos.</p>
+        <a class="button" href="${link('catalogo')}&filtro=Chile">Ver Chile</a>
       </aside>
     </section>
     <section class="study">
       <article class="card">
-        <h3>Comprar en Buscalibre</h3>
-        <p>En cada ficha hay un botón <strong>Comprar en Buscalibre</strong> para ediciones físicas o anotadas (incluye libros modernos con copyright que no podemos hostear).</p>
-        <p class="catalogue-note">Hojear participa del <a href="https://www.buscalibre.cl/afiliados" target="_blank" rel="noopener">programa de afiliados de Buscalibre</a>. Si compras por esos enlaces, una comisión ayuda a mantener el proyecto. ${HOJEAR_BC_AFFILIATE_ID ? 'Afiliado activo.' : 'ID de afiliado pendiente de configurar tras aprobación.'}</p>
-        <a class="button" href="https://www.buscalibre.cl/" target="_blank" rel="noopener sponsored">Ir a Buscalibre →</a>
+        <h3>Comprar el libro</h3>
+        <p>Si quieres el libro en papel, hay un botón <strong>Comprar el libro</strong> en cada título.</p>
+        <a class="button" href="https://www.buscalibre.cl/" target="_blank" rel="noopener sponsored">Ir a Buscalibre</a>
       </article>
       <aside class="card">
-        <h3>Otras fuentes libres</h3>
-        <p><a href="https://www.elejandria.com/" target="_blank" rel="noopener">Elejandría</a> · <a href="https://es.wikisource.org/" target="_blank" rel="noopener">Wikisource</a> · <a href="https://www.cervantesvirtual.com/" target="_blank" rel="noopener">Cervantes Virtual</a> · <a href="https://librivox.org/" target="_blank" rel="noopener">LibriVox</a> (audio).</p>
+        <h3>Escuchar</h3>
+        <p>Algunos títulos tienen audio en LibriVox.</p>
+        <a class="button alt" href="https://librivox.org/" target="_blank" rel="noopener">LibriVox</a>
       </aside>
     </section>
-    <section class="study">
-      <article class="card">
-        <h3>OER · Creative Commons</h3>
-        <p>${oerCount()} guías de estudio originales Hojear bajo <strong>CC BY 4.0</strong>: narrador, conflicto, símbolo, contexto, poesía, argumentación PAES y citas.</p>
-        <a class="button" href="${link('catalogo')}&filtro=Educativo">Abrir educativos →</a>
-      </article>
-      <aside class="card">
-        <h3>Otras fuentes recomendadas</h3>
-        <p>Wikisource ES · Biblioteca Virtual Miguel de Cervantes · BNE (dominio público) · OpenStax / LibreTexts (OER, muchas en inglés) · LibriVox (audio).</p>
-        <a class="button alt" href="${link('leer','&libro=oer-cita')}">Leer guía de licencias →</a>
-      </aside>
-    </section>
-    <p class="catalogue-note">Catálogo actual: <strong>${readableCount()}</strong> textos legibles de ${books.length} fichas. No se copian libros con copyright vigente.</p>
   </div></main>`;
 }
 
 function routes() {
   return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Rutas</div>
-    <span class="eyebrow">Elige por interés</span>
-    <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:780px">Rutas listas para empezar a leer.</h1>
+    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / Rutas</div>
+    <span class="eyebrow">Por dónde empezar</span>
+    <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:780px">Cuatro caminos fáciles.</h1>
     <section class="study">
       <article class="card"><h3>Clásicos hispanos</h3>
         <p><em>Quijote</em>, <em>Lazarillo</em>, <em>El Buscón</em>, <em>Niebla</em>.</p>
@@ -455,7 +398,7 @@ function how() {
     <span class="eyebrow">Producto</span>
     <h1 style="font-size:clamp(2.6rem,5vw,4.4rem);max-width:760px">Gratis para entrar. Útil para volver.</h1>
     <section class="study">
-      <article class="card"><h3>Plan gratuito</h3><p>Catálogo, lector y guías de muestra.</p>
+      <article class="card"><h3>Plan gratuito</h3><p>Libros, lector y guías.</p>
       <h3>Hojear Plus</h3><p>Guías completas, simulacros y packs mensuales.</p></article>
       <aside class="card"><h3>La idea</h3><p>El dominio público atrae. Las guías y la experiencia son la membresía.</p>
       <a class="button" href="${link('unete')}">Lista de espera →</a></aside>
@@ -773,7 +716,7 @@ function leerLoader(b) {
       }
       if (cur.length) pages.push(cur);
       if (!pages.length) {
-        art.innerHTML = '<p class="reader-loading">No se encontró el texto completo de este título.</p>';
+        art.innerHTML = '<p class="reader-loading">No se pudo abrir este libro. Elige otro.</p>';
         return;
       }
       const saved = loadSaved();
@@ -900,7 +843,8 @@ function bindCatalogue() {
   const countEl = document.querySelector('#cat-count');
   const qEl = document.querySelector('#cat-q');
   if (!box) return;
-  const state = { genre: 'Todos', place: 'todos', lang: 'todos', onlyText: false, onlyOer: false, q: '', sort: 'titulo' };
+  const params = new URLSearchParams(location.search);
+  const state = { genre: 'Todos', place: 'todos', lang: 'todos', onlyText: false, onlyOer: false, q: (params.get('q') || '').trim() };
 
   const match = b => {
     if (state.q && !bookHay(b).includes(fold(state.q))) return false;
@@ -911,15 +855,13 @@ function bindCatalogue() {
     if (state.onlyOer && !(b.license && String(b.license).indexOf('CC') === 0)) return false;
     return true;
   };
-  const sorter = (a, b) => {
-    const key = state.sort === 'autor' ? 'author' : 'title';
-    return String(a[key] || '').localeCompare(String(b[key] || ''), 'es', { sensitivity: 'base' });
-  };
-  const paintSalas = () => {
-    document.querySelectorAll('.cajon').forEach(btn => {
+  const paint = () => {
+    document.querySelectorAll('.chip').forEach(btn => {
       const mode = btn.dataset.mode;
       const f = btn.dataset.filter;
-      const on = mode === 'genre' ? state.genre === f
+      const on = mode === 'reset'
+        ? state.genre === 'Todos' && state.place === 'todos' && state.lang === 'todos' && !state.onlyText && !state.onlyOer
+        : mode === 'genre' ? state.genre === f
         : mode === 'place' ? state.place === f
         : mode === 'lang' ? state.lang === f
         : mode === 'text' ? state.onlyText
@@ -928,70 +870,51 @@ function bindCatalogue() {
       btn.classList.toggle('active', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
-    document.querySelectorAll('.sort-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.sort === state.sort);
-    });
   };
   const apply = () => {
-    const list = books.filter(match).sort(sorter);
-    const group = state.genre === 'Todos' && !state.q;
+    const list = books.filter(match).sort((a, b) => String(a.title || '').localeCompare(String(b.title || ''), 'es', { sensitivity: 'base' }));
     if (!list.length) {
-      box.innerHTML = '<p class="catalogue-note">Nada en este estante. Prueba otro cajón o borra la consulta.</p>';
-    } else if (group) {
-      const map = new Map();
-      list.forEach(b => {
-        const k = bookGenre(b);
-        if (!map.has(k)) map.set(k, []);
-        map.get(k).push(b);
-      });
-      const order = [...GENRE_ORDER.filter(g => map.has(g)), ...[...map.keys()].filter(g => !GENRE_ORDER.includes(g))];
-      box.innerHTML = order.map(g => {
-        const items = map.get(g);
-        return `<section class="shelf"><div class="shelf-head"><h3>${g}</h3><span>${items.length}</span></div><div class="books">${items.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></section>`;
-      }).join('');
+      box.innerHTML = '<p class="catalogue-note">No hay libros con eso. Prueba otra búsqueda o pulsa Todos.</p>';
     } else {
       box.innerHTML = `<div class="stack"><div class="books">${list.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></div>`;
     }
-    const bits = [];
-    if (state.q) bits.push(`“${state.q.trim()}”`);
-    if (state.lang !== 'todos') bits.push(LANG_LABEL[state.lang]);
-    if (state.genre !== 'Todos') bits.push(state.genre);
-    if (state.place !== 'todos') bits.push(state.place);
-    if (state.onlyText) bits.push('abrir ahora');
-    if (state.onlyOer) bits.push('OER');
-    const where = bits.length ? bits.join(' · ') : 'toda la casa';
-    if (countEl) countEl.textContent = `${list.length} ${list.length === 1 ? 'tomo' : 'tomos'} · ${where}`;
-    paintSalas();
+    if (countEl) countEl.textContent = `${list.length} ${list.length === 1 ? 'libro' : 'libros'}`;
+    paint();
   };
 
-  document.querySelectorAll('.cajon').forEach(btn => {
+  document.querySelectorAll('.chip').forEach(btn => {
     btn.addEventListener('click', () => {
       const mode = btn.dataset.mode;
       const f = btn.dataset.filter;
-      if (mode === 'genre') state.genre = f;
-      else if (mode === 'place') state.place = f;
-      else if (mode === 'lang') state.lang = f;
+      if (mode === 'reset') {
+        state.genre = 'Todos'; state.place = 'todos'; state.lang = 'todos';
+        state.onlyText = false; state.onlyOer = false;
+      } else if (mode === 'genre') state.genre = state.genre === f ? 'Todos' : f;
+      else if (mode === 'place') state.place = state.place === f ? 'todos' : f;
+      else if (mode === 'lang') state.lang = state.lang === f ? 'todos' : f;
       else if (mode === 'text') state.onlyText = !state.onlyText;
       else if (mode === 'license') state.onlyOer = !state.onlyOer;
       apply();
     });
   });
-  document.querySelectorAll('.sort-btn').forEach(btn => {
-    btn.addEventListener('click', () => { state.sort = btn.dataset.sort; apply(); });
-  });
   let t = 0;
-  qEl?.addEventListener('input', () => {
-    clearTimeout(t);
-    t = setTimeout(() => { state.q = qEl.value.trim(); apply(); }, 80);
-  });
+  if (qEl) {
+    qEl.value = state.q;
+    qEl.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => { state.q = qEl.value.trim(); apply(); }, 80);
+    });
+  }
 
-  const filtro = new URLSearchParams(location.search).get('filtro');
+  const filtro = params.get('filtro');
   if (filtro) {
     if (filtro === 'Chile' || filtro === 'Latinoamérica' || filtro === 'Universal') state.place = filtro;
     else if (LANG_LABEL[filtro]) state.lang = filtro;
     else if (filtro === 'hasText') state.onlyText = true;
-    else if (filtro === 'oer' || filtro === 'OER') state.onlyOer = true;
-    else state.genre = filtro;
+    else if (filtro === 'oer' || filtro === 'OER' || filtro === 'Educativo') {
+      if (filtro === 'Educativo') state.genre = 'Educativo';
+      else state.onlyOer = true;
+    } else state.genre = filtro;
   }
   apply();
 }
@@ -1014,7 +937,7 @@ function render() {
     home();
   document.querySelector('#app').innerHTML = nav() + page + footer();
   document.body.classList.toggle('lib-mode', view === 'catalogo');
-  document.title = view === 'inicio' ? 'Hojear — Lector y biblioteca' : 'Hojear — ' + (b?.title || 'Biblioteca');
+  document.title = view === 'inicio' ? 'Hojear' : (view === 'catalogo' ? 'Libros — Hojear' : 'Hojear — ' + (b?.title || 'Libros'));
   bindNav();
   if (view === 'leer') leerLoader(b);
   if (view === 'catalogo') bindCatalogue();
