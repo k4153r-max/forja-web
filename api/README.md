@@ -1,6 +1,18 @@
-# Formulario ETEMEN — Cloudflare Worker + D1
+# API ETEMEN — Cloudflare Worker + D1
 
-El sitio sigue estático en Render. Este Worker intercepta `POST /api/contacto` **antes** del origen.
+El sitio sigue estático en Render. Este Worker intercepta `/api/contacto` y `/api/visita` **antes** del origen.
+
+## Visitas
+
+Host del Worker: `https://api.etemen.cl` (Custom Domain). El apex `/api/*` no intercepta por O2O con Render.
+
+- `POST https://api.etemen.cl/api/visita` — suma 1 (sin IP en claro; un hash por día).
+- `GET https://api.etemen.cl/api/visita` — `{ total, hoy, unicos_hoy }`
+- `GET https://api.etemen.cl/api/visita?libro=lazarillo` — lecturas / escuchas
+- `GET https://api.etemen.cl/api/visita?resumen=1` — páginas y libros
+- Panel: `https://etemen.cl/visitas/` (noindex)
+
+No se cuentan bots evidentes. El mismo visitante no suma de nuevo la misma página en la misma sesión.
 
 ## Nunca
 

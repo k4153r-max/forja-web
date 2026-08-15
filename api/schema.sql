@@ -23,3 +23,26 @@ CREATE TABLE IF NOT EXISTS rate_limits (
   hits INTEGER NOT NULL DEFAULT 1,
   PRIMARY KEY (ip_hash, window_start)
 );
+
+CREATE TABLE IF NOT EXISTS visitas_dia (
+  day TEXT NOT NULL,
+  path TEXT NOT NULL,
+  hits INTEGER NOT NULL DEFAULT 0,
+  uniques INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (day, path)
+);
+CREATE INDEX IF NOT EXISTS idx_visitas_dia_hits ON visitas_dia(hits DESC);
+
+CREATE TABLE IF NOT EXISTS visitas_visto (
+  day TEXT NOT NULL,
+  path TEXT NOT NULL,
+  visitor TEXT NOT NULL,
+  PRIMARY KEY (day, path, visitor)
+);
+
+CREATE TABLE IF NOT EXISTS visitas_libro (
+  book_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  hits INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (book_id, kind)
+);

@@ -112,4 +112,11 @@
     .catch(() => {
       if (!cached) paint({ pct: "", ok: false, down: false });
     });
+
+  if (!document.querySelector('script[src*="/js/visitas.js"]')) {
+    const s = document.createElement("script");
+    s.src = "/js/visitas.js?v=2";
+    s.defer = true;
+    document.body.appendChild(s);
+  }
 })();

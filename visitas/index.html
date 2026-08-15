@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visitas — ETEMEN</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0B0B0C">
+  <link rel="stylesheet" href="/css/main-v9.css">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <style>
+    .visitas-wrap { padding: 48px 0 80px; }
+    .visitas-nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--rule-dim); margin: 28px 0 40px; border: 1px solid var(--rule-dim); }
+    .visitas-nums div { background: var(--carbon-2); padding: 20px 18px; }
+    .visitas-nums b { display: block; font-family: var(--font-mono, "IBM Plex Mono", monospace); font-size: 1.6rem; font-weight: 500; color: var(--ink); }
+    .visitas-nums span { color: var(--ink-mute); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+    .visitas-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .visitas-table th, .visitas-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--rule-dim); }
+    .visitas-table th { color: var(--ink-mute); font-weight: 500; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+    .visitas-table td:last-child, .visitas-table th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+    .visitas-empty { color: var(--ink-dim); }
+    @media (max-width: 640px) { .visitas-nums { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="/" class="logo" aria-label="ETEMEN">
+        <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="28" height="28">
+        <div class="logo-wordmark">
+          <span class="name">ETEMEN</span>
+          <span class="tagline">Fundamento</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Inicio</a>
+        <a href="/nexo/">Nexo</a>
+        <a href="/hojear/">Hojear</a>
+        <a href="/contacto/">Contacto</a>
+      </nav>
+    </div>
+  </header>
+  <main id="contenido" class="visitas-wrap">
+    <div class="wrap">
+      <p class="eyebrow">Interno</p>
+      <h1>Visitas</h1>
+      <p class="lead">Números reales del sitio. No se indexa.</p>
+      <div class="visitas-nums">
+        <div><b id="v-total">—</b><span>Total</span></div>
+        <div><b id="v-hoy">—</b><span>Hoy</span></div>
+        <div><b id="v-unicos">—</b><span>Únicos hoy</span></div>
+      </div>
+      <h2>Páginas</h2>
+      <table class="visitas-table">
+        <thead><tr><th>Ruta</th><th>Hoy</th><th>Total</th></tr></thead>
+        <tbody id="v-paginas"><tr><td class="visitas-empty" colspan="3">Cargando…</td></tr></tbody>
+      </table>
+      <h2 style="margin-top:40px">Hojear</h2>
+      <table class="visitas-table">
+        <thead><tr><th>Libro</th><th>Lecturas</th><th>Escuchas</th></tr></thead>
+        <tbody id="v-libros"><tr><td class="visitas-empty" colspan="3">Cargando…</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-bottom">
+        <span>© <span id="y"></span> ETEMEN</span>
+        <a href="/">Inicio</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/js/site.js?v=3"></script>
+  <script src="/js/visitas.js?v=2"></script>
+  <script>
+    (function () {
+      var fmt = function (n) { return new Intl.NumberFormat("es-CL").format(n || 0); };
+      fetch("https://api.etemen.cl/api/visita?resumen=1")
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || !d.ok) {
+            document.getElementById("v-paginas").innerHTML = '<tr><td class="visitas-empty" colspan="3">El contador aún no está en el borde. Revisa el Worker.</td></tr>';
+            document.getElementById("v-libros").innerHTML = "";
+            return;
+          }
+          document.getElementById("v-total").textContent = fmt(d.total);
+          document.getElementById("v-hoy").textContent = fmt(d.hoy);
+          document.getElementById("v-unicos").textContent = fmt(d.unicos_hoy);
+          var pages = d.paginas || [];
+          document.getElementById("v-paginas").innerHTML = pages.length
+            ? pages.map(function (p) {
+                return "<tr><td>" + p.path + "</td><td>" + fmt(p.hoy) + "</td><td>" + fmt(p.hits) + "</td></tr>";
+              }).join("")
+            : '<tr><td class="visitas-empty" colspan="3">Todavía no hay páginas.</td></tr>';
+          var books = d.libros || [];
+          document.getElementById("v-libros").innerHTML = books.length
+            ? books.map(function (b) {
+                return "<tr><td>" + b.id + "</td><td>" + fmt(b.leer) + "</td><td>" + fmt(b.escuchar) + "</td></tr>";
+              }).join("")
+            : '<tr><td class="visitas-empty" colspan="3">Todavía no hay lecturas.</td></tr>';
+        })
+        .catch(function () {
+          document.getElementById("v-paginas").innerHTML = '<tr><td class="visitas-empty" colspan="3">No se pudo leer el contador.</td></tr>';
+        });
+    })();
+  </script>
+</body>
+</html>

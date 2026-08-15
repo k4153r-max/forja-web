@@ -88,7 +88,7 @@ function bindNav() {
   });
 }
 function footer() {
-  return `<footer class="footer"><div class="wrap foot"><span>Hojear · ETEMEN</span><span><a href="${link('catalogo')}">Libros</a> · <a href="${link('guias')}">Guías</a> · <a href="/contacto/?producto=Hojear+Plus">Plus</a></span></div></footer>`;
+  return `<footer class="footer"><div class="wrap foot"><span>Hojear · ETEMEN</span><span data-visitas hidden></span><span><a href="${link('catalogo')}">Libros</a> · <a href="${link('guias')}">Guías</a> · <a href="/contacto/?producto=Hojear+Plus">Plus</a></span></div></footer>`;
 }
 function bookCard(b) {
   const dest = b.hasText ? link('leer', '&libro=' + b.id) : link('libro', '&libro=' + b.id);
@@ -158,6 +158,7 @@ function bookPage(b) {
       <div>
         <h1 style="font-size:clamp(2.4rem,5vw,4rem);margin-bottom:12px">${b.title}</h1>
         <p class="meta">${b.author}${b.year ? ' · ' + b.year : ''}<br>${b.desc || ''}</p>
+        <p class="libro-hits" id="libro-hits" hidden></p>
         <div class="actions">
           ${readBtn}
           ${hasAudio(b) ? `<a class="button alt" href="${link('escuchar', '&libro=' + b.id)}">Escuchar</a>` : ''}
@@ -915,6 +916,7 @@ function listenPage(b) {
     <span class="eyebrow">Escuchar</span>
     <h1 class="listen-h1">${b.title}</h1>
     <p class="lead">${b.author}${b.year ? ' · ' + b.year : ''}</p>
+    <p class="libro-hits" id="libro-hits" hidden></p>
     <div class="au-box">
       <audio id="au-el" preload="metadata"></audio>
       <button type="button" class="au-play" id="au-play">Escuchar</button>
@@ -996,8 +998,20 @@ function bindListen(b) {
   }
 
   playBtn.addEventListener('click', () => {
-    if (audio.paused) audio.play().catch(() => {});
-    else audio.pause();
+    if (audio.paused) {
+      audio.play().catch(() => {});
+      const V = window.etemenVisitas;
+      if (V && V.ping) {
+        try {
+          if (!sessionStorage.getItem('hojear-escucho:' + b.id)) {
+            sessionStorage.setItem('hojear-escucho:' + b.id, '1');
+            V.ping({ kind: 'escuchar', libro: b.id, path: '/biblioteca', force: true }).then(d => {
+              if (d) V.paintLibro(document.getElementById('libro-hits'), b.id);
+            });
+          }
+        } catch (_) {}
+      }
+    } else audio.pause();
   });
   document.getElementById('au-prev')?.addEventListener('click', () => {
     if (audio.currentTime > 3) { audio.currentTime = 0; save(); }
@@ -1071,6 +1085,15 @@ function render() {
   if (view === 'leer') leerLoader(b);
   if (view === 'catalogo') bindCatalogue();
   if (view === 'escuchar') bindListen(b);
+  const V = window.etemenVisitas;
+  if (V) {
+    if (view === 'leer' && b) V.ping({ kind: 'leer', libro: b.id, path: '/biblioteca' });
+    else if (view === 'libro' && b) V.ping({ kind: 'page', libro: b.id, path: '/biblioteca' });
+    V.paintTotal();
+    if (b && (view === 'libro' || view === 'escuchar' || view === 'leer')) {
+      V.paintLibro(document.getElementById('libro-hits'), b.id);
+    }
+  }
   const form = document.querySelector('#join-form');
   if (form) form.addEventListener('submit', e => {
     e.preventDefault();

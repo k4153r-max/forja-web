@@ -1,17 +1,20 @@
 name = "etemen-contacto"
 main = "src/index.js"
 compatibility_date = "2026-08-01"
+workers_dev = false
 
-# Route, NUNCA Custom Domain sobre etemen.cl
+# Route en /api/* del sitio. Custom Domain solo en api.etemen.cl
+# (nunca Custom Domain sobre el apex: reemplaza el sitio).
 routes = [
-  { pattern = "etemen.cl/api/contacto*", zone_name = "etemen.cl" },
-  { pattern = "www.etemen.cl/api/contacto*", zone_name = "etemen.cl" }
+  { pattern = "etemen.cl/api/*", zone_name = "etemen.cl" },
+  { pattern = "www.etemen.cl/api/*", zone_name = "etemen.cl" },
+  { pattern = "api.etemen.cl", zone_name = "etemen.cl", custom_domain = true }
 ]
 
 [[d1_databases]]
 binding = "DB"
 database_name = "etemen-contactos"
-database_id = "REPLACE_AFTER_D1_CREATE"
+database_id = "cc25e404-9933-43b5-92ff-c93abcbe19e4"
 
 [vars]
 NOTIFY_TO = "hola@etemen.cl"

@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /demos/
+Disallow: /visitas/
 
 Sitemap: https://etemen.cl/sitemap.xml
