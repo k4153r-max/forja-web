@@ -1,4 +1,4 @@
-/* Hojear catalog — generado. Textos en /textos/{id}.txt */
+/* Hojear catalog — generado. Textos en /biblioteca/libros/{id}.txt */
 const books = [
  { id:'cuentos-chilenos-nunca', title:'Cuentos chilenos de nunca acabar', author:'Ramón A. Laval', type:'Cuentos', genre:'Cuentos', place:'Chile', color:'yellow', year:'s. XX', hasText:true, license:'Dominio público', source:'Project Gutenberg', desc:'Tradición oral chilena en relatos breves.', lang:'es' },
  { id:'cuentos-chilenos-populares', title:'Cuentos populares en Chile', author:'Ramón A. Laval', type:'Cuentos', genre:'Cuentos', place:'Chile', color:'yellow', year:'s. XX', hasText:true, license:'Dominio público', source:'Project Gutenberg', desc:'Recopilación de cuentos populares chilenos.', lang:'es' },

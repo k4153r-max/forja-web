@@ -16,7 +16,7 @@ imp = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(imp)
 
 ROOT = Path(__file__).resolve().parents[1]
-TEXTOS = ROOT / "textos"
+TEXTOS = ROOT / "libros"
 CATALOG = ROOT / "catalog.js"
 PG_CSV = Path(os.environ.get("TEMP", "/tmp")) / "pg_catalog.csv"
 

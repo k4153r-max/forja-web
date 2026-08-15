@@ -10,7 +10,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TEXTOS = ROOT / "textos"
+TEXTOS = ROOT / "libros"
 CATALOG = ROOT / "catalog.js"
 CACHE = Path.home() / "AppData" / "Local" / "Temp" / "pg_catalog.csv"
 UA = "HojearImport/1.1 (+https://etemen.cl; hola@etemen.cl; educational library)"

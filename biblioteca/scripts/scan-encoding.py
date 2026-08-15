@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TEXTOS = ROOT / "textos"
+TEXTOS = ROOT / "libros"
 CATALOG = ROOT / "catalog.js"
 
 

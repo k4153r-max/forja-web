@@ -7,7 +7,7 @@
   - Filtra Language=es, Type=Text.
   - Opcionalmente filtra por género (palabras en Title/Subjects/Bookshelves).
   - Descarga TXT, limpia preámbulo legal y valida que sea español.
-  - Guarda en biblioteca/textos/{slug}.txt
+  - Guarda en biblioteca/libros/{slug}.txt
   - Emite un fragmento JSON/JS de metadatos para pegar en app.js.
 
 .EXAMPLE
@@ -21,7 +21,7 @@ param(
   [string]$Genre = 'Todos',
   [int]$Limit = 15,
   [int[]]$Ids = @(),
-  [string]$OutDir = (Join-Path $PSScriptRoot '..\textos'),
+  [string]$OutDir = (Join-Path $PSScriptRoot '..\libros'),
   [string]$CatalogCache = (Join-Path $env:TEMP 'pg_catalog.csv'),
   [switch]$Force,
   [switch]$DryRun

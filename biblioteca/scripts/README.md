@@ -2,7 +2,7 @@
 
 ## `import-gutenberg.ps1`
 
-Importa ebooks en **español** de [Project Gutenberg](https://www.gutenberg.org/browse/languages/es) a `biblioteca/textos/`.
+Importa ebooks en **español** de [Project Gutenberg](https://www.gutenberg.org/browse/languages/es) a `biblioteca/libros/`.
 
 ```powershell
 cd biblioteca/scripts
