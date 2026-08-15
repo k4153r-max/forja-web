@@ -65,10 +65,11 @@ nav .wrap.nav-in,.nav-in{display:flex;width:100%;max-width:1160px;margin:0 auto;
 .book:after{display:none}
 .book:hover{transform:translateY(-3px);border-color:rgba(224,106,61,.5)}
 .book>*{position:relative;z-index:1}
-.book small{font-size:.62rem;letter-spacing:.14em;font-weight:600;text-transform:uppercase;opacity:.8;font-family:'IBM Plex Mono',ui-monospace,monospace}
+.book-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.book small{font-size:.62rem;letter-spacing:.14em;font-weight:600;text-transform:uppercase;opacity:.8;font-family:'IBM Plex Mono',ui-monospace,monospace;line-height:1.45;flex:1;min-width:0}
 .book-title{font:500 1.85rem/.98 var(--serif);letter-spacing:-.04em;max-width:11ch}
 .book-footer{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;font-weight:500;color:var(--ink2)}
-.book-badge{position:absolute;right:14px;top:14px;z-index:2;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border:1px solid rgba(244,239,230,.2);color:var(--gold)}
+.book-badge{flex-shrink:0;font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border:1px solid rgba(240,160,106,.45);color:var(--gold)}
 .circle{border:1px solid currentColor;width:26px;height:26px;border-radius:0;display:grid;place-items:center;font-weight:600}
 .blue,.red,.yellow,.purple,.brown,.pink,.navy,.green,.copper{background:transparent;color:var(--ink)}
 /* guide band */
@@ -584,7 +585,7 @@ body.reading-mode .reader-crumb{display:none}
 </style>
 </head>
 <body><div id="app"></div>
-<script src="catalog.js?v=20260815-6"></script>
-<script src="app.js?v=20260815-6"></script>
+<script src="catalog.js?v=20260815-7"></script>
+<script src="app.js?v=20260815-7"></script>
 </body>
 </html>

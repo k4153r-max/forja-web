@@ -79,9 +79,11 @@ function footer() {
   return `<footer class="footer"><div class="wrap foot"><span>Hojear · cámara de lectura · ETEMEN</span><span>${readableCount()} textos · ${chileCount()} Chile · ${oerCount()} OER</span></div></footer>`;
 }
 function bookCard(b) {
-  const badge = b.hasText ? (b.license && String(b.license).indexOf('CC') === 0 ? 'OER' : 'Leer') : 'Ficha';
-  const lic = b.license ? ` · ${b.license}` : '';
-  return `<a class="book ${b.color}" href="${link('libro', '&libro=' + b.id)}"><small>${b.genre || b.type} · ${LANG_LABEL[bookLang(b)] || bookLang(b)} · ${b.place}${b.hasText ? ' · ✓' : ''}${lic}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><i class="circle">${b.hasText ? '▶' : '↗'}</i></div><span class="book-badge">${badge}</span></a>`;
+  const isOer = b.license && String(b.license).indexOf('CC') === 0;
+  const badge = !b.hasText ? 'Ficha' : isOer ? 'OER' : '';
+  const meta = [b.genre || b.type, LANG_LABEL[bookLang(b)] || bookLang(b), b.place].filter(Boolean).join(' · ');
+  const chip = badge ? `<span class="book-badge">${badge}</span>` : '';
+  return `<a class="book ${b.color}" href="${link('libro', '&libro=' + b.id)}"><div class="book-top"><small>${meta}</small>${chip}</div><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><i class="circle">${b.hasText ? '▶' : '↗'}</i></div></a>`;
 }
 
 function home() {
