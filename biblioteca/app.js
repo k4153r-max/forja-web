@@ -62,7 +62,18 @@ const buyBtn = b =>
   `<a class="button alt buy-bc" href="${buyUrl(b)}" target="_blank" rel="noopener sponsored">Comprar en Buscalibre ↗</a>`;
 
 function nav() {
-  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark.svg" width="30" height="30" alt="">Hojear</a><div class="nav-links"><a href="${link('catalogo')}">Catálogo</a><a href="${link('guias')}">Guías</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Fuentes</a><a class="pill" href="/contacto/?producto=Hojear+Plus">Plus</a></div></div></nav>`;
+  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark.svg" width="30" height="30" alt="">Hojear</a><button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">Menú</button><div class="nav-links"><a href="${link('catalogo')}">Catálogo</a><a href="${link('guias')}">Guías</a><a href="${link('rutas')}">Rutas</a><a href="${link('recursos')}">Fuentes</a><a class="pill" href="/contacto/?producto=Hojear+Plus">Plus</a></div></div></nav>`;
+}
+function bindNav() {
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  if (!toggle || !links) return;
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
 }
 function footer() {
   return `<footer class="footer"><div class="wrap foot"><span>Hojear · cámara de lectura · ETEMEN</span><span>${readableCount()} textos · ${chileCount()} Chile · ${oerCount()} OER</span></div></footer>`;
@@ -932,6 +943,7 @@ function render() {
     home();
   document.querySelector('#app').innerHTML = nav() + page + footer();
   document.title = view === 'inicio' ? 'Hojear — Lector y biblioteca' : 'Hojear — ' + (b?.title || 'Biblioteca');
+  bindNav();
   if (view === 'leer') leerLoader(b);
   if (view === 'catalogo') bindCatalogue();
   const form = document.querySelector('#join-form');

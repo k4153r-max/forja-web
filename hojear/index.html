@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/hojear-v1.css">
+  <link rel="stylesheet" href="/css/hojear-v2.css">
   <link rel="icon" href="/assets/logos/hojear-mark.svg" type="image/svg+xml">
 </head>
 <body>
@@ -26,6 +26,7 @@
   <header class="hnav">
     <div class="wrap">
       <a class="brand" href="/hojear/"><img src="/assets/logos/hojear-mark.svg" alt="" width="28" height="28">Hojear</a>
+      <button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">Menú</button>
       <nav class="hnav-links" aria-label="Hojear">
         <a href="/biblioteca/?vista=catalogo">Catálogo</a>
         <a href="/biblioteca/?vista=guias">Guías</a>
@@ -131,6 +132,16 @@
   </footer>
   <script>
     (function () {
+      var toggle = document.querySelector(".nav-toggle");
+      var links = document.querySelector(".hnav-links");
+      if (toggle && links) {
+        toggle.addEventListener("click", function () {
+          var open = links.classList.toggle("open");
+          toggle.classList.toggle("open", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+        });
+      }
       var light = document.getElementById("chamber-light");
       if (!light || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       var x = 50, y = 38, tx = 50, ty = 38;
