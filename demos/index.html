@@ -8,8 +8,8 @@
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0a0b0f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main-v7.css">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main-v8.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -26,7 +26,8 @@
         <a href="/">Inicio</a>
         <a href="/nexo/">Nexo</a>
         <a href="/hojear/">Hojear</a>
-        <a href="/contacto/?producto=Nexo" class="nav-cta">Contacto</a>
+        <a href="/portafolio/">Casos</a>
+        <a href="/contacto/?producto=Nexo+Trial" class="nav-cta">Contacto</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
@@ -50,27 +51,11 @@
           <p class="eyebrow nexo">Nexo · Servicios</p>
           <h2>Agenda y reservas</h2>
         </div>
-        <div class="vert-row">
-          <a class="vert-card" href="/demos/luna/">
-            <div class="bar" style="background:#c2617a"></div>
-            <h3>Luna Nails</h3>
-            <p>Salón de uñas · soft gel y nail art</p>
-          </a>
-          <a class="vert-card" href="/demos/atelier/">
-            <div class="bar" style="background:#c9a227"></div>
-            <h3>Atelier Norte</h3>
-            <p>Barbería · cortes y barba</p>
-          </a>
-          <a class="vert-card" href="/demos/aura/">
-            <div class="bar" style="background:#5b8a72"></div>
-            <h3>Aura Studio</h3>
-            <p>Spa · faciales y masajes</p>
-          </a>
-          <a class="vert-card" href="/demos/taller/">
-            <div class="bar" style="background:#f97316"></div>
-            <h3>Taller Ruta Norte</h3>
-            <p>Taller mecánico · OTs por patente</p>
-          </a>
+        <div class="demo-grid">
+          <a class="demo-card" href="/demos/luna/"><h3>Luna Nails</h3><p>Salón de uñas · soft gel y nail art</p></a>
+          <a class="demo-card" href="/demos/atelier/"><h3>Atelier Norte</h3><p>Barbería · cortes y barba</p></a>
+          <a class="demo-card" href="/demos/aura/"><h3>Aura Studio</h3><p>Spa · faciales y masajes</p></a>
+          <a class="demo-card" href="/demos/taller/"><h3>Taller Ruta Norte</h3><p>Taller mecánico · OTs por patente</p></a>
         </div>
 
         <div class="section-head" style="margin-top:40px">
@@ -78,33 +63,14 @@
           <h2>Almacén · ferretería · botillería</h2>
           <p class="lead">Demostraciones en video interactivo. El trial privado se solicita por contacto.</p>
         </div>
-        <div class="vert-row">
-          <a class="vert-card" href="/demos/almacen/">
-            <div class="bar" style="background:#e08a4a"></div>
-            <h3>Almacén El Barrio</h3>
-            <p>Abarrotes, panadería y fiado</p>
-          </a>
-          <a class="vert-card" href="/demos/ferreteria/">
-            <div class="bar" style="background:#e36c12"></div>
-            <h3>Herramientas del Sur</h3>
-            <p>Ferretería · skin industrial y SKU</p>
-          </a>
-          <a class="vert-card" href="/demos/botilleria/">
-            <div class="bar" style="background:#3b82f6"></div>
-            <h3>La Esquina Fría</h3>
-            <p>Botillería · cervezas y destilados en frío</p>
-          </a>
+        <div class="demo-grid">
+          <a class="demo-card" href="/demos/almacen/"><h3>Almacén El Barrio</h3><p>Abarrotes, panadería y fiado</p></a>
+          <a class="demo-card" href="/demos/ferreteria/"><h3>Herramientas del Sur</h3><p>Ferretería · skin industrial y SKU</p></a>
+          <a class="demo-card" href="/demos/botilleria/"><h3>La Esquina Fría</h3><p>Botillería · cervezas y destilados en frío</p></a>
         </div>
-
-        <div class="cta-box compact" style="margin-top:32px">
-          <div>
-            <h2>¿Listo para tu propio trial?</h2>
-            <p>3 días gratis · sin tarjeta. Te configuramos la categoría de tu local.</p>
-          </div>
-          <div class="btn-row">
-            <a class="btn btn-nexo" href="/contacto/?producto=Nexo+Trial">Pedir trial</a>
-            <a class="btn btn-ghost" href="/nexo/#categorias">Mapa de categorías</a>
-          </div>
+        <div class="btn-row" style="margin-top:32px">
+          <a class="btn btn-primary" href="/contacto/?producto=Nexo+Trial">Pedir trial</a>
+          <a class="btn btn-ghost" href="/nexo/#flujo">Elegir rubro</a>
         </div>
       </div>
     </section>
@@ -122,7 +88,6 @@
       </div>
     </div>
   </footer>
-  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
-  <script src="/js/main.js"></script>
+  <script src="/js/site.js"></script>
 </body>
 </html>

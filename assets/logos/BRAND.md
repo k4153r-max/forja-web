@@ -38,28 +38,30 @@
 - Landing: `etemen.cl/hojear/` · App: `etemen.cl/biblioteca/`
 - `/umbral/` redirige a `/hojear/` (legacy).
 
-## Paleta ETEMEN
+## Paleta ETEMEN (DS Cimientos, 2026-08-14)
 
 | Token | Hex | Uso |
 |-------|-----|-----|
-| Obsidian | `#070B14` | Fondo profundo |
-| Navy | `#1B2A4A` | Marca, textos dark |
-| Navy mid | `#121C30` | Superficies |
-| Copper | `#C4894A` | Acento principal |
-| Copper light | `#D9A870` | Highlights, taglines |
-| Cream | `#F3EEE6` | Secciones claras |
+| Carbono | `#0B0B0C` | Fondo |
+| Carbono 2 | `#141416` | Superficie |
+| Tinta / papel | `#F4F1EA` | Texto y secciones claras |
+| Copper | `#C4894A` | Acento ETEMEN |
+| Copper light | `#D9A870` | Highlights |
+| Clay | `#B56A45` | Acento mineral |
 | Nexo teal | `#00C9A7` | Solo producto Nexo |
 | Hojear terracotta | `#D95D39` | Solo producto Hojear |
 | indago violet | `#8B7CF7` | Solo producto indago |
 
 ## Tipografía
 
-- **Display:** Syne (títulos)
-- **UI / cuerpo:** Plus Jakarta Sans
+- **Display:** Archivo (condensado en H1)
+- **Cuerpo:** Source Sans 3
+- **Estado / métricas:** IBM Plex Mono
+- CSS vivo: `css/main-v8.css`
 
 ## Reglas
 
-1. **ETEMEN** = holding / estudio (marca madre).
+1. **ETEMEN** = holding / empresa que opera productos (no agencia, no estudio).
 2. **Nexo**, **Hojear**, **indago** = productos con marca propia.
 3. No usar el logo full de ETEMEN como logo de Nexo o Hojear.
 4. En marketing público: no nombrar competidores.

@@ -1,0 +1,17 @@
+name = "etemen-contacto"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+# Route, NUNCA Custom Domain sobre etemen.cl
+routes = [
+  { pattern = "etemen.cl/api/contacto*", zone_name = "etemen.cl" },
+  { pattern = "www.etemen.cl/api/contacto*", zone_name = "etemen.cl" }
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "etemen-contactos"
+database_id = "REPLACE_AFTER_D1_CREATE"
+
+[vars]
+NOTIFY_TO = "hola@etemen.cl"

@@ -4,165 +4,114 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contacto — ETEMEN</title>
-  <meta name="description" content="Contacta a ETEMEN por Nexo, Hojear o indago. Trial de 3 días, respuesta en menos de 24 horas. Chile.">
-  <meta name="theme-color" content="#0a0b0f">
+  <meta name="description" content="Escribe a ETEMEN por Nexo, Hojear o indago. Trial de 3 días. Respuesta en menos de 24 horas.">
   <link rel="canonical" href="https://etemen.cl/contacto/">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://etemen.cl/contacto/">
-  <meta property="og:site_name" content="ETEMEN">
-  <meta property="og:locale" content="es_CL">
   <meta property="og:title" content="Contacto — ETEMEN">
-  <meta property="og:description" content="Solicita trial de Nexo, consulta Hojear o escribe a ETEMEN. Respuesta en menos de 24 horas hábiles.">
+  <meta property="og:description" content="Trial de Nexo, Hojear Plus o consulta general. Respuesta en menos de 24 horas.">
+  <meta property="og:url" content="https://etemen.cl/contacto/">
   <meta property="og:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Contacto — ETEMEN">
-  <meta name="twitter:description" content="Solicita trial de Nexo, consulta Hojear o escribe a ETEMEN. Chile.">
-  <meta name="twitter:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "name": "Contacto ETEMEN",
-    "url": "https://etemen.cl/contacto/",
-    "description": "Página de contacto oficial de ETEMEN para consultas sobre Nexo, Hojear e indago en Chile.",
-    "mainEntity": {
-      "@type": "Organization",
-      "name": "ETEMEN",
-      "email": "hola@etemen.cl",
-      "url": "https://etemen.cl/"
-    }
-  }
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main-v7.css">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main-v8.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="/" class="logo" aria-label="ETEMEN">
-        <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="32" height="32">
-        <div class="logo-wordmark">
-          <span class="name">ETEMEN</span>
-          <span class="tagline">Fundamento</span>
-        </div>
-      </a>
+      <a href="/" class="logo" aria-label="ETEMEN"><img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="28" height="28"><div class="logo-wordmark"><span class="name">ETEMEN</span><span class="tagline">Fundamento</span></div></a>
       <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="/nexo/">Nexo</a>
         <a href="/hojear/">Hojear</a>
+        <a href="/portafolio/">Casos</a>
         <a href="/contacto/" class="active nav-cta">Contacto</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
-
-  <main>
+  <main id="contenido">
     <section class="page-hero">
       <div class="wrap">
         <p class="eyebrow">Contacto</p>
-        <h1>Cuéntanos tu caso.</h1>
-        <p class="lead">
-          Trial de Nexo, consulta de Hojear o una pregunta general.
-          Respuesta en menos de 24 horas hábiles — sin intermediarios.
-        </p>
+        <h1>Cuéntanos el caso.</h1>
+        <p class="lead">Trial de Nexo, Hojear Plus o una consulta. Respuesta en menos de 24 horas hábiles.</p>
       </div>
     </section>
-
     <section class="section" style="padding-top:8px">
       <div class="wrap contact-grid">
         <div class="contact-card">
-          <form data-contact-form data-mailto="hola@etemen.cl">
+          <form data-contact-form>
             <label for="nombre">Nombre</label>
-            <input id="nombre" name="nombre" type="text" required autocomplete="name" placeholder="Tu nombre">
+            <input id="nombre" name="nombre" type="text" required maxlength="120" autocomplete="name">
 
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required autocomplete="email" placeholder="tu@email.com">
+            <label for="correo">Correo</label>
+            <input id="correo" name="correo" type="email" required maxlength="254" autocomplete="email">
 
-            <label for="producto">Tema</label>
-            <select id="producto" name="producto">
-              <option value="General" selected>Consulta general</option>
-              <option value="Nexo Trial">Nexo — pedir trial (3 días)</option>
+            <label for="empresa">Empresa o local</label>
+            <input id="empresa" name="empresa" type="text" maxlength="160" autocomplete="organization">
+
+            <label for="rubro">Rubro</label>
+            <select id="rubro" name="rubro">
+              <option value="">Selecciona</option>
+              <option>Salón</option>
+              <option>Barbería</option>
+              <option>Spa</option>
+              <option>Taller</option>
+              <option>Ferretería</option>
+              <option>Minimarket</option>
+              <option>Botillería</option>
+              <option>Otro</option>
+              <option>No aplica</option>
+            </select>
+
+            <label for="producto">Producto</label>
+            <select id="producto" name="producto" required>
+              <option value="General">Consulta general</option>
+              <option value="Nexo Trial">Nexo — trial 3 días</option>
               <option value="Nexo">Nexo — general</option>
-              <option value="Nexo Servicios">Nexo · Servicios (salón / barbería / spa)</option>
-              <option value="Nexo Taller">Nexo · Taller mecánico</option>
-              <option value="Nexo Comercio">Nexo · Comercio (almacén / ferretería / boti)</option>
+              <option value="Nexo Servicios">Nexo · Servicios</option>
+              <option value="Nexo Taller">Nexo · Taller</option>
+              <option value="Nexo Comercio">Nexo · Comercio</option>
               <option value="Nexo Ferreteria">Nexo · Ferretería</option>
-              <option value="Nexo Almacen">Nexo · Almacén</option>
+              <option value="Nexo Almacen">Nexo · Minimarket</option>
               <option value="Nexo Botilleria">Nexo · Botillería</option>
-              <option value="Hojear">Hojear (Biblioteca Digital / Plus)</option>
+              <option value="Hojear">Hojear</option>
+              <option value="Hojear Plus">Hojear Plus</option>
               <option value="indago">indago</option>
             </select>
 
             <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" name="mensaje" required placeholder="Rubro, tamaño del local y qué necesitas (2–3 líneas)…"></textarea>
+            <textarea id="mensaje" name="mensaje" required maxlength="4000" placeholder="Rubro, tamaño del local y qué necesitas."></textarea>
 
-            <button class="btn btn-primary" type="submit" style="margin-top:18px">Preparar correo</button>
-            <p class="contact-hint">
-              Se abre tu cliente de correo con el mensaje listo para <strong>hola@etemen.cl</strong>.
-              Si no tienes correo configurado en este equipo, escribe directo al canal de la derecha.
-            </p>
+            <label class="hp-field" for="empresa_web">Sitio web</label>
+            <input class="hp-field" id="empresa_web" name="empresa_web" type="text" tabindex="-1" autocomplete="off">
+
+            <button class="btn btn-primary" type="submit" style="margin-top:18px">Enviar</button>
+            <p class="contact-hint">Si el envío no llega, escribe a <a href="mailto:hola@etemen.cl">hola@etemen.cl</a>.</p>
           </form>
         </div>
-
         <aside class="contact-aside">
-          <h3>Canales</h3>
-          <div class="contact-channels">
-            <a class="contact-channel" href="mailto:hola@etemen.cl">
-              <strong>hola@etemen.cl</strong>
-              <span>Canal principal · &lt; 24 h hábiles</span>
-            </a>
-            <a class="contact-channel" href="mailto:hola@etemen.cl?subject=%5BETEMEN%5D%20Trial%20Nexo%203%20d%C3%ADas">
-              <strong>Pedir trial Nexo</strong>
-              <span>3 días gratis · sin tarjeta</span>
-            </a>
-          </div>
-
-          <h3>Productos</h3>
-          <p><a href="/nexo/#categorias">Nexo</a> — todas las categorías</p>
-          <p><a href="/hojear/">Hojear</a> — biblioteca digital</p>
-          <p><a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a> — comparador de precios</p>
-
-          <h3>Probar demos</h3>
-          <p><a href="https://nexus-trial-demo.onrender.com/login" target="_blank" rel="noopener">Nexo · Servicios</a></p>
-          <p><a href="https://bodega-trial-ferreteria-demo.onrender.com/login" target="_blank" rel="noopener">Nexo · Ferretería</a></p>
-          <p><a href="/demos/">Hub de demos</a></p>
+          <h3>Canal directo</h3>
+          <p><a href="mailto:hola@etemen.cl">hola@etemen.cl</a><br>Menos de 24 horas hábiles.</p>
+          <h3>Nexo</h3>
+          <p><a href="/nexo/#flujo">Elegir rubro</a></p>
+          <h3>Estado</h3>
+          <p><a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener">Monitoreo público</a></p>
         </aside>
       </div>
     </section>
   </main>
-
   <footer class="footer">
     <div class="wrap">
-      <div class="footer-bottom footer-links-row">
+      <div class="footer-bottom">
         <span>© <span id="y"></span> ETEMEN</span>
-        <span>
-          <a href="/">Inicio</a>
-          · <a href="/nexo/">Nexo</a>
-          · <a href="/hojear/">Hojear</a>
-          · <a href="/portafolio/">Portafolio</a>
-        </span>
+        <a href="/">Inicio</a>
       </div>
     </div>
   </footer>
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-    (function(){
-      var p = new URLSearchParams(location.search).get("producto");
-      if (!p) return;
-      var sel = document.getElementById("producto");
-      if (!sel) return;
-      var want = p.replace(/\+/g, " ");
-      for (var i = 0; i < sel.options.length; i++) {
-        if (sel.options[i].value === want || sel.options[i].value.indexOf(want.split(" ")[0]) === 0) {
-          sel.selectedIndex = i; break;
-        }
-      }
-    })();
-  </script>
-  <script src="/js/main.js"></script>
+  <script src="/js/site.js"></script>
+  <script src="/js/contacto.js"></script>
 </body>
 </html>

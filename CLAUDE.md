@@ -25,14 +25,13 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 ```
 
 ## CSS
-- Archivo: `css/main-v7.css` (cache-bust: renombrar al cambiar estilos globales)
-- Tipografías: Syne (display) + Plus Jakarta Sans (UI) — Google Fonts
-- Paleta:
-  - Navy / obsidian: `#07090e` · `#0e1424`
-  - Copper: `#C4894A`
-  - Cream: `#F3EEE6`
-  - Nexo: `#00c9a7` · Hojear: `#d95d39` · Comercio: `#e08a4a`
+- Archivo vivo: `css/main-v8.css` (cache-bust: renombrar al cambiar estilos globales)
+- Tipografías: Archivo + Source Sans 3 + IBM Plex Mono
+- Paleta Cimientos: carbono `#0B0B0C` · tinta `#F4F1EA` · cobre `#C4894A`
+- Nexo `#00C9A7` · Hojear `#D95D39` · indago `#8B7CF7` — solo en superficies de producto
+- Radio 0–2 px. Sin glow ni blur.
 - **Trial unificado:** 3 días gratis en todo el sitio
+- Spec: `docs/REDISENO_ETEMEN.md`
 
 ## Logos
 - **ETEMEN mark**: `assets/logos/etemen-mark-v2.svg` — bloque cobre rx=8, E en espacio negativo

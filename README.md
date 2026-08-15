@@ -13,7 +13,8 @@ Sitio principal del holding **ETEMEN Studio** y del producto **Nexo**.
 - Holding: **ETEMEN** (del *Etemenanki*: «la casa del fundamento del cielo y la tierra»)
 - Lema: *Fundamento sólido. Productos extraordinarios.*
 - Nav tagline: **Fundamento** (no “Estudio”)
-- Design system: `css/main-v7.css` “Etemenanki / Fundamento”
+- Design system: `css/main-v8.css` “Cimientos”
+- Spec de rediseño: `docs/REDISENO_ETEMEN.md`
 - Logo: `assets/logos/etemen-mark*.svg` + lockups · ver `assets/logos/BRAND.md`
 - Trial Nexo: **3 días** (unificado en home, nexo, demos y contacto)
 
@@ -28,7 +29,7 @@ forja-web/
   demos/               → Hub + micrositios por rubro
   contacto/            → Contacto
   portafolio/          → Portafolio
-  css/main-v7.css · demos.css
+  css/main-v8.css · demos.css
   js/main.js
   assets/
 ```
