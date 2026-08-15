@@ -27,21 +27,108 @@ function encodeSubject(s) {
   return `=?UTF-8?B?${btoa(bin)}?=`;
 }
 
-function contactRaw({ from, to, replyTo, subject, text }) {
+function contactRaw({ from, to, replyTo, subject, text, html }) {
   const lines = [
     `From: ${from}`,
     `To: ${to}`,
   ];
   if (replyTo) lines.push(`Reply-To: ${replyTo}`);
-  lines.push(
-    `Subject: ${encodeSubject(subject)}`,
-    "MIME-Version: 1.0",
-    "Content-Type: text/plain; charset=utf-8",
-    "Content-Transfer-Encoding: 8bit",
-    "",
-    text
-  );
+  if (html) {
+    const boundary = "etemen" + crypto.randomUUID().replace(/-/g, "");
+    lines.push(
+      `Subject: ${encodeSubject(subject)}`,
+      "MIME-Version: 1.0",
+      `Content-Type: multipart/alternative; boundary="${boundary}"`,
+      "",
+      `--${boundary}`,
+      "Content-Type: text/plain; charset=utf-8",
+      "Content-Transfer-Encoding: 8bit",
+      "",
+      text,
+      `--${boundary}`,
+      "Content-Type: text/html; charset=utf-8",
+      "Content-Transfer-Encoding: 8bit",
+      "",
+      html,
+      `--${boundary}--`,
+      ""
+    );
+  } else {
+    lines.push(
+      `Subject: ${encodeSubject(subject)}`,
+      "MIME-Version: 1.0",
+      "Content-Type: text/plain; charset=utf-8",
+      "Content-Transfer-Encoding: 8bit",
+      "",
+      text
+    );
+  }
   return lines.join("\r\n");
+}
+
+function escapeHtml(s) {
+  return String(s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function ackCopy(nombre) {
+  const first = String(nombre || "").trim().split(/\s+/)[0] || "";
+  const hello = first ? `Hola ${first},` : "Hola,";
+  const text = [
+    hello,
+    "",
+    "Recibimos tu mensaje. Lo leemos y te escribimos en menos de 24 horas hábiles.",
+    "",
+    "No hace falta que respondas este correo. Si quieres agregar algo, responde acá o escribe a hola@etemen.cl.",
+    "",
+    "—",
+    "ETEMEN",
+    "Software con fundamento",
+    "https://etemen.cl",
+  ].join("\n");
+  const html = `<!doctype html>
+<html lang="es"><body style="margin:0;padding:0;background:#F4F1EA;color:#1A1814;">
+  <div style="max-width:520px;margin:0 auto;padding:32px 24px;font-family:Georgia,'Times New Roman',serif;line-height:1.55;font-size:16px;">
+    <div style="width:40px;height:3px;background:#C4894A;margin-bottom:28px;"></div>
+    <p style="margin:0 0 16px;">${escapeHtml(hello)}</p>
+    <p style="margin:0 0 16px;">Recibimos tu mensaje. Lo leemos y te escribimos en menos de 24 horas hábiles.</p>
+    <p style="margin:0 0 28px;color:#5C574F;font-size:15px;">No hace falta que respondas este correo. Si quieres agregar algo, responde acá o escribe a hola@etemen.cl.</p>
+    <p style="margin:0;font-size:13px;color:#5C574F;letter-spacing:0.04em;">ETEMEN<br>Software con fundamento<br><a href="https://etemen.cl" style="color:#C4894A;text-decoration:none;">etemen.cl</a></p>
+  </div>
+</body></html>`;
+  return { text, html };
+}
+
+async function sendMime(binding, { fromAddr, fromName, to, replyTo, subject, text, html }) {
+  if (!binding) return 0;
+  if (typeof binding.send === "function") {
+    try {
+      await binding.send({
+        to,
+        from: { email: fromAddr, name: fromName || "ETEMEN" },
+        replyTo: replyTo || fromAddr,
+        subject,
+        text,
+        html,
+      });
+      return 1;
+    } catch (_) {
+      /* binding clásico: solo EmailMessage */
+    }
+  }
+  const raw = contactRaw({
+    from: `${fromName || "ETEMEN"} <${fromAddr}>`,
+    to,
+    replyTo: replyTo || fromAddr,
+    subject,
+    text,
+    html,
+  });
+  await binding.send(new EmailMessage(fromAddr, to, raw));
+  return 1;
 }
 
 async function notifyContact(env, { nombre, correo, empresa, rubro, producto, mensaje }) {
@@ -62,14 +149,14 @@ async function notifyContact(env, { nombre, correo, empresa, rubro, producto, me
   ].join("\n");
 
   if (env.EMAIL) {
-    const raw = contactRaw({
-      from: `ETEMEN <${fromAddr}>`,
+    await sendMime(env.EMAIL, {
+      fromAddr,
+      fromName: "ETEMEN",
       to: inbox,
       replyTo: correo,
       subject,
       text,
     });
-    await env.EMAIL.send(new EmailMessage(fromAddr, inbox, raw));
     return 1;
   }
 
@@ -93,6 +180,23 @@ async function notifyContact(env, { nombre, correo, empresa, rubro, producto, me
   }
 
   return 0;
+}
+
+async function ackContact(env, { nombre, correo }) {
+  if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) return 0;
+  const fromAddr = "hola@etemen.cl";
+  const { text, html } = ackCopy(nombre);
+  const subject = "Recibimos tu mensaje — ETEMEN";
+  const binding = env.EMAIL_ACK || env.EMAIL;
+  return sendMime(binding, {
+    fromAddr,
+    fromName: "ETEMEN",
+    to: correo,
+    replyTo: fromAddr,
+    subject,
+    text,
+    html,
+  });
 }
 
 function pathRedirect(url) {
@@ -472,10 +576,17 @@ export default {
       console.log("notify_failed", String(err && err.message ? err.message : err));
       notifyOk = 0;
     }
+    let ackOk = 0;
+    try {
+      ackOk = await ackContact(env, { nombre, correo });
+    } catch (err) {
+      console.log("ack_failed", String(err && err.message ? err.message : err));
+      ackOk = 0;
+    }
     await env.DB.prepare(
-      "UPDATE contactos SET notify_ok = ? WHERE id = (SELECT MAX(id) FROM contactos WHERE correo = ?)"
-    ).bind(notifyOk, correo).run();
+      "UPDATE contactos SET notify_ok = ?, ack_ok = ? WHERE id = (SELECT MAX(id) FROM contactos WHERE correo = ?)"
+    ).bind(notifyOk, ackOk, correo).run();
 
-    return json({ ok: true, notify: notifyOk === 1 }, 201, origin);
+    return json({ ok: true, notify: notifyOk === 1, ack: ackOk === 1 }, 201, origin);
   },
 };

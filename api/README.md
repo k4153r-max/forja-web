@@ -48,5 +48,7 @@ Si el Worker no está desplegado, el HTML muestra el fallback a hola@etemen.cl.
 
 ## Aviso por correo
 
-Cada envío válido se guarda en D1 y se manda a Gmail con `send_email` (Email Routing).
+Cada envío válido se guarda en D1 y se manda a Gmail con `EMAIL` (Email Routing).
 `hola@etemen.cl` también reenvía a ese destino. Reply-To = correo del visitante.
+
+El acuse al visitante usa `EMAIL_ACK` (sin destino fijo). Hoy Email Sending está **deshabilitado** en la cuenta (`10203 sending_disabled`). Cuando se habilite en Dashboard → Email Service → Onboard `etemen.cl` (o se ponga `RESEND_API_KEY`), el visitante recibe “Recibimos tu mensaje”.

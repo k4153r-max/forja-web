@@ -27,7 +27,11 @@ database_id = "cc25e404-9933-43b5-92ff-c93abcbe19e4"
 [vars]
 NOTIFY_TO = "hola@etemen.cl"
 
-# Aviso de contactos a destino verificado de Email Routing (Gmail).
+# Aviso interno: solo Gmail verificado (Email Routing).
 [[send_email]]
 name = "EMAIL"
 destination_address = "godoyleytonantonio@gmail.com"
+
+# Acuse al visitante. Sin destination_address: intenta Email Sending.
+[[send_email]]
+name = "EMAIL_ACK"

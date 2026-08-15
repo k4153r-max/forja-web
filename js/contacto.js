@@ -1,5 +1,5 @@
 (() => {
-  const SUCCESS = "Mensaje recibido. Te responderemos en menos de 24 horas.";
+  const SUCCESS = "Lo leemos y te escribimos en menos de 24 horas hábiles.";
   const PRODUCTOS = [
     "General",
     "Nexo Trial",
@@ -69,9 +69,17 @@
         body: JSON.stringify(payload),
       });
       if (res.status === 201) {
+        let ack = false;
+        try {
+          const body = await res.json();
+          ack = !!(body && body.ack);
+        } catch (_) {}
         const done = document.createElement("div");
         done.className = "contact-success";
-        done.innerHTML = `<h2>Recibido.</h2><p>${SUCCESS}</p>`;
+        const extra = ack
+          ? `<p class="contact-hint">También te escribimos a ${payload.correo}.</p>`
+          : "";
+        done.innerHTML = `<h2>Recibido.</h2><p>${SUCCESS}</p>${extra}`;
         form.replaceWith(done);
         return;
       }

@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS contactos (
   user_agent TEXT,
   turnstile_ok INTEGER NOT NULL DEFAULT 0,
   status TEXT NOT NULL DEFAULT 'nuevo',
-  notify_ok INTEGER NOT NULL DEFAULT 0
+  notify_ok INTEGER NOT NULL DEFAULT 0,
+  ack_ok INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_contactos_created ON contactos(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_contactos_status ON contactos(status);
