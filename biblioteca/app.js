@@ -90,8 +90,8 @@ function bookCard(b) {
   const isOer = b.license && String(b.license).indexOf('CC') === 0;
   const badge = !b.hasText ? 'Ficha' : isOer ? 'OER' : '';
   const meta = [b.genre || b.type, LANG_LABEL[bookLang(b)] || bookLang(b), b.place].filter(Boolean).join(' · ');
-  const chip = badge ? `<span class="book-badge">${badge}</span>` : '';
-  return `<a class="book ${b.color}" href="${link('libro', '&libro=' + b.id)}"><div class="book-top"><small>${meta}</small>${chip}</div><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><i class="circle">${b.hasText ? '▶' : '↗'}</i></div></a>`;
+  const mark = badge ? ` · ${badge}` : '';
+  return `<a class="book ${b.color || 'brown'}" href="${link('libro', '&libro=' + b.id)}"><small>${meta}${mark}</small><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span><span>${b.year || ''}</span></div></a>`;
 }
 
 function home() {
@@ -115,7 +115,7 @@ function home() {
 <section class="section"><div class="wrap">
   <div class="head"><div><span class="eyebrow">Lectura inmediata</span><h2>Empieza por cualquiera de estas obras.</h2></div>
   <a class="text-link" href="${link('catalogo')}">Ver catálogo completo →</a></div>
-  <div class="books">${featured.map(bookCard).join('')}</div>
+  <div class="stack"><div class="books">${featured.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></div>
 </div></section>
 <section class="guide-band"><div class="wrap guide-grid">
   <div><span class="eyebrow" style="color:#f0a06a">Cómo leer aquí</span>
@@ -131,39 +131,35 @@ function home() {
 </main>`;
 }
 
-function salaBtn(mode, filter, title, n, extraClass = '') {
-  return `<button type="button" class="sala ${extraClass}" data-mode="${mode}" data-filter="${filter}" aria-pressed="false"><strong>${title}</strong><em>${n}</em></button>`;
+function cajon(mode, filter, title, n, extraClass = '') {
+  return `<button type="button" class="cajon ${extraClass}" data-mode="${mode}" data-filter="${filter}" aria-pressed="false"><strong>${title}</strong><em>${n}</em></button>`;
+}
+function cajonera(id, heading, inner) {
+  return `<div class="armario"><p class="armario-h">${heading}</p><div class="cajones" id="${id}">${inner}</div></div>`;
 }
 function catalogue() {
   const langs = langsInCatalog().map(l =>
-    salaBtn('lang', l, LANG_LABEL[l], countWhere(b => bookLang(b) === l))
+    cajon('lang', l, LANG_LABEL[l], countWhere(b => bookLang(b) === l))
   ).join('');
   const genres = genresInCatalog().map(g =>
-    salaBtn('genre', g, g, countWhere(b => bookGenre(b) === g))
+    cajon('genre', g, g, countWhere(b => bookGenre(b) === g))
   ).join('');
   const places = PLACES.map(p =>
-    salaBtn('place', p, p, countWhere(b => b.place === p))
+    cajon('place', p, p, countWhere(b => b.place === p))
   ).join('');
   return `<main class="page cat"><div class="wrap">
     <div class="crumb"><a href="${link('inicio')}">Hojear</a> / Biblioteca</div>
-    <span class="eyebrow">Cámara de libros</span>
-    <h1 class="cat-h1">Entra a una sala.<em>O busca.</em></h1>
-    <p class="lead">${readableCount()} textos para abrir aquí · ${chileCount()} de Chile · ${oerCount()} guías OER. Siete idiomas.</p>
+    <span class="eyebrow">Casa de lectura</span>
+    <h1 class="cat-h1">El fichero</h1>
+    <p class="lead">Títulos de dominio público, ordenados como en una biblioteca antigua. ${readableCount()} para abrir aquí · ${chileCount()} de Chile · ${oerCount()} OER.</p>
     <label class="cat-search">
-      <span class="visually-hidden">Buscar en la biblioteca</span>
-      <input id="cat-q" type="search" placeholder="Título, autor, lengua, lugar…" autocomplete="off" spellcheck="false">
+      <span class="visually-hidden">Consultar el fichero</span>
+      <input id="cat-q" type="search" placeholder="Consultar por título o autor…" autocomplete="off" spellcheck="false">
     </label>
-    <div class="sala-block">
-      <div class="sala-label">Lengua</div>
-      <div class="sala-row" id="filters-lang">${salaBtn('lang', 'todos', 'Todas', books.length, 'is-all active')}${langs}</div>
-    </div>
-    <div class="sala-block">
-      <div class="sala-label">Forma</div>
-      <div class="sala-row" id="filters-genre">${salaBtn('genre', 'Todos', 'Todas', books.length, 'is-all active')}${genres}</div>
-    </div>
-    <div class="sala-block">
-      <div class="sala-label">Territorio y modo</div>
-      <div class="sala-row" id="filters-place">${salaBtn('place', 'todos', 'Todos', books.length, 'is-all active')}${places}${salaBtn('text', 'hasText', 'Abrir ahora', readableCount())}${salaBtn('license', 'oer', 'Estudiar · OER', oerCount())}</div>
+    <div class="fichero">
+      ${cajonera('filters-lang', 'Lengua', cajon('lang', 'todos', 'Todas', books.length, 'is-all active') + langs)}
+      ${cajonera('filters-genre', 'Forma', cajon('genre', 'Todos', 'Todas', books.length, 'is-all active') + genres)}
+      ${cajonera('filters-place', 'Territorio y modo', cajon('place', 'todos', 'Todos', books.length, 'is-all active') + places + cajon('text', 'hasText', 'Abrir ahora', readableCount()) + cajon('license', 'oer', 'Estudiar · OER', oerCount()))}
     </div>
     <div class="cat-bar">
       <p class="cat-count" id="cat-count"></p>
@@ -916,7 +912,7 @@ function bindCatalogue() {
     return String(a[key] || '').localeCompare(String(b[key] || ''), 'es', { sensitivity: 'base' });
   };
   const paintSalas = () => {
-    document.querySelectorAll('.sala').forEach(btn => {
+    document.querySelectorAll('.cajon').forEach(btn => {
       const mode = btn.dataset.mode;
       const f = btn.dataset.filter;
       const on = mode === 'genre' ? state.genre === f
@@ -936,7 +932,7 @@ function bindCatalogue() {
     const list = books.filter(match).sort(sorter);
     const group = state.genre === 'Todos' && !state.q;
     if (!list.length) {
-      box.innerHTML = '<p class="catalogue-note">Nada en esta sala. Prueba otra o borra la búsqueda.</p>';
+      box.innerHTML = '<p class="catalogue-note">Nada en este estante. Prueba otro cajón o borra la consulta.</p>';
     } else if (group) {
       const map = new Map();
       list.forEach(b => {
@@ -947,10 +943,10 @@ function bindCatalogue() {
       const order = [...GENRE_ORDER.filter(g => map.has(g)), ...[...map.keys()].filter(g => !GENRE_ORDER.includes(g))];
       box.innerHTML = order.map(g => {
         const items = map.get(g);
-        return `<section class="shelf"><div class="shelf-head"><h3>${g}</h3><span>${items.length}</span></div><div class="books">${items.map(bookCard).join('')}</div></section>`;
+        return `<section class="shelf"><div class="shelf-head"><h3>${g}</h3><span>${items.length}</span></div><div class="books">${items.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></section>`;
       }).join('');
     } else {
-      box.innerHTML = `<div class="books">${list.map(bookCard).join('')}</div>`;
+      box.innerHTML = `<div class="stack"><div class="books">${list.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></div>`;
     }
     const bits = [];
     if (state.q) bits.push(`“${state.q.trim()}”`);
@@ -959,12 +955,12 @@ function bindCatalogue() {
     if (state.place !== 'todos') bits.push(state.place);
     if (state.onlyText) bits.push('abrir ahora');
     if (state.onlyOer) bits.push('OER');
-    const where = bits.length ? bits.join(' · ') : 'toda la cámara';
-    if (countEl) countEl.textContent = `${list.length} ${list.length === 1 ? 'título' : 'títulos'} · ${where}`;
+    const where = bits.length ? bits.join(' · ') : 'toda la casa';
+    if (countEl) countEl.textContent = `${list.length} ${list.length === 1 ? 'tomo' : 'tomos'} · ${where}`;
     paintSalas();
   };
 
-  document.querySelectorAll('.sala').forEach(btn => {
+  document.querySelectorAll('.cajon').forEach(btn => {
     btn.addEventListener('click', () => {
       const mode = btn.dataset.mode;
       const f = btn.dataset.filter;
@@ -1013,6 +1009,7 @@ function render() {
     view === 'como-funciona' ? how() :
     home();
   document.querySelector('#app').innerHTML = nav() + page + footer();
+  document.body.classList.toggle('lib-mode', view === 'catalogo');
   document.title = view === 'inicio' ? 'Hojear — Lector y biblioteca' : 'Hojear — ' + (b?.title || 'Biblioteca');
   bindNav();
   if (view === 'leer') leerLoader(b);
