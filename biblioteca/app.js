@@ -186,32 +186,35 @@ function internalReader(b) {
   return `<main class="page reader-page"><div class="wrap">
     <div class="reader-stage theme-paper mode-book" id="reader-stage">
       <header class="reader-topbar" id="reader-topbar">
-        <a class="back" href="${link('libro', '&libro=' + b.id)}" title="Salir">← Salir</a>
-        <div class="meta-mini"><strong>${b.title}</strong> · ${b.author}</div>
+        <a class="back" href="${link('catalogo')}" title="Volver a los libros">← Libros</a>
+        <a class="meta-mini" href="${link('libro', '&libro=' + b.id)}"><strong>${b.title}</strong></a>
         <div class="reader-tools">
-          <button type="button" id="fr-toc" class="rtool" title="Índice" aria-label="Índice">☰</button>
-          <button type="button" id="fr-settings" class="rtool" title="Ajustes de lectura" aria-label="Ajustes">Aa</button>
-          <button type="button" id="fr-mode" class="rtool active" title="Libro o scroll" aria-label="Modo de lectura">📖</button>
-          <button type="button" id="fr-minus" class="rtool" aria-label="Disminuir letra">A−</button>
-          <span class="rtool-size" id="rtool-size">100%</span>
-          <button type="button" id="fr-plus" class="rtool" aria-label="Aumentar letra">A+</button>
+          <button type="button" id="fr-settings" class="rtool" title="Letra y pantalla" aria-label="Letra y pantalla">Aa</button>
         </div>
       </header>
       <div class="reader-settings" id="reader-settings" hidden>
-        <label>Interlineado <input type="range" id="fr-lh" min="145" max="210" value="178"></label>
-        <label>Ancho hoja <input type="range" id="fr-width" min="28" max="46" value="38"></label>
-        <div class="theme-pills" role="group" aria-label="Tema">
-          <button type="button" class="theme-pill active" data-theme="paper" title="Papel" aria-label="Tema papel"></button>
-          <button type="button" class="theme-pill" data-theme="sepia" title="Sepia" aria-label="Tema sepia"></button>
-          <button type="button" class="theme-pill" data-theme="mist" title="Niebla" aria-label="Tema niebla"></button>
-          <button type="button" class="theme-pill" data-theme="night" title="Noche" aria-label="Tema noche"></button>
+        <div class="set-row">
+          <span>Letra</span>
+          <button type="button" id="fr-minus" class="rtool" aria-label="Letra más chica">A−</button>
+          <button type="button" id="fr-plus" class="rtool" aria-label="Letra más grande">A+</button>
+        </div>
+        <div class="set-row">
+          <span>Pantalla</span>
+          <div class="theme-choice" role="group" aria-label="Pantalla">
+            <button type="button" class="theme-choice-btn active" data-theme="paper">Clara</button>
+            <button type="button" class="theme-choice-btn" data-theme="night">Noche</button>
+          </div>
+        </div>
+        <div class="reader-toc-inline" id="reader-toc" hidden>
+          <div class="toc-head">Capítulos</div>
+          <div class="toc-list" id="toc-list"></div>
+        </div>
+        <div class="set-links">
+          <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Guía</a>
+          <button type="button" class="simple-btn" id="read-reset">Empezar de nuevo</button>
         </div>
       </div>
       <div class="reader-shell" id="reader-shell">
-        <aside class="reader-toc" id="reader-toc" hidden>
-          <div class="toc-head">Índice</div>
-          <div class="toc-list" id="toc-list"><p class="toc-empty">Se genera al cargar…</p></div>
-        </aside>
         <div>
           <article class="reader-body mode-book" id="reader-text" style="--read-size:1.125rem;--read-lh:1.78;--read-measure:38rem">
             <p class="reader-loading">Abriendo el libro…</p>
@@ -242,12 +245,7 @@ function internalReader(b) {
         </div>
         <button type="button" class="read-btn" id="read-next" aria-label="Siguiente">›</button>
       </div>
-      <div class="reader-foot-links">
-        <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Guía</a>
-        <a class="simple-btn" href="${audioUrl(b)}" target="_blank" rel="noopener">Audiolibro</a>
-        <button type="button" class="simple-btn" id="read-reset">Reiniciar progreso</button>
-      </div>
-      <p class="reader-credit">Texto libre para leer · Hojear</p>
+      <p class="reader-credit">Hojear</p>
     </div>
   </div></main>`;
 }
@@ -465,23 +463,14 @@ function leerLoader(b) {
       bookOpen.style.setProperty('--read-size', base.toFixed(3) + 'rem');
       bookOpen.style.setProperty('--read-lh', (lh / 100).toFixed(2));
     }
-    const sz = document.getElementById('rtool-size');
-    if (sz) sz.textContent = fr + '%';
     if (stage) {
-      stage.className = 'reader-stage theme-' + theme + ' mode-' + mode;
+      stage.className = 'reader-stage theme-' + theme + ' mode-book';
     }
-    art.classList.toggle('mode-scroll', mode === 'scroll');
-    art.classList.toggle('mode-book', mode === 'book');
-    document.getElementById('fr-mode')?.classList.toggle('active', mode === 'book');
-    document.getElementById('fr-mode') && (document.getElementById('fr-mode').textContent = mode === 'book' ? '📖' : '↕');
-    if (hint) hint.hidden = mode !== 'book';
-    document.querySelectorAll('.theme-pill').forEach(p => {
+    art.classList.remove('mode-scroll');
+    art.classList.add('mode-book');
+    document.querySelectorAll('.theme-choice-btn').forEach(p => {
       p.classList.toggle('active', p.dataset.theme === theme);
     });
-    const lhEl = document.getElementById('fr-lh');
-    const wEl = document.getElementById('fr-width');
-    if (lhEl) lhEl.value = String(lh);
-    if (wEl) wEl.value = String(measure);
   }
   function save() {
     try {
@@ -639,11 +628,13 @@ function leerLoader(b) {
     });
     if (!tocList) return;
     if (!toc.length) {
-      tocList.innerHTML = '<p class="toc-empty">Sin capítulos detectados. Pasa las hojas con las flechas.</p>';
+      tocList.innerHTML = '';
+      if (tocPanel) tocPanel.hidden = true;
       return;
     }
+    if (tocPanel) tocPanel.hidden = false;
     tocList.innerHTML = toc.map((t, i) =>
-      `<button type="button" class="toc-item" data-para="${t.para}">${String(i + 1).padStart(2, '0')} · ${esc(t.title)}</button>`
+      `<button type="button" class="toc-item" data-para="${t.para}">${esc(t.title)}</button>`
     ).join('');
     tocList.querySelectorAll('.toc-item').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -655,17 +646,12 @@ function leerLoader(b) {
           acc += pages[p].length;
           pageFor = p;
         }
-        if (mode === 'book') {
-          renderBook(pageFor, false);
-        } else {
-          const el = art.querySelector('[data-page="' + pageFor + '"]');
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          else window.scrollTo({ top: 0, behavior: 'smooth' });
+        renderBook(pageFor, false);
+        if (settings) {
+          settings.setAttribute('hidden', '');
+          settings.classList.remove('open');
         }
-        if (window.innerWidth < 860 && tocPanel) {
-          tocPanel.hidden = true;
-          shell?.classList.remove('with-toc');
-        }
+        document.getElementById('fr-settings')?.classList.remove('active');
       });
     });
   }
@@ -722,12 +708,8 @@ function leerLoader(b) {
       const saved = loadSaved();
       if (saved) {
         if (typeof saved.fr === 'number') fr = saved.fr;
-        if (typeof saved.lh === 'number') lh = saved.lh;
-        if (typeof saved.measure === 'number') measure = saved.measure;
-        if (saved.theme) theme = saved.theme;
-        if (saved.mode === 'book' || saved.mode === 'scroll') mode = saved.mode;
-        // migrar modes viejos
-        if (saved.mode === 'pages') mode = 'book';
+        theme = saved.theme === 'night' ? 'night' : 'paper';
+        mode = 'book';
         if (typeof saved.page === 'number') idx = saved.page;
       }
       applyChrome();
@@ -754,7 +736,7 @@ function leerLoader(b) {
       if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goNext(); e.preventDefault(); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goPrev(); e.preventDefault(); }
     }
-    if (e.key === 'Escape') location.href = link('libro', '&libro=' + b.id);
+    if (e.key === 'Escape') location.href = link('catalogo');
   });
 
   // swipe en móvil
@@ -800,8 +782,6 @@ function leerLoader(b) {
 
   document.getElementById('fr-minus')?.addEventListener('click', () => { fr = Math.max(80, fr - 10); applyChrome(); save(); });
   document.getElementById('fr-plus')?.addEventListener('click', () => { fr = Math.min(150, fr + 10); applyChrome(); save(); });
-  document.getElementById('fr-lh')?.addEventListener('input', e => { lh = parseInt(e.target.value, 10) || 178; applyChrome(); save(); });
-  document.getElementById('fr-width')?.addEventListener('input', e => { measure = parseInt(e.target.value, 10) || 38; applyChrome(); save(); });
   document.getElementById('fr-settings')?.addEventListener('click', () => {
     if (!settings) return;
     const open = settings.hasAttribute('hidden');
@@ -809,22 +789,9 @@ function leerLoader(b) {
     else { settings.setAttribute('hidden', ''); settings.classList.remove('open'); }
     document.getElementById('fr-settings')?.classList.toggle('active', open);
   });
-  document.getElementById('fr-mode')?.addEventListener('click', () => {
-    mode = mode === 'book' ? 'scroll' : 'book';
-    applyChrome();
-    showContent();
-    save();
-  });
-  document.getElementById('fr-toc')?.addEventListener('click', () => {
-    if (!tocPanel || !shell) return;
-    const open = tocPanel.hidden;
-    tocPanel.hidden = !open;
-    shell.classList.toggle('with-toc', open);
-    document.getElementById('fr-toc')?.classList.toggle('active', open);
-  });
-  document.querySelectorAll('.theme-pill').forEach(pill => {
+  document.querySelectorAll('.theme-choice-btn').forEach(pill => {
     pill.addEventListener('click', () => {
-      theme = pill.dataset.theme || 'paper';
+      theme = pill.dataset.theme === 'night' ? 'night' : 'paper';
       applyChrome();
       save();
     });
@@ -836,6 +803,9 @@ function leerLoader(b) {
     showContent();
     window.scrollTo(0, 0);
   });
+  if (hint) {
+    setTimeout(() => { if (hint) hint.hidden = true; }, 5000);
+  }
 }
 
 function bindCatalogue() {
