@@ -38,7 +38,11 @@
   err.hidden = true;
   form.appendChild(err);
 
-  const endpoint = form.dataset.api || "/api/contacto";
+  const endpoint =
+    form.dataset.api ||
+    (location.hostname === "localhost" || location.hostname === "127.0.0.1"
+      ? "/api/contacto"
+      : "https://api.etemen.cl/api/contacto");
 
   form.addEventListener("submit", async (ev) => {
     ev.preventDefault();

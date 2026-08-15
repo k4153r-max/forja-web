@@ -8,6 +8,14 @@ workers_dev = false
 routes = [
   { pattern = "etemen.cl/api/*", zone_name = "etemen.cl" },
   { pattern = "www.etemen.cl/api/*", zone_name = "etemen.cl" },
+  { pattern = "etemen.cl/umbral*", zone_name = "etemen.cl" },
+  { pattern = "www.etemen.cl/umbral*", zone_name = "etemen.cl" },
+  { pattern = "etemen.cl/nexus*", zone_name = "etemen.cl" },
+  { pattern = "www.etemen.cl/nexus*", zone_name = "etemen.cl" },
+  { pattern = "etemen.cl/minimarket*", zone_name = "etemen.cl" },
+  { pattern = "www.etemen.cl/minimarket*", zone_name = "etemen.cl" },
+  { pattern = "etemen.cl/bodega*", zone_name = "etemen.cl" },
+  { pattern = "www.etemen.cl/bodega*", zone_name = "etemen.cl" },
   { pattern = "api.etemen.cl", zone_name = "etemen.cl", custom_domain = true }
 ]
 

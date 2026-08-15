@@ -53,6 +53,17 @@ Cada ficha lleva `lang:'es'|'en'|'fr'|'de'|'it'|'pt'|'la'`. El catálogo filtra 
 3. Los enlaces usan `https://www.buscalibre.cl/libros/search?q=...&afiliado=...`  
    Si Buscalibre te da un formato de URL distinto, actualiza `buyUrl()` en `app.js`.
 
+## LibriVox (`match-librivox.py`, `find-lv-ids.py`, `build-audio.py`)
+
+Busca proyectos en español y regenera `biblioteca/audio.js`. Solo se mapean IDs exactos a fichas de Hojear (no lookalikes).
+
+```powershell
+cd biblioteca/scripts
+python .\match-librivox.py
+python .\find-lv-ids.py
+python .\build-audio.py
+```
+
 ## Regenerar `catalog.js`
 
 Tras añadir TXT nuevos, regenera el catálogo con el generador de sesión o actualiza entradas a mano en `catalog.js` (cargado antes de `app.js`).

@@ -9,6 +9,23 @@ const ALLOW = new Set([
 const BOT_UA = /bot|crawl|spider|preview|scan|headless|wget|curl|python-requests|facebookexternalhit|slurp|bingpreview|uptimerobot|monitor/i;
 const VISIT_KINDS = new Set(["page", "leer", "escuchar"]);
 
+const PATH_REDIRECTS = [
+  [/^\/umbral(\/|$)/i, "https://etemen.cl/hojear/"],
+  [/^\/nexus(\/|$)/i, "https://etemen.cl/nexo/"],
+  [/^\/minimarket(\/|$)/i, "https://etemen.cl/nexo/minimarkets/"],
+  [/^\/bodega(\/|$)/i, "https://etemen.cl/nexo/"],
+];
+
+function pathRedirect(url) {
+  for (const [re, dest] of PATH_REDIRECTS) {
+    if (!re.test(url.pathname)) continue;
+    const next = new URL(dest);
+    next.search = url.search;
+    return Response.redirect(next.toString(), 301);
+  }
+  return null;
+}
+
 const PRODUCTOS = new Set([
   "General",
   "Nexo Trial",
@@ -281,6 +298,9 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const origin = request.headers.get("Origin") || "";
+
+    const bounced = pathRedirect(url);
+    if (bounced) return bounced;
 
     if (request.method === "OPTIONS") {
       if (origin && !ALLOW.has(origin)) return new Response(null, { status: 403 });
