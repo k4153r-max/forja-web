@@ -704,7 +704,7 @@ function leerLoader(b) {
     else renderBook(idx, false);
   }
 
-  fetch('textos/' + encodeURIComponent(b.id) + '.txt')
+  fetch('textos/' + encodeURIComponent(b.id) + '.txt?v=20260815-8')
     .then(r => { if (!r.ok) throw new Error(String(r.status)); return r.text(); })
     .then(t => {
       // Normalizar y partir en bloques; párrafos gigantes se fragmentan (evita "libros" de 1 hoja)
