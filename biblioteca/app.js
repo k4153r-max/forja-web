@@ -51,7 +51,11 @@ const audioUrl = b => {
   const direct = {
     lazarillo: 'https://librivox.org/lazarillo-de-tormes/',
     frankenstein: 'https://librivox.org/frankenstein-el-moderno-prometeo-by-mary-wollstonecraft-shelley/',
-    quijote: 'https://librivox.org/don-quijote-vol-1-by-miguel-de-cervantes-saavedra/'
+    quijote: 'https://librivox.org/don-quijote-vol-1-by-miguel-de-cervantes-saavedra/',
+    platero: 'https://librivox.org/platero-y-yo-by-juan-ramon-jimenez/',
+    'dona-perfecta': 'https://librivox.org/dona-perfecta-by-benito-perez-galdos/',
+    corazon: 'https://librivox.org/cuore-by-edmondo-de-amicis/',
+    'martin-fierro': 'https://librivox.org/el-gaucho-martin-fierro-by-jose-hernandez/'
   };
   return direct[b.id] || `https://librivox.org/search?title=${encodeURIComponent(b.title)}&recorded_language=es`;
 };
