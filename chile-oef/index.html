@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHILE-OEF — Forecasting sísmico experimental · ETEMEN</title>
+  <meta name="description" content="CHILE-OEF: plataforma experimental de investigación en forecasting probabilístico de sismicidad para Chile. Catálogo real 1964-2026, ETAS espacio-temporal, evaluación CSEP.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0B0B0C">
+  <link rel="canonical" href="https://etemen.cl/chile-oef/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://etemen.cl/chile-oef/">
+  <meta property="og:site_name" content="ETEMEN">
+  <meta property="og:title" content="CHILE-OEF — Forecasting sísmico experimental">
+  <meta property="og:description" content="Plataforma experimental de investigación: catálogo sísmico real de Chile (1964-2026), modelo ETAS espacio-temporal, forecast en vivo y evaluación CSEP.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main-v9.css">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --oef: #6ba3c9;
+      --oef-soft: rgba(107,163,201,.12);
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+    .oef-ribbon{
+      background: var(--oef-soft);
+      border-bottom: 1px solid rgba(107,163,201,.25);
+      color: var(--text);
+      font-size: .82rem;
+      padding: 9px 0;
+    }
+    .oef-ribbon .wrap{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .oef-ribbon strong{ color: var(--oef); }
+    .oef-ribbon a{ color: var(--oef); border-bottom: 1px solid rgba(107,163,201,.35); }
+    .oef-ribbon a:hover{ color:#fff; }
+    .oef-hero{ padding: 56px 0 32px; }
+    .oef-hero .eyebrow{ color: var(--oef); }
+    .oef-hero h1{ margin-bottom: 14px; }
+    .oef-hero h1 em{ color: var(--oef); font-style: normal; }
+    .disclaimer-box{
+      margin-top: 24px;
+      padding: 16px 18px;
+      border: 1px solid rgba(107,163,201,.3);
+      background: var(--oef-soft);
+      border-radius: var(--radius);
+      font-size: .88rem;
+      color: var(--muted);
+      max-width: 62em;
+    }
+    .disclaimer-box strong{ color: var(--text); }
+
+    .stat-strip{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+      gap: 1px;
+      background: var(--rule-dim);
+      border: 1px solid var(--rule-dim);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 28px;
+    }
+    .stat{ background: var(--surface); padding: 18px 16px; }
+    .stat .n{ font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color:#fff; line-height:1.1; }
+    .stat .n .unit{ font-size: .95rem; font-weight: 600; color: var(--muted); }
+    .stat .l{ font-size: .74rem; color: var(--muted); margin-top: 6px; letter-spacing: .02em; }
+
+    .oef-card{
+      border: 1px solid var(--rule-dim);
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .oef-grid-2{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 20px; }
+    @media (max-width: 860px){ .oef-grid-2{ grid-template-columns: 1fr; } }
+
+    .kv{ display:grid; grid-template-columns: auto 1fr; gap: 7px 14px; font-size: .88rem; }
+    .kv dt{ color: var(--muted); }
+    .kv dd{ font-family: var(--mono); color: #fff; text-align: right; }
+
+    .badge-row{ display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0 18px; }
+    .badge{
+      font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 99px; border: 1px solid var(--rule);
+      color: var(--muted);
+    }
+    .badge.warn{ border-color: rgba(224,138,74,.4); color: #e08a4a; }
+    .badge.ok{ border-color: rgba(0,201,167,.35); color: var(--nexo); }
+
+    .magbar-row{ display:flex; align-items:center; gap:10px; font-size:.82rem; margin-bottom:8px; }
+    .magbar-row .type{ width: 54px; font-family: var(--mono); color: var(--muted); flex-shrink:0; }
+    .magbar-row .track{ flex:1; height: 8px; background: rgba(255,255,255,.06); border-radius:4px; overflow:hidden; }
+    .magbar-row .fill{ height:100%; background: var(--oef); border-radius:4px; }
+    .magbar-row .count{ width: 62px; text-align:right; font-family: var(--mono); color: var(--muted); flex-shrink:0; }
+
+    table.oef-table{ width:100%; border-collapse: collapse; font-size: .84rem; }
+    table.oef-table th{ text-align:left; color: var(--muted); font-weight:600; font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; padding: 6px 8px; border-bottom: 1px solid var(--rule); }
+    table.oef-table td{ padding: 8px; border-bottom: 1px solid var(--rule-dim); font-family: var(--mono); }
+    table.oef-table tr.notable td{ color: #ffb26b; }
+    table.oef-table tr:hover td{ background: rgba(255,255,255,.02); }
+
+    #oef-map-wrap{ position:relative; border:1px solid var(--rule-dim); border-radius: var(--radius); overflow:hidden; background:#0d1015; }
+    #oef-map{ display:block; width:100%; height:auto; }
+    .map-legend{ display:flex; align-items:center; gap:8px; font-size:.76rem; color:var(--muted); margin-top:10px; }
+    .map-legend .dot{ width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+    .loading{ color: var(--muted); font-size: .88rem; font-style: italic; }
+    .err-box{ color:#e08a4a; font-size:.84rem; padding: 12px 0; }
+
+    .finding-card{
+      border: 1px solid rgba(224,138,74,.3);
+      background: rgba(224,138,74,.06);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .finding-card h3{ color:#ffb26b; }
+    .finding-card p{ font-size:.9rem; color: var(--muted); line-height:1.65; margin-top:10px; }
+    .finding-card code{ font-family: var(--mono); font-size:.85em; color:#fff; background:rgba(255,255,255,.06); padding:1px 5px; border-radius:4px; }
+
+    select.mag-select{
+      background: var(--bg-2); color:#fff; border:1px solid var(--rule); border-radius:8px;
+      padding:6px 10px; font-family: var(--mono); font-size:.82rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="oef-ribbon">
+    <div class="wrap">
+      <span class="badge warn" style="margin:0">Investigación experimental</span>
+      <span><strong>CHILE-OEF</strong> no predice terremotos ni reemplaza a CSN/SENAPRED.</span>
+      <span class="sep">·</span>
+      <a href="/">← Volver a ETEMEN</a>
+    </div>
+  </div>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="/" class="logo" aria-label="ETEMEN">
+        <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="ETEMEN Logo" width="34" height="34">
+        <div class="logo-wordmark">
+          <span class="name">ETEMEN</span>
+          <span class="tagline">CHILE-OEF</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="/">Inicio</a>
+        <a href="#pronostico">Pronóstico en vivo</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#evaluacion" class="nav-cta">Evaluación</a>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="oef-hero">
+      <div class="wrap">
+        <p class="eyebrow">Chile Operational Earthquake Forecasting · Plataforma de investigación</p>
+        <h1>Forecasting sísmico <em>probabilístico</em>, no determinista.</h1>
+        <p class="lead">
+          CHILE-OEF analiza patrones estadísticos de actividad sísmica en Chile con un modelo
+          ETAS espacio-temporal ajustado sobre un catálogo real de USGS (1964-2026), y evalúa
+          sus propios pronósticos con la batería de tests CSEP (Zechar et al. 2010). Cada número
+          en esta página viene de una corrida real contra datos reales — no hay valores de ejemplo.
+        </p>
+        <div class="disclaimer-box">
+          <strong>Aviso científico.</strong> CHILE-OEF es una plataforma experimental de
+          investigación que analiza patrones estadísticos de actividad sísmica. No predice
+          terremotos de forma determinista y no reemplaza información oficial del Centro
+          Sismológico Nacional, SENAPRED ni otras autoridades.
+        </div>
+
+        <div class="stat-strip" id="stat-strip">
+          <div class="stat"><div class="n" id="s-total">—</div><div class="l">Eventos reales ingeridos</div></div>
+          <div class="stat"><div class="n" id="s-range">—</div><div class="l">Rango temporal</div></div>
+          <div class="stat"><div class="n" id="s-mc">—</div><div class="l">Mc (magnitud de completitud)</div></div>
+          <div class="stat"><div class="n" id="s-b">—</div><div class="l">b-value (Gutenberg-Richter)</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pronostico">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Pronóstico en vivo</p>
+          <h2>Probabilidad de al menos un evento por celda</h2>
+          <p class="lead">
+            Grilla regular de 0.1° sobre Chile continental. Cada celda combina la tasa de fondo
+            (ETAS) con la contribución de sismicidad reciente (gatillamiento). Punto estimado,
+            sin incertidumbre de parámetros propagada — <code>uncalibrated_point_forecast</code>.
+          </p>
+        </div>
+        <div id="forecast-loading" class="loading">Cargando el pronóstico más reciente…</div>
+        <div id="forecast-error" class="err-box" style="display:none"></div>
+        <div id="forecast-content" style="display:none">
+          <div class="oef-grid-2">
+            <div class="oef-card">
+              <div class="badge-row">
+                <span class="badge" id="fc-horizon"></span>
+                <span class="badge" id="fc-calibration"></span>
+              </div>
+              <div id="oef-map-wrap">
+                <canvas id="oef-map" width="600" height="900"></canvas>
+              </div>
+              <div class="map-legend">
+                <span class="dot" style="background:var(--oef)"></span> probabilidad relativa por celda (radio y opacidad ∝ probabilidad)
+              </div>
+            </div>
+            <div class="oef-card">
+              <h3 style="margin-bottom:14px">Ficha del run</h3>
+              <dl class="kv" id="fc-kv"></dl>
+              <div style="margin-top:18px">
+                <label for="mag-select" class="muted" style="font-size:.82rem">Bin de magnitud:</label><br>
+                <select class="mag-select" id="mag-select" style="margin-top:6px"></select>
+              </div>
+              <h4 style="margin-top:20px; font-size:.82rem; color:var(--muted); text-transform:uppercase; letter-spacing:.04em">Top celdas por probabilidad</h4>
+              <table class="oef-table" style="margin-top:8px">
+                <thead><tr><th>Celda</th><th>Prob.</th></tr></thead>
+                <tbody id="fc-top-cells"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Modelo actual</p>
+          <h2>ETAS espacio-temporal + Gutenberg-Richter</h2>
+        </div>
+        <div id="model-loading" class="loading">Cargando parámetros del modelo…</div>
+        <div id="model-content" class="oef-card" style="display:none">
+          <dl class="kv" id="model-kv"></dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="catalogo">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Catálogo</p>
+          <h2>Sismicidad real de Chile, USGS 1964-2026</h2>
+          <p class="lead">Ingesta histórica masiva real vía FDSN, resumible y tolerante a fallos. Ver <code>docs/PROJECT_STATE.md</code> del repositorio para el detalle completo.</p>
+        </div>
+        <div id="catalog-loading" class="loading">Cargando catálogo…</div>
+        <div id="catalog-error" class="err-box" style="display:none"></div>
+        <div id="catalog-content" style="display:none">
+          <div class="oef-grid-2">
+            <div class="oef-card">
+              <h3 style="margin-bottom:14px">Por tipo de magnitud</h3>
+              <div id="mag-type-bars"></div>
+            </div>
+            <div class="oef-card">
+              <h3 style="margin-bottom:14px">Mayores eventos registrados</h3>
+              <table class="oef-table">
+                <thead><tr><th>Fecha</th><th>Mag.</th><th>Lugar</th></tr></thead>
+                <tbody id="top-events"></tbody>
+              </table>
+              <p class="muted" style="margin-top:10px;font-size:.8rem">El Mw 8.8 del 27F (Maule, 2010) está en la lista — su secuencia de réplicas también fue ingerida.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="evaluacion">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Evaluación prospectiva (CSEP)</p>
+          <h2>Por qué esta página no muestra un backtest todavía</h2>
+        </div>
+        <div class="finding-card">
+          <h3>El sistema se negó a fabricar un backtest — y eso es correcto</h3>
+          <p>
+            CHILE-OEF tiene un motor completo de evaluación walk-forward con los tests clásicos
+            CSEP (N/M/S/L, Zechar et al. 2010) y toda la batería de scores registrada. Pero cada
+            fila del catálogo recién ingerido tiene <code>available_at</code> igual al momento
+            real de la ingesta (hoy), no la fecha histórica del sismo — lo único honesto, porque
+            el sistema no tuvo ese dato antes.
+          </p>
+          <p>
+            Eso significa que un pronóstico emitido con fecha pasada ve el catálogo <strong>vacío</strong>
+            (nada estaba "disponible" todavía), y uno emitido a futuro no tiene resultado observado
+            para comparar. La evaluación prospectiva real solo puede empezar a acumularse desde hoy
+            hacia adelante — no es un hueco de código, es lo que "prospectivo" significa. Verificado
+            directamente: un pronóstico emitido ahora ve 626 eventos previos reales; el mismo llamado
+            dos días atrás ve cero.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="32" height="32">
+            <div class="logo-wordmark"><span class="name">ETEMEN</span></div>
+          </a>
+          <p><strong>Fundamento sólido. Productos extraordinarios.</strong></p>
+        </div>
+        <div>
+          <h4>CHILE-OEF</h4>
+          <a href="#pronostico">Pronóstico en vivo</a>
+          <a href="#catalogo">Catálogo</a>
+          <a href="#evaluacion">Evaluación</a>
+        </div>
+        <div>
+          <h4>Productos</h4>
+          <a href="/nexo/">Nexo</a>
+          <a href="/hojear/">Hojear</a>
+          <a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a>
+        </div>
+        <div>
+          <h4>Empresa</h4>
+          <a href="/contacto/">Contacto</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="y"></span> ETEMEN</span>
+        <span>Chile</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/site.js?v=3"></script>
+  <script src="/chile-oef/app.js"></script>
+</body>
+</html>
