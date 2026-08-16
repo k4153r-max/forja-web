@@ -12,9 +12,46 @@
   const CHILE_BOUNDS = { minLat: -60, maxLat: -15, minLon: -82, maxLon: -62 };
   const MAULE_DATE = "2010-02-27";
 
+  // Zonas geográficas de Chile de uso común (no una división administrativa
+  // exacta), usadas solo para presentar resultados en lenguaje corriente en
+  // vez de coordenadas o identificadores internos de celda.
+  const ZONES = [
+    { name: "Norte Grande", maxLat: -17.4, minLat: -26.0 },
+    { name: "Norte Chico", maxLat: -26.0, minLat: -32.0 },
+    { name: "Zona Central", maxLat: -32.0, minLat: -37.0 },
+    { name: "Zona Sur", maxLat: -37.0, minLat: -44.0 },
+    { name: "Zona Austral", maxLat: -44.0, minLat: -56.0 },
+  ];
+  const MAP_LANDMARKS = [
+    { name: "Arica", lat: -18.5 },
+    { name: "Antofagasta", lat: -23.6 },
+    { name: "La Serena", lat: -29.9 },
+    { name: "Santiago", lat: -33.4 },
+    { name: "Concepción", lat: -36.8 },
+    { name: "Puerto Montt", lat: -41.5 },
+    { name: "Coyhaique", lat: -45.6 },
+    { name: "Punta Arenas", lat: -53.2 },
+  ];
+
+  function zoneForLatitude(lat) {
+    const zone = ZONES.find((z) => lat <= z.maxLat && lat > z.minLat);
+    return zone ? zone.name : "Zona Austral";
+  }
+
+  function intensityLabel(intensity) {
+    if (intensity >= 0.75) return "Muy alta";
+    if (intensity >= 0.45) return "Alta";
+    if (intensity >= 0.2) return "Media";
+    return "Baja";
+  }
+
   const fmtInt = (n) => new Intl.NumberFormat("es-CL").format(n);
+  // UTC explícito: estas fechas representan un día del catálogo (00:00:00Z),
+  // no un instante -- mostrarlas en huso horario local las corre un día.
   const fmtDate = (iso) =>
-    new Date(iso).toLocaleDateString("es-CL", { year: "numeric", month: "short", day: "2-digit" });
+    new Date(iso).toLocaleDateString("es-CL", {
+      year: "numeric", month: "short", day: "2-digit", timeZone: "UTC",
+    });
   const fmtDateTime = (iso) =>
     new Date(iso).toLocaleString("es-CL", {
       year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit",
@@ -89,16 +126,13 @@
         : "—";
       document.getElementById("s-range").textContent = `${earliestYear}–${latestYear}`;
       if (model) {
-        document.getElementById("s-mc").innerHTML =
-          model.mc_value.toFixed(2) + ' <span class="unit">' + model.magnitude_type + "</span>";
-        document.getElementById("s-b").textContent = model.b_value.toFixed(2);
+        document.getElementById("s-mc").textContent = "M" + model.mc_value.toFixed(1) + "+";
       }
       return summary;
     } catch (error) {
       document.getElementById("s-total").textContent = "s/d";
       document.getElementById("s-range").textContent = "s/d";
       document.getElementById("s-mc").textContent = "s/d";
-      document.getElementById("s-b").textContent = "s/d";
       throw error;
     }
   }
@@ -163,6 +197,12 @@
   async function loadModelSummary() {
     try {
       const model = await apiGet("/seismicity/model-summary");
+      document.getElementById("model-summary").textContent =
+        `El modelo actual fue entrenado con ${fmtInt(model.completeness_event_count)} ` +
+        `sismos reales registrados entre ${fmtDate(model.completeness_window_start)} y ` +
+        `${fmtDate(model.completeness_window_end)} — un período que incluye el terremoto ` +
+        `del Maule de 2010 (27F). Solo detecta de forma confiable sismos de magnitud ` +
+        `${model.mc_value.toFixed(1)} o mayor.`;
       const dl = document.getElementById("model-kv");
       setKv(dl, [
         ["Mc (completitud)", model.mc_value.toFixed(2) + " " + model.magnitude_type],
@@ -192,22 +232,39 @@
     const ctx = canvas.getContext("2d");
     const w = canvas.width;
     const h = canvas.height;
+    const leftMargin = 92;
+
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = "#0d1015";
+    ctx.fillStyle = "#101820";
     ctx.fillRect(0, 0, w, h);
-    ctx.strokeStyle = "rgba(255,255,255,.12)";
-    ctx.strokeRect(0.5, 0.5, w - 1, h - 1);
 
     const toXY = (lat, lon) => {
-      const x = ((lon - CHILE_BOUNDS.minLon) / (CHILE_BOUNDS.maxLon - CHILE_BOUNDS.minLon)) * w;
+      const x =
+        leftMargin +
+        ((lon - CHILE_BOUNDS.minLon) / (CHILE_BOUNDS.maxLon - CHILE_BOUNDS.minLon)) * (w - leftMargin - 10);
       const y = ((CHILE_BOUNDS.maxLat - lat) / (CHILE_BOUNDS.maxLat - CHILE_BOUNDS.minLat)) * h;
       return [x, y];
     };
 
+    // Ciudades de referencia, para que el mapa se pueda leer sin necesitar
+    // coordenadas -- el punto no es la geografía exacta, es la orientación.
+    ctx.strokeStyle = "rgba(244,241,234,.10)";
+    ctx.fillStyle = "rgba(244,241,234,.55)";
+    ctx.font = "11px 'Source Sans 3', sans-serif";
+    ctx.textBaseline = "middle";
+    for (const place of MAP_LANDMARKS) {
+      const [, y] = toXY(place.lat, CHILE_BOUNDS.minLon);
+      ctx.beginPath();
+      ctx.moveTo(leftMargin, y);
+      ctx.lineTo(w - 10, y);
+      ctx.stroke();
+      ctx.fillText(place.name, 4, y);
+    }
+
     if (!cells.length) {
-      ctx.fillStyle = "rgba(255,255,255,.4)";
+      ctx.fillStyle = "rgba(255,255,255,.5)";
       ctx.font = "13px sans-serif";
-      ctx.fillText("Sin celdas estimables en este bin", 16, h / 2);
+      ctx.fillText("No hay datos suficientes para esta magnitud", leftMargin + 10, h / 2);
       return;
     }
 
@@ -215,19 +272,28 @@
     for (const cell of cells) {
       const [x, y] = toXY(cell.center_latitude, cell.center_longitude);
       const intensity = maxProb > 0 ? cell.probability_at_least_one / maxProb : 0;
-      const radius = 1.5 + intensity * 7;
+      const radius = 2.5 + intensity * 9;
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(107,163,201,${0.25 + intensity * 0.65})`;
+      ctx.fillStyle = `rgba(196,137,74,${0.3 + intensity * 0.6})`;
       ctx.fill();
     }
   }
 
+  const HORIZON_LABELS = { PT6H: "las próximas 6 horas", P1D: "el próximo día", P3D: "los próximos 3 días", P7D: "los próximos 7 días" };
+
   async function loadForecast(runId, magnitudeLower) {
     const detail = await apiGet(`/forecasts/${runId}`, { limit: 300, magnitude_lower: magnitudeLower });
 
-    document.getElementById("fc-horizon").textContent = "Horizonte " + detail.horizon_id;
-    document.getElementById("fc-calibration").textContent = detail.calibration_status;
+    const magLabel = detail.selected_magnitude_lower + (
+      detail.magnitude_bins.find((b) => b.lower === detail.selected_magnitude_lower)?.upper
+        ? ` a ${detail.magnitude_bins.find((b) => b.lower === detail.selected_magnitude_lower).upper}`
+        : " o más"
+    );
+    document.getElementById("fc-summary").innerHTML =
+      `Sismos de magnitud <strong>${magLabel}</strong>, para ` +
+      `${HORIZON_LABELS[detail.horizon_id] || detail.horizon_id}. ` +
+      `Calculado el ${fmtDate(detail.issued_at)}.`;
 
     const dl = document.getElementById("fc-kv");
     setKv(dl, [
@@ -246,10 +312,12 @@
       for (const bin of detail.magnitude_bins) {
         const opt = document.createElement("option");
         opt.value = bin.lower;
-        opt.textContent = bin.upper ? `M${bin.lower}–${bin.upper}` : `M${bin.lower}+`;
+        opt.textContent = bin.upper
+          ? `Magnitud ${bin.lower} a ${bin.upper}`
+          : `Magnitud ${bin.lower} o más`;
         if (bin.lower < detail.reference_magnitude) {
           opt.disabled = true;
-          opt.textContent += " (bajo Mc)";
+          opt.textContent += " (no detectable de forma confiable)";
         }
         select.appendChild(opt);
       }
@@ -260,17 +328,49 @@
 
     drawMap(detail.cells);
 
-    const tbody = document.getElementById("fc-top-cells");
-    tbody.innerHTML = "";
-    for (const cell of detail.cells.slice(0, 8)) {
-      const tr = document.createElement("tr");
-      const idTd = document.createElement("td");
-      idTd.textContent = cell.cell_id.split(":").slice(1).join(" ");
-      const probTd = document.createElement("td");
-      probTd.textContent = (cell.probability_at_least_one * 100).toFixed(3) + "%";
-      tr.appendChild(idTd);
-      tr.appendChild(probTd);
-      tbody.appendChild(tr);
+    // Agrupar celdas en zonas en lenguaje corriente en vez de mostrar
+    // identificadores internos de celda (ej. "r0364 c0133"), que no le dicen
+    // nada a alguien que no conoce la grilla interna del modelo.
+    const zoneMax = new Map();
+    for (const cell of detail.cells) {
+      const zone = zoneForLatitude(cell.center_latitude);
+      const current = zoneMax.get(zone) || 0;
+      if (cell.probability_at_least_one > current) zoneMax.set(zone, cell.probability_at_least_one);
+    }
+    const ranked = ZONES.map((z) => z.name)
+      .filter((name) => zoneMax.has(name))
+      .sort((a, b) => zoneMax.get(b) - zoneMax.get(a));
+    const maxZoneProb = ranked.length ? zoneMax.get(ranked[0]) : 0;
+
+    const zoneList = document.getElementById("fc-zone-list");
+    zoneList.innerHTML = "";
+    if (!ranked.length) {
+      const p = document.createElement("p");
+      p.className = "plain-note";
+      p.style.marginTop = "0";
+      p.textContent = "No hay datos suficientes para esta magnitud en ninguna zona.";
+      zoneList.appendChild(p);
+    }
+    for (const name of ranked) {
+      const intensity = maxZoneProb > 0 ? zoneMax.get(name) / maxZoneProb : 0;
+      const row = document.createElement("div");
+      row.className = "zone-row";
+      const nameEl = document.createElement("span");
+      nameEl.className = "zone-name";
+      nameEl.textContent = name;
+      const track = document.createElement("span");
+      track.className = "zone-bar-track";
+      const fill = document.createElement("span");
+      fill.className = "zone-bar-fill";
+      fill.style.width = Math.max(6, intensity * 100) + "%";
+      track.appendChild(fill);
+      const level = document.createElement("span");
+      level.className = "zone-level";
+      level.textContent = intensityLabel(intensity);
+      row.appendChild(nameEl);
+      row.appendChild(track);
+      row.appendChild(level);
+      zoneList.appendChild(row);
     }
 
     document.getElementById("forecast-loading").style.display = "none";

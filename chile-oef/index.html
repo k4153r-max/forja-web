@@ -120,8 +120,30 @@
 
     select.mag-select{
       background: var(--bg-2); color:#fff; border:1px solid var(--rule); border-radius:8px;
-      padding:6px 10px; font-family: var(--mono); font-size:.82rem;
+      padding:8px 12px; font-family: var(--font-body); font-size:.9rem;
     }
+
+    .plain-lead{ font-size: 1rem; line-height:1.65; color: var(--text); }
+    .plain-note{ font-size:.85rem; color: var(--muted); margin-top:10px; line-height:1.6; }
+
+    .zone-list{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+    .zone-row{ display:flex; align-items:center; gap:12px; }
+    .zone-row .zone-bar-track{ flex:1; height:10px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden; }
+    .zone-row .zone-bar-fill{ height:100%; background: var(--oef); border-radius:6px; }
+    .zone-row .zone-name{ width:120px; flex-shrink:0; font-size:.9rem; }
+    .zone-row .zone-level{ width:90px; flex-shrink:0; font-size:.78rem; color:var(--muted); text-align:right; }
+
+    details.tech-details{ margin-top:18px; border-top:1px solid var(--rule-dim); padding-top:14px; }
+    details.tech-details summary{
+      cursor:pointer; font-size:.8rem; color: var(--muted); text-transform:uppercase;
+      letter-spacing:.04em; font-family: var(--font-mono);
+    }
+    details.tech-details summary:hover{ color: var(--text); }
+    details.tech-details .kv{ margin-top:14px; }
+
+    #oef-map-wrap{ background:#101820; }
+    .map-axis-label{ font-size:9px; fill: rgba(244,241,234,.4); font-family: var(--font-mono); }
+    .map-coast{ fill:none; stroke:rgba(244,241,234,.16); stroke-width:1.5; }
   </style>
 </head>
 <body>
@@ -156,26 +178,25 @@
   <main>
     <section class="oef-hero">
       <div class="wrap">
-        <p class="eyebrow">Chile Operational Earthquake Forecasting · Plataforma de investigación</p>
-        <h1>Forecasting sísmico <em>probabilístico</em>, no determinista.</h1>
+        <p class="eyebrow">Investigación en sismología · Chile</p>
+        <h1>Estudiamos <em>patrones</em> de actividad sísmica en Chile, con datos reales.</h1>
         <p class="lead">
-          CHILE-OEF analiza patrones estadísticos de actividad sísmica en Chile con un modelo
-          ETAS espacio-temporal ajustado sobre un catálogo real de USGS (1964-2026), y evalúa
-          sus propios pronósticos con la batería de tests CSEP (Zechar et al. 2010). Cada número
-          en esta página viene de una corrida real contra datos reales — no hay valores de ejemplo.
+          CHILE-OEF es un proyecto de investigación que busca entender cómo se agrupan los
+          sismos en el tiempo y el espacio, usando el historial real de terremotos en Chile.
+          No predice terremotos: estima, con un modelo estadístico, dónde ha habido más
+          actividad relativa recientemente — y revisa honestamente qué tan bien funciona.
         </p>
         <div class="disclaimer-box">
-          <strong>Aviso científico.</strong> CHILE-OEF es una plataforma experimental de
-          investigación que analiza patrones estadísticos de actividad sísmica. No predice
-          terremotos de forma determinista y no reemplaza información oficial del Centro
-          Sismológico Nacional, SENAPRED ni otras autoridades.
+          <strong>Esto no es un sistema de alerta.</strong> CHILE-OEF es un proyecto experimental
+          de investigación. No predice terremotos de forma determinista, no calcula riesgo, y no
+          reemplaza la información oficial del Centro Sismológico Nacional (CSN) ni de SENAPRED.
+          Ante cualquier emergencia, sigue siempre las indicaciones de las autoridades oficiales.
         </div>
 
         <div class="stat-strip" id="stat-strip">
-          <div class="stat"><div class="n" id="s-total">—</div><div class="l">Eventos reales ingeridos</div></div>
-          <div class="stat"><div class="n" id="s-range">—</div><div class="l">Rango temporal</div></div>
-          <div class="stat"><div class="n" id="s-mc">—</div><div class="l">Mc (magnitud de completitud)</div></div>
-          <div class="stat"><div class="n" id="s-b">—</div><div class="l">b-value (Gutenberg-Richter)</div></div>
+          <div class="stat"><div class="n" id="s-total">—</div><div class="l">Terremotos reales en la base de datos</div></div>
+          <div class="stat"><div class="n" id="s-range">—</div><div class="l">Años cubiertos</div></div>
+          <div class="stat"><div class="n" id="s-mc">—</div><div class="l">Magnitud mínima detectada de forma confiable</div></div>
         </div>
       </div>
     </section>
@@ -184,11 +205,13 @@
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Pronóstico en vivo</p>
-          <h2>Probabilidad de al menos un evento por celda</h2>
-          <p class="lead">
-            Grilla regular de 0.1° sobre Chile continental. Cada celda combina la tasa de fondo
-            (ETAS) con la contribución de sismicidad reciente (gatillamiento). Punto estimado,
-            sin incertidumbre de parámetros propagada — <code>uncalibrated_point_forecast</code>.
+          <h2>¿Dónde hay más actividad relativa esperada?</h2>
+          <p class="plain-lead">
+            El mapa muestra, para cada zona de Chile, qué tan probable es —en términos
+            relativos, comparando una zona con otra— que ocurra un sismo en los próximos días.
+            <strong>No es una escala de riesgo ni un porcentaje calibrado</strong>: es una
+            estimación estadística que combina la actividad de fondo histórica de cada zona con
+            los sismos más recientes.
           </p>
         </div>
         <div id="forecast-loading" class="loading">Cargando el pronóstico más reciente…</div>
@@ -196,29 +219,27 @@
         <div id="forecast-content" style="display:none">
           <div class="oef-grid-2">
             <div class="oef-card">
-              <div class="badge-row">
-                <span class="badge" id="fc-horizon"></span>
-                <span class="badge" id="fc-calibration"></span>
-              </div>
+              <p id="fc-summary" class="plain-lead" style="margin-bottom:16px"></p>
               <div id="oef-map-wrap">
                 <canvas id="oef-map" width="600" height="900"></canvas>
               </div>
               <div class="map-legend">
-                <span class="dot" style="background:var(--oef)"></span> probabilidad relativa por celda (radio y opacidad ∝ probabilidad)
+                <span class="dot" style="background:var(--oef)"></span>
+                más grande y más intenso = más actividad relativa estimada en esa zona
+              </div>
+              <div style="margin-top:16px">
+                <label for="mag-select" class="muted" style="font-size:.85rem">Ver para sismos de:</label><br>
+                <select class="mag-select" id="mag-select" style="margin-top:6px"></select>
               </div>
             </div>
             <div class="oef-card">
-              <h3 style="margin-bottom:14px">Ficha del run</h3>
-              <dl class="kv" id="fc-kv"></dl>
-              <div style="margin-top:18px">
-                <label for="mag-select" class="muted" style="font-size:.82rem">Bin de magnitud:</label><br>
-                <select class="mag-select" id="mag-select" style="margin-top:6px"></select>
-              </div>
-              <h4 style="margin-top:20px; font-size:.82rem; color:var(--muted); text-transform:uppercase; letter-spacing:.04em">Top celdas por probabilidad</h4>
-              <table class="oef-table" style="margin-top:8px">
-                <thead><tr><th>Celda</th><th>Prob.</th></tr></thead>
-                <tbody id="fc-top-cells"></tbody>
-              </table>
+              <h3 style="margin-bottom:6px">Zonas con más actividad relativa</h3>
+              <p class="plain-note" style="margin-top:0">Comparado entre las zonas de Chile, ordenado de mayor a menor.</p>
+              <div class="zone-list" id="fc-zone-list"></div>
+              <details class="tech-details">
+                <summary>Ver detalles técnicos</summary>
+                <dl class="kv" id="fc-kv"></dl>
+              </details>
             </div>
           </div>
         </div>
@@ -228,12 +249,22 @@
     <section class="section alt">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Modelo actual</p>
-          <h2>ETAS espacio-temporal + Gutenberg-Richter</h2>
+          <p class="eyebrow">Cómo funciona</p>
+          <h2>Un modelo entrenado con sismos reales, no con reglas fijas</h2>
         </div>
-        <div id="model-loading" class="loading">Cargando parámetros del modelo…</div>
+        <div id="model-loading" class="loading">Cargando el modelo…</div>
         <div id="model-content" class="oef-card" style="display:none">
-          <dl class="kv" id="model-kv"></dl>
+          <p class="plain-lead" id="model-summary"></p>
+          <p class="plain-note">
+            El modelo aprende dos patrones bien documentados en sismología: (1) cada zona de
+            Chile tiene su propio ritmo histórico de actividad, y (2) después de un sismo, la
+            probabilidad de que ocurran réplicas cerca aumenta por un tiempo y luego decae —el
+            comportamiento clásico de una secuencia de réplicas.
+          </p>
+          <details class="tech-details">
+            <summary>Ver parámetros técnicos (ETAS + Gutenberg-Richter)</summary>
+            <dl class="kv" id="model-kv"></dl>
+          </details>
         </div>
       </div>
     </section>
@@ -241,16 +272,17 @@
     <section class="section" id="catalogo">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Catálogo</p>
-          <h2>Sismicidad real de Chile, USGS 1964-2026</h2>
-          <p class="lead">Ingesta histórica masiva real vía FDSN, resumible y tolerante a fallos. Ver <code>docs/PROJECT_STATE.md</code> del repositorio para el detalle completo.</p>
+          <p class="eyebrow">Los datos</p>
+          <h2>Historial real de terremotos en Chile, 1964-2026</h2>
+          <p class="lead">Datos públicos del Servicio Geológico de Estados Unidos (USGS), la misma fuente que usan sismólogos de todo el mundo.</p>
         </div>
         <div id="catalog-loading" class="loading">Cargando catálogo…</div>
         <div id="catalog-error" class="err-box" style="display:none"></div>
         <div id="catalog-content" style="display:none">
           <div class="oef-grid-2">
             <div class="oef-card">
-              <h3 style="margin-bottom:14px">Por tipo de magnitud</h3>
+              <h3 style="margin-bottom:6px">Cómo se midió cada sismo</h3>
+              <p class="plain-note" style="margin-top:0">Distintas estaciones sismológicas usan distintas escalas de magnitud; por eso aparecen varios códigos.</p>
               <div id="mag-type-bars"></div>
             </div>
             <div class="oef-card">
@@ -269,26 +301,36 @@
     <section class="section alt" id="evaluacion">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Evaluación prospectiva (CSEP)</p>
-          <h2>Por qué esta página no muestra un backtest todavía</h2>
+          <p class="eyebrow">Honestidad ante todo</p>
+          <h2>¿Qué tan bueno es este modelo? Todavía no lo sabemos con certeza</h2>
         </div>
         <div class="finding-card">
-          <h3>El sistema se negó a fabricar un backtest — y eso es correcto</h3>
+          <h3>Preferimos no mostrar un resultado todavía, en vez de inventar uno</h3>
           <p>
-            CHILE-OEF tiene un motor completo de evaluación walk-forward con los tests clásicos
-            CSEP (N/M/S/L, Zechar et al. 2010) y toda la batería de scores registrada. Pero cada
-            fila del catálogo recién ingerido tiene <code>available_at</code> igual al momento
-            real de la ingesta (hoy), no la fecha histórica del sismo — lo único honesto, porque
-            el sistema no tuvo ese dato antes.
+            La forma correcta de saber si un modelo como este funciona es dejarlo hacer
+            pronósticos y, después, comparar contra lo que realmente ocurrió — nunca revisando
+            datos que ya conocemos de antemano, porque eso hace ver cualquier modelo mejor de lo
+            que es en realidad.
           </p>
           <p>
-            Eso significa que un pronóstico emitido con fecha pasada ve el catálogo <strong>vacío</strong>
-            (nada estaba "disponible" todavía), y uno emitido a futuro no tiene resultado observado
-            para comparar. La evaluación prospectiva real solo puede empezar a acumularse desde hoy
-            hacia adelante — no es un hueco de código, es lo que "prospectivo" significa. Verificado
-            directamente: un pronóstico emitido ahora ve 626 eventos previos reales; el mismo llamado
-            dos días atrás ve cero.
+            Como recién cargamos todo el historial de terremotos hoy, el sistema técnicamente
+            "conoce" datos del pasado recién a partir de hoy, no desde el momento en que
+            realmente ocurrieron. Eso hace que cualquier evaluación contra el pasado esté
+            sesgada. Así que, en vez de mostrar un número que no sería confiable, esperamos:
+            la evaluación real recién puede empezar a acumularse desde hoy hacia adelante.
           </p>
+          <details class="tech-details">
+            <summary>Ver la explicación técnica</summary>
+            <p style="margin-top:10px">
+              CHILE-OEF tiene un motor completo de evaluación walk-forward con los tests clásicos
+              CSEP (N/M/S/L, Zechar et al. 2010) y toda la batería de scores registrada. Pero
+              cada fila del catálogo recién ingerido tiene <code>available_at</code> igual al
+              momento real de la ingesta (hoy), no la fecha histórica del sismo — lo único
+              honesto, porque el sistema no tuvo ese dato antes. Verificado directamente: un
+              pronóstico emitido ahora ve 626 eventos previos reales; el mismo llamado dos días
+              atrás ve cero.
+            </p>
+          </details>
         </div>
       </div>
     </section>
