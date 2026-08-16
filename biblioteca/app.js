@@ -192,9 +192,11 @@ function internalReader(b) {
         <a class="meta-mini" href="${link('libro', '&libro=' + b.id)}"><strong>${b.title}</strong></a>
         <div class="reader-tools">
           ${hasAudio(b) ? `<button type="button" id="fr-audio-toggle" class="rtool" title="Escuchar audio flotante" aria-label="Escuchar audio">🎧 Audio</button>` : ''}
+          <button type="button" id="fr-fullscreen" class="rtool" title="Pantalla completa Zen (F)" aria-label="Pantalla completa">⛶ Zen</button>
           <button type="button" id="fr-settings" class="rtool" title="Letra y pantalla" aria-label="Letra y pantalla">Aa</button>
         </div>
       </header>
+      <button type="button" class="zen-exit-hint" id="zen-exit-hint" title="Salir de pantalla completa">✕ Salir Zen</button>
       <div class="reader-settings" id="reader-settings" hidden>
         <div class="set-row">
           <span>Letra</span>
@@ -222,6 +224,7 @@ function internalReader(b) {
           <div class="toc-list" id="toc-list"></div>
         </div>
         <div class="set-links">
+          <button type="button" class="simple-btn" id="fr-fs-btn">⛶ Pantalla completa</button>
           ${hasAudio(b) ? `<a class="simple-btn" href="${link('escuchar', '&libro=' + b.id)}">Página de Audio</a>` : ''}
           <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Guía</a>
           <button type="button" class="simple-btn" id="read-reset">Empezar de nuevo</button>
@@ -888,6 +891,40 @@ function leerLoader(b) {
     });
   }
 
+  // Modo Pantalla Completa Zen
+  const fsBtn = document.getElementById('fr-fullscreen');
+  const fsSetBtn = document.getElementById('fr-fs-btn');
+  const zenHint = document.getElementById('zen-exit-hint');
+
+  function toggleZenMode() {
+    const isZen = stage.classList.toggle('is-zen');
+    fsBtn?.classList.toggle('active', isZen);
+    fsSetBtn?.classList.toggle('active', isZen);
+
+    if (isZen) {
+      if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      }
+    } else {
+      if (document.exitFullscreen && document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+  }
+
+  document.addEventListener('fullscreenchange', () => {
+    const isFS = !!document.fullscreenElement;
+    if (!isFS && stage.classList.contains('is-zen')) {
+      stage.classList.remove('is-zen');
+      fsBtn?.classList.remove('active');
+      fsSetBtn?.classList.remove('active');
+    }
+  });
+
+  fsBtn?.addEventListener('click', toggleZenMode);
+  fsSetBtn?.addEventListener('click', toggleZenMode);
+  zenHint?.addEventListener('click', toggleZenMode);
+
   prevBtn?.addEventListener('click', () => { if (mode !== 'scroll') goPrev(); });
   nextBtn?.addEventListener('click', () => { if (mode !== 'scroll') goNext(); });
   document.getElementById('reader-side-prev')?.addEventListener('click', goPrev);
@@ -901,6 +938,10 @@ function leerLoader(b) {
     if (mode === 'page' || mode === 'book') {
       if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goNext(); e.preventDefault(); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goPrev(); e.preventDefault(); }
+    }
+    if (e.key === 'f' || e.key === 'F') {
+      toggleZenMode();
+      e.preventDefault();
     }
     if (e.key === 't' || e.key === 'T') {
       const order = ['paper', 'sepia', 'night'];
@@ -918,7 +959,13 @@ function leerLoader(b) {
     if (e.key === '-') {
       fr = Math.max(80, fr - 10); applyChrome(); save();
     }
-    if (e.key === 'Escape') location.href = link('catalogo');
+    if (e.key === 'Escape') {
+      if (stage.classList.contains('is-zen')) {
+        toggleZenMode();
+      } else {
+        location.href = link('catalogo');
+      }
+    }
   });
 
   // swipe en móvil
@@ -962,7 +1009,10 @@ function leerLoader(b) {
 
   document.addEventListener('mousemove', e => {
     if (view !== 'leer' || !topbar || !ctrl) return;
-    if (e.clientY < 70 || e.clientY > window.innerHeight - 80) {
+    const nearEdge = (e.clientY < 60 || e.clientY > window.innerHeight - 70);
+    if (stage.classList.contains('is-zen')) {
+      stage.classList.toggle('show-chrome', nearEdge);
+    } else if (nearEdge) {
       topbar.classList.remove('is-hidden');
       ctrl.classList.remove('is-hidden');
     }

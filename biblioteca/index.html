@@ -392,6 +392,36 @@ body.reading-mode .reader-crumb{display:none}
   --read-edge:rgba(36,48,56,.1);
 }
 
+/* Pantalla Completa / Zen Mode */
+.reader-stage.is-zen .reader-topbar{
+  opacity:0;transform:translateY(-100%);pointer-events:none;
+}
+.reader-stage.is-zen.show-chrome .reader-topbar,
+.reader-stage.is-zen:hover .reader-topbar{
+  opacity:1;transform:translateY(0);pointer-events:auto;
+}
+.reader-stage.is-zen .read-ctrl{
+  opacity:0;transform:translateX(-50%) translateY(120%);pointer-events:none;
+}
+.reader-stage.is-zen.show-chrome .read-ctrl,
+.reader-stage.is-zen:hover .read-ctrl{
+  opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;
+}
+.reader-stage.is-zen .reader-body{
+  padding-top:min(8vh, 60px);
+  padding-bottom:min(12vh, 100px);
+}
+.zen-exit-hint{
+  position:fixed;top:14px;right:14px;z-index:42;
+  font:600 .75rem var(--sans);color:var(--read-muted);
+  background:var(--read-chrome);border:1px solid var(--read-edge);
+  padding:6px 12px;border-radius:999px;cursor:pointer;
+  box-shadow:var(--read-shadow);opacity:.4;transition:all .2s ease;
+  display:none;
+}
+.reader-stage.is-zen .zen-exit-hint{display:inline-flex;align-items:center;gap:6px}
+.zen-exit-hint:hover{opacity:1;color:var(--read-accent);border-color:rgba(154,91,50,.35)}
+
 /* Modos de visualización */
 .mode-choice-btn{
   min-height:36px;padding:0 12px;border:1px solid var(--read-edge);
@@ -721,9 +751,9 @@ body.reading-mode .reader-crumb{display:none}
 </style>
 </head>
 <body><div id="app"></div>
-<script src="catalog.js?v=20260816-18"></script>
-<script src="audio.js?v=20260816-18"></script>
+<script src="catalog.js?v=20260816-19"></script>
+<script src="audio.js?v=20260816-19"></script>
 <script src="/js/visitas.js?v=2"></script>
-<script src="app.js?v=20260816-18"></script>
+<script src="app.js?v=20260816-19"></script>
 </body>
 </html>
