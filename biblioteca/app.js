@@ -186,11 +186,12 @@ function internalReader(b) {
     </div></main>`;
   }
   return `<main class="page reader-page"><div class="wrap">
-    <div class="reader-stage theme-paper mode-book" id="reader-stage">
+    <div class="reader-stage theme-paper mode-page" id="reader-stage">
       <header class="reader-topbar" id="reader-topbar">
         <a class="back" href="${link('catalogo')}" title="Volver a los libros">← Libros</a>
         <a class="meta-mini" href="${link('libro', '&libro=' + b.id)}"><strong>${b.title}</strong></a>
         <div class="reader-tools">
+          ${hasAudio(b) ? `<button type="button" id="fr-audio-toggle" class="rtool" title="Escuchar audio flotante" aria-label="Escuchar audio">🎧 Audio</button>` : ''}
           <button type="button" id="fr-settings" class="rtool" title="Letra y pantalla" aria-label="Letra y pantalla">Aa</button>
         </div>
       </header>
@@ -204,7 +205,16 @@ function internalReader(b) {
           <span>Pantalla</span>
           <div class="theme-choice" role="group" aria-label="Pantalla">
             <button type="button" class="theme-choice-btn active" data-theme="paper">Clara</button>
+            <button type="button" class="theme-choice-btn" data-theme="sepia">Sepia</button>
             <button type="button" class="theme-choice-btn" data-theme="night">Noche</button>
+          </div>
+        </div>
+        <div class="set-row">
+          <span>Vista</span>
+          <div class="theme-choice" role="group" aria-label="Modo de lectura">
+            <button type="button" class="mode-choice-btn active" data-mode="page">Página única</button>
+            <button type="button" class="mode-choice-btn" data-mode="book">Doble hoja</button>
+            <button type="button" class="mode-choice-btn" data-mode="scroll">Scroll</button>
           </div>
         </div>
         <div class="reader-toc-inline" id="reader-toc" hidden>
@@ -212,14 +222,16 @@ function internalReader(b) {
           <div class="toc-list" id="toc-list"></div>
         </div>
         <div class="set-links">
-          ${hasAudio(b) ? `<a class="simple-btn" href="${link('escuchar', '&libro=' + b.id)}">Escuchar</a>` : ''}
+          ${hasAudio(b) ? `<a class="simple-btn" href="${link('escuchar', '&libro=' + b.id)}">Página de Audio</a>` : ''}
           <a class="simple-btn" href="${link('guia', '&libro=' + b.id)}">Guía</a>
           <button type="button" class="simple-btn" id="read-reset">Empezar de nuevo</button>
         </div>
       </div>
+      <button type="button" class="reader-side-btn side-prev" id="reader-side-prev" aria-label="Página anterior">‹</button>
+      <button type="button" class="reader-side-btn side-next" id="reader-side-next" aria-label="Página siguiente">›</button>
       <div class="reader-shell" id="reader-shell">
         <div>
-          <article class="reader-body mode-book" id="reader-text" style="--read-size:1.125rem;--read-lh:1.78;--read-measure:38rem">
+          <article class="reader-body mode-page" id="reader-text" style="--read-size:1.125rem;--read-lh:1.78;--read-measure:42rem">
             <p class="reader-loading">Abriendo el libro…</p>
           </article>
           <div class="book-desk" id="book-desk" aria-label="Libro abierto">
@@ -237,9 +249,29 @@ function internalReader(b) {
               </div>
             </div>
           </div>
-          <p class="book-hint" id="book-hint">Toca el borde de la página para pasar</p>
+          <p class="book-hint" id="book-hint">Toca las flechas o los bordes para pasar</p>
         </div>
       </div>
+      ${hasAudio(b) ? `
+      <div class="reader-audio-bar" id="reader-audio-bar" hidden>
+        <audio id="fr-audio-el" preload="metadata"></audio>
+        <div class="rab-row">
+          <div class="rab-info" id="rab-info"><strong>Audio</strong></div>
+          <div class="rab-controls">
+            <button type="button" class="rab-btn" id="rab-back15" title="Rebobinar 15s">−15s</button>
+            <button type="button" class="rab-btn play-btn" id="rab-play" title="Reproducir / Pausa">▶</button>
+            <button type="button" class="rab-btn" id="rab-fwd15" title="Avanzar 15s">+15s</button>
+            <button type="button" class="rab-btn" id="rab-speed" title="Velocidad">1x</button>
+            <button type="button" class="rab-btn" id="rab-close" title="Ocultar audio">✕</button>
+          </div>
+        </div>
+        <div class="rab-progress">
+          <span id="rab-cur">0:00</span>
+          <input type="range" id="rab-seek" min="0" max="1000" value="0" aria-label="Avance del audio">
+          <span id="rab-dur">0:00</span>
+        </div>
+      </div>
+      ` : ''}
       <div class="read-ctrl" id="read-ctrl" hidden>
         <button type="button" class="read-btn" id="read-prev" aria-label="Anterior">‹</button>
         <div class="read-mid">
@@ -432,12 +464,12 @@ function leerLoader(b) {
   const storageKey = 'hojear-read-v1:' + b.id;
   let pages = [];
   let rawParas = [];
-  let idx = 0; // índice de hoja izquierda del pliego (par)
+  let idx = 0; // índice de página o pliego
   let fr = 100;
   let lh = 178;
-  let measure = 38;
+  let measure = 42;
   let theme = 'paper';
-  let mode = 'book'; // book | scroll
+  let mode = 'page'; // page (Focus Única) | book (Doble hoja) | scroll (Scroll)
   let chromeTimer = null;
   let flipping = false;
   let touchX = null;
@@ -455,7 +487,7 @@ function leerLoader(b) {
     return window.innerWidth < 860;
   }
   function spreadStep() {
-    return isMobileBook() ? 1 : 2;
+    return (mode === 'book' && !isMobileBook()) ? 2 : 1;
   }
   function applyChrome() {
     const base = 1.125 * (fr / 100);
@@ -467,12 +499,15 @@ function leerLoader(b) {
       bookOpen.style.setProperty('--read-lh', (lh / 100).toFixed(2));
     }
     if (stage) {
-      stage.className = 'reader-stage theme-' + theme + ' mode-book';
+      stage.className = 'reader-stage theme-' + theme + ' mode-' + mode;
     }
-    art.classList.remove('mode-scroll');
-    art.classList.add('mode-book');
+    art.classList.remove('mode-scroll', 'mode-book', 'mode-page');
+    art.classList.add('mode-' + mode);
     document.querySelectorAll('.theme-choice-btn').forEach(p => {
       p.classList.toggle('active', p.dataset.theme === theme);
+    });
+    document.querySelectorAll('.mode-choice-btn').forEach(p => {
+      p.classList.toggle('active', p.dataset.mode === mode);
     });
   }
   function save() {
@@ -484,7 +519,6 @@ function leerLoader(b) {
     try {
       const cur = localStorage.getItem(storageKey);
       if (cur) return JSON.parse(cur);
-      // Migrar progreso de la marca anterior (Umbral)
       const legacyKeys = ['umbral-read-v3:' + b.id, 'Umbral-read-v3:' + b.id];
       for (const k of legacyKeys) {
         const old = localStorage.getItem(k);
@@ -527,7 +561,6 @@ function leerLoader(b) {
     if (!bookOpen || flipping) return Promise.resolve();
     flipping = true;
     bookOpen.classList.remove('is-flipping-next', 'is-flipping-prev');
-    // force reflow
     void bookOpen.offsetWidth;
     bookOpen.classList.add(dir === 'next' ? 'is-flipping-next' : 'is-flipping-prev');
     return new Promise(res => {
@@ -538,48 +571,51 @@ function leerLoader(b) {
       }, 480);
     });
   }
-  function renderBook(i, withAnim) {
-    const step = spreadStep();
+  function renderContent(i, withAnim) {
+    const isTwoCol = (mode === 'book' && !isMobileBook());
+    const step = isTwoCol ? 2 : 1;
     const maxIdx = Math.max(0, pages.length - 1);
-    // en desktop idx es par (hoja izquierda)
-    if (step === 2) i = Math.floor(i / 2) * 2;
+    if (isTwoCol) i = Math.floor(i / 2) * 2;
     idx = Math.max(0, Math.min(maxIdx, i));
 
     const paint = () => {
-      if (isMobileBook()) {
-        // una sola hoja (derecha visible)
-        if (leafL) leafL.innerHTML = '';
-        if (leafR) leafR.innerHTML = pageHtml(idx, true);
-        if (numL) numL.textContent = '';
-        if (numR) numR.textContent = String(idx + 1);
-      } else {
-        if (leafL) leafL.innerHTML = pageHtml(idx, true);
-        if (leafR) leafR.innerHTML = pageHtml(idx + 1, true);
-        if (numL) numL.textContent = pages[idx] ? String(idx + 1) : '';
-        if (numR) numR.textContent = pages[idx + 1] ? String(idx + 2) : '';
+      if (mode === 'page') {
+        art.innerHTML = pageHtml(idx, true);
+      } else if (mode === 'book') {
+        if (isMobileBook()) {
+          if (leafL) leafL.innerHTML = '';
+          if (leafR) leafR.innerHTML = pageHtml(idx, true);
+          if (numL) numL.textContent = '';
+          if (numR) numR.textContent = String(idx + 1);
+        } else {
+          if (leafL) leafL.innerHTML = pageHtml(idx, true);
+          if (leafR) leafR.innerHTML = pageHtml(idx + 1, true);
+          if (numL) numL.textContent = pages[idx] ? String(idx + 1) : '';
+          if (numR) numR.textContent = pages[idx + 1] ? String(idx + 2) : '';
+        }
       }
       updateProgress();
       window.scrollTo({ top: 0, behavior: 'auto' });
       save();
     };
 
-    if (withAnim) {
+    if (withAnim && mode === 'book') {
       animateFlip(withAnim).then(paint);
     } else {
       paint();
     }
   }
   function goNext() {
-    if (mode !== 'book' || flipping) return;
-    const step = spreadStep();
+    if (mode === 'scroll' || flipping) return;
+    const step = (mode === 'book' && !isMobileBook()) ? 2 : 1;
     if (idx + step >= pages.length) return;
-    renderBook(idx + step, 'next');
+    renderContent(idx + step, 'next');
   }
   function goPrev() {
-    if (mode !== 'book' || flipping) return;
-    const step = spreadStep();
+    if (mode === 'scroll' || flipping) return;
+    const step = (mode === 'book' && !isMobileBook()) ? 2 : 1;
     if (idx <= 0) return;
-    renderBook(idx - step, 'prev');
+    renderContent(idx - step, 'prev');
   }
   function renderScroll() {
     let h = '<div class="p-cover"><h2 class="p-chapter">' + esc(b.title) + '</h2><p class="p-author">' + esc(b.author) + ' · ' + esc(String(b.year)) + '</p></div>';
@@ -603,25 +639,40 @@ function leerLoader(b) {
   }
   function updateProgress() {
     if (!pages.length) return;
+    const sidePrev = document.getElementById('reader-side-prev');
+    const sideNext = document.getElementById('reader-side-next');
     prevBtn.style.visibility = 'visible';
     nextBtn.style.visibility = 'visible';
-    if (mode === 'book') {
-      const step = spreadStep();
-      const shown = isMobileBook() ? 1 : Math.min(2, pages.length - idx);
-      const end = Math.min(pages.length, idx + (isMobileBook() ? 1 : 2));
-      metaEl.textContent = isMobileBook()
-        ? (idx + 1) + ' / ' + pages.length
-        : (idx + 1) + (pages[idx + 1] ? '–' + (idx + 2) : '') + ' / ' + pages.length;
+    const totalWords = rawParas.reduce((acc, p) => acc + (p.trim().split(/\s+/).length || 0), 0);
+    const estMin = Math.max(1, Math.ceil(totalWords / 200));
+
+    if (mode === 'page' || mode === 'book') {
+      const isTwoCol = (mode === 'book' && !isMobileBook());
+      const step = isTwoCol ? 2 : 1;
+      const end = Math.min(pages.length, idx + step);
+      metaEl.textContent = (isTwoCol
+        ? (idx + 1) + (pages[idx + 1] ? '–' + (idx + 2) : '') + ' / ' + pages.length
+        : (idx + 1) + ' / ' + pages.length) + ' · ~' + estMin + ' min';
       fill.style.width = pages.length > 1 ? Math.round((end / pages.length) * 100) + '%' : '100%';
       prevBtn.disabled = idx <= 0;
       nextBtn.disabled = idx + step >= pages.length;
+      if (sidePrev) {
+        sidePrev.style.display = mode === 'page' ? 'flex' : 'none';
+        sidePrev.disabled = idx <= 0;
+      }
+      if (sideNext) {
+        sideNext.style.display = mode === 'page' ? 'flex' : 'none';
+        sideNext.disabled = idx + step >= pages.length;
+      }
     } else {
       const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const pct = Math.min(100, Math.round((window.scrollY / max) * 100));
-      metaEl.textContent = pct + '% leído';
+      metaEl.textContent = pct + '% leído · ~' + estMin + ' min';
       fill.style.width = pct + '%';
       prevBtn.style.visibility = 'hidden';
       nextBtn.style.visibility = 'hidden';
+      if (sidePrev) sidePrev.style.display = 'none';
+      if (sideNext) sideNext.style.display = 'none';
     }
   }
   function buildToc() {
@@ -649,7 +700,7 @@ function leerLoader(b) {
           acc += pages[p].length;
           pageFor = p;
         }
-        renderBook(pageFor, false);
+        renderContent(pageFor, false);
         if (settings) {
           settings.setAttribute('hidden', '');
           settings.classList.remove('open');
@@ -660,18 +711,16 @@ function leerLoader(b) {
   }
   function showContent() {
     if (mode === 'scroll') renderScroll();
-    else renderBook(idx, false);
+    else renderContent(idx, false);
   }
 
   fetch('libros/' + encodeURIComponent(b.id) + '.txt')
     .then(r => { if (!r.ok) throw new Error(String(r.status)); return r.text(); })
     .then(t => {
-      // Normalizar y partir en bloques; párrafos gigantes se fragmentan (evita "libros" de 1 hoja)
       const CHARS = isMobileBook() ? 1600 : 1400;
       const splitLong = (block) => {
         if (block.length <= CHARS) return [block];
         const out = [];
-        // preferir cortes por oración / salto de línea
         const parts = block.split(/(?<=[\.\!\?…»"'])\s+|\n+/).map(s => s.trim()).filter(Boolean);
         let buf = '';
         const flush = () => { if (buf) { out.push(buf); buf = ''; } };
@@ -711,8 +760,8 @@ function leerLoader(b) {
       const saved = loadSaved();
       if (saved) {
         if (typeof saved.fr === 'number') fr = saved.fr;
-        theme = saved.theme === 'night' ? 'night' : 'paper';
-        mode = 'book';
+        theme = (saved.theme === 'night' || saved.theme === 'sepia') ? saved.theme : 'paper';
+        mode = (saved.mode === 'book' || saved.mode === 'scroll' || saved.mode === 'page') ? saved.mode : 'page';
         if (typeof saved.page === 'number') idx = saved.page;
       }
       applyChrome();
@@ -728,16 +777,146 @@ function leerLoader(b) {
       if (leafR) leafR.innerHTML = '<p class="reader-loading">No se pudo cargar el texto.</p>';
     });
 
-  prevBtn?.addEventListener('click', () => { if (mode === 'book') goPrev(); });
-  nextBtn?.addEventListener('click', () => { if (mode === 'book') goNext(); });
+  // Mini reproductor flotante dentro del lector
+  const packAudio = audioPack(b.id);
+  const audioToggle = document.getElementById('fr-audio-toggle');
+  const audioBar = document.getElementById('reader-audio-bar');
+  const frAudio = document.getElementById('fr-audio-el');
+  const rabPlay = document.getElementById('rab-play');
+  const rabBack15 = document.getElementById('rab-back15');
+  const rabFwd15 = document.getElementById('rab-fwd15');
+  const rabSpeed = document.getElementById('rab-speed');
+  const rabClose = document.getElementById('rab-close');
+  const rabInfo = document.getElementById('rab-info');
+  const rabSeek = document.getElementById('rab-seek');
+  const rabCur = document.getElementById('rab-cur');
+  const rabDur = document.getElementById('rab-dur');
+
+  if (packAudio && frAudio && audioBar) {
+    const audioKey = 'hojear-audio-v1:' + b.id;
+    let trackIdx = 0;
+    let seeking = false;
+    const speeds = [1, 1.25, 1.5, 2, 0.75];
+    let speedIdx = 0;
+
+    function saveAudioState() {
+      try { localStorage.setItem(audioKey, JSON.stringify({ i: trackIdx, t: frAudio.currentTime || 0 })); } catch (_) {}
+    }
+
+    function loadTrack(n, autoPlay) {
+      trackIdx = Math.max(0, Math.min(packAudio.tracks.length - 1, n));
+      const tr = packAudio.tracks[trackIdx];
+      frAudio.src = tr.u;
+      frAudio.playbackRate = speeds[speedIdx];
+      if (rabInfo) rabInfo.innerHTML = `<strong>Cap. ${trackIdx + 1}/${packAudio.tracks.length}</strong> ${esc(tr.t)}`;
+      if (rabDur) rabDur.textContent = fmtTime(tr.s);
+      if (autoPlay) frAudio.play().catch(() => {});
+      saveAudioState();
+    }
+
+    try {
+      const savedA = JSON.parse(localStorage.getItem(audioKey) || 'null');
+      if (savedA && typeof savedA.i === 'number') trackIdx = savedA.i;
+      loadTrack(trackIdx, false);
+      if (savedA && typeof savedA.t === 'number' && savedA.t > 2) {
+        const jump = () => { frAudio.currentTime = savedA.t; frAudio.removeEventListener('loadedmetadata', jump); };
+        frAudio.addEventListener('loadedmetadata', jump);
+      }
+    } catch (_) { loadTrack(0, false); }
+
+    audioToggle?.addEventListener('click', () => {
+      const isHidden = audioBar.hasAttribute('hidden');
+      if (isHidden) {
+        audioBar.removeAttribute('hidden');
+        audioToggle.classList.add('active');
+        if (frAudio.paused) frAudio.play().catch(() => {});
+      } else {
+        audioBar.setAttribute('hidden', '');
+        audioToggle.classList.remove('active');
+      }
+    });
+
+    rabClose?.addEventListener('click', () => {
+      audioBar.setAttribute('hidden', '');
+      audioToggle?.classList.remove('active');
+      frAudio.pause();
+    });
+
+    rabPlay?.addEventListener('click', () => {
+      if (frAudio.paused) frAudio.play().catch(() => {});
+      else frAudio.pause();
+    });
+
+    frAudio.addEventListener('play', () => { if (rabPlay) rabPlay.textContent = '⏸'; audioToggle?.classList.add('active'); });
+    frAudio.addEventListener('pause', () => { if (rabPlay) rabPlay.textContent = '▶'; saveAudioState(); });
+
+    frAudio.addEventListener('timeupdate', () => {
+      if (seeking) return;
+      const d = frAudio.duration || packAudio.tracks[trackIdx].s || 0;
+      if (rabSeek && d) rabSeek.value = String(Math.round((frAudio.currentTime / d) * 1000));
+      if (rabCur) rabCur.textContent = fmtTime(frAudio.currentTime);
+      if (rabDur && d) rabDur.textContent = fmtTime(d);
+    });
+
+    rabSeek?.addEventListener('input', () => { seeking = true; });
+    rabSeek?.addEventListener('change', () => {
+      const d = frAudio.duration || packAudio.tracks[trackIdx].s || 0;
+      if (d) frAudio.currentTime = (parseInt(rabSeek.value, 10) / 1000) * d;
+      seeking = false;
+      saveAudioState();
+    });
+
+    rabBack15?.addEventListener('click', () => {
+      frAudio.currentTime = Math.max(0, frAudio.currentTime - 15);
+      saveAudioState();
+    });
+    rabFwd15?.addEventListener('click', () => {
+      frAudio.currentTime = Math.min(frAudio.duration || 0, frAudio.currentTime + 15);
+      saveAudioState();
+    });
+
+    rabSpeed?.addEventListener('click', () => {
+      speedIdx = (speedIdx + 1) % speeds.length;
+      const spd = speeds[speedIdx];
+      frAudio.playbackRate = spd;
+      rabSpeed.textContent = spd + 'x';
+    });
+
+    frAudio.addEventListener('ended', () => {
+      if (trackIdx + 1 < packAudio.tracks.length) loadTrack(trackIdx + 1, true);
+      else saveAudioState();
+    });
+  }
+
+  prevBtn?.addEventListener('click', () => { if (mode !== 'scroll') goPrev(); });
+  nextBtn?.addEventListener('click', () => { if (mode !== 'scroll') goNext(); });
+  document.getElementById('reader-side-prev')?.addEventListener('click', goPrev);
+  document.getElementById('reader-side-next')?.addEventListener('click', goNext);
   document.getElementById('book-hit-left')?.addEventListener('click', goPrev);
   document.getElementById('book-hit-right')?.addEventListener('click', goNext);
 
   document.addEventListener('keydown', function kd(e) {
     if (view !== 'leer') return;
-    if (mode === 'book') {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+    if (mode === 'page' || mode === 'book') {
       if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { goNext(); e.preventDefault(); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goPrev(); e.preventDefault(); }
+    }
+    if (e.key === 't' || e.key === 'T') {
+      const order = ['paper', 'sepia', 'night'];
+      theme = order[(order.indexOf(theme) + 1) % order.length];
+      applyChrome();
+      save();
+    }
+    if ((e.key === 'm' || e.key === 'M' || e.key === 'a' || e.key === 'A') && hasAudio(b)) {
+      document.getElementById('fr-audio-toggle')?.click();
+      e.preventDefault();
+    }
+    if (e.key === '+' || e.key === '=') {
+      fr = Math.min(150, fr + 10); applyChrome(); save();
+    }
+    if (e.key === '-') {
+      fr = Math.max(80, fr - 10); applyChrome(); save();
     }
     if (e.key === 'Escape') location.href = link('catalogo');
   });
@@ -746,17 +925,23 @@ function leerLoader(b) {
   bookOpen?.addEventListener('touchstart', e => {
     touchX = e.changedTouches[0].clientX;
   }, { passive: true });
-  bookOpen?.addEventListener('touchend', e => {
-    if (touchX == null || mode !== 'book') return;
+  art.addEventListener('touchstart', e => {
+    if (mode === 'page') touchX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  
+  const handleTouchEnd = e => {
+    if (touchX == null || mode === 'scroll') return;
     const dx = e.changedTouches[0].clientX - touchX;
     touchX = null;
     if (Math.abs(dx) < 48) return;
     if (dx < 0) goNext();
     else goPrev();
-  }, { passive: true });
+  };
+  bookOpen?.addEventListener('touchend', handleTouchEnd, { passive: true });
+  art.addEventListener('touchend', handleTouchEnd, { passive: true });
 
   window.addEventListener('resize', () => {
-    if (view === 'leer' && mode === 'book') renderBook(idx, false);
+    if (view === 'leer' && mode !== 'scroll') renderContent(idx, false);
   });
 
   window.addEventListener('scroll', () => {
@@ -794,14 +979,24 @@ function leerLoader(b) {
   });
   document.querySelectorAll('.theme-choice-btn').forEach(pill => {
     pill.addEventListener('click', () => {
-      theme = pill.dataset.theme === 'night' ? 'night' : 'paper';
+      const t = pill.dataset.theme;
+      theme = (t === 'night' || t === 'sepia') ? t : 'paper';
       applyChrome();
+      save();
+    });
+  });
+  document.querySelectorAll('.mode-choice-btn').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const m = pill.dataset.mode;
+      mode = (m === 'book' || m === 'scroll' || m === 'page') ? m : 'page';
+      applyChrome();
+      showContent();
       save();
     });
   });
   document.getElementById('read-reset')?.addEventListener('click', () => {
     try { localStorage.removeItem(storageKey); } catch (_) {}
-    fr = 100; lh = 178; measure = 38; theme = 'paper'; mode = 'book'; idx = 0;
+    fr = 100; lh = 178; measure = 42; theme = 'paper'; mode = 'page'; idx = 0;
     applyChrome();
     showContent();
     window.scrollTo(0, 0);
@@ -924,8 +1119,11 @@ function listenPage(b) {
       <input id="au-seek" class="au-seek" type="range" min="0" max="1000" value="0" aria-label="Avance">
       <div class="au-times"><span id="au-cur">0:00</span><span id="au-dur">0:00</span></div>
       <div class="au-skip">
-        <button type="button" class="button alt" id="au-prev">Anterior</button>
-        <button type="button" class="button alt" id="au-next">Siguiente</button>
+        <button type="button" class="button alt" id="au-prev">« Anterior</button>
+        <button type="button" class="button alt" id="au-back15">−15s</button>
+        <button type="button" class="button alt" id="au-fwd15">+15s</button>
+        <button type="button" class="button alt" id="au-next">Siguiente »</button>
+        <button type="button" class="au-speed-btn" id="au-speed" title="Velocidad de reproducción">1x</button>
       </div>
     </div>
     <p class="au-count">${n} ${n === 1 ? 'capítulo' : 'capítulos'}</p>
@@ -947,11 +1145,16 @@ function bindListen(b) {
   const curEl = document.getElementById('au-cur');
   const durEl = document.getElementById('au-dur');
   const list = document.getElementById('au-list');
+  const back15 = document.getElementById('au-back15');
+  const fwd15 = document.getElementById('au-fwd15');
+  const speedBtn = document.getElementById('au-speed');
   if (!pack || !audio || !playBtn || !list) return;
   const tracks = pack.tracks;
   const key = 'hojear-audio-v1:' + b.id;
   let i = 0;
   let seeking = false;
+  const speeds = [1, 1.25, 1.5, 2, 0.75];
+  let speedIdx = 0;
 
   function paintList() {
     list.innerHTML = tracks.map((tr, n) =>
@@ -976,6 +1179,7 @@ function bindListen(b) {
     i = Math.max(0, Math.min(tracks.length - 1, n));
     const tr = tracks[i];
     audio.src = tr.u;
+    audio.playbackRate = speeds[speedIdx];
     audio.load();
     label();
     if (durEl) durEl.textContent = fmtTime(tr.s);
@@ -983,6 +1187,8 @@ function bindListen(b) {
       audio.play().catch(() => {});
     }
     save();
+    const activeItem = list.querySelector('.au-item.active');
+    if (activeItem) activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   try {
@@ -1013,6 +1219,24 @@ function bindListen(b) {
       }
     } else audio.pause();
   });
+
+  back15?.addEventListener('click', () => {
+    audio.currentTime = Math.max(0, audio.currentTime - 15);
+    save();
+  });
+
+  fwd15?.addEventListener('click', () => {
+    audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 15);
+    save();
+  });
+
+  speedBtn?.addEventListener('click', () => {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    const spd = speeds[speedIdx];
+    audio.playbackRate = spd;
+    speedBtn.textContent = spd + 'x';
+  });
+
   document.getElementById('au-prev')?.addEventListener('click', () => {
     if (audio.currentTime > 3) { audio.currentTime = 0; save(); }
     else load(i - 1, true);
@@ -1057,6 +1281,8 @@ function bindListen(b) {
       navigator.mediaSession.setActionHandler('pause', () => audio.pause());
       navigator.mediaSession.setActionHandler('previoustrack', () => load(i - 1, true));
       navigator.mediaSession.setActionHandler('nexttrack', () => load(i + 1, true));
+      navigator.mediaSession.setActionHandler('seekbackward', () => { audio.currentTime = Math.max(0, audio.currentTime - 15); save(); });
+      navigator.mediaSession.setActionHandler('seekforward', () => { audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 15); save(); });
     } catch (_) {}
   }
 }
