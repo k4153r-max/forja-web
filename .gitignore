@@ -4,3 +4,8 @@ __pycache__/
 
 keepalive/.wrangler/
 
+.superpowers/
+
+task_plan.md
+findings.md
+progress.md
