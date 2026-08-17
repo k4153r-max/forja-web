@@ -140,6 +140,14 @@
       width:8px; height:8px; border-radius:50%; background: var(--oef);
     }
 
+    .city-list{ display:flex; flex-direction:column; gap:2px; margin-top:10px; max-height: 340px; overflow:auto; }
+    .city-row{
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      width:100%; background:transparent; border:0; border-bottom:1px solid var(--rule-dim);
+      color:inherit; font: inherit; padding: 8px 2px; cursor:pointer; text-align:left;
+    }
+    .city-row:hover{ color:#fff; }
+    .city-row .city-chance{ font-variant-numeric: tabular-nums; color:#ffc27a; font-weight:700; }
     .zone-list{ display:flex; flex-direction:column; gap:11px; margin-top: 6px; }
     .zone-row{ display:flex; align-items:center; gap:12px; }
     .zone-row .zone-bar-track{ flex:1; height:11px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden; }
@@ -277,6 +285,14 @@
             </div>
             <div>
               <div class="oef-card">
+                <h3 style="margin-bottom:4px">Por ciudad</h3>
+                <p class="plain-note" style="margin-top:0">
+                  Estimación del modelo a 40 km de cada ciudad, para el mismo período del mapa.
+                  <strong>No es un porcentaje oficial de riesgo.</strong>
+                </p>
+                <div class="city-list" id="city-list"></div>
+              </div>
+              <div class="oef-card" style="margin-top:16px">
                 <h3 style="margin-bottom:4px">De norte a sur</h3>
                 <p class="plain-note" style="margin-top:0">Comparado entre zonas de Chile, de más a menos.</p>
                 <div class="zone-list" id="fc-zone-list"></div>
@@ -412,6 +428,6 @@
 
   <script src="/js/site.js?v=3"></script>
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="/chile-oef/app.js?v=20260817-map3"></script>
+  <script src="/chile-oef/app.js?v=20260817-cities"></script>
 </body>
 </html>

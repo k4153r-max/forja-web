@@ -41,6 +41,7 @@
 
   let map = null;
   let gridLayer = null;
+  let placeLayer = null;
 
   const fmtInt = (n) => new Intl.NumberFormat("es-CL").format(n);
   const fmtDate = (iso) =>
@@ -76,6 +77,14 @@
   function zoneForLatitude(lat) {
     const zone = ZONES.find((item) => lat <= item.maxLat && lat > item.minLat);
     return zone ? zone.name : "Zona Austral";
+  }
+
+  function formatChance(probability) {
+    if (probability == null) return "sin dato";
+    const percent = probability * 100;
+    if (percent >= 1) return percent.toFixed(1).replace(".", ",") + "%";
+    if (percent >= 0.01) return percent.toFixed(2).replace(".", ",") + "%";
+    return "menos de 0,01%";
   }
 
   function intensityLabel(intensity) {
@@ -376,6 +385,56 @@
     });
   }
 
+  function paintPlaces(places) {
+    const leafletMap = ensureMap();
+    if (placeLayer) {
+      leafletMap.removeLayer(placeLayer);
+      placeLayer = null;
+    }
+    placeLayer = L.layerGroup();
+    for (const place of places) {
+      if (place.probability_at_least_one == null) continue;
+      const marker = L.circleMarker([place.latitude, place.longitude], {
+        radius: 5,
+        weight: 1,
+        color: "#f4f1ea",
+        fillColor: "#c4894a",
+        fillOpacity: 0.9,
+      });
+      marker.bindTooltip(
+        `<strong>${place.name}</strong><br>${formatChance(place.probability_at_least_one)}`,
+        { direction: "top", offset: [0, -6], opacity: 0.95 }
+      );
+      marker.on("click", () => leafletMap.setView([place.latitude, place.longitude], 8));
+      marker.addTo(placeLayer);
+    }
+    placeLayer.addTo(leafletMap);
+  }
+
+  function renderPlaces(payload) {
+    const list = document.getElementById("city-list");
+    if (!list) return;
+    const places = [...(payload.places || [])].sort((a, b) => {
+      const pa = a.probability_at_least_one ?? -1;
+      const pb = b.probability_at_least_one ?? -1;
+      return pb - pa;
+    });
+    list.innerHTML = "";
+    for (const place of places) {
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = "city-row";
+      row.innerHTML = `<span class="city-name"></span><span class="city-chance"></span>`;
+      row.querySelector(".city-name").textContent = place.name;
+      row.querySelector(".city-chance").textContent = formatChance(place.probability_at_least_one);
+      row.addEventListener("click", () => {
+        if (!map) return;
+        map.setView([place.latitude, place.longitude], 8);
+      });
+      list.appendChild(row);
+    }
+  }
+
   function renderZones(cells) {
     const mass = new Map(ZONES.map((zone) => [zone.name, 0]));
     for (const cell of cells) {
@@ -456,6 +515,17 @@
     document.getElementById("forecast-content").style.display = "block";
     paintHeat(cells);
     renderZones(cells);
+    try {
+      const places = await apiGet(`/forecasts/${runId}/places`, {
+        magnitude_lower: detail.selected_magnitude_lower,
+      });
+      renderPlaces(places);
+      paintPlaces(places.places || []);
+    } catch (error) {
+      const list = document.getElementById("city-list");
+      if (list) list.textContent = "No se pudieron cargar las ciudades.";
+      console.warn("chile-oef places", error);
+    }
   }
 
   async function initForecast() {
