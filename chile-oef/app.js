@@ -40,7 +40,7 @@
   };
 
   let map = null;
-  let heatLayer = null;
+  let gridLayer = null;
 
   const fmtInt = (n) => new Intl.NumberFormat("es-CL").format(n);
   const fmtDate = (iso) =>
@@ -248,17 +248,80 @@
     }
   }
 
-  function heatPoints(cells) {
-    if (!cells.length) return [];
-    const logs = cells.map((cell) => Math.log10(cell.probability_at_least_one + 1e-12));
-    const minLog = Math.min(...logs);
-    const maxLog = Math.max(...logs);
-    const span = Math.max(maxLog - minLog, 0.2);
-    return cells.map((cell, index) => {
-      const t = (logs[index] - minLog) / span;
-      return [cell.center_latitude, cell.center_longitude, 0.18 + t * 0.82];
-    });
+  function rankedCells(cells) {
+    const sorted = cells
+      .filter((cell) => cell.probability_at_least_one > 0)
+      .sort((a, b) => a.probability_at_least_one - b.probability_at_least_one);
+    return sorted.map((cell, index) => ({
+      cell,
+      rank: sorted.length < 2 ? 1 : index / (sorted.length - 1),
+    }));
   }
+
+  const ActivityLayer = L.Layer.extend({
+    initialize(cells) {
+      this._cells = cells || [];
+    },
+    onAdd(leafletMap) {
+      this._map = leafletMap;
+      this._canvas = L.DomUtil.create("canvas", "oef-grid-canvas");
+      this._canvas.style.position = "absolute";
+      this._canvas.style.pointerEvents = "none";
+      leafletMap.getPanes().overlayPane.appendChild(this._canvas);
+      this._onReset = () => this._redraw();
+      leafletMap.on("moveend zoom viewreset resize", this._onReset);
+      this._redraw();
+    },
+    onRemove(leafletMap) {
+      leafletMap.off("moveend zoom viewreset resize", this._onReset);
+      if (this._canvas) L.DomUtil.remove(this._canvas);
+      this._canvas = null;
+    },
+    setCells(next) {
+      this._cells = next || [];
+      this._redraw();
+    },
+    _redraw() {
+      const leafletMap = this._map;
+      if (!leafletMap || !this._canvas) return;
+      const size = leafletMap.getSize();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const topLeft = leafletMap.containerPointToLayerPoint([0, 0]);
+      L.DomUtil.setPosition(this._canvas, topLeft);
+      this._canvas.width = Math.round(size.x * dpr);
+      this._canvas.height = Math.round(size.y * dpr);
+      this._canvas.style.width = size.x + "px";
+      this._canvas.style.height = size.y + "px";
+      const ctx = this._canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, size.x, size.y);
+
+      const ranked = rankedCells(this._cells).filter((item) => item.rank >= 0.55);
+      for (const item of ranked) {
+        const { cell, rank } = item;
+        const t = (rank - 0.55) / 0.45;
+        const half = 0.055;
+        const a = leafletMap.latLngToContainerPoint([
+          cell.center_latitude + half,
+          cell.center_longitude - half,
+        ]);
+        const b = leafletMap.latLngToContainerPoint([
+          cell.center_latitude - half,
+          cell.center_longitude + half,
+        ]);
+        const x = Math.min(a.x, b.x);
+        const y = Math.min(a.y, b.y);
+        const w = Math.max(1.6, Math.abs(b.x - a.x));
+        const h = Math.max(1.6, Math.abs(b.y - a.y));
+        let fill;
+        if (t < 0.45) fill = `rgba(80,140,180,${0.18 + t * 0.25})`;
+        else if (t < 0.78) fill = `rgba(196,137,74,${0.32 + t * 0.28})`;
+        else fill = `rgba(255,190,110,${0.55 + (t - 0.78) * 0.8})`;
+        ctx.fillStyle = fill;
+        ctx.fillRect(x, y, w, h);
+      }
+    },
+  });
 
   function ensureMap() {
     if (map) {
@@ -274,7 +337,7 @@
       minZoom: 4,
       maxZoom: 9,
       maxBounds: CHILE_MAX_BOUNDS,
-      maxBoundsViscosity: 0.85,
+      maxBoundsViscosity: 0.9,
     });
     L.control.zoom({ position: "bottomright" }).addTo(map);
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
@@ -294,47 +357,35 @@
     };
     legend.addTo(map);
 
-    map.fitBounds(CHILE_BOUNDS, { padding: [18, 18] });
+    map.fitBounds(CHILE_BOUNDS, { padding: [10, 10] });
     return map;
   }
 
   function paintHeat(cells) {
     const leafletMap = ensureMap();
-    const points = heatPoints(cells);
-    if (heatLayer) {
-      leafletMap.removeLayer(heatLayer);
-      heatLayer = null;
+    if (!gridLayer) {
+      gridLayer = new ActivityLayer(cells);
+      gridLayer.addTo(leafletMap);
+    } else {
+      gridLayer.setCells(cells);
     }
-    if (window.L && L.heatLayer && points.length) {
-      heatLayer = L.heatLayer(points, {
-        radius: 22,
-        blur: 18,
-        maxZoom: 7,
-        minOpacity: 0.28,
-        gradient: {
-          0.15: "#1a3348",
-          0.4: "#3d7ea6",
-          0.62: "#6ba3c9",
-          0.8: "#c4894a",
-          1: "#ffc27a",
-        },
-      });
-      heatLayer.addTo(leafletMap);
-    }
-    requestAnimationFrame(() => leafletMap.invalidateSize());
+    requestAnimationFrame(() => {
+      leafletMap.invalidateSize();
+      leafletMap.fitBounds(CHILE_BOUNDS, { padding: [10, 10] });
+      if (gridLayer && gridLayer._redraw) gridLayer._redraw();
+    });
   }
 
   function renderZones(cells) {
-    const zoneMax = new Map();
+    const mass = new Map(ZONES.map((zone) => [zone.name, 0]));
     for (const cell of cells) {
       const zone = zoneForLatitude(cell.center_latitude);
-      const current = zoneMax.get(zone) || 0;
-      if (cell.probability_at_least_one > current) zoneMax.set(zone, cell.probability_at_least_one);
+      mass.set(zone, (mass.get(zone) || 0) + cell.probability_at_least_one);
     }
     const ranked = ZONES.map((zone) => zone.name)
-      .filter((name) => zoneMax.has(name))
-      .sort((a, b) => zoneMax.get(b) - zoneMax.get(a));
-    const maxZoneProb = ranked.length ? zoneMax.get(ranked[0]) : 0;
+      .filter((name) => mass.get(name) > 0)
+      .sort((a, b) => mass.get(b) - mass.get(a));
+    const maxMass = ranked.length ? mass.get(ranked[0]) : 0;
     const zoneList = document.getElementById("fc-zone-list");
     zoneList.innerHTML = "";
     if (!ranked.length) {
@@ -345,7 +396,7 @@
       return;
     }
     for (const name of ranked) {
-      const intensity = maxZoneProb > 0 ? zoneMax.get(name) / maxZoneProb : 0;
+      const intensity = maxMass > 0 ? mass.get(name) / maxMass : 0;
       const row = document.createElement("div");
       row.className = "zone-row";
       row.innerHTML =
