@@ -4,15 +4,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Actividad sísmica en Chile · CHILE-OEF · ETEMEN</title>
-  <meta name="description" content="Un mapa sencillo de investigación: en qué zonas de Chile el modelo espera más sismos en los próximos días. No es una alerta ni predice terremotos.">
+  <meta name="description" content="Investigación experimental de pronóstico operacional de sismos en Chile. Mapa de actividad esperada a 7 días con datos USGS. No es una alerta y no reemplaza al CSN ni a SENAPRED.">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#0B0B0C">
+  <meta name="author" content="ETEMEN">
+  <meta name="keywords" content="Chile, sismos, terremotos, pronóstico operacional, OEF, ETAS, investigación, CSN, SENAPRED, USGS">
   <link rel="canonical" href="https://etemen.cl/chile-oef/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://etemen.cl/chile-oef/">
   <meta property="og:site_name" content="ETEMEN">
+  <meta property="og:locale" content="es_CL">
   <meta property="og:title" content="Actividad sísmica en Chile — CHILE-OEF">
-  <meta property="og:description" content="Mapa de investigación con datos reales. No es un sistema de alerta.">
+  <meta property="og:description" content="Mapa de investigación con 74.384 sismos reales (1964–2026). No es un sistema de alerta. No predice terremotos.">
+  <meta property="og:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Actividad sísmica en Chile — CHILE-OEF">
+  <meta name="twitter:description" content="Investigación experimental. No es alerta. No reemplaza al CSN ni a SENAPRED.">
+  <meta name="twitter:image" content="https://etemen.cl/assets/logos/etemen-logo-official.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "ETEMEN", "item": "https://etemen.cl/"},
+          {"@type": "ListItem", "position": 2, "name": "CHILE-OEF", "item": "https://etemen.cl/chile-oef/"}
+        ]
+      },
+      {
+        "@type": "Dataset",
+        "name": "CHILE-OEF",
+        "alternateName": "Chile Operational Earthquake Forecasting",
+        "url": "https://etemen.cl/chile-oef/",
+        "description": "Plataforma experimental de investigación de pronóstico operacional de sismos en Chile. Estima tasas y probabilidades condicionales por celda, magnitud y ventana de tiempo. No es un sistema de alerta.",
+        "creator": {"@type": "Organization", "name": "ETEMEN", "url": "https://etemen.cl/"},
+        "isAccessibleForFree": true,
+        "inLanguage": "es-CL",
+        "temporalCoverage": "1964-01-26/2026-08-15",
+        "spatialCoverage": {"@type": "Place", "name": "Chile"},
+        "keywords": ["OEF", "ETAS", "Chile", "sismicidad", "USGS ComCat"],
+        "license": "https://github.com/k4153r-max/chile-oef",
+        "distribution": {
+          "@type": "DataDownload",
+          "contentUrl": "https://chile-oef-api.onrender.com/v1/forecasts",
+          "encodingFormat": "application/json"
+        },
+        "variableMeasured": "Probabilidad condicional de al menos un sismo en una celda, bin de magnitud y horizonte de 7 días"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿CHILE-OEF predice terremotos?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Estima tasas y probabilidades relativas de actividad. No da fecha, hora, epicentro ni magnitud exactos."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Reemplaza al CSN o a SENAPRED?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. En una emergencia hay que seguir al Centro Sismológico Nacional y a SENAPRED."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué tan bueno es el modelo?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Todavía no hay una prueba prospectiva publicada. El catálogo se cargó de una vez, así que una prueba hacia el pasado no sería honesta."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -29,7 +100,7 @@
     .oef-ribbon .wrap{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
     .oef-ribbon strong{ color: var(--oef); }
     .oef-ribbon a{ color: var(--oef); border-bottom: 1px solid rgba(107,163,201,.35); }
-    .oef-hero{ padding: 48px 0 20px; }
+    .oef-hero{ padding: 40px 0 16px; }
     .oef-hero .eyebrow{ color: var(--oef); }
     .oef-hero h1{ margin-bottom: 12px; }
     .oef-hero h1 em{ color: var(--oef); font-style: normal; }
@@ -41,6 +112,24 @@
       font-size: .9rem; color: var(--muted); max-width: 46em;
     }
     .disclaimer-box strong{ color: var(--text); }
+    .oef-status{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin-top: 18px;
+    }
+    .oef-chip{
+      display:inline-flex; align-items:center; gap:7px;
+      font-family: var(--font-mono, ui-monospace, monospace);
+      font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+      border: 1px solid var(--rule); padding: 6px 10px; color: var(--muted);
+    }
+    .oef-chip .dot{ width:6px; height:6px; border-radius:50%; background: var(--oef); }
+    .oef-chip.warn{ border-color: rgba(224,138,74,.45); color:#e08a4a; }
+    .oef-chip.warn .dot{ background:#e08a4a; }
+    .official-row{
+      display:flex; flex-wrap:wrap; gap:10px 18px;
+      margin-top: 16px; font-size: .88rem;
+    }
+    .official-row a{ color: var(--oef); border-bottom: 1px solid rgba(107,163,201,.35); }
     .stat-strip{
       display:grid; grid-template-columns: repeat(3,1fr);
       gap: 1px; background: var(--rule-dim);
@@ -58,6 +147,23 @@
       border-radius: var(--radius);
       padding: 20px;
     }
+    .oef-steps{
+      display:grid; grid-template-columns: repeat(4,1fr); gap: 12px;
+    }
+    @media (max-width: 900px){ .oef-steps{ grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px){ .oef-steps{ grid-template-columns: 1fr; } }
+    .step{
+      border: 1px solid var(--rule-dim);
+      background: var(--surface);
+      padding: 16px 16px 18px;
+    }
+    .step .num{
+      font-family: var(--font-mono, ui-monospace, monospace);
+      font-size: 11px; letter-spacing: .1em; color: var(--oef);
+    }
+    .step h3{ font-size: 1.05rem; margin: 8px 0 8px; }
+    .step p{ font-size: .88rem; color: var(--muted); line-height: 1.55; margin:0; }
+
     .map-layout{ display:grid; grid-template-columns: minmax(280px, 460px) minmax(260px, 1fr); gap: 20px; align-items:start; }
     @media (max-width: 900px){ .map-layout{ grid-template-columns: 1fr; } }
 
@@ -125,6 +231,12 @@
       width: 120px; height: 10px; border-radius: 99px;
       background: linear-gradient(90deg, #2a4a66 0%, #6ba3c9 42%, #c4894a 78%, #ffb26b 100%);
     }
+    .layer-toggles{
+      display:flex; flex-wrap:wrap; gap:10px 16px;
+      margin: 12px 0 0; font-size: .86rem;
+    }
+    .layer-toggles label{ display:inline-flex; align-items:center; gap:6px; cursor:pointer; color: var(--muted); }
+    .layer-toggles input{ accent-color: var(--oef); }
 
     .plain{ font-size: 1.02rem; line-height: 1.65; color: var(--text); }
     .plain-note{ font-size: .88rem; color: var(--muted); line-height: 1.6; }
@@ -153,7 +265,7 @@
     .zone-row .zone-bar-track{ flex:1; height:11px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden; }
     .zone-row .zone-bar-fill{ height:100%; border-radius:6px; background: linear-gradient(90deg, #6ba3c9, #c4894a); }
     .zone-row .zone-name{ width:118px; flex-shrink:0; font-size:.95rem; }
-    .zone-row .zone-level{ width:88px; flex-shrink:0; font-size:.8rem; color:var(--muted); text-align:right; }
+    .zone-row .zone-level{ width:108px; flex-shrink:0; font-size:.8rem; color:var(--muted); text-align:right; }
 
     select.mag-select{
       background: var(--bg-2); color:#fff; border:1px solid var(--rule); border-radius:8px;
@@ -166,8 +278,9 @@
       text-transform:uppercase; letter-spacing:.04em; padding: 6px 8px;
       border-bottom: 1px solid var(--rule);
     }
-    table.oef-table td{ padding: 10px 8px; border-bottom: 1px solid var(--rule-dim); }
+    table.oef-table td{ padding: 10px 8px; border-bottom: 1px solid var(--rule-dim); vertical-align: top; }
     table.oef-table tr.notable td{ color: #ffb26b; }
+    table.oef-table tr.live td:first-child{ color: var(--oef); }
     .mag-pill{
       display:inline-block; min-width: 3.2em; text-align:center;
       font-weight:700; color:#fff;
@@ -182,6 +295,16 @@
     .finding-card h3{ color:#ffb26b; }
     .finding-card p{ font-size:.95rem; color: var(--muted); line-height:1.65; margin-top:10px; }
 
+    .limit-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 700px){ .limit-grid{ grid-template-columns: 1fr; } }
+    .limit-item{
+      border: 1px solid var(--rule-dim);
+      background: var(--surface);
+      padding: 16px;
+    }
+    .limit-item h3{ font-size: .98rem; margin: 0 0 8px; }
+    .limit-item p{ font-size: .88rem; color: var(--muted); line-height: 1.55; margin:0; }
+
     details.tech-details{ margin-top:16px; border-top:1px solid var(--rule-dim); padding-top:12px; }
     details.tech-details summary{
       cursor:pointer; font-size:.8rem; color: var(--muted);
@@ -190,6 +313,15 @@
     .kv{ display:grid; grid-template-columns: auto 1fr; gap: 7px 14px; font-size: .86rem; margin-top:12px; }
     .kv dt{ color: var(--muted); }
     .kv dd{ font-family: var(--font-mono, ui-monospace, monospace); color:#fff; text-align:right; }
+
+    .method-prose h3{ margin: 22px 0 8px; font-size: 1.15rem; }
+    .method-prose p{ font-size: .98rem; line-height: 1.7; color: var(--muted); }
+    .method-prose a{ color: var(--oef); }
+
+    #mt-chart{
+      width:100%; height: 240px; display:block;
+      background: #0a1016; border: 1px solid var(--rule-dim);
+    }
 
     .loading{ color: var(--muted); font-size: .9rem; font-style: italic; }
     .err-box{ color:#e08a4a; font-size:.9rem; padding: 12px 0; }
@@ -201,6 +333,7 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <div class="oef-ribbon">
     <div class="wrap">
       <span class="badge" style="margin:0">No es una alerta</span>
@@ -221,14 +354,15 @@
       <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="#mapa">El mapa</a>
-        <a href="#terremotos">Terremotos grandes</a>
+        <a href="#metodo">Cómo se calcula</a>
+        <a href="#limites">Límites</a>
         <a href="#preguntas" class="nav-cta">Preguntas</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
 
-  <main>
+  <main id="contenido">
     <section class="oef-hero">
       <div class="wrap">
         <p class="eyebrow">Un proyecto de investigación · Chile</p>
@@ -242,15 +376,63 @@
           Esta página no calcula riesgo, no dice cuándo va a temblar y no reemplaza
           a las autoridades.
         </div>
+        <div class="oef-status" aria-label="Estado del experimento">
+          <span class="oef-chip"><span class="dot"></span>Experimental</span>
+          <span class="oef-chip warn"><span class="dot"></span>No es alerta</span>
+          <span class="oef-chip warn" id="rail-csep"><span class="dot"></span>Sin prueba prospectiva publicada</span>
+          <span class="oef-chip" id="rail-model"><span class="dot"></span>Modelo mwc · Mc ≈ 5</span>
+          <span class="oef-chip" id="rail-valid"><span class="dot"></span>Mapa válido hasta el 24 ago 2026</span>
+        </div>
+        <div class="official-row">
+          <a href="https://www.csn.uchile.cl/" target="_blank" rel="noopener">CSN — sismos oficiales</a>
+          <a href="https://www.senapred.cl/" target="_blank" rel="noopener">SENAPRED — emergencias</a>
+          <a href="https://github.com/k4153r-max/chile-oef" target="_blank" rel="noopener">Código en GitHub</a>
+          <a href="https://chile-oef-api.onrender.com/v1/health" target="_blank" rel="noopener">API pública</a>
+        </div>
         <div class="stat-strip">
-          <div class="stat"><div class="n" id="s-total">—</div><div class="l">Terremotos reales en la base</div></div>
-          <div class="stat"><div class="n" id="s-range">—</div><div class="l">Años de historia</div></div>
-          <div class="stat"><div class="n" id="s-mc">—</div><div class="l">Sismos que el mapa puede mostrar</div></div>
+          <div class="stat"><div class="n" id="s-total">74.384</div><div class="l">Terremotos reales en la base</div></div>
+          <div class="stat"><div class="n" id="s-range">1964–2026</div><div class="l">Años de historia</div></div>
+          <div class="stat"><div class="n" id="s-mc">Magnitud 5 o más</div><div class="l">Sismos que el mapa puede mostrar</div></div>
+        </div>
+        <noscript>
+          <p class="plain-note" style="margin-top:14px">El mapa necesita JavaScript. Los números de arriba son del 17 de agosto de 2026.</p>
+        </noscript>
+      </div>
+    </section>
+
+    <section class="section" id="pasos">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">En cuatro pasos</p>
+          <h2>Cómo se arma este mapa</h2>
+          <p class="plain">Sin magia y sin inteligencia artificial. Solo historia, un umbral y un modelo clásico.</p>
+        </div>
+        <div class="oef-steps">
+          <article class="step">
+            <div class="num">01 · Catálogo</div>
+            <h3>Historia real</h3>
+            <p>Se usa el catálogo público de USGS (ComCat), con 74.384 sismos en y cerca de Chile desde 1964. Incluye el de Maule de 2010.</p>
+          </article>
+          <article class="step">
+            <div class="num">02 · Completitud</div>
+            <h3>El tamaño mínimo</h3>
+            <p>El modelo solo mira sismos de magnitud 5 o más (tipo mwc). Debajo de ese umbral el catálogo global se ve incompleto.</p>
+          </article>
+          <article class="step">
+            <div class="num">03 · ETAS</div>
+            <h3>Ritmo y réplicas</h3>
+            <p>Cada zona tiene un ritmo de fondo. Después de un sismo hay más réplicas cerca, y luego se calma. Eso se junta en un modelo ETAS.</p>
+          </article>
+          <article class="step">
+            <div class="num">04 · Mapa</div>
+            <h3>Siete días adelante</h3>
+            <p>Chile se parte en celdas. En cada una se estima la chance de al menos un sismo, por rango de magnitud, en los próximos 7 días.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="mapa">
+    <section class="section alt" id="mapa">
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Los próximos 7 días</p>
@@ -278,6 +460,12 @@
                 </div>
                 <span>La franja brillante suele ir por el mar, frente a la costa.</span>
               </div>
+              <fieldset class="layer-toggles" id="layer-toggles">
+                <legend class="plain-note" style="padding:0;margin:0 0 4px">Capas del mapa</legend>
+                <label><input type="checkbox" id="tog-activity" checked> Actividad esperada</label>
+                <label><input type="checkbox" id="tog-cities" checked> Ciudades</label>
+                <label><input type="checkbox" id="tog-recent" checked> Sismos recientes USGS</label>
+              </fieldset>
               <div style="margin-top:16px">
                 <label for="mag-select">Quiero ver:</label><br>
                 <select class="mag-select" id="mag-select"></select>
@@ -294,7 +482,7 @@
               </div>
               <div class="oef-card" style="margin-top:16px">
                 <h3 style="margin-bottom:4px">De norte a sur</h3>
-                <p class="plain-note" style="margin-top:0">Comparado entre zonas de Chile, de más a menos.</p>
+                <p class="plain-note" style="margin-top:0">Cuántas veces más actividad suma cada zona respecto de la más baja.</p>
                 <div class="zone-list" id="fc-zone-list"></div>
               </div>
               <div class="oef-card" style="margin-top:16px">
@@ -302,7 +490,7 @@
                 <ul class="read-list">
                   <li>Un color más intenso no significa “va a haber un terremoto grande”.</li>
                   <li>Compara una zona con otra. El brillo es relativo, no un nivel de alerta.</li>
-                  <li>Puedes mover y acercar el mapa. La costa y las ciudades son de un mapa real.</li>
+                  <li>Los círculos son sismos que ya ocurrieron (USGS), no predicciones.</li>
                 </ul>
                 <details class="tech-details">
                   <summary>Datos técnicos del cálculo</summary>
@@ -315,38 +503,42 @@
       </div>
     </section>
 
-    <section class="section alt">
+    <section class="section" id="reciente">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">En simple</p>
-          <h2>¿Cómo se arma este mapa?</h2>
+          <p class="eyebrow">Lo que ya ocurrió</p>
+          <h2>Sismos recientes y terremotos grandes</h2>
+          <p class="plain">Los puntos del gráfico son observaciones de USGS, no del modelo.</p>
         </div>
-        <div id="model-loading" class="loading">Cargando…</div>
-        <div id="model-content" class="oef-card" style="display:none">
-          <p class="plain" id="model-summary"></p>
-          <ul class="read-list">
-            <li>Chile tiembla seguido: cada zona tiene su propio ritmo histórico.</li>
-            <li>Después de un sismo, por un tiempo hay más réplicas cerca, y luego se calma.</li>
-            <li>El modelo junta esas dos ideas y pinta el mapa de los próximos días.</li>
-          </ul>
-          <details class="tech-details">
-            <summary>Parámetros del modelo</summary>
-            <dl class="kv" id="model-kv"></dl>
-          </details>
+        <div class="oef-card">
+          <h3 style="margin-bottom:6px">Magnitud en el tiempo (24 meses, M ≥ 4,5)</h3>
+          <p class="plain-note" id="mt-caption">Cargando sismos recientes de USGS…</p>
+          <canvas id="mt-chart" width="960" height="240" aria-label="Gráfico de magnitud versus tiempo"></canvas>
         </div>
-      </div>
-    </section>
-
-    <section class="section" id="terremotos">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Los datos</p>
-          <h2>Los terremotos más fuertes de esta base</h2>
-          <p class="plain">Historia pública del Servicio Geológico de Estados Unidos, desde 1964.</p>
+        <div class="oef-card" style="margin-top:16px">
+          <h3 style="margin-bottom:6px">Historial de mapas publicados</h3>
+          <p class="plain-note">Cada cálculo queda guardado. El de arriba es el que se usa. El de magnitud mb se conserva como archivo y no se borra.</p>
+          <div id="runs-loading" class="loading">Cargando historial…</div>
+          <div style="overflow:auto">
+            <table class="oef-table" id="runs-table" style="display:none">
+              <thead>
+                <tr>
+                  <th>Estado</th>
+                  <th>Emitido</th>
+                  <th>Válido hasta</th>
+                  <th>Horizonte</th>
+                  <th>b usado</th>
+                  <th>Calibración</th>
+                </tr>
+              </thead>
+              <tbody id="run-history"></tbody>
+            </table>
+          </div>
         </div>
-        <div id="catalog-loading" class="loading">Cargando la lista…</div>
+        <div id="catalog-loading" class="loading" style="margin-top:16px">Cargando la lista de terremotos grandes…</div>
         <div id="catalog-error" class="err-box" style="display:none"></div>
-        <div id="catalog-content" class="oef-card" style="display:none">
+        <div id="catalog-content" class="oef-card" style="display:none;margin-top:16px">
+          <h3 style="margin-bottom:8px">Los más fuertes de esta base</h3>
           <table class="oef-table">
             <thead><tr><th>Cuándo</th><th>Qué tan fuerte</th><th>Dónde</th></tr></thead>
             <tbody id="top-events"></tbody>
@@ -354,23 +546,127 @@
           <p class="plain-note">El de magnitud 8.8 en Maule (27 de febrero de 2010) está en la lista.</p>
           <details class="tech-details">
             <summary>Cómo se midió cada sismo</summary>
-            <p class="plain-note">Hay varias formas de medir la magnitud. Por eso aparecen códigos distintos.</p>
+            <p class="plain-note">Hay varias formas de medir la magnitud. Por eso aparecen códigos distintos. El mapa vivo usa mwc, no mb.</p>
             <div id="mag-type-bars" style="margin-top:12px"></div>
           </details>
         </div>
       </div>
     </section>
 
-    <section class="section alt" id="preguntas">
+    <section class="section alt" id="metodo">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Método</p>
+          <h2>Qué hay detrás, en simple y con nombre</h2>
+        </div>
+        <div id="model-loading" class="loading">Cargando el resumen del modelo…</div>
+        <div id="model-content" class="oef-card" style="display:none">
+          <p class="plain" id="model-summary"></p>
+          <ul class="read-list">
+            <li>Chile tiembla seguido: cada zona tiene su propio ritmo histórico.</li>
+            <li>Después de un sismo, por un tiempo hay más réplicas cerca, y luego se calma.</li>
+            <li>El modelo junta esas dos ideas y pinta el mapa de los próximos días.</li>
+            <li>El pronóstico es un punto: un número, no un intervalo. Su estado es <strong>sin calibrar</strong>.</li>
+          </ul>
+          <details class="tech-details">
+            <summary>Parámetros del modelo</summary>
+            <dl class="kv" id="model-kv"></dl>
+          </details>
+        </div>
+
+        <article class="oef-card method-prose" style="margin-top:16px">
+          <h3>Qué es esto</h3>
+          <p>
+            CHILE-OEF es un experimento de <em>pronóstico operacional de sismos</em>
+            (Operational Earthquake Forecasting, Jordan 2011). No busca adivinar
+            un terremoto. Busca estimar, con un modelo publicado, dónde hay más
+            actividad esperada en una ventana corta.
+          </p>
+          <h3>De dónde salen los datos</h3>
+          <p>
+            El catálogo vivo es USGS ComCat (FDSN), no la red del Centro Sismológico
+            Nacional. Por eso los sismos chicos se ven peor que en un catálogo local.
+            La fila científica con magnitud <code>mb</code> se conservó: ese tipo se satura
+            cerca de 6,2 y da un valor b artificialmente alto (~2,13). El mapa público
+            usa magnitud momento <code>mwc</code>, con b ≈ 1,12.
+          </p>
+          <h3>Cómo se calcula</h3>
+          <p>
+            Primero se estima la magnitud de completez (Mc) con el método EMR de
+            Ogata y Katsura. Luego la pendiente Gutenberg–Richter con el estimador
+            de Aki y la corrección de binning de Utsu. El motor espacial es un ETAS
+            espacio-temporal (Ogata 1988/1998) con fondo homogéneo y γ = 0.
+            Cada celda de 0,1° y cada rango de magnitud reciben un recuento
+            esperado; la cifra del mapa es la probabilidad de Poisson de al menos
+            un evento, P(N ≥ 1) = 1 − exp(−λ).
+          </p>
+          <p>
+            Las ciudades suman las λ de las celdas a 40 km y aplican la misma
+            fórmula. Eso no es amenaza sísmica, ni Intensidad de Mercalli, ni un
+            aviso para tu casa.
+          </p>
+          <h3>Qué no hay (todavía)</h3>
+          <p>
+            No hay puntaje CSEP publicado. El catálogo se cargó de una vez, así que
+            <code>available_at</code> no reproduce la latencia histórica. Una prueba hacia
+            el pasado vería un catálogo vacío o “hacer trampa”. La prueba justa
+            empieza desde ahora hacia adelante. Tampoco hay intervalos de
+            incertidumbre de los parámetros, ni aprendizaje automático, ni datos
+            del CSN en el modelo.
+          </p>
+          <h3>Qué hacen otros</h3>
+          <p>
+            El USGS publica outlooks de réplicas (OAF). Japón tiene outlooks de
+            réplicas de la JMA. Italia (INGV) opera OEF semanal para autoridades,
+            no como mapa público de este tipo. CHILE-OEF no es un equivalente
+            operacional de ninguno de ellos.
+          </p>
+          <p>
+            Código y contratos:
+            <a href="https://github.com/k4153r-max/chile-oef" target="_blank" rel="noopener">github.com/k4153r-max/chile-oef</a>.
+            API:
+            <a href="https://chile-oef-api.onrender.com/v1/forecasts" target="_blank" rel="noopener">/v1/forecasts</a>.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="limites">
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Con honestidad</p>
-          <h2>¿Qué tan bueno es este modelo?</h2>
+          <h2>Cinco límites que importan</h2>
         </div>
-        <div class="finding-card">
-          <h3>Todavía no lo sabemos. Y no vamos a inventar un número.</h3>
+        <div class="limit-grid">
+          <article class="limit-item">
+            <h3>1. Sin prueba hacia adelante</h3>
+            <p>Aún no comparamos este mapa con sismos que ocurrieron después de publicarlo. No vamos a inventar un puntaje.</p>
+          </article>
+          <article class="limit-item">
+            <h3>2. El fondo es el mismo en todo Chile</h3>
+            <p>El modelo no cambia el ritmo de fondo según la fosa, la placa o la ciudad. γ = 0: la extensión espacial no crece con la magnitud.</p>
+          </article>
+          <article class="limit-item">
+            <h3>3. Los datos no son del CSN</h3>
+            <p>USGS ve peor los sismos chicos. Por eso el mapa parte en magnitud 5. Un catálogo chileno local sería otra cosa.</p>
+          </article>
+          <article class="limit-item">
+            <h3>4. La ciudad no es tu casa</h3>
+            <p>El porcentaje urbano suma celdas a 40 km. No es riesgo de tu edificio, ni de tsunami, ni de que se caiga algo.</p>
+          </article>
+          <article class="limit-item">
+            <h3>5. Es un número puntual</h3>
+            <p>No hay intervalo de los parámetros. El estado del pronóstico es <em>uncalibrated_point_forecast</em>: un punto, sin calibrar.</p>
+          </article>
+          <article class="limit-item">
+            <h3>Y esto no es alerta</h3>
+            <p>No hay semáforo, no hay “salgan de la casa”, no hay fecha. Si hay emergencia: CSN y SENAPRED.</p>
+          </article>
+        </div>
+        <div class="finding-card" style="margin-top:18px">
+          <h3>Todavía no sabemos si acierta. Y no vamos a inventar un número.</h3>
           <p>
-            Para saber si el mapa acierta hay que dejarlo funcionar y, después, comparar
+            Para saber si el mapa sirve hay que dejarlo funcionar y, después, comparar
             con lo que realmente ocurrió. No sirve “probarlo” con terremotos que ya conocemos,
             porque eso hace ver cualquier modelo mejor de lo que es.
           </p>
@@ -381,12 +677,32 @@
           <details class="tech-details">
             <summary>Explicación técnica</summary>
             <p class="plain-note">
-              El motor de evaluación existe (pruebas CSEP N/M/S/L y el resto de puntajes
-              registrados). Cada sismo recién cargado quedó disponible hoy, no en la fecha
-              histórica del evento. Un cálculo hacia el pasado vería un catálogo vacío.
-              Por eso no hay un backtest publicado.
+              El motor de evaluación existe (pruebas CSEP N/M/S/L en caminata sintética).
+              Cada sismo del backfill quedó disponible al momento de la carga, no en la
+              fecha histórica del evento. Un cálculo hacia el pasado vería un catálogo
+              vacío o usaría información que entonces no existía. Por eso no hay un
+              backtest publicado ni un puntaje CSEP en esta página.
             </p>
           </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="preguntas">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Preguntas cortas</p>
+          <h2>Lo que la gente suele preguntar</h2>
+        </div>
+        <div class="oef-card">
+          <h3>¿Predice el próximo terremoto?</h3>
+          <p class="plain-note">No. Nadie puede dar fecha, hora, lugar y tamaño con certeza. Esto solo compara actividad esperada.</p>
+          <h3 style="margin-top:18px">¿Tengo que hacer algo si mi ciudad sale más alta?</h3>
+          <p class="plain-note">Nada distinto de lo de siempre: kit, punto de encuentro, y seguir al CSN y a SENAPRED si hay un sismo fuerte.</p>
+          <h3 style="margin-top:18px">¿Por qué los números de las ciudades son tan chicos?</h3>
+          <p class="plain-note">Porque un sismo de magnitud 5 a 6, en 7 días y a 40 km, es raro incluso en Chile. Un 0,14% es “1 en 700”, no “va a temblar”.</p>
+          <h3 style="margin-top:18px">¿Usan inteligencia artificial?</h3>
+          <p class="plain-note">No. El mapa público es ETAS + Gutenberg–Richter. Si algún día se prueba otra cosa, se va a decir con claridad, y solo si gana en una prueba hacia adelante.</p>
         </div>
       </div>
     </section>
@@ -405,29 +721,30 @@
         <div>
           <h4>CHILE-OEF</h4>
           <a href="#mapa">El mapa</a>
-          <a href="#terremotos">Terremotos grandes</a>
-          <a href="#preguntas">Preguntas</a>
+          <a href="#metodo">Cómo se calcula</a>
+          <a href="#limites">Límites</a>
+          <a href="https://github.com/k4153r-max/chile-oef" target="_blank" rel="noopener">GitHub</a>
         </div>
         <div>
-          <h4>Productos</h4>
-          <a href="/nexo/">Nexo</a>
-          <a href="/hojear/">Hojear</a>
-          <a href="https://www.indago.cl" target="_blank" rel="noopener">indago</a>
+          <h4>Autoridades</h4>
+          <a href="https://www.csn.uchile.cl/" target="_blank" rel="noopener">CSN</a>
+          <a href="https://www.senapred.cl/" target="_blank" rel="noopener">SENAPRED</a>
         </div>
         <div>
           <h4>Empresa</h4>
+          <a href="/">Inicio</a>
           <a href="/contacto/">Contacto</a>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© <span id="y"></span> ETEMEN</span>
-        <span>Chile</span>
+        <span>Investigación experimental · Chile</span>
       </div>
     </div>
   </footer>
 
   <script src="/js/site.js?v=3"></script>
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="/chile-oef/app.js?v=20260817-cities2"></script>
+  <script src="/chile-oef/app.js?v=20260817-audit1"></script>
 </body>
 </html>

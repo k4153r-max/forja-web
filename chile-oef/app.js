@@ -15,6 +15,10 @@
     [-58.5, -82],
     [-15.5, -62],
   ];
+  const USGS_QUERY =
+    "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson" +
+    "&minlatitude=-56&maxlatitude=-17&minlongitude=-78&maxlongitude=-66" +
+    "&minmagnitude=4.5&orderby=time&limit=1000";
 
   const ZONES = [
     { name: "Norte Grande", maxLat: -17.4, minLat: -26.0 },
@@ -39,14 +43,27 @@
     P7D: "los próximos 7 días",
   };
 
+  const CALIBRATION_LABELS = {
+    uncalibrated_point_forecast: "Puntual, sin calibrar",
+  };
+
   let map = null;
   let gridLayer = null;
   let placeLayer = null;
+  let quakeLayer = null;
+  let lastCells = [];
+  let lastPlaces = [];
+  let lastUsgsQuakes = [];
+  const layerOn = { activity: true, cities: true, recent: true };
 
   const fmtInt = (n) => new Intl.NumberFormat("es-CL").format(n);
   const fmtDate = (iso) =>
     new Date(iso).toLocaleDateString("es-CL", {
       year: "numeric", month: "long", day: "numeric", timeZone: "UTC",
+    });
+  const fmtDateShort = (iso) =>
+    new Date(iso).toLocaleDateString("es-CL", {
+      year: "numeric", month: "short", day: "2-digit", timeZone: "UTC",
     });
   const fmtDateTime = (iso) =>
     new Date(iso).toLocaleString("es-CL", {
@@ -89,11 +106,8 @@
     return oneInText;
   }
 
-  function intensityLabel(intensity) {
-    if (intensity >= 0.75) return "La más alta";
-    if (intensity >= 0.45) return "Alta";
-    if (intensity >= 0.2) return "Media";
-    return "Más baja";
+  function formatMultiple(value) {
+    return value.toFixed(1).replace(".", ",") + "×";
   }
 
   async function apiGet(path, params) {
@@ -146,28 +160,40 @@
     }
   }
 
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  function setChipText(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const dot = el.querySelector(".dot");
+    el.textContent = "";
+    if (dot) el.appendChild(dot);
+    el.appendChild(document.createTextNode(text));
+  }
+
   async function loadHeroStats() {
     try {
       const [summary, model] = await Promise.all([
         apiGet("/catalog/summary"),
         apiGet("/seismicity/model-summary").catch(() => null),
       ]);
-      document.getElementById("s-total").textContent = fmtInt(summary.total_events);
+      setText("s-total", fmtInt(summary.total_events));
       const earliestYear = summary.earliest_event_time
         ? new Date(summary.earliest_event_time).getFullYear()
-        : "—";
+        : "1964";
       const latestYear = summary.latest_event_time
         ? new Date(summary.latest_event_time).getFullYear()
-        : "—";
-      document.getElementById("s-range").textContent = `${earliestYear}–${latestYear}`;
+        : "2026";
+      setText("s-range", `${earliestYear}–${latestYear}`);
       if (model) {
-        document.getElementById("s-mc").textContent = "Magnitud " + model.mc_value.toFixed(0) + " o más";
+        setText("s-mc", "Magnitud " + model.mc_value.toFixed(0) + " o más");
+        setChipText("rail-model", `Modelo ${model.magnitude_type} · Mc ≈ ${model.mc_value.toFixed(0)}`);
       }
       return summary;
     } catch (error) {
-      document.getElementById("s-total").textContent = "—";
-      document.getElementById("s-range").textContent = "—";
-      document.getElementById("s-mc").textContent = "—";
       throw error;
     }
   }
@@ -248,6 +274,7 @@
         ["c (horas)", (model.c_days * 24).toFixed(2)],
         ["p", model.p_exponent.toFixed(3)],
         ["d0 (km)", model.d0_km.toFixed(1)],
+        ["γ", String(model.gamma ?? 0)],
         ["q", model.q_exponent.toFixed(3)],
         ["Convergencia", model.converged ? "sí" : "no"],
       ]);
@@ -352,7 +379,7 @@
     });
     L.control.zoom({ position: "bottomright" }).addTo(map);
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · CARTO',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · CARTO · USGS',
       subdomains: "abcd",
       maxZoom: 9,
     }).addTo(map);
@@ -363,7 +390,8 @@
       box.innerHTML =
         "<strong>Actividad relativa</strong>" +
         "<div class=\"heat-bar\"></div>" +
-        "<div style=\"display:flex;justify-content:space-between\"><span>Menos</span><span>Más</span></div>";
+        "<div style=\"display:flex;justify-content:space-between\"><span>Menos</span><span>Más</span></div>" +
+        "<div style=\"margin-top:6px;opacity:.75\">Círculos = sismos ya ocurridos</div>";
       return box;
     };
     legend.addTo(map);
@@ -373,12 +401,14 @@
   }
 
   function paintHeat(cells) {
+    lastCells = cells || [];
     const leafletMap = ensureMap();
+    const visible = layerOn.activity ? lastCells : [];
     if (!gridLayer) {
-      gridLayer = new ActivityLayer(cells);
+      gridLayer = new ActivityLayer(visible);
       gridLayer.addTo(leafletMap);
     } else {
-      gridLayer.setCells(cells);
+      gridLayer.setCells(visible);
     }
     requestAnimationFrame(() => {
       leafletMap.invalidateSize();
@@ -388,13 +418,15 @@
   }
 
   function paintPlaces(places) {
+    lastPlaces = places || [];
     const leafletMap = ensureMap();
     if (placeLayer) {
       leafletMap.removeLayer(placeLayer);
       placeLayer = null;
     }
+    if (!layerOn.cities) return;
     placeLayer = L.layerGroup();
-    for (const place of places) {
+    for (const place of lastPlaces) {
       if (place.probability_at_least_one == null) continue;
       const marker = L.circleMarker([place.latitude, place.longitude], {
         radius: 5,
@@ -411,6 +443,36 @@
       marker.addTo(placeLayer);
     }
     placeLayer.addTo(leafletMap);
+  }
+
+  function paintUsgsQuakes(quakes) {
+    lastUsgsQuakes = quakes || [];
+    const leafletMap = ensureMap();
+    if (quakeLayer) {
+      leafletMap.removeLayer(quakeLayer);
+      quakeLayer = null;
+    }
+    if (!layerOn.recent) return;
+    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const recent = lastUsgsQuakes.filter((q) => q.time >= cutoff);
+    quakeLayer = L.layerGroup();
+    for (const quake of recent) {
+      const ageDays = (Date.now() - quake.time) / 86400000;
+      const fill = ageDays < 2 ? "#ffb26b" : ageDays < 7 ? "#c4894a" : "#6ba3c9";
+      const marker = L.circleMarker([quake.lat, quake.lon], {
+        radius: Math.max(3, (quake.mag - 4) * 3.2),
+        weight: 1,
+        color: "#0a1016",
+        fillColor: fill,
+        fillOpacity: 0.85,
+      });
+      marker.bindTooltip(
+        `<strong>M ${quake.mag.toFixed(1)}</strong><br>${fmtDateShort(new Date(quake.time).toISOString())}<br>${cleanPlace(quake.place)}`,
+        { direction: "top", offset: [0, -6], opacity: 0.95 }
+      );
+      marker.addTo(quakeLayer);
+    }
+    quakeLayer.addTo(leafletMap);
   }
 
   function renderPlaces(payload) {
@@ -447,6 +509,7 @@
       .filter((name) => mass.get(name) > 0)
       .sort((a, b) => mass.get(b) - mass.get(a));
     const maxMass = ranked.length ? mass.get(ranked[0]) : 0;
+    const minMass = ranked.length ? mass.get(ranked[ranked.length - 1]) : 0;
     const zoneList = document.getElementById("fc-zone-list");
     zoneList.innerHTML = "";
     if (!ranked.length) {
@@ -458,6 +521,7 @@
     }
     for (const name of ranked) {
       const intensity = maxMass > 0 ? mass.get(name) / maxMass : 0;
+      const multiple = minMass > 0 ? mass.get(name) / minMass : 0;
       const row = document.createElement("div");
       row.className = "zone-row";
       row.innerHTML =
@@ -466,7 +530,8 @@
         `<span class="zone-level"></span>`;
       row.querySelector(".zone-name").textContent = name;
       row.querySelector(".zone-bar-fill").style.width = Math.max(8, intensity * 100) + "%";
-      row.querySelector(".zone-level").textContent = intensityLabel(intensity);
+      row.querySelector(".zone-level").textContent =
+        name === ranked[ranked.length - 1] ? "la más baja" : formatMultiple(multiple) + " la más baja";
       zoneList.appendChild(row);
     }
   }
@@ -485,12 +550,15 @@
       `${binLabel(selectedBin)}, para ${HORIZON_LABELS[detail.horizon_id] || "los próximos días"}. ` +
       `Actualizado el ${fmtDate(detail.issued_at)}.`;
 
+    setChipText("rail-valid", "Mapa válido hasta el " + fmtDateShort(detail.validity_end));
+
     setKv(document.getElementById("fc-kv"), [
       ["Emitido", fmtDateTime(detail.issued_at)],
       ["Válido desde", fmtDateTime(detail.validity_start)],
       ["Válido hasta", fmtDateTime(detail.validity_end)],
       ["Mc de referencia", detail.reference_magnitude.toFixed(2)],
       ["b-value usado", detail.b_value_used.toFixed(3)],
+      ["Calibración", CALIBRATION_LABELS[detail.calibration_status] || detail.calibration_status],
       ["Celdas en la grilla", fmtInt(detail.cell_count_total)],
       ["Puntos pintados", fmtInt(cells.length)],
     ]);
@@ -528,11 +596,165 @@
       if (list) list.textContent = "No se pudieron cargar las ciudades.";
       console.warn("chile-oef places", error);
     }
+    if (lastUsgsQuakes.length) paintUsgsQuakes(lastUsgsQuakes);
+  }
+
+  function renderRunHistory(runs) {
+    const tbody = document.getElementById("run-history");
+    const table = document.getElementById("runs-table");
+    const loading = document.getElementById("runs-loading");
+    if (!tbody || !runs.length) {
+      if (loading) loading.textContent = "Todavía no hay un historial publicado.";
+      return;
+    }
+    tbody.innerHTML = "";
+    runs.forEach((run, index) => {
+      const tr = document.createElement("tr");
+      if (index === 0) tr.className = "live";
+      const archived = run.b_value_used > 1.6;
+      const status = index === 0 ? "En uso" : archived ? "Archivo (mb)" : "Anterior";
+      const cells = [
+        status,
+        fmtDateTime(run.issued_at),
+        fmtDateShort(run.validity_end),
+        HORIZON_LABELS[run.horizon_id] || run.horizon_id,
+        run.b_value_used.toFixed(3),
+        CALIBRATION_LABELS[run.calibration_status] || run.calibration_status,
+      ];
+      for (const value of cells) {
+        const td = document.createElement("td");
+        td.textContent = value;
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    });
+    if (loading) loading.style.display = "none";
+    if (table) table.style.display = "table";
+  }
+
+  function drawMagnitudeTime(events) {
+    const canvas = document.getElementById("mt-chart");
+    const caption = document.getElementById("mt-caption");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cssW = canvas.clientWidth || 960;
+    const cssH = 240;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+    ctx.fillStyle = "#0a1016";
+    ctx.fillRect(0, 0, cssW, cssH);
+
+    if (!events.length) {
+      if (caption) caption.textContent = "USGS no devolvió sismos recientes para este recuadro.";
+      return;
+    }
+
+    const pad = { l: 42, r: 16, t: 16, b: 28 };
+    const minT = Math.min(...events.map((e) => e.time));
+    const maxT = Math.max(...events.map((e) => e.time));
+    const minM = 4.4;
+    const maxM = Math.max(7.2, ...events.map((e) => e.mag)) + 0.2;
+    const xOf = (t) => pad.l + ((t - minT) / Math.max(1, maxT - minT)) * (cssW - pad.l - pad.r);
+    const yOf = (m) => pad.t + (1 - (m - minM) / (maxM - minM)) * (cssH - pad.t - pad.b);
+
+    ctx.strokeStyle = "rgba(244,241,234,.08)";
+    ctx.lineWidth = 1;
+    ctx.font = "11px IBM Plex Mono, ui-monospace, monospace";
+    ctx.fillStyle = "rgba(244,241,234,.45)";
+    for (let mag = 5; mag <= Math.floor(maxM); mag += 1) {
+      const y = yOf(mag);
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y);
+      ctx.lineTo(cssW - pad.r, y);
+      ctx.stroke();
+      ctx.fillText("M" + mag, 8, y + 4);
+    }
+
+    const yearStart = new Date(new Date(minT).getUTCFullYear(), 0, 1).getTime();
+    for (let t = yearStart; t <= maxT; t += 365.25 * 86400000 / 4) {
+      if (t < minT) continue;
+      const x = xOf(t);
+      ctx.beginPath();
+      ctx.moveTo(x, pad.t);
+      ctx.lineTo(x, cssH - pad.b);
+      ctx.stroke();
+    }
+    ctx.fillText(fmtDateShort(new Date(minT).toISOString()), pad.l, cssH - 8);
+    ctx.fillText(fmtDateShort(new Date(maxT).toISOString()), cssW - 92, cssH - 8);
+
+    for (const event of events) {
+      const ageDays = (Date.now() - event.time) / 86400000;
+      ctx.fillStyle = ageDays < 30 ? "rgba(255,178,107,.9)" : "rgba(107,163,201,.7)";
+      ctx.beginPath();
+      ctx.arc(xOf(event.time), yOf(event.mag), event.mag >= 6 ? 4.2 : 2.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const last30 = events.filter((e) => Date.now() - e.time <= 30 * 86400000).length;
+    if (caption) {
+      caption.textContent =
+        `${fmtInt(events.length)} sismos M ≥ 4,5 en 24 meses (USGS). ` +
+        `${fmtInt(last30)} en los últimos 30 días. No son predicciones.`;
+    }
+  }
+
+  async function loadUsgs() {
+    const start = new Date();
+    start.setUTCMonth(start.getUTCMonth() - 24);
+    const url = USGS_QUERY + "&starttime=" + start.toISOString().slice(0, 10);
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("USGS " + response.status);
+      const geo = await response.json();
+      const quakes = (geo.features || [])
+        .map((feature) => {
+          const coords = feature.geometry && feature.geometry.coordinates;
+          const props = feature.properties || {};
+          if (!coords || props.mag == null || !props.time) return null;
+          return {
+            lon: coords[0],
+            lat: coords[1],
+            mag: props.mag,
+            time: props.time,
+            place: props.place || "",
+          };
+        })
+        .filter(Boolean);
+      lastUsgsQuakes = quakes;
+      drawMagnitudeTime(quakes);
+      if (map) paintUsgsQuakes(quakes);
+    } catch (error) {
+      const caption = document.getElementById("mt-caption");
+      if (caption) caption.textContent = "No se pudieron cargar los sismos recientes de USGS.";
+      console.warn("chile-oef usgs", error);
+    }
+  }
+
+  function bindLayerToggles() {
+    const pairs = [
+      ["tog-activity", "activity"],
+      ["tog-cities", "cities"],
+      ["tog-recent", "recent"],
+    ];
+    for (const [id, key] of pairs) {
+      const input = document.getElementById(id);
+      if (!input) continue;
+      input.addEventListener("change", () => {
+        layerOn[key] = input.checked;
+        if (key === "activity" && gridLayer) gridLayer.setCells(layerOn.activity ? lastCells : []);
+        if (key === "cities") paintPlaces(lastPlaces);
+        if (key === "recent") paintUsgsQuakes(lastUsgsQuakes);
+      });
+    }
   }
 
   async function initForecast() {
     try {
-      const list = await apiGet("/forecasts", { limit: 1 });
+      const list = await apiGet("/forecasts", { limit: 10 });
+      renderRunHistory(list.data || []);
       if (!list.data.length) {
         document.getElementById("forecast-loading").textContent = "Todavía no hay un mapa publicado.";
         return;
@@ -550,7 +772,13 @@
     }
   }
 
+  window.addEventListener("resize", () => {
+    if (lastUsgsQuakes.length) drawMagnitudeTime(lastUsgsQuakes);
+  });
+
+  bindLayerToggles();
   loadCatalog();
   loadModelSummary();
   initForecast();
+  loadUsgs();
 })();
