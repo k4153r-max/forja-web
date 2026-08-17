@@ -5,11 +5,16 @@
   const FETCH_TIMEOUT_MS = 20000;
   const COLD_START_RETRY_MS = 6000;
   const MAX_RETRIES = 5;
-  const MAP_CELL_LIMIT = 5000;
+  const MAP_CELL_LIMIT = 8000;
   const MAULE_DATE = "2010-02-27";
-
-  // Recorte ajustado a Chile continental para que el país llene el mapa.
-  const VIEW = { minLat: -55.8, maxLat: -17.2, minLon: -76.4, maxLon: -66.0 };
+  const CHILE_BOUNDS = [
+    [-55.9, -76.8],
+    [-17.4, -66.2],
+  ];
+  const CHILE_MAX_BOUNDS = [
+    [-58.5, -82],
+    [-15.5, -62],
+  ];
 
   const ZONES = [
     { name: "Norte Grande", maxLat: -17.4, minLat: -26.0 },
@@ -17,45 +22,6 @@
     { name: "Zona Central", maxLat: -32.0, minLat: -37.0 },
     { name: "Zona Sur", maxLat: -37.0, minLat: -44.0 },
     { name: "Zona Austral", maxLat: -44.0, minLat: -56.0 },
-  ];
-
-  const CITIES = [
-    { name: "Arica", lat: -18.48, lon: -70.31 },
-    { name: "Iquique", lat: -20.21, lon: -70.15 },
-    { name: "Antofagasta", lat: -23.65, lon: -70.40 },
-    { name: "La Serena", lat: -29.90, lon: -71.25 },
-    { name: "Santiago", lat: -33.45, lon: -70.67 },
-    { name: "Concepción", lat: -36.83, lon: -73.05 },
-    { name: "Valdivia", lat: -39.81, lon: -73.25 },
-    { name: "Pto. Montt", lat: -41.47, lon: -72.94 },
-    { name: "Coyhaique", lat: -45.57, lon: -72.07 },
-    { name: "Pta. Arenas", lat: -53.16, lon: -70.91 },
-  ];
-
-  // Contorno simplificado de Chile continental (lon, lat), sentido horario
-  // desde Arica: costa del Pacífico hacia el sur y frontera andina de vuelta.
-  const CHILE_MAIN = [
-    [-70.32, -17.50], [-70.38, -18.48], [-70.18, -20.22], [-70.18, -21.45],
-    [-70.28, -22.45], [-70.40, -23.65], [-70.48, -25.40], [-70.85, -27.35],
-    [-71.32, -29.90], [-71.52, -31.63], [-71.63, -32.78], [-71.63, -33.58],
-    [-71.98, -34.40], [-72.42, -35.33], [-72.70, -36.00], [-73.12, -36.83],
-    [-73.40, -37.60], [-73.42, -38.73], [-73.40, -39.82], [-73.18, -40.60],
-    [-72.95, -41.47], [-72.82, -42.20], [-72.85, -43.20], [-73.05, -44.60],
-    [-73.40, -45.50], [-73.80, -46.60], [-74.40, -47.70], [-74.55, -48.80],
-    [-74.20, -50.10], [-73.40, -51.30], [-72.30, -52.10], [-71.20, -52.70],
-    [-70.93, -53.16], [-70.10, -53.00], [-69.20, -52.50], [-68.70, -52.40],
-    [-68.65, -51.60], [-70.40, -50.80], [-71.80, -49.40], [-72.20, -48.20],
-    [-72.10, -46.80], [-71.85, -45.57], [-71.80, -44.00], [-71.75, -42.80],
-    [-71.70, -41.50], [-71.75, -40.20], [-71.70, -39.00], [-71.40, -37.80],
-    [-71.00, -36.50], [-70.55, -35.20], [-70.15, -34.00], [-70.05, -33.45],
-    [-70.15, -32.20], [-69.95, -30.80], [-69.80, -29.50], [-69.50, -27.80],
-    [-68.80, -26.40], [-68.35, -24.80], [-68.20, -23.00], [-68.00, -21.90],
-    [-68.50, -20.40], [-69.20, -18.80], [-69.48, -17.50],
-  ];
-
-  const CHILOE = [
-    [-73.92, -41.78], [-73.52, -41.85], [-73.48, -42.35],
-    [-73.55, -43.12], [-73.95, -43.35], [-74.25, -42.55], [-74.15, -41.95],
   ];
 
   const MAG_LABELS = {
@@ -73,8 +39,8 @@
     P7D: "los próximos 7 días",
   };
 
-  let lastCells = [];
-  let resizeTimer = 0;
+  let map = null;
+  let heatLayer = null;
 
   const fmtInt = (n) => new Intl.NumberFormat("es-CL").format(n);
   const fmtDate = (iso) =>
@@ -119,34 +85,6 @@
     return "Más baja";
   }
 
-  function lerp(a, b, t) {
-    return a + (b - a) * t;
-  }
-
-  function heatColor(t) {
-    const x = Math.max(0, Math.min(1, t));
-    let r;
-    let g;
-    let b;
-    if (x < 0.4) {
-      const u = x / 0.4;
-      r = lerp(28, 107, u);
-      g = lerp(58, 163, u);
-      b = lerp(82, 201, u);
-    } else if (x < 0.75) {
-      const u = (x - 0.4) / 0.35;
-      r = lerp(107, 196, u);
-      g = lerp(163, 137, u);
-      b = lerp(201, 74, u);
-    } else {
-      const u = (x - 0.75) / 0.25;
-      r = lerp(196, 255, u);
-      g = lerp(137, 178, u);
-      b = lerp(74, 107, u);
-    }
-    return [Math.round(r), Math.round(g), Math.round(b)];
-  }
-
   async function apiGet(path, params) {
     const url = new URL(API_BASE + path);
     if (params) {
@@ -181,8 +119,7 @@
     const el = document.getElementById(containerId);
     if (!el) return;
     el.style.display = "block";
-    el.textContent =
-      "Estamos cargando los datos. Si tarda, espera un minuto y recarga la página.";
+    el.textContent = "Estamos cargando los datos. Si tarda, espera un minuto y recarga la página.";
     if (error) console.warn("chile-oef", error);
   }
 
@@ -253,8 +190,7 @@
     tbody.innerHTML = "";
     for (const event of summary.top_magnitude_events) {
       const tr = document.createElement("tr");
-      const isMaule = (event.event_time || "").slice(0, 10) === MAULE_DATE;
-      if (isMaule) tr.className = "notable";
+      if ((event.event_time || "").slice(0, 10) === MAULE_DATE) tr.className = "notable";
       const dateTd = document.createElement("td");
       dateTd.textContent = fmtDate(event.event_time);
       const magTd = document.createElement("td");
@@ -273,8 +209,7 @@
 
   async function loadCatalog() {
     try {
-      const summary = await loadHeroStats();
-      renderCatalog(summary);
+      renderCatalog(await loadHeroStats());
     } catch (error) {
       document.getElementById("catalog-loading").style.display = "none";
       showError("catalog-error", error);
@@ -289,8 +224,7 @@
         `ocurridos entre ${fmtDate(model.completeness_window_start)} y ` +
         `${fmtDate(model.completeness_window_end)}, un período que incluye el de Maule ` +
         `de 2010. El mapa muestra sismos de magnitud ${model.mc_value.toFixed(0)} o más.`;
-      const dl = document.getElementById("model-kv");
-      setKv(dl, [
+      setKv(document.getElementById("model-kv"), [
         ["Tipo de magnitud", model.magnitude_type],
         ["Mc", model.mc_value.toFixed(2)],
         ["Ventana", fmtDate(model.completeness_window_start) + " – " + fmtDate(model.completeness_window_end)],
@@ -314,107 +248,114 @@
     }
   }
 
-  function project(lat, lon, w, h, pad) {
-    const x =
-      pad.left +
-      ((lon - VIEW.minLon) / (VIEW.maxLon - VIEW.minLon)) * (w - pad.left - pad.right);
-    const y =
-      pad.top +
-      ((VIEW.maxLat - lat) / (VIEW.maxLat - VIEW.minLat)) * (h - pad.top - pad.bottom);
-    return [x, y];
-  }
-
-  function drawPolygon(ctx, ring, w, h, pad, fill, stroke) {
-    if (!ring.length) return;
-    ctx.beginPath();
-    ring.forEach(([lon, lat], index) => {
-      const [x, y] = project(lat, lon, w, h, pad);
-      if (index === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
+  function heatPoints(cells) {
+    if (!cells.length) return [];
+    const logs = cells.map((cell) => Math.log10(cell.probability_at_least_one + 1e-12));
+    const minLog = Math.min(...logs);
+    const maxLog = Math.max(...logs);
+    const span = Math.max(maxLog - minLog, 0.2);
+    return cells.map((cell, index) => {
+      const t = (logs[index] - minLog) / span;
+      return [cell.center_latitude, cell.center_longitude, 0.18 + t * 0.82];
     });
-    ctx.closePath();
-    if (fill) {
-      ctx.fillStyle = fill;
-      ctx.fill();
-    }
-    if (stroke) {
-      ctx.strokeStyle = stroke;
-      ctx.lineWidth = 1.4;
-      ctx.stroke();
-    }
   }
 
-  function sizeCanvas(canvas) {
-    const wrap = canvas.parentElement;
-    const cssW = Math.max(280, wrap.clientWidth);
-    const cssH = Math.round(cssW * 1.72);
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.style.width = cssW + "px";
-    canvas.style.height = cssH + "px";
-    canvas.width = Math.round(cssW * dpr);
-    canvas.height = Math.round(cssH * dpr);
-    const ctx = canvas.getContext("2d");
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    return { ctx, w: cssW, h: cssH };
+  function ensureMap() {
+    if (map) {
+      map.invalidateSize();
+      return map;
+    }
+    if (!window.L) throw new Error("no se pudo cargar el mapa");
+
+    map = L.map("oef-map", {
+      zoomControl: false,
+      scrollWheelZoom: false,
+      attributionControl: true,
+      minZoom: 4,
+      maxZoom: 9,
+      maxBounds: CHILE_MAX_BOUNDS,
+      maxBoundsViscosity: 0.85,
+    });
+    L.control.zoom({ position: "bottomright" }).addTo(map);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · CARTO',
+      subdomains: "abcd",
+      maxZoom: 9,
+    }).addTo(map);
+
+    const legend = L.control({ position: "bottomleft" });
+    legend.onAdd = () => {
+      const box = L.DomUtil.create("div", "oef-map-legend");
+      box.innerHTML =
+        "<strong>Actividad relativa</strong>" +
+        "<div class=\"heat-bar\"></div>" +
+        "<div style=\"display:flex;justify-content:space-between\"><span>Menos</span><span>Más</span></div>";
+      return box;
+    };
+    legend.addTo(map);
+
+    map.fitBounds(CHILE_BOUNDS, { padding: [18, 18] });
+    return map;
   }
 
-  function drawMap(cells) {
-    const canvas = document.getElementById("oef-map");
-    if (!canvas) return;
-    const { ctx, w, h } = sizeCanvas(canvas);
-    const pad = { top: 12, right: 14, bottom: 12, left: 14 };
-
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = "#081018";
-    ctx.fillRect(0, 0, w, h);
-
-    drawPolygon(ctx, CHILE_MAIN, w, h, pad, "#141c26", null);
-    drawPolygon(ctx, CHILOE, w, h, pad, "#141c26", null);
-
-    if (cells.length) {
-      const logs = cells.map((cell) => Math.log10(cell.probability_at_least_one + 1e-12));
-      const minLog = Math.min(...logs);
-      const maxLog = Math.max(...logs);
-      const span = Math.max(maxLog - minLog, 0.15);
-      const [x0] = project(0, 0, w, h, pad);
-      const [x1] = project(0, 0.1, w, h, pad);
-      const [, y0] = project(0, 0, w, h, pad);
-      const [, y1] = project(0.1, 0, w, h, pad);
-      const cellW = Math.max(2.2, Math.abs(x1 - x0) * 1.35);
-      const cellH = Math.max(2.2, Math.abs(y1 - y0) * 1.15);
-
-      cells.forEach((cell, index) => {
-        const t = (logs[index] - minLog) / span;
-        if (t < 0.08) return;
-        const [x, y] = project(cell.center_latitude, cell.center_longitude, w, h, pad);
-        const [r, g, b] = heatColor(t);
-        ctx.fillStyle = `rgba(${r},${g},${b},${0.22 + t * 0.7})`;
-        ctx.fillRect(x - cellW / 2, y - cellH / 2, cellW, cellH);
+  function paintHeat(cells) {
+    const leafletMap = ensureMap();
+    const points = heatPoints(cells);
+    if (heatLayer) {
+      leafletMap.removeLayer(heatLayer);
+      heatLayer = null;
+    }
+    if (window.L && L.heatLayer && points.length) {
+      heatLayer = L.heatLayer(points, {
+        radius: 22,
+        blur: 18,
+        maxZoom: 7,
+        minOpacity: 0.28,
+        gradient: {
+          0.15: "#1a3348",
+          0.4: "#3d7ea6",
+          0.62: "#6ba3c9",
+          0.8: "#c4894a",
+          1: "#ffc27a",
+        },
       });
+      heatLayer.addTo(leafletMap);
     }
+    requestAnimationFrame(() => leafletMap.invalidateSize());
+  }
 
-    drawPolygon(ctx, CHILE_MAIN, w, h, pad, "rgba(20,28,38,.28)", "rgba(244,241,234,.55)");
-    drawPolygon(ctx, CHILOE, w, h, pad, "rgba(20,28,38,.28)", "rgba(244,241,234,.55)");
-
-    ctx.font = "600 11px 'Source Sans 3', sans-serif";
-    ctx.textBaseline = "middle";
-    for (const city of CITIES) {
-      const [x, y] = project(city.lat, city.lon, w, h, pad);
-      ctx.beginPath();
-      ctx.fillStyle = "rgba(244,241,234,.9)";
-      ctx.arc(x, y, 2.1, 0, Math.PI * 2);
-      ctx.fill();
-      const onLeft = city.lon > -70.4;
-      ctx.textAlign = onLeft ? "right" : "left";
-      ctx.fillStyle = "rgba(244,241,234,.82)";
-      ctx.fillText(city.name, x + (onLeft ? -6 : 6), y);
+  function renderZones(cells) {
+    const zoneMax = new Map();
+    for (const cell of cells) {
+      const zone = zoneForLatitude(cell.center_latitude);
+      const current = zoneMax.get(zone) || 0;
+      if (cell.probability_at_least_one > current) zoneMax.set(zone, cell.probability_at_least_one);
     }
-
-    if (!cells.length) {
-      ctx.fillStyle = "rgba(244,241,234,.7)";
-      ctx.font = "14px 'Source Sans 3', sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText("No hay datos para esta magnitud", w / 2, h / 2);
+    const ranked = ZONES.map((zone) => zone.name)
+      .filter((name) => zoneMax.has(name))
+      .sort((a, b) => zoneMax.get(b) - zoneMax.get(a));
+    const maxZoneProb = ranked.length ? zoneMax.get(ranked[0]) : 0;
+    const zoneList = document.getElementById("fc-zone-list");
+    zoneList.innerHTML = "";
+    if (!ranked.length) {
+      const p = document.createElement("p");
+      p.className = "plain-note";
+      p.textContent = "No hay datos suficientes para esta magnitud.";
+      zoneList.appendChild(p);
+      return;
+    }
+    for (const name of ranked) {
+      const intensity = maxZoneProb > 0 ? zoneMax.get(name) / maxZoneProb : 0;
+      const row = document.createElement("div");
+      row.className = "zone-row";
+      row.innerHTML =
+        `<span class="zone-name"></span>` +
+        `<span class="zone-bar-track"><span class="zone-bar-fill"></span></span>` +
+        `<span class="zone-level"></span>`;
+      row.querySelector(".zone-name").textContent = name;
+      row.querySelector(".zone-bar-fill").style.width = Math.max(8, intensity * 100) + "%";
+      row.querySelector(".zone-level").textContent = intensityLabel(intensity);
+      zoneList.appendChild(row);
     }
   }
 
@@ -423,8 +364,7 @@
       limit: MAP_CELL_LIMIT,
       magnitude_lower: magnitudeLower,
     });
-    lastCells = detail.cells || [];
-
+    const cells = detail.cells || [];
     const selectedBin = detail.magnitude_bins.find(
       (bin) => bin.lower === detail.selected_magnitude_lower
     ) || { lower: detail.selected_magnitude_lower, upper: null };
@@ -440,7 +380,7 @@
       ["Mc de referencia", detail.reference_magnitude.toFixed(2)],
       ["b-value usado", detail.b_value_used.toFixed(3)],
       ["Celdas en la grilla", fmtInt(detail.cell_count_total)],
-      ["Puntos pintados", fmtInt(lastCells.length)],
+      ["Puntos pintados", fmtInt(cells.length)],
     ]);
 
     const select = document.getElementById("mag-select");
@@ -461,68 +401,23 @@
     }
     select.value = String(detail.selected_magnitude_lower);
 
-    drawMap(lastCells);
-
-    const zoneMax = new Map();
-    for (const cell of lastCells) {
-      const zone = zoneForLatitude(cell.center_latitude);
-      const current = zoneMax.get(zone) || 0;
-      if (cell.probability_at_least_one > current) {
-        zoneMax.set(zone, cell.probability_at_least_one);
-      }
-    }
-    const ranked = ZONES.map((zone) => zone.name)
-      .filter((name) => zoneMax.has(name))
-      .sort((a, b) => zoneMax.get(b) - zoneMax.get(a));
-    const maxZoneProb = ranked.length ? zoneMax.get(ranked[0]) : 0;
-
-    const zoneList = document.getElementById("fc-zone-list");
-    zoneList.innerHTML = "";
-    if (!ranked.length) {
-      const p = document.createElement("p");
-      p.className = "plain-note";
-      p.textContent = "No hay datos suficientes para esta magnitud.";
-      zoneList.appendChild(p);
-    }
-    for (const name of ranked) {
-      const intensity = maxZoneProb > 0 ? zoneMax.get(name) / maxZoneProb : 0;
-      const row = document.createElement("div");
-      row.className = "zone-row";
-      const nameEl = document.createElement("span");
-      nameEl.className = "zone-name";
-      nameEl.textContent = name;
-      const track = document.createElement("span");
-      track.className = "zone-bar-track";
-      const fill = document.createElement("span");
-      fill.className = "zone-bar-fill";
-      fill.style.width = Math.max(8, intensity * 100) + "%";
-      track.appendChild(fill);
-      const level = document.createElement("span");
-      level.className = "zone-level";
-      level.textContent = intensityLabel(intensity);
-      row.appendChild(nameEl);
-      row.appendChild(track);
-      row.appendChild(level);
-      zoneList.appendChild(row);
-    }
-
     document.getElementById("forecast-loading").style.display = "none";
     document.getElementById("forecast-content").style.display = "block";
+    paintHeat(cells);
+    renderZones(cells);
   }
 
   async function initForecast() {
     try {
       const list = await apiGet("/forecasts", { limit: 1 });
       if (!list.data.length) {
-        document.getElementById("forecast-loading").textContent =
-          "Todavía no hay un mapa publicado.";
+        document.getElementById("forecast-loading").textContent = "Todavía no hay un mapa publicado.";
         return;
       }
       const runId = list.data[0].id;
       await loadForecast(runId);
-      const select = document.getElementById("mag-select");
-      select.addEventListener("change", () => {
-        loadForecast(select.dataset.runId, parseFloat(select.value)).catch((error) =>
+      document.getElementById("mag-select").addEventListener("change", (event) => {
+        loadForecast(event.target.dataset.runId, parseFloat(event.target.value)).catch((error) =>
           showError("forecast-error", error)
         );
       });
@@ -531,11 +426,6 @@
       showError("forecast-error", error);
     }
   }
-
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => drawMap(lastCells), 120);
-  });
 
   loadCatalog();
   loadModelSummary();

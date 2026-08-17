@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main-v9.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <style>
     :root{ --oef:#6ba3c9; --oef-soft:rgba(107,163,201,.12); --heat:#e08a4a; }
@@ -63,11 +64,55 @@
     #oef-map-wrap{
       position:relative;
       border: 1px solid var(--rule-dim);
-      border-radius: var(--radius);
+      border-radius: 4px;
       overflow:hidden;
       background: #0a1016;
+      isolation: isolate;
     }
-    #oef-map{ display:block; width:100%; height:auto; vertical-align:top; }
+    #oef-map{
+      width:100%;
+      height: min(78vh, 740px);
+      min-height: 520px;
+      background: #0a1016;
+    }
+    #oef-map .leaflet-container,
+    #oef-map.leaflet-container{ background:#0a1016; font-family: inherit; }
+    #oef-map .leaflet-control-zoom a{
+      background: #14181f;
+      color: #f4f1ea;
+      border: 1px solid rgba(244,241,234,.12);
+      width: 32px; height: 32px; line-height: 30px;
+      border-radius: 2px;
+    }
+    #oef-map .leaflet-control-zoom a:hover{ background:#1d232c; color:#fff; }
+    #oef-map .leaflet-bar{ border: 0; box-shadow: none; }
+    #oef-map .leaflet-control-attribution{
+      background: rgba(10,16,22,.72);
+      color: rgba(244,241,234,.45);
+      font-size: 10px;
+    }
+    #oef-map .leaflet-control-attribution a{ color: rgba(107,163,201,.8); }
+    .oef-map-legend{
+      background: rgba(10,16,22,.82);
+      border: 1px solid rgba(244,241,234,.1);
+      color: #f4f1ea;
+      padding: 8px 10px;
+      font-size: 11px;
+      line-height: 1.35;
+      border-radius: 3px;
+      backdrop-filter: blur(8px);
+    }
+    .oef-map-legend strong{ display:block; font-size:10px; letter-spacing:.04em; text-transform:uppercase; color:rgba(244,241,234,.55); margin-bottom:6px; font-weight:600; }
+    .oef-map-legend .heat-bar{ width:132px; height:8px; margin: 4px 0; }
+    .oef-map-hint{
+      position:absolute; top:10px; left:10px; z-index:500;
+      background: rgba(10,16,22,.78);
+      color: rgba(244,241,234,.72);
+      font-size: 11px;
+      padding: 6px 9px;
+      border-radius: 3px;
+      pointer-events:none;
+    }
     .map-caption{
       display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center;
       margin-top: 12px; font-size: .82rem; color: var(--muted);
@@ -211,7 +256,8 @@
             <div class="oef-card">
               <p id="fc-summary" class="plain" style="margin-bottom:14px"></p>
               <div id="oef-map-wrap">
-                <canvas id="oef-map" width="560" height="920" aria-label="Mapa de Chile con actividad sísmica relativa"></canvas>
+                <div id="oef-map" role="img" aria-label="Mapa de Chile con actividad sísmica relativa"></div>
+                <div class="oef-map-hint">Arrastra el mapa · usa + / − para acercar</div>
               </div>
               <div class="map-caption">
                 <div class="heat-scale">
@@ -219,7 +265,7 @@
                   <span class="heat-bar" aria-hidden="true"></span>
                   <span>Más</span>
                 </div>
-                <span>Incluye el mar frente a la costa, donde suele concentrarse la actividad.</span>
+                <span>La franja brillante suele ir por el mar, frente a la costa.</span>
               </div>
               <div style="margin-top:16px">
                 <label for="mag-select">Quiero ver:</label><br>
@@ -236,8 +282,8 @@
                 <h3 style="margin-bottom:4px">Cómo leerlo</h3>
                 <ul class="read-list">
                   <li>Un color más intenso no significa “va a haber un terremoto grande”.</li>
-                  <li>Compara una zona con otra, nada más.</li>
-                  <li>Después de un sismo fuerte suelen venir réplicas cerca, y eso se nota en el mapa.</li>
+                  <li>Compara una zona con otra. El brillo es relativo, no un nivel de alerta.</li>
+                  <li>Puedes mover y acercar el mapa. La costa y las ciudades son de un mapa real.</li>
                 </ul>
                 <details class="tech-details">
                   <summary>Datos técnicos del cálculo</summary>
@@ -362,6 +408,8 @@
   </footer>
 
   <script src="/js/site.js?v=3"></script>
-  <script src="/chile-oef/app.js?v=20260817-pub"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <script src="/chile-oef/app.js?v=20260817-map2"></script>
 </body>
 </html>
