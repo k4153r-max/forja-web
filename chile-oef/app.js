@@ -82,9 +82,11 @@
   function formatChance(probability) {
     if (probability == null) return "sin dato";
     const percent = probability * 100;
+    const oneIn = Math.max(2, Math.round(1 / probability));
+    const oneInText = "1 en " + new Intl.NumberFormat("es-CL").format(oneIn);
     if (percent >= 1) return percent.toFixed(1).replace(".", ",") + "%";
-    if (percent >= 0.01) return percent.toFixed(2).replace(".", ",") + "%";
-    return "menos de 0,01%";
+    if (percent >= 0.01) return percent.toFixed(2).replace(".", ",") + "% · " + oneInText;
+    return oneInText;
   }
 
   function intensityLabel(intensity) {
