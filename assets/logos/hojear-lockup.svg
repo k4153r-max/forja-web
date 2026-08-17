@@ -1,17 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none" role="img" aria-label="Hojear">
   <!-- Mark -->
   <svg x="0" y="0" width="64" height="64" viewBox="0 0 64 64">
-    <rect width="64" height="64" rx="14" fill="#141a1c"/>
-    <rect x="1.5" y="1.5" width="61" height="61" rx="12.5" stroke="#d95d39" stroke-width="1.2" stroke-opacity="0.32"/>
-    <path d="M32 16 v34" stroke="#d95d39" stroke-width="2.2" stroke-linecap="round" opacity="0.9"/>
-    <path d="M30.5 18 C22 19 14 22 12 28 C14 36 20 42 30.5 48 Z" fill="#f3ebe0" opacity="0.92"/>
-    <path d="M16.5 28.5 h9.5 M16.5 32.5 h8 M16.5 36.5 h9 M16.5 40.5 h6.5" stroke="#8a6a4a" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
-    <path d="M33.5 18 C42 17.5 50 20 53.5 26.5 C55 32 52 40 45 46 C40 49.5 35 49 33.5 48 Z" fill="#d95d39"/>
-    <path d="M36 20.5 C43 20 49 22.5 51.5 27.5 C52.5 31.5 50.5 37.5 45.5 42.5 C41.5 45.5 37 46 35 45.5 L35 21 Z" fill="#e8875a" opacity="0.55"/>
-    <path d="M38 28.5 h10 M38 32.5 h8.5 M38 36.5 h9.5 M38 40.5 h7" stroke="#fff8f0" stroke-width="1.1" stroke-linecap="round" opacity="0.45"/>
-    <path d="M48 18.5 L54 24.5 L48 24.5 Z" fill="#f3ebe0" opacity="0.95"/>
+    <rect width="64" height="64" rx="14" fill="#0B0B0C"/>
+    <rect x="1.5" y="1.5" width="61" height="61" rx="12.5" stroke="#D95D39" stroke-width="1.2" stroke-opacity="0.3"/>
+    <path d="M31 18 C20 20 13 26 13 33 C13 40 20 45 31 47 Z" fill="#D95D39"/>
+    <path d="M33 18 C44 20 51 26 51 33 C51 40 44 45 33 47 Z M44 21 L50 27 L44 27 Z" fill="#D95D39" fill-rule="evenodd"/>
   </svg>
   <!-- Wordmark -->
-  <text x="80" y="40" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="600" fill="#f3ebe0" letter-spacing="-0.5">Hojear</text>
-  <text x="80" y="54" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="10" font-weight="700" fill="#d95d39" letter-spacing="2.4">BIBLIOTECA DIGITAL</text>
+  <text x="80" y="40" font-family="Archivo, 'Arial Narrow', 'Helvetica Neue', sans-serif" font-size="28" font-weight="800" fill="#F4F1EA" letter-spacing="-0.5">Hojear</text>
+  <text x="80" y="54" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="10" font-weight="700" fill="#D95D39" letter-spacing="2.4">BIBLIOTECA DIGITAL</text>
 </svg>

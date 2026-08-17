@@ -29,12 +29,21 @@
 | `hojear-mark.svg` / `hojear-mark-light.svg` / `hojear-lockup.svg` / `hojear-icon.jpg` | **Hojear** (biblioteca digital; antes Umbral) |
 | (indago en `assets/portfolio/`) | indago |
 
-### Hojear — concepto del mark
-- **Libro abierto** + **hoja derecha en movimiento** = *hojear* (pasar páginas).
-- Color producto: terracotta `#d95d39` (no usar el teal de Nexo).
-- `hojear-mark.svg` → fondos oscuros / web ETEMEN.
-- `hojear-mark-light.svg` → fondos claros / app biblioteca.
-- `hojear-icon.jpg` → avatar redes / OG / apple-touch.
+### Hojear — concepto del mark (v2, 2026-08-17)
+- **Libro abierto**: dos hojas en un solo tono con el lomo como hueco
+  negativo, esquina superior derecha levantada (recorte, no color
+  aparte) = gesto de *hojear* (pasar página).
+- Redibujado para seguir la misma disciplina que Nexo/ETEMEN: **un solo
+  color de acento sobre badge oscuro/claro**, sin gradientes, sin
+  detalle fino (las líneas de texto y el brillo de la v1 no leían bien
+  a tamaño de nav/favicon).
+- Color producto: terracotta `#D95D39` (no usar el teal de Nexo).
+- `hojear-mark.svg` → fondo carbono `#0B0B0C` / fondos oscuros, web ETEMEN.
+- `hojear-mark-light.svg` → fondo papel `#F4F1EA` / fondos claros.
+- `hojear-lockup.svg` → mark + wordmark Archivo 800 + tagline mono, para
+  fondo oscuro.
+- `hojear-icon.jpg` → avatar redes / OG / apple-touch (1024×1024,
+  renderizado desde `hojear-mark.svg`).
 - Landing: `etemen.cl/hojear/` · App: `etemen.cl/biblioteca/`
 - `/umbral/` redirige a `/hojear/` (legacy).
 
@@ -57,7 +66,7 @@
 - **Display:** Archivo (condensado en H1)
 - **Cuerpo:** Source Sans 3
 - **Estado / métricas:** IBM Plex Mono
-- CSS vivo: `css/main-v8.css`
+- CSS vivo: `css/main-v9.css`
 
 ## Reglas
 
