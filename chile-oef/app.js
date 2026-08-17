@@ -1,20 +1,16 @@
 (() => {
   "use strict";
 
-  // Updated once the FastAPI backend is deployed (see docs/PROJECT_STATE.md
-  // "Deploy" section). Until then this page shows its own loading/error
-  // states rather than fabricated numbers.
   const API_BASE = window.CHILE_OEF_API_BASE || "https://chile-oef-api.onrender.com/v1";
-  const FETCH_TIMEOUT_MS = 15000;
+  const FETCH_TIMEOUT_MS = 20000;
   const COLD_START_RETRY_MS = 6000;
   const MAX_RETRIES = 5;
-
-  const CHILE_BOUNDS = { minLat: -60, maxLat: -15, minLon: -82, maxLon: -62 };
+  const MAP_CELL_LIMIT = 5000;
   const MAULE_DATE = "2010-02-27";
 
-  // Zonas geográficas de Chile de uso común (no una división administrativa
-  // exacta), usadas solo para presentar resultados en lenguaje corriente en
-  // vez de coordenadas o identificadores internos de celda.
+  // Recorte ajustado a Chile continental para que el país llene el mapa.
+  const VIEW = { minLat: -55.8, maxLat: -17.2, minLon: -76.4, maxLon: -66.0 };
+
   const ZONES = [
     { name: "Norte Grande", maxLat: -17.4, minLat: -26.0 },
     { name: "Norte Chico", maxLat: -26.0, minLat: -32.0 },
@@ -22,40 +18,134 @@
     { name: "Zona Sur", maxLat: -37.0, minLat: -44.0 },
     { name: "Zona Austral", maxLat: -44.0, minLat: -56.0 },
   ];
-  const MAP_LANDMARKS = [
-    { name: "Arica", lat: -18.5 },
-    { name: "Antofagasta", lat: -23.6 },
-    { name: "La Serena", lat: -29.9 },
-    { name: "Santiago", lat: -33.4 },
-    { name: "Concepción", lat: -36.8 },
-    { name: "Puerto Montt", lat: -41.5 },
-    { name: "Coyhaique", lat: -45.6 },
-    { name: "Punta Arenas", lat: -53.2 },
+
+  const CITIES = [
+    { name: "Arica", lat: -18.48, lon: -70.31 },
+    { name: "Iquique", lat: -20.21, lon: -70.15 },
+    { name: "Antofagasta", lat: -23.65, lon: -70.40 },
+    { name: "La Serena", lat: -29.90, lon: -71.25 },
+    { name: "Santiago", lat: -33.45, lon: -70.67 },
+    { name: "Concepción", lat: -36.83, lon: -73.05 },
+    { name: "Valdivia", lat: -39.81, lon: -73.25 },
+    { name: "Pto. Montt", lat: -41.47, lon: -72.94 },
+    { name: "Coyhaique", lat: -45.57, lon: -72.07 },
+    { name: "Pta. Arenas", lat: -53.16, lon: -70.91 },
   ];
 
-  function zoneForLatitude(lat) {
-    const zone = ZONES.find((z) => lat <= z.maxLat && lat > z.minLat);
-    return zone ? zone.name : "Zona Austral";
-  }
+  // Contorno simplificado de Chile continental (lon, lat), sentido horario
+  // desde Arica: costa del Pacífico hacia el sur y frontera andina de vuelta.
+  const CHILE_MAIN = [
+    [-70.32, -17.50], [-70.38, -18.48], [-70.18, -20.22], [-70.18, -21.45],
+    [-70.28, -22.45], [-70.40, -23.65], [-70.48, -25.40], [-70.85, -27.35],
+    [-71.32, -29.90], [-71.52, -31.63], [-71.63, -32.78], [-71.63, -33.58],
+    [-71.98, -34.40], [-72.42, -35.33], [-72.70, -36.00], [-73.12, -36.83],
+    [-73.40, -37.60], [-73.42, -38.73], [-73.40, -39.82], [-73.18, -40.60],
+    [-72.95, -41.47], [-72.82, -42.20], [-72.85, -43.20], [-73.05, -44.60],
+    [-73.40, -45.50], [-73.80, -46.60], [-74.40, -47.70], [-74.55, -48.80],
+    [-74.20, -50.10], [-73.40, -51.30], [-72.30, -52.10], [-71.20, -52.70],
+    [-70.93, -53.16], [-70.10, -53.00], [-69.20, -52.50], [-68.70, -52.40],
+    [-68.65, -51.60], [-70.40, -50.80], [-71.80, -49.40], [-72.20, -48.20],
+    [-72.10, -46.80], [-71.85, -45.57], [-71.80, -44.00], [-71.75, -42.80],
+    [-71.70, -41.50], [-71.75, -40.20], [-71.70, -39.00], [-71.40, -37.80],
+    [-71.00, -36.50], [-70.55, -35.20], [-70.15, -34.00], [-70.05, -33.45],
+    [-70.15, -32.20], [-69.95, -30.80], [-69.80, -29.50], [-69.50, -27.80],
+    [-68.80, -26.40], [-68.35, -24.80], [-68.20, -23.00], [-68.00, -21.90],
+    [-68.50, -20.40], [-69.20, -18.80], [-69.48, -17.50],
+  ];
 
-  function intensityLabel(intensity) {
-    if (intensity >= 0.75) return "Muy alta";
-    if (intensity >= 0.45) return "Alta";
-    if (intensity >= 0.2) return "Media";
-    return "Baja";
-  }
+  const CHILOE = [
+    [-73.92, -41.78], [-73.52, -41.85], [-73.48, -42.35],
+    [-73.55, -43.12], [-73.95, -43.35], [-74.25, -42.55], [-74.15, -41.95],
+  ];
+
+  const MAG_LABELS = {
+    "3-4": "Sismos suaves (magnitud 3 a 4)",
+    "4-5": "Sismos leves (magnitud 4 a 5)",
+    "5-6": "Sismos medianos (magnitud 5 a 6)",
+    "6-7": "Sismos fuertes (magnitud 6 a 7)",
+    "7+": "Sismos muy fuertes (magnitud 7 o más)",
+  };
+
+  const HORIZON_LABELS = {
+    PT6H: "las próximas 6 horas",
+    P1D: "el próximo día",
+    P3D: "los próximos 3 días",
+    P7D: "los próximos 7 días",
+  };
+
+  let lastCells = [];
+  let resizeTimer = 0;
 
   const fmtInt = (n) => new Intl.NumberFormat("es-CL").format(n);
-  // UTC explícito: estas fechas representan un día del catálogo (00:00:00Z),
-  // no un instante -- mostrarlas en huso horario local las corre un día.
   const fmtDate = (iso) =>
     new Date(iso).toLocaleDateString("es-CL", {
-      year: "numeric", month: "short", day: "2-digit", timeZone: "UTC",
+      year: "numeric", month: "long", day: "numeric", timeZone: "UTC",
     });
   const fmtDateTime = (iso) =>
     new Date(iso).toLocaleString("es-CL", {
       year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit",
     });
+
+  function binKey(bin) {
+    return bin.upper ? `${bin.lower}-${bin.upper}` : `${bin.lower}+`;
+  }
+
+  function binLabel(bin) {
+    return MAG_LABELS[binKey(bin)] || (
+      bin.upper ? `Magnitud ${bin.lower} a ${bin.upper}` : `Magnitud ${bin.lower} o más`
+    );
+  }
+
+  function cleanPlace(place) {
+    if (!place) return "Chile";
+    return place
+      .replace(/^\d+\s*km\s+[A-Z]{1,3}\s+of\s+/i, "")
+      .replace(/\s+Earthquake$/i, "")
+      .replace(/^2010\s+/i, "")
+      .replace(/\s+Chile$/i, ", Chile")
+      .replace(/^,\s*/, "")
+      .trim();
+  }
+
+  function zoneForLatitude(lat) {
+    const zone = ZONES.find((item) => lat <= item.maxLat && lat > item.minLat);
+    return zone ? zone.name : "Zona Austral";
+  }
+
+  function intensityLabel(intensity) {
+    if (intensity >= 0.75) return "La más alta";
+    if (intensity >= 0.45) return "Alta";
+    if (intensity >= 0.2) return "Media";
+    return "Más baja";
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function heatColor(t) {
+    const x = Math.max(0, Math.min(1, t));
+    let r;
+    let g;
+    let b;
+    if (x < 0.4) {
+      const u = x / 0.4;
+      r = lerp(28, 107, u);
+      g = lerp(58, 163, u);
+      b = lerp(82, 201, u);
+    } else if (x < 0.75) {
+      const u = (x - 0.4) / 0.35;
+      r = lerp(107, 196, u);
+      g = lerp(163, 137, u);
+      b = lerp(201, 74, u);
+    } else {
+      const u = (x - 0.75) / 0.25;
+      r = lerp(196, 255, u);
+      g = lerp(137, 178, u);
+      b = lerp(74, 107, u);
+    }
+    return [Math.round(r), Math.round(g), Math.round(b)];
+  }
 
   async function apiGet(path, params) {
     const url = new URL(API_BASE + path);
@@ -79,9 +169,6 @@
       } catch (error) {
         clearTimeout(timer);
         lastError = error;
-        // Render's free tier sleeps after inactivity; a cold start can take
-        // 30-50s. Retry with a fixed backoff rather than failing on the
-        // first attempt.
         if (attempt < MAX_RETRIES - 1) {
           await new Promise((resolve) => setTimeout(resolve, COLD_START_RETRY_MS));
         }
@@ -95,8 +182,8 @@
     if (!el) return;
     el.style.display = "block";
     el.textContent =
-      "No se pudo cargar (" + (error?.message || "error desconocido") + "). " +
-      "El backend puede estar despertando (plan gratuito) — reintentá en un minuto.";
+      "Estamos cargando los datos. Si tarda, espera un minuto y recarga la página.";
+    if (error) console.warn("chile-oef", error);
   }
 
   function setKv(dl, pairs) {
@@ -126,35 +213,35 @@
         : "—";
       document.getElementById("s-range").textContent = `${earliestYear}–${latestYear}`;
       if (model) {
-        document.getElementById("s-mc").textContent = "M" + model.mc_value.toFixed(1) + "+";
+        document.getElementById("s-mc").textContent = "Magnitud " + model.mc_value.toFixed(0) + " o más";
       }
       return summary;
     } catch (error) {
-      document.getElementById("s-total").textContent = "s/d";
-      document.getElementById("s-range").textContent = "s/d";
-      document.getElementById("s-mc").textContent = "s/d";
+      document.getElementById("s-total").textContent = "—";
+      document.getElementById("s-range").textContent = "—";
+      document.getElementById("s-mc").textContent = "—";
       throw error;
     }
   }
 
   function renderCatalog(summary) {
-    const maxCount = Math.max(...summary.magnitude_type_counts.map((r) => r.count));
+    const counts = summary.magnitude_type_counts || [];
+    const maxCount = Math.max(1, ...counts.map((row) => row.count));
     const bars = document.getElementById("mag-type-bars");
     bars.innerHTML = "";
-    for (const row of summary.magnitude_type_counts.slice(0, 8)) {
+    for (const row of counts.slice(0, 8)) {
       const wrap = document.createElement("div");
-      wrap.className = "magbar-row";
+      wrap.style.cssText = "display:flex;align-items:center;gap:10px;font-size:.82rem;margin-bottom:8px";
       const type = document.createElement("span");
-      type.className = "type";
-      type.textContent = row.magnitude_type || "(s/tipo)";
+      type.style.cssText = "width:54px;font-family:ui-monospace,monospace;color:var(--muted)";
+      type.textContent = row.magnitude_type || "sin tipo";
       const track = document.createElement("span");
-      track.className = "track";
+      track.style.cssText = "flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden";
       const fill = document.createElement("span");
-      fill.className = "fill";
-      fill.style.width = (100 * row.count) / maxCount + "%";
+      fill.style.cssText = `display:block;height:100%;width:${(100 * row.count) / maxCount}%;background:var(--oef)`;
       track.appendChild(fill);
       const count = document.createElement("span");
-      count.className = "count";
+      count.style.cssText = "width:62px;text-align:right;color:var(--muted)";
       count.textContent = fmtInt(row.count);
       wrap.appendChild(type);
       wrap.appendChild(track);
@@ -169,11 +256,11 @@
       const isMaule = (event.event_time || "").slice(0, 10) === MAULE_DATE;
       if (isMaule) tr.className = "notable";
       const dateTd = document.createElement("td");
-      dateTd.textContent = fmtDate(event.event_time) + (isMaule ? " · 27F" : "");
+      dateTd.textContent = fmtDate(event.event_time);
       const magTd = document.createElement("td");
-      magTd.textContent = event.magnitude.toFixed(1) + " " + (event.magnitude_type || "");
+      magTd.innerHTML = `<span class="mag-pill">${event.magnitude.toFixed(1)}</span>`;
       const placeTd = document.createElement("td");
-      placeTd.textContent = event.place || "—";
+      placeTd.textContent = cleanPlace(event.place);
       tr.appendChild(dateTd);
       tr.appendChild(magTd);
       tr.appendChild(placeTd);
@@ -198,113 +285,162 @@
     try {
       const model = await apiGet("/seismicity/model-summary");
       document.getElementById("model-summary").textContent =
-        `El modelo actual fue entrenado con ${fmtInt(model.completeness_event_count)} ` +
-        `sismos reales en escala de magnitud momento (${model.magnitude_type}), ` +
-        `registrados entre ${fmtDate(model.completeness_window_start)} y ` +
-        `${fmtDate(model.completeness_window_end)} — un período que incluye el terremoto ` +
-        `del Maule de 2010 (27F). Solo detecta de forma confiable sismos de magnitud ` +
-        `${model.mc_value.toFixed(1)} o mayor.`;
+        `Se entrenó con ${fmtInt(model.completeness_event_count)} terremotos reales ` +
+        `ocurridos entre ${fmtDate(model.completeness_window_start)} y ` +
+        `${fmtDate(model.completeness_window_end)}, un período que incluye el de Maule ` +
+        `de 2010. El mapa muestra sismos de magnitud ${model.mc_value.toFixed(0)} o más.`;
       const dl = document.getElementById("model-kv");
       setKv(dl, [
-        ["Mc (completitud)", model.mc_value.toFixed(2) + " " + model.magnitude_type],
-        ["Ventana Mc", fmtDate(model.completeness_window_start) + " – " + fmtDate(model.completeness_window_end)],
-        ["Eventos en ventana", fmtInt(model.completeness_event_count)],
-        ["b-value (Gutenberg-Richter)", model.b_value.toFixed(3) + " ± " + (model.b_value_standard_error?.toFixed(3) ?? "—")],
+        ["Tipo de magnitud", model.magnitude_type],
+        ["Mc", model.mc_value.toFixed(2)],
+        ["Ventana", fmtDate(model.completeness_window_start) + " – " + fmtDate(model.completeness_window_end)],
+        ["Eventos en la ventana", fmtInt(model.completeness_event_count)],
+        ["b-value", model.b_value.toFixed(3) + " ± " + (model.b_value_standard_error?.toFixed(3) ?? "—")],
         ["Eventos ≥ Mc", fmtInt(model.events_at_or_above_mc)],
-        ["μ (fondo, ETAS)", model.mu_per_day.toExponential(3) + " /día"],
-        ["k0 (productividad)", model.k0.toExponential(3)],
-        ["α (escala con magnitud)", model.alpha.toFixed(3)],
-        ["c (offset Omori)", (model.c_days * 24).toFixed(2) + " h"],
-        ["p (decaimiento Omori)", model.p_exponent.toFixed(3)],
-        ["d0 (escala espacial)", model.d0_km.toFixed(1) + " km"],
-        ["q (decaimiento espacial)", model.q_exponent.toFixed(3)],
+        ["μ / día", model.mu_per_day.toExponential(3)],
+        ["k0", model.k0.toExponential(3)],
+        ["α", model.alpha.toFixed(3)],
+        ["c (horas)", (model.c_days * 24).toFixed(2)],
+        ["p", model.p_exponent.toFixed(3)],
+        ["d0 (km)", model.d0_km.toFixed(1)],
+        ["q", model.q_exponent.toFixed(3)],
         ["Convergencia", model.converged ? "sí" : "no"],
       ]);
       document.getElementById("model-loading").style.display = "none";
       document.getElementById("model-content").style.display = "block";
     } catch (error) {
       document.getElementById("model-loading").textContent =
-        "No se pudo cargar el modelo (" + (error?.message || "error") + ").";
+        "No se pudo cargar esta parte. El mapa de arriba sí debería funcionar.";
     }
+  }
+
+  function project(lat, lon, w, h, pad) {
+    const x =
+      pad.left +
+      ((lon - VIEW.minLon) / (VIEW.maxLon - VIEW.minLon)) * (w - pad.left - pad.right);
+    const y =
+      pad.top +
+      ((VIEW.maxLat - lat) / (VIEW.maxLat - VIEW.minLat)) * (h - pad.top - pad.bottom);
+    return [x, y];
+  }
+
+  function drawPolygon(ctx, ring, w, h, pad, fill, stroke) {
+    if (!ring.length) return;
+    ctx.beginPath();
+    ring.forEach(([lon, lat], index) => {
+      const [x, y] = project(lat, lon, w, h, pad);
+      if (index === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    if (fill) {
+      ctx.fillStyle = fill;
+      ctx.fill();
+    }
+    if (stroke) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    }
+  }
+
+  function sizeCanvas(canvas) {
+    const wrap = canvas.parentElement;
+    const cssW = Math.max(280, wrap.clientWidth);
+    const cssH = Math.round(cssW * 1.72);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.style.width = cssW + "px";
+    canvas.style.height = cssH + "px";
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w: cssW, h: cssH };
   }
 
   function drawMap(cells) {
     const canvas = document.getElementById("oef-map");
-    const ctx = canvas.getContext("2d");
-    const w = canvas.width;
-    const h = canvas.height;
-    const leftMargin = 92;
+    if (!canvas) return;
+    const { ctx, w, h } = sizeCanvas(canvas);
+    const pad = { top: 12, right: 14, bottom: 12, left: 14 };
 
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = "#101820";
+    ctx.fillStyle = "#081018";
     ctx.fillRect(0, 0, w, h);
 
-    const toXY = (lat, lon) => {
-      const x =
-        leftMargin +
-        ((lon - CHILE_BOUNDS.minLon) / (CHILE_BOUNDS.maxLon - CHILE_BOUNDS.minLon)) * (w - leftMargin - 10);
-      const y = ((CHILE_BOUNDS.maxLat - lat) / (CHILE_BOUNDS.maxLat - CHILE_BOUNDS.minLat)) * h;
-      return [x, y];
-    };
+    drawPolygon(ctx, CHILE_MAIN, w, h, pad, "#141c26", null);
+    drawPolygon(ctx, CHILOE, w, h, pad, "#141c26", null);
 
-    // Ciudades de referencia, para que el mapa se pueda leer sin necesitar
-    // coordenadas -- el punto no es la geografía exacta, es la orientación.
-    ctx.strokeStyle = "rgba(244,241,234,.10)";
-    ctx.fillStyle = "rgba(244,241,234,.55)";
-    ctx.font = "11px 'Source Sans 3', sans-serif";
+    if (cells.length) {
+      const logs = cells.map((cell) => Math.log10(cell.probability_at_least_one + 1e-12));
+      const minLog = Math.min(...logs);
+      const maxLog = Math.max(...logs);
+      const span = Math.max(maxLog - minLog, 0.15);
+      const [x0] = project(0, 0, w, h, pad);
+      const [x1] = project(0, 0.1, w, h, pad);
+      const [, y0] = project(0, 0, w, h, pad);
+      const [, y1] = project(0.1, 0, w, h, pad);
+      const cellW = Math.max(2.2, Math.abs(x1 - x0) * 1.35);
+      const cellH = Math.max(2.2, Math.abs(y1 - y0) * 1.15);
+
+      cells.forEach((cell, index) => {
+        const t = (logs[index] - minLog) / span;
+        if (t < 0.08) return;
+        const [x, y] = project(cell.center_latitude, cell.center_longitude, w, h, pad);
+        const [r, g, b] = heatColor(t);
+        ctx.fillStyle = `rgba(${r},${g},${b},${0.22 + t * 0.7})`;
+        ctx.fillRect(x - cellW / 2, y - cellH / 2, cellW, cellH);
+      });
+    }
+
+    drawPolygon(ctx, CHILE_MAIN, w, h, pad, "rgba(20,28,38,.28)", "rgba(244,241,234,.55)");
+    drawPolygon(ctx, CHILOE, w, h, pad, "rgba(20,28,38,.28)", "rgba(244,241,234,.55)");
+
+    ctx.font = "600 11px 'Source Sans 3', sans-serif";
     ctx.textBaseline = "middle";
-    for (const place of MAP_LANDMARKS) {
-      const [, y] = toXY(place.lat, CHILE_BOUNDS.minLon);
+    for (const city of CITIES) {
+      const [x, y] = project(city.lat, city.lon, w, h, pad);
       ctx.beginPath();
-      ctx.moveTo(leftMargin, y);
-      ctx.lineTo(w - 10, y);
-      ctx.stroke();
-      ctx.fillText(place.name, 4, y);
+      ctx.fillStyle = "rgba(244,241,234,.9)";
+      ctx.arc(x, y, 2.1, 0, Math.PI * 2);
+      ctx.fill();
+      const onLeft = city.lon > -70.4;
+      ctx.textAlign = onLeft ? "right" : "left";
+      ctx.fillStyle = "rgba(244,241,234,.82)";
+      ctx.fillText(city.name, x + (onLeft ? -6 : 6), y);
     }
 
     if (!cells.length) {
-      ctx.fillStyle = "rgba(255,255,255,.5)";
-      ctx.font = "13px sans-serif";
-      ctx.fillText("No hay datos suficientes para esta magnitud", leftMargin + 10, h / 2);
-      return;
-    }
-
-    const maxProb = Math.max(...cells.map((c) => c.probability_at_least_one));
-    for (const cell of cells) {
-      const [x, y] = toXY(cell.center_latitude, cell.center_longitude);
-      const intensity = maxProb > 0 ? cell.probability_at_least_one / maxProb : 0;
-      const radius = 2.5 + intensity * 9;
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(196,137,74,${0.3 + intensity * 0.6})`;
-      ctx.fill();
+      ctx.fillStyle = "rgba(244,241,234,.7)";
+      ctx.font = "14px 'Source Sans 3', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("No hay datos para esta magnitud", w / 2, h / 2);
     }
   }
 
-  const HORIZON_LABELS = { PT6H: "las próximas 6 horas", P1D: "el próximo día", P3D: "los próximos 3 días", P7D: "los próximos 7 días" };
-
   async function loadForecast(runId, magnitudeLower) {
-    const detail = await apiGet(`/forecasts/${runId}`, { limit: 300, magnitude_lower: magnitudeLower });
+    const detail = await apiGet(`/forecasts/${runId}`, {
+      limit: MAP_CELL_LIMIT,
+      magnitude_lower: magnitudeLower,
+    });
+    lastCells = detail.cells || [];
 
-    const magLabel = detail.selected_magnitude_lower + (
-      detail.magnitude_bins.find((b) => b.lower === detail.selected_magnitude_lower)?.upper
-        ? ` a ${detail.magnitude_bins.find((b) => b.lower === detail.selected_magnitude_lower).upper}`
-        : " o más"
-    );
-    document.getElementById("fc-summary").innerHTML =
-      `Sismos de magnitud <strong>${magLabel}</strong>, para ` +
-      `${HORIZON_LABELS[detail.horizon_id] || detail.horizon_id}. ` +
-      `Calculado el ${fmtDate(detail.issued_at)}.`;
+    const selectedBin = detail.magnitude_bins.find(
+      (bin) => bin.lower === detail.selected_magnitude_lower
+    ) || { lower: detail.selected_magnitude_lower, upper: null };
 
-    const dl = document.getElementById("fc-kv");
-    setKv(dl, [
+    document.getElementById("fc-summary").textContent =
+      `${binLabel(selectedBin)}, para ${HORIZON_LABELS[detail.horizon_id] || "los próximos días"}. ` +
+      `Actualizado el ${fmtDate(detail.issued_at)}.`;
+
+    setKv(document.getElementById("fc-kv"), [
       ["Emitido", fmtDateTime(detail.issued_at)],
       ["Válido desde", fmtDateTime(detail.validity_start)],
       ["Válido hasta", fmtDateTime(detail.validity_end)],
       ["Mc de referencia", detail.reference_magnitude.toFixed(2)],
       ["b-value usado", detail.b_value_used.toFixed(3)],
-      ["Celdas totales (grilla)", fmtInt(detail.cell_count_total)],
-      ["Bin mostrado", detail.selected_magnitude_lower.toFixed(1) + "+"],
+      ["Celdas en la grilla", fmtInt(detail.cell_count_total)],
+      ["Puntos pintados", fmtInt(lastCells.length)],
     ]);
 
     const select = document.getElementById("mag-select");
@@ -313,12 +449,10 @@
       for (const bin of detail.magnitude_bins) {
         const opt = document.createElement("option");
         opt.value = bin.lower;
-        opt.textContent = bin.upper
-          ? `Magnitud ${bin.lower} a ${bin.upper}`
-          : `Magnitud ${bin.lower} o más`;
+        opt.textContent = binLabel(bin);
         if (bin.lower < detail.reference_magnitude) {
           opt.disabled = true;
-          opt.textContent += " (no detectable de forma confiable)";
+          opt.textContent += " — no se puede mostrar con confianza";
         }
         select.appendChild(opt);
       }
@@ -327,18 +461,17 @@
     }
     select.value = String(detail.selected_magnitude_lower);
 
-    drawMap(detail.cells);
+    drawMap(lastCells);
 
-    // Agrupar celdas en zonas en lenguaje corriente en vez de mostrar
-    // identificadores internos de celda (ej. "r0364 c0133"), que no le dicen
-    // nada a alguien que no conoce la grilla interna del modelo.
     const zoneMax = new Map();
-    for (const cell of detail.cells) {
+    for (const cell of lastCells) {
       const zone = zoneForLatitude(cell.center_latitude);
       const current = zoneMax.get(zone) || 0;
-      if (cell.probability_at_least_one > current) zoneMax.set(zone, cell.probability_at_least_one);
+      if (cell.probability_at_least_one > current) {
+        zoneMax.set(zone, cell.probability_at_least_one);
+      }
     }
-    const ranked = ZONES.map((z) => z.name)
+    const ranked = ZONES.map((zone) => zone.name)
       .filter((name) => zoneMax.has(name))
       .sort((a, b) => zoneMax.get(b) - zoneMax.get(a));
     const maxZoneProb = ranked.length ? zoneMax.get(ranked[0]) : 0;
@@ -348,8 +481,7 @@
     if (!ranked.length) {
       const p = document.createElement("p");
       p.className = "plain-note";
-      p.style.marginTop = "0";
-      p.textContent = "No hay datos suficientes para esta magnitud en ninguna zona.";
+      p.textContent = "No hay datos suficientes para esta magnitud.";
       zoneList.appendChild(p);
     }
     for (const name of ranked) {
@@ -363,7 +495,7 @@
       track.className = "zone-bar-track";
       const fill = document.createElement("span");
       fill.className = "zone-bar-fill";
-      fill.style.width = Math.max(6, intensity * 100) + "%";
+      fill.style.width = Math.max(8, intensity * 100) + "%";
       track.appendChild(fill);
       const level = document.createElement("span");
       level.className = "zone-level";
@@ -383,7 +515,7 @@
       const list = await apiGet("/forecasts", { limit: 1 });
       if (!list.data.length) {
         document.getElementById("forecast-loading").textContent =
-          "Todavía no se ha emitido ningún pronóstico.";
+          "Todavía no hay un mapa publicado.";
         return;
       }
       const runId = list.data[0].id;
@@ -399,6 +531,11 @@
       showError("forecast-error", error);
     }
   }
+
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => drawMap(lastCells), 120);
+  });
 
   loadCatalog();
   loadModelSummary();
