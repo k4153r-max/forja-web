@@ -199,7 +199,8 @@
       const model = await apiGet("/seismicity/model-summary");
       document.getElementById("model-summary").textContent =
         `El modelo actual fue entrenado con ${fmtInt(model.completeness_event_count)} ` +
-        `sismos reales registrados entre ${fmtDate(model.completeness_window_start)} y ` +
+        `sismos reales en escala de magnitud momento (${model.magnitude_type}), ` +
+        `registrados entre ${fmtDate(model.completeness_window_start)} y ` +
         `${fmtDate(model.completeness_window_end)} — un período que incluye el terremoto ` +
         `del Maule de 2010 (27F). Solo detecta de forma confiable sismos de magnitud ` +
         `${model.mc_value.toFixed(1)} o mayor.`;

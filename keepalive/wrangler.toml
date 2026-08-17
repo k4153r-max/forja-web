@@ -1,0 +1,11 @@
+name = "chile-oef-keepalive"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+workers_dev = true
+preview_urls = false
+
+[triggers]
+crons = ["* * * * *"]
+
+[vars]
+KEEPALIVE_URL = "https://chile-oef-api.onrender.com/v1/health"
