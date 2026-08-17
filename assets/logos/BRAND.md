@@ -26,7 +26,7 @@
 | Archivo | Marca |
 |---------|--------|
 | `nexo-icon.jpg` / `nexo-wordmark.jpg` / `nexo-mark.svg` | Nexo |
-| `hojear-mark.svg` / `hojear-mark-light.svg` / `hojear-lockup.svg` / `hojear-icon.jpg` | **Hojear** (biblioteca digital; antes Umbral) |
+| `hojear-mark-v2.svg` / `hojear-mark-light.svg` / `hojear-lockup.svg` / `hojear-icon.jpg` | **Hojear** (biblioteca digital; antes Umbral) |
 | (indago en `assets/portfolio/`) | indago |
 
 ### Hojear — concepto del mark (v2, 2026-08-17)
@@ -38,12 +38,12 @@
   detalle fino (las líneas de texto y el brillo de la v1 no leían bien
   a tamaño de nav/favicon).
 - Color producto: terracotta `#D95D39` (no usar el teal de Nexo).
-- `hojear-mark.svg` → fondo carbono `#0B0B0C` / fondos oscuros, web ETEMEN.
+- `hojear-mark-v2.svg` → fondo carbono `#0B0B0C` / fondos oscuros, web ETEMEN.
 - `hojear-mark-light.svg` → fondo papel `#F4F1EA` / fondos claros.
 - `hojear-lockup.svg` → mark + wordmark Archivo 800 + tagline mono, para
   fondo oscuro.
 - `hojear-icon.jpg` → avatar redes / OG / apple-touch (1024×1024,
-  renderizado desde `hojear-mark.svg`).
+  renderizado desde `hojear-mark-v2.svg`).
 - Landing: `etemen.cl/hojear/` · App: `etemen.cl/biblioteca/`
 - `/umbral/` redirige a `/hojear/` (legacy).
 
