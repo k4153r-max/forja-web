@@ -124,19 +124,56 @@
 
           <div class="pos-terminal-sim">
             <div class="pos-screen-bar">
-              <span>TERMINAL POS № 042 — CONSOLA LOCAL</span>
-              <span class="pos-status-badge">CONECTADO</span>
+              <span>TERMINAL POS № 042 — CONSOLA EN VIVO</span>
+              <span class="pos-status-badge">ONLINE</span>
             </div>
+
             <div class="pos-receipt-paper">
-              <div style="text-align:center; margin-bottom:10px; font-weight:700; color:#fff;">VALPARAÍSO BEAUTY &amp; SPA</div>
-              <div class="pos-receipt-line"><span>Corte Dama + Brushing</span><span>$25.000 CLP</span></div>
-              <div class="pos-receipt-line"><span>Manicura Rusa (Ysabel)</span><span>$18.000 CLP</span></div>
-              <div class="pos-receipt-line"><span>Abono Reserva Seña</span><span style="color:var(--nexo-mint)">-$10.000 CLP</span></div>
-              <div class="pos-receipt-line total"><span>TOTAL TICKET CAJA:</span><span>$33.000 CLP</span></div>
+              <div style="text-align:center; margin-bottom:10px; font-weight:700; color:#fff; font-size:11px;">VALPARAÍSO BEAUTY &amp; SPA</div>
+              <div id="pos-receipt-lines">
+                <!-- Se llena dinámicamente con JS -->
+              </div>
+              <div class="pos-receipt-line total">
+                <span>TOTAL TICKET:</span>
+                <span id="pos-total-val" style="color:var(--nexo-copper-light)">$33.000 CLP</span>
+              </div>
             </div>
-            <div style="margin-top:14px; font-size:11px; color:var(--nexo-muted); display:flex; justify-content:space-between;">
-              <span>WhatsApp: Confirmado (14:30)</span>
-              <span>Caja: Abierta ($50k)</span>
+
+            <div style="margin-top:14px;">
+              <span style="font-size:10px; color:var(--nexo-muted); text-transform:uppercase; font-weight:700;">+ Agregar productos al ticket:</span>
+              <div class="pos-add-items" id="pos-add-items">
+                <!-- Botones agregados dinámicamente por JS -->
+              </div>
+              <button type="button" class="pos-pay-btn" id="pos-pay-btn">💳 Cobrar Ticket &amp; Enviar WhatsApp</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculadora de Retorno de Inversión (page-cro) -->
+        <div class="roi-card">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+            <span class="eyebrow" style="margin:0">CALCULADORA DE RETORNO (CRO)</span>
+          </div>
+          <h2 style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; text-transform:uppercase;">¿Cuánto dinero recuperas con NEXO en tu local?</h2>
+          <p style="color:var(--nexo-muted); font-size:0.95rem;">Ajusta los parámetros de tu negocio para calcular el ahorro mensual estimado eliminando desorden en citas e inventario:</p>
+          
+          <div class="roi-grid">
+            <div>
+              <div class="roi-control">
+                <label for="range-citas">Citas perdidas o no confirmadas al mes: <strong id="val-citas-num" style="color:#fff">6 citas</strong></label>
+                <input type="range" id="range-citas" min="0" max="30" value="6" oninput="document.getElementById('val-citas-num').textContent = this.value + ' citas'">
+              </div>
+              <div class="roi-control">
+                <label for="range-stock">Horas/día perdidas buscando productos o cuadrando caja: <strong id="val-stock-num" style="color:#fff">1.5 horas</strong></label>
+                <input type="range" id="range-stock" min="0" max="5" step="0.5" value="1.5" oninput="document.getElementById('val-stock-num').textContent = this.value + ' horas'">
+              </div>
+            </div>
+
+            <div class="roi-result-box">
+              <div class="roi-lbl">AHORRO RECUPERADO ESTIMADO</div>
+              <div class="roi-val" id="roi-val-res">$275.000 CLP / mes</div>
+              <p style="color:var(--nexo-muted); font-size:0.8rem; margin-top:8px;">Costo del Plan Nexo: desde $19.900 / mes (Retorno de 10x)</p>
+              <a class="btn btn-primary" href="/contacto/?producto=Nexo+Trial" style="margin-top:14px; width:100%;">Activar Trial 3 Días →</a>
             </div>
           </div>
         </div>
