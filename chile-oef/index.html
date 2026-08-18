@@ -696,6 +696,135 @@
       </div>
     </section>
 
+    <section class="section" id="comunas">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Buscador Local</p>
+          <h2>Consulta la sismicidad en tu comuna o ciudad</h2>
+        </div>
+        <div class="oef-card">
+          <p class="plain-note" style="margin-bottom:12px">Escribe el nombre de tu comuna para ver su probabilidad estimada a 7 días, distancia a la fosa tectónica y el sismo histórico de referencia:</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px;">
+            <input type="text" id="comuna-input" placeholder="Ej: Puente Alto, Viña del Mar, Coquimbo, Concepción, Antofagasta..." style="flex:1; min-width:240px; background:#141416; border:1px solid var(--rule); color:#fff; padding:12px 14px; border-radius:4px; font-size:1rem;">
+          </div>
+          <div id="comuna-result" class="comuna-result-box" style="display:none; background:#141416; border:1px solid var(--oef); border-radius:6px; padding:16px;">
+            <!-- JS dynamic content -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="mitos">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Educación Sísmica</p>
+          <h2>Mitos vs. Realidad de los sismos en Chile</h2>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap:16px;">
+          <article class="oef-card">
+            <span style="color:#e08a4a; font-weight:700; font-size:1.05rem; display:block; margin-bottom:6px;">❌ Mito: "El calor produce terremotos"</span>
+            <p class="plain-note"><strong>Realidad científica:</strong> La temperatura del aire solo afecta los primeros metros de suelo. Las placas tectónicas rozan a más de 30 km de profundidad en la oscuridad de la corteza, donde el clima no tiene ningún impacto.</p>
+          </article>
+          <article class="oef-card">
+            <span style="color:#e08a4a; font-weight:700; font-size:1.05rem; display:block; margin-bottom:6px;">❌ Mito: "Es mejor que tiemble despacio para liberar energía"</span>
+            <p class="plain-note"><strong>Realidad científica:</strong> La escala es logarítmica (factor ~32x). Se necesitan 32 temblores magnitud 5.0 para igualar a un M6.0, y 1.000 temblores M5.0 para liberar la energía de un solo M7.0.</p>
+          </article>
+          <article class="oef-card">
+            <span style="color:#e08a4a; font-weight:700; font-size:1.05rem; display:block; margin-bottom:6px;">❌ Mito: "Los animales sienten el terremoto minutos antes"</span>
+            <p class="plain-note"><strong>Realidad científica:</strong> Los animales sienten las Ondas P (rápidas e imperceptibles para humanos) segundos antes de que lleguen las Ondas S (que causan la sacudida principal).</p>
+          </article>
+          <article class="oef-card">
+            <span style="color:#e08a4a; font-weight:700; font-size:1.05rem; display:block; margin-bottom:6px;">❌ Mito: "Las marejadas avisan un tsunami"</span>
+            <p class="plain-note"><strong>Realidad científica:</strong> Las marejadas las causa el viento en la superficie. Los tsunamis los causa un desplazamiento brusco del fondo marino por un terremoto submarino. No están relacionados.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="historia">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Historia Tectónica</p>
+          <h2>Grandes Terremotos de Chile y lo que aprendimos de ellos</h2>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div class="oef-card" style="display:flex; gap:16px; align-items:start; flex-wrap:wrap;">
+            <div style="font-family:var(--font-display); font-size:1.6rem; font-weight:800; color:var(--oef); min-width:80px;">1960</div>
+            <div style="flex:1; min-width:240px;">
+              <h3 style="font-size:1.1rem; margin-bottom:4px;">Valdivia — Magnitud 9.5 MW (El sismo más grande en la historia mundial)</h3>
+              <p class="plain-note">Reestructuró la teoría moderna de subducción y tectónica de placas en la ciencia mundial. Generó una secuencia de réplicas que duró años.</p>
+            </div>
+          </div>
+          <div class="oef-card" style="display:flex; gap:16px; align-items:start; flex-wrap:wrap;">
+            <div style="font-family:var(--font-display); font-size:1.6rem; font-weight:800; color:var(--oef); min-width:80px;">1985</div>
+            <div style="flex:1; min-width:240px;">
+              <h3 style="font-size:1.1rem; margin-bottom:4px;">Valparaíso / Zona Central — Magnitud 8.0 MW</h3>
+              <p class="plain-note">Impulsó la norma chilena de diseño sismorresistente NCh433, haciendo de la edificación en Chile una de las más estrictas y seguras del planeta.</p>
+            </div>
+          </div>
+          <div class="oef-card" style="display:flex; gap:16px; align-items:start; flex-wrap:wrap;">
+            <div style="font-family:var(--font-display); font-size:1.6rem; font-weight:800; color:var(--oef); min-width:80px;">2010</div>
+            <div style="flex:1; min-width:240px;">
+              <h3 style="font-size:1.1rem; margin-bottom:4px;">Maule (27F) — Magnitud 8.8 MW</h3>
+              <p class="plain-note">Ruptura de más de 500 km de costa. Demostró la importancia de modelar réplicas lejanas y gatilló la renovación tecnológica del CSN y SENAPRED.</p>
+            </div>
+          </div>
+          <div class="oef-card" style="display:flex; gap:16px; align-items:start; flex-wrap:wrap;">
+            <div style="font-family:var(--font-display); font-size:1.6rem; font-weight:800; color:var(--oef); min-width:80px;">2014</div>
+            <div style="flex:1; min-width:240px;">
+              <h3 style="font-size:1.1rem; margin-bottom:4px;">Iquique — Magnitud 8.2 MW</h3>
+              <p class="plain-note">Precedido por una intensa secuencia de sismos precursores (foreshocks) de 2 semanas en el Norte Grande, altamente estudiada por modelos ETAS.</p>
+            </div>
+          </div>
+          <div class="oef-card" style="display:flex; gap:16px; align-items:start; flex-wrap:wrap;">
+            <div style="font-family:var(--font-display); font-size:1.6rem; font-weight:800; color:var(--oef); min-width:80px;">2015</div>
+            <div style="flex:1; min-width:240px;">
+              <h3 style="font-size:1.1rem; margin-bottom:4px;">Illapel — Magnitud 8.3 MW</h3>
+              <p class="plain-note">Ejemplo clave de secuencia de réplicas de alta tasa inmediata en la Región de Coquimbo. Confirmó la estabilidad del parámetro b en el Norte Chico.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="preparacion">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Prevención Sísmica</p>
+          <h2>Kit de Emergencia Familiar en Chile (Checklist)</h2>
+        </div>
+        <div class="oef-card">
+          <p class="plain-note" style="margin-bottom:16px">En un país sísmico como Chile, estar preparados en casa es la mejor medida. Revisa esta lista básica recomendada por organismos oficiales:</p>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px;">
+            <label style="display:flex; align-items:center; gap:10px; background:#141416; padding:10px 14px; border-radius:4px; border:1px solid var(--rule-dim); cursor:pointer;">
+              <input type="checkbox" style="width:18px; height:18px; accent-color:var(--oef);">
+              <span><strong>Agua potable:</strong> 3 litros por persona por día (mínimo 3 días).</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; background:#141416; padding:10px 14px; border-radius:4px; border:1px solid var(--rule-dim); cursor:pointer;">
+              <input type="checkbox" style="width:18px; height:18px; accent-color:var(--oef);">
+              <span><strong>Linterna y radio:</strong> A pilas o manivela con pilas de repuesto.</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; background:#141416; padding:10px 14px; border-radius:4px; border:1px solid var(--rule-dim); cursor:pointer;">
+              <input type="checkbox" style="width:18px; height:18px; accent-color:var(--oef);">
+              <span><strong>Alimentos no perecibles:</strong> Enlatados, barras de cereal, abrelatas.</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; background:#141416; padding:10px 14px; border-radius:4px; border:1px solid var(--rule-dim); cursor:pointer;">
+              <input type="checkbox" style="width:18px; height:18px; accent-color:var(--oef);">
+              <span><strong>Botiquín básico:</strong> Alcohol, gasas, vendas, medicamentos crónicos.</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; background:#141416; padding:10px 14px; border-radius:4px; border:1px solid var(--rule-dim); cursor:pointer;">
+              <input type="checkbox" style="width:18px; height:18px; accent-color:var(--oef);">
+              <span><strong>Copia de documentos &amp; llaves:</strong> Carnet, llaves de casa, silbato.</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; background:#141416; padding:10px 14px; border-radius:4px; border:1px solid var(--rule-dim); cursor:pointer;">
+              <input type="checkbox" style="width:18px; height:18px; accent-color:var(--oef);">
+              <span><strong>Punto de encuentro:</strong> Plan de reunión familiar sin depender de celular.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section alt" id="preguntas">
       <div class="wrap">
         <div class="section-head">

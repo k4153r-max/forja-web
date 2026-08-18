@@ -776,9 +776,106 @@
     if (lastUsgsQuakes.length) drawMagnitudeTime(lastUsgsQuakes);
   });
 
+  const COMUNAS_DATA = [
+    { name: "Arica", lat: -18.47, lon: -70.30, zone: "Norte Grande", ref: "Sismo de Arica 1868 (M8.8)" },
+    { name: "Iquique", lat: -20.21, lon: -70.15, zone: "Norte Grande", ref: "Terremoto de Iquique 2014 (M8.2)" },
+    { name: "Tocopilla", lat: -22.09, lon: -70.19, zone: "Norte Grande", ref: "Terremoto de Tocopilla 2007 (M7.7)" },
+    { name: "Calama", lat: -22.45, lon: -68.92, zone: "Norte Grande", ref: "Sismo de Calama 1950 (M7.0)" },
+    { name: "Antofagasta", lat: -23.65, lon: -70.40, zone: "Norte Grande", ref: "Terremoto de Antofagasta 1995 (M8.0)" },
+    { name: "Copiapó", lat: -27.36, lon: -70.33, zone: "Norte Chico", ref: "Terremoto de Atacama 1922 (M8.5)" },
+    { name: "Vallenar", lat: -28.57, lon: -70.75, zone: "Norte Chico", ref: "Terremoto de Atacama 1922 (M8.5)" },
+    { name: "La Serena", lat: -29.90, lon: -71.25, zone: "Norte Chico", ref: "Terremoto de Coquimbo 2015 (M8.3)" },
+    { name: "Coquimbo", lat: -29.95, lon: -71.33, zone: "Norte Chico", ref: "Terremoto de Illapel / Coquimbo 2015 (M8.3)" },
+    { name: "Ovalle", lat: -30.59, lon: -71.20, zone: "Norte Chico", ref: "Terremoto de Punitaqui 1997 (M7.1)" },
+    { name: "Illapel", lat: -31.63, lon: -71.16, zone: "Norte Chico", ref: "Terremoto de Illapel 2015 (M8.3)" },
+    { name: "La Ligua / Petorca", lat: -32.45, lon: -71.23, zone: "Zona Central", ref: "Terremoto de La Ligua 1965 (M7.4)" },
+    { name: "Viña del Mar", lat: -33.02, lon: -71.55, zone: "Zona Central", ref: "Terremoto de Valparaíso 1985 (M8.0)" },
+    { name: "Valparaíso", lat: -33.04, lon: -71.61, zone: "Zona Central", ref: "Terremoto de Valparaíso 1985 (M8.0)" },
+    { name: "Quillota", lat: -32.88, lon: -71.24, zone: "Zona Central", ref: "Terremoto de 1985 (M8.0)" },
+    { name: "San Antonio", lat: -33.58, lon: -71.61, zone: "Zona Central", ref: "Terremoto de 1985 (M8.0)" },
+    { name: "Santiago", lat: -33.45, lon: -70.66, zone: "Zona Central", ref: "Terremoto 1985 (M8.0) / 2010 (M8.8)" },
+    { name: "Puente Alto", lat: -33.61, lon: -70.57, zone: "Zona Central", ref: "Terremoto 27F 2010 (M8.8)" },
+    { name: "Maipú", lat: -33.51, lon: -70.76, zone: "Zona Central", ref: "Terremoto 27F 2010 (M8.8)" },
+    { name: "La Florida", lat: -33.52, lon: -70.58, zone: "Zona Central", ref: "Terremoto 27F 2010 (M8.8)" },
+    { name: "Melipilla", lat: -33.68, lon: -71.21, zone: "Zona Central", ref: "Terremoto de 1985 (M8.0)" },
+    { name: "Rancagua", lat: -34.17, lon: -70.74, zone: "Zona Central", ref: "Terremoto de Pichilemu 2010 (M6.9)" },
+    { name: "San Fernando", lat: -34.58, lon: -70.98, zone: "Zona Central", ref: "Terremoto del Maule 2010 (M8.8)" },
+    { name: "Curicó", lat: -34.98, lon: -71.23, zone: "Zona Central", ref: "Terremoto 27F 2010 (M8.8)" },
+    { name: "Talca", lat: -35.42, lon: -71.65, zone: "Zona Central", ref: "Epicentro cercano 27F 2010 (M8.8)" },
+    { name: "Linares", lat: -35.84, lon: -71.59, zone: "Zona Central", ref: "Terremoto 27F 2010 (M8.8)" },
+    { name: "Chillán", lat: -36.60, lon: -72.10, zone: "Zona Central", ref: "Terremoto de Chillán 1939 (M7.8)" },
+    { name: "Concepción", lat: -36.82, lon: -73.05, zone: "Zona Sur", ref: "Terremoto del Maule 27F 2010 (M8.8)" },
+    { name: "Talcahuano", lat: -36.71, lon: -73.11, zone: "Zona Sur", ref: "Terremoto 27F 2010 (M8.8)" },
+    { name: "Los Ángeles", lat: -37.47, lon: -72.35, zone: "Zona Sur", ref: "Terremoto 27F 2010 (M8.8)" },
+    { name: "Temuco", lat: -38.73, lon: -72.59, zone: "Zona Sur", ref: "Terremoto de Valdivia 1960 (M9.5)" },
+    { name: "Valdivia", lat: -39.81, lon: -73.24, zone: "Zona Sur", ref: "El Gran Terremoto de Valdivia 1960 (M9.5)" },
+    { name: "Osorno", lat: -40.57, lon: -73.13, zone: "Zona Sur", ref: "Terremoto de Valdivia 1960 (M9.5)" },
+    { name: "Puerto Montt", lat: -41.47, lon: -72.94, zone: "Zona Sur", ref: "Terremoto de Valdivia 1960 (M9.5)" },
+    { name: "Castro / Chiloé", lat: -42.47, lon: -73.77, zone: "Zona Sur", ref: "Terremoto de Chiloé 2016 (M7.6)" },
+    { name: "Coyhaique", lat: -45.57, lon: -72.06, zone: "Zona Austral", ref: "Terremoto de Aysén 2007 (M6.2)" },
+    { name: "Punta Arenas", lat: -53.16, lon: -70.91, zone: "Zona Austral", ref: "Terremoto de Magallanes 1949 (M7.8)" }
+  ];
+
+  function initComunaSearch() {
+    const input = document.getElementById("comuna-input");
+    const box = document.getElementById("comuna-result");
+    if (!input || !box) return;
+
+    input.addEventListener("input", () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q || q.length < 2) {
+        box.style.display = "none";
+        return;
+      }
+
+      const match = COMUNAS_DATA.find(c => c.name.toLowerCase().includes(q));
+      if (!match) {
+        box.style.display = "block";
+        box.innerHTML = `<p class="plain-note" style="color:var(--muted)">No encontramos resultados exactos para "${q}". Intenta con el nombre de tu ciudad principal más cercana (ej: Santiago, Viña del Mar, Concepción...).</p>`;
+        return;
+      }
+
+      // Calculate chance from lastCells if available
+      let chanceText = "cargando...";
+      if (lastCells && lastCells.length) {
+        let bestDist = Infinity;
+        let bestCell = null;
+        for (const cell of lastCells) {
+          const dLat = cell.lat - match.lat;
+          const dLon = cell.lon - match.lon;
+          const dist = dLat * dLat + dLon * dLon;
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestCell = cell;
+          }
+        }
+        if (bestCell) {
+          const p = (bestCell.bins && (bestCell.bins["5-6"] || bestCell.bins["5+"])) || bestCell.rate;
+          chanceText = formatChance(p);
+        }
+      }
+
+      box.style.display = "block";
+      box.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h3 style="color:#fff; margin-bottom:4px; font-size:1.15rem;">📍 Comuna / Ciudad: ${match.name}</h3>
+            <p class="plain-note" style="margin-bottom:6px;"><strong>Macro-Zona:</strong> ${match.zone} · <strong>Referencia Histórica:</strong> ${match.ref}</p>
+          </div>
+          <div style="background:#0b0b0c; border:1px solid var(--rule); padding:10px 14px; border-radius:4px; text-align:right;">
+            <div style="font-size:10px; text-transform:uppercase; color:var(--muted);">Probabilidad ETAS (7 días M≥5.0):</div>
+            <div style="font-family:var(--font-mono); font-weight:700; font-size:1.25rem; color:var(--oef);">${chanceText}</div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
   bindLayerToggles();
   loadCatalog();
   loadModelSummary();
   initForecast();
   loadUsgs();
+  initComunaSearch();
 })();
+
