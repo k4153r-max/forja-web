@@ -271,15 +271,21 @@
             estos días. No se vende y no es un sistema de alerta.
           </p>
         </div>
-        <div class="product-grid">
-          <article class="product-block" style="border-color:rgba(107,163,201,.35)">
-            <img src="/assets/chile-oef-logo.jpg" alt="CHILE-OEF Logo" style="width:54px; height:54px; border-radius:10px; border:1px solid rgba(107,163,201,.35); margin-bottom:12px; display:block;">
-            <span class="status-chip" style="border-color:rgba(107,163,201,.4);color:#6ba3c9"><span class="mark" style="background:#6ba3c9"></span>CHILE-OEF / Experimental</span>
-            <h3>CHILE-OEF</h3>
-            <p>No predice terremotos. Usa más de 70 mil sismos reales, incluido el de Maule de 2010. No reemplaza al CSN ni a SENAPRED. Todavía no hay prueba prospectiva publicada.</p>
-            <p class="product-block-meta">Investigación experimental · USGS 1964–2026 · Sin costo</p>
-            <div class="btn-row">
-              <a class="btn btn-ghost btn-sm" href="/chile-oef/">Ver el mapa</a>
+        <div class="product-grid" style="grid-template-columns: 1fr; background:transparent; border:0;">
+          <article class="product-block" style="border:1px solid rgba(107,163,201,.35); border-radius:12px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:24px; padding:24px; align-items:center;">
+            <div>
+              <img src="/assets/chile-oef-logo.jpg" alt="CHILE-OEF Logo" style="width:58px; height:58px; border-radius:10px; border:1px solid rgba(107,163,201,.35); margin-bottom:12px; display:block; object-fit:cover;">
+              <span class="status-chip" style="border-color:rgba(107,163,201,.4);color:#6ba3c9"><span class="mark" style="background:#6ba3c9"></span>CHILE-OEF / Experimental</span>
+              <h3 style="margin:8px 0 10px;">CHILE-OEF</h3>
+              <p style="color:var(--ink-dim); font-size:0.98rem; line-height:1.6;">No predice terremotos. Usa más de 74 mil sismos reales de Chile desde 1964. No reemplaza al CSN ni a SENAPRED. Muestra la tasa esperada a 7 días con modelos estadísticos ETAS.</p>
+              <p class="product-block-meta" style="margin-top:8px;">Investigación experimental · USGS 1964–2026 · Sin costo</p>
+              <div class="btn-row" style="margin-top:14px;">
+                <a class="btn btn-ghost btn-sm" href="/chile-oef/">Ver el mapa interactivo →</a>
+              </div>
+            </div>
+            <div>
+              <p style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#6ba3c9; margin-bottom:8px;">Widget en Vivo (7 días):</p>
+              <iframe src="/chile-oef/widget.html" width="100%" height="340" frameborder="0" style="border:1px solid rgba(107,163,201,.3); border-radius:8px; background:#0b0b0c; width:100%;"></iframe>
             </div>
           </article>
         </div>
