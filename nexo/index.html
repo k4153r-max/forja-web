@@ -76,16 +76,16 @@
 
         <div class="nexo-stats">
           <div class="nexo-stat-card">
-            <div class="val">+450</div>
-            <div class="lbl">Locales Conectados en Chile</div>
+            <div class="val">Instancia Propia</div>
+            <div class="lbl">Base de Datos Aislada por Local</div>
           </div>
           <div class="nexo-stat-card">
             <div class="val">24 Horas</div>
-            <div class="lbl">Carga Inicial de Catálogo</div>
+            <div class="lbl">Configuración &amp; Carga de Inventario</div>
           </div>
           <div class="nexo-stat-card">
-            <div class="val">99.9%</div>
-            <div class="lbl">Disponibilidad en Servidor Render</div>
+            <div class="val">Trial 3 Días</div>
+            <div class="lbl">Prueba Funcional sin Tarjeta</div>
           </div>
         </div>
       </div>
@@ -94,9 +94,9 @@
     <section id="flujo" class="section">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Consola de Demostración</p>
+          <p class="eyebrow">Demos Operativas por Rubro</p>
           <h2>Selecciona el rubro de tu negocio</h2>
-          <p style="color:var(--nexo-muted); margin-top:6px; font-family:var(--font-mono); font-size:0.9rem;">Interactúa con los controles táctiles para evaluar la interfaz operativa:</p>
+          <p style="color:var(--nexo-muted); margin-top:6px; font-family:var(--font-mono); font-size:0.9rem;">Prueba la consola de caja e ingresa a las aplicaciones reales en Render:</p>
         </div>
 
         <div class="rubro-selector" data-rubro-selector role="tablist">
@@ -114,9 +114,9 @@
             <h3 data-panel-titulo>Salones de Belleza &amp; Spas</h3>
             <p class="product-block-meta" data-panel-precio style="font-family:var(--font-mono); font-size:1.25rem; color:var(--nexo-copper-light); font-weight:700;">$45.000 / mes · Setup $100.000</p>
             <p style="color:var(--nexo-muted); margin:14px 0 18px; line-height:1.65;">Gestión de agenda, señas automáticas por Webpay, recordatorios al cliente por WhatsApp, cálculo de comisiones para profesionales y cierre diario de caja.</p>
-            <p class="hero-note">📌 Las instancias de prueba se ejecutan en Render. Haz clic en "Ver demo" para abrir el sistema funcional.</p>
+            <p class="hero-note">📌 Las apps de prueba viven en Render y pueden tardar unos segundos en despertar.</p>
             <div class="btn-row">
-              <a class="btn btn-primary" data-panel-trial href="/contacto/?producto=Nexo+Trial">Activar Trial 3 Días</a>
+              <a class="btn btn-primary" data-panel-trial href="/contacto/?producto=Nexo+Trial">Pedir Trial 3 Días</a>
               <a class="btn btn-ghost" data-panel-demo href="/nexo/salones/">Ver Demo Salones</a>
               <a class="btn btn-ghost" data-panel-app hidden>Abrir App de Prueba</a>
             </div>
@@ -124,12 +124,12 @@
 
           <div class="pos-terminal-sim">
             <div class="pos-screen-bar">
-              <span>TERMINAL POS № 042 — CONSOLA EN VIVO</span>
-              <span class="pos-status-badge">ONLINE</span>
+              <span>TERMINAL POS — DEMO DE CAJA</span>
+              <span class="pos-status-badge">ACTIVO</span>
             </div>
 
             <div class="pos-receipt-paper">
-              <div style="text-align:center; margin-bottom:10px; font-weight:700; color:#fff; font-size:11px;">VALPARAÍSO BEAUTY &amp; SPA</div>
+              <div style="text-align:center; margin-bottom:10px; font-weight:700; color:#fff; font-size:11px;">EJEMPLO TICKET LOCAL</div>
               <div id="pos-receipt-lines">
                 <!-- Se llena dinámicamente con JS -->
               </div>
@@ -140,40 +140,11 @@
             </div>
 
             <div style="margin-top:14px;">
-              <span style="font-size:10px; color:var(--nexo-muted); text-transform:uppercase; font-weight:700;">+ Agregar productos al ticket:</span>
+              <span style="font-size:10px; color:var(--nexo-muted); text-transform:uppercase; font-weight:700;">+ Probar agregar productos al ticket:</span>
               <div class="pos-add-items" id="pos-add-items">
                 <!-- Botones agregados dinámicamente por JS -->
               </div>
-              <button type="button" class="pos-pay-btn" id="pos-pay-btn">💳 Cobrar Ticket &amp; Enviar WhatsApp</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Calculadora de Retorno de Inversión (page-cro) -->
-        <div class="roi-card">
-          <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
-            <span class="eyebrow" style="margin:0">CALCULADORA DE RETORNO (CRO)</span>
-          </div>
-          <h2 style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; text-transform:uppercase;">¿Cuánto dinero recuperas con NEXO en tu local?</h2>
-          <p style="color:var(--nexo-muted); font-size:0.95rem;">Ajusta los parámetros de tu negocio para calcular el ahorro mensual estimado eliminando desorden en citas e inventario:</p>
-          
-          <div class="roi-grid">
-            <div>
-              <div class="roi-control">
-                <label for="range-citas">Citas perdidas o no confirmadas al mes: <strong id="val-citas-num" style="color:#fff">6 citas</strong></label>
-                <input type="range" id="range-citas" min="0" max="30" value="6" oninput="document.getElementById('val-citas-num').textContent = this.value + ' citas'">
-              </div>
-              <div class="roi-control">
-                <label for="range-stock">Horas/día perdidas buscando productos o cuadrando caja: <strong id="val-stock-num" style="color:#fff">1.5 horas</strong></label>
-                <input type="range" id="range-stock" min="0" max="5" step="0.5" value="1.5" oninput="document.getElementById('val-stock-num').textContent = this.value + ' horas'">
-              </div>
-            </div>
-
-            <div class="roi-result-box">
-              <div class="roi-lbl">AHORRO RECUPERADO ESTIMADO</div>
-              <div class="roi-val" id="roi-val-res">$275.000 CLP / mes</div>
-              <p style="color:var(--nexo-muted); font-size:0.8rem; margin-top:8px;">Costo del Plan Nexo: desde $19.900 / mes (Retorno de 10x)</p>
-              <a class="btn btn-primary" href="/contacto/?producto=Nexo+Trial" style="margin-top:14px; width:100%;">Activar Trial 3 Días →</a>
+              <button type="button" class="pos-pay-btn" id="pos-pay-btn">Simular Cobro en Caja</button>
             </div>
           </div>
         </div>
