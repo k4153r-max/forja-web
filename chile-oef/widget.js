@@ -46,65 +46,69 @@
   }
 
   const STYLES = `
-    :host, .chile-oef-w-box {
+    :host {
       display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .chile-oef-w-box {
+      box-sizing: border-box;
+      width: 100%;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #0b0b0c;
       color: #f4f1ea;
       border: 1px solid #242428;
       border-radius: 6px;
-      padding: 16px;
-      max-width: 480px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
-      line-height: 1.4;
-      font-size: 13px;
+      padding: 14px;
+      line-height: 1.35;
+      font-size: 12px;
     }
     .w-head {
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid #1f1f24; padding-bottom: 10px; margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      border-bottom: 1px solid #1f1f24; padding-bottom: 8px; margin-bottom: 10px;
     }
     .w-title {
-      display: flex; align-items: center; gap: 8px; font-weight: 700;
-      font-size: 14px; color: #f4f1ea; text-decoration: none;
+      display: flex; align-items: center; gap: 6px; font-weight: 700;
+      font-size: 13px; color: #f4f1ea; text-decoration: none;
     }
     .w-title .mark {
-      width: 10px; height: 10px; background: #6ba3c9; border-radius: 2px;
+      width: 8px; height: 8px; background: #6ba3c9; border-radius: 2px; flex-shrink: 0;
     }
     .w-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-family: monospace; font-size: 10px; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 4px;
+      font-family: ui-monospace, SFMono-Regular, monospace; font-size: 10px; text-transform: uppercase;
       background: rgba(107,163,201,0.12); color: #6ba3c9; border: 1px solid rgba(107,163,201,0.3);
-      padding: 2px 6px; border-radius: 3px;
+      padding: 2px 6px; border-radius: 3px; white-space: nowrap;
     }
     .w-badge .dot {
-      width: 6px; height: 6px; border-radius: 50%; background: #6ba3c9; animation: w-pulse 2s infinite;
+      width: 5px; height: 5px; border-radius: 50%; background: #6ba3c9; animation: w-pulse 2s infinite; flex-shrink: 0;
     }
     @keyframes w-pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 
     .w-latest {
       background: #141416; border: 1px solid #1f1f24; border-radius: 4px;
-      padding: 10px 12px; margin-bottom: 12px;
+      padding: 8px 10px; margin-bottom: 10px;
     }
-    .w-latest-l { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: #8a8a93; }
-    .w-latest-val { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
-    .w-mag { font-weight: 800; font-size: 16px; color: #c4894a; }
-    .w-loc { font-weight: 600; color: #f4f1ea; font-size: 13px; }
-    .w-time { font-size: 11px; color: #8a8a93; margin-left: auto; }
+    .w-latest-l { font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: #8a8a93; }
+    .w-latest-val { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 3px; flex-wrap: wrap; }
+    .w-mag { font-weight: 800; font-size: 14px; color: #c4894a; white-space: nowrap; }
+    .w-loc { font-weight: 600; color: #f4f1ea; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 100px; }
+    .w-time { font-size: 10px; color: #8a8a93; white-space: nowrap; }
 
-    .w-section-l { font-size: 11px; font-weight: 600; color: #8a8a93; margin-bottom: 6px; }
-    .w-city-grid { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .w-section-l { font-size: 10px; font-weight: 600; color: #8a8a93; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .03em; }
+    .w-city-grid { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
     .w-city-row {
-      display: flex; align-items: center; justify-content: space-between;
-      background: #141416; border: 1px solid #1f1f24; padding: 6px 10px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      background: #141416; border: 1px solid #1f1f24; padding: 5px 8px; border-radius: 4px;
     }
-    .w-city-name { font-weight: 500; font-size: 12px; }
-    .w-city-prob { font-family: monospace; font-size: 12px; font-weight: 700; color: #6ba3c9; }
+    .w-city-name { font-weight: 500; font-size: 11px; color: #f4f1ea; }
+    .w-city-prob { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 11px; font-weight: 700; color: #6ba3c9; white-space: nowrap; }
 
     .w-foot {
       font-size: 10px; color: #8a8a93; border-top: 1px solid #1f1f24;
-      padding-top: 8px; display: flex; flex-direction: column; gap: 4px;
+      padding-top: 8px; display: flex; flex-direction: column; gap: 3px;
     }
-    .w-foot-links { display: flex; gap: 12px; }
+    .w-foot-links { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
     .w-foot a { color: #6ba3c9; text-decoration: none; }
     .w-foot a:hover { text-decoration: underline; }
   `;
@@ -133,15 +137,15 @@
           </div>
 
           <div class="w-latest" id="w-latest-box">
-            <div class="w-latest-l">Último sismo relevante registrado (USGS)</div>
+            <div class="w-latest-l">Último sismo relevante (USGS)</div>
             <div class="w-latest-val">
               <span class="w-mag" id="w-mag">...</span>
-              <span class="w-loc" id="w-loc">Cargando datos...</span>
+              <span class="w-loc" id="w-loc">Cargando...</span>
               <span class="w-time" id="w-time"></span>
             </div>
           </div>
 
-          <div class="w-section-l">Probabilidad estimada 7 días (M≥5.0, radio 40 km):</div>
+          <div class="w-section-l">Probabilidad estimada 7 días (M≥5.0):</div>
           <div class="w-city-grid" id="w-city-grid">
             ${DEFAULT_CITIES.map(c => `
               <div class="w-city-row">
@@ -153,10 +157,10 @@
 
           <div class="w-foot">
             <div class="w-foot-links">
-              <span>Fuentes oficiales: <a href="https://www.csn.uchile.cl/" target="_blank" rel="noopener">CSN</a> · <a href="https://www.senapred.cl/" target="_blank" rel="noopener">SENAPRED</a></span>
-              <a href="https://etemen.cl/chile-oef/" target="_blank" rel="noopener" style="margin-left:auto">Ver mapa completo →</a>
+              <span>Oficiales: <a href="https://www.csn.uchile.cl/" target="_blank" rel="noopener">CSN</a> · <a href="https://www.senapred.cl/" target="_blank" rel="noopener">SENAPRED</a></span>
+              <a href="https://etemen.cl/chile-oef/" target="_blank" rel="noopener">Mapa completo →</a>
             </div>
-            <div>Investigación experimental. No predice terremotos deterministamente.</div>
+            <div>Investigación experimental. No predice terremotos.</div>
           </div>
         </div>
       `;
@@ -183,7 +187,7 @@
           }
         }
       } catch (e) {
-        console.warn("CHILE-OEF Widget: error al cargar USGS feed", e);
+        console.warn("CHILE-OEF Widget: error USGS feed", e);
       }
 
       // 2. Fetch CHILE-OEF forecast
@@ -196,7 +200,7 @@
           }
         }
       } catch (e) {
-        console.warn("CHILE-OEF Widget: error al cargar API forecast", e);
+        console.warn("CHILE-OEF Widget: error API forecast", e);
       }
     }
 
@@ -205,7 +209,6 @@
       if (!gridEl) return;
 
       const html = DEFAULT_CITIES.map(city => {
-        // Find closest cell
         let bestDist = Infinity;
         let bestCell = null;
         for (const cell of cells) {
@@ -236,12 +239,10 @@
     }
   }
 
-  // Register custom element
   if (!customElements.get('chile-oef-widget')) {
     customElements.define('chile-oef-widget', ChileOefWidget);
   }
 
-  // Auto-mount if container #oef-widget-root exists
   document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById("oef-widget-root");
     if (root && !root.hasChildNodes()) {

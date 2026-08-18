@@ -278,6 +278,22 @@
       text-transform:uppercase; letter-spacing:.04em; padding: 6px 8px;
       border-bottom: 1px solid var(--rule);
     }
+    .oef-widget-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 380px);
+      gap: 28px;
+      align-items: start;
+    }
+    .oef-widget-grid pre {
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-width: 100%;
+    }
+    @media (max-width: 820px) {
+      .oef-widget-grid {
+        grid-template-columns: 1fr;
+      }
+    }
     table.oef-table td{ padding: 10px 8px; border-bottom: 1px solid var(--rule-dim); vertical-align: top; }
     table.oef-table tr.notable td{ color: #ffb26b; }
     table.oef-table tr.live td:first-child{ color: var(--oef); }
@@ -705,19 +721,19 @@
           <p class="eyebrow">Integración &amp; Difusión</p>
           <h2>Incrusta el Widget Sísmico en tu sitio web o medio</h2>
         </div>
-        <div class="oef-card" style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; align-items:start">
+        <div class="oef-card oef-widget-grid">
           <div>
             <h3>Seismic Pulse Widget (7 días)</h3>
             <p class="plain-note">Cualquier portal de noticias, blog o sitio web puede incrustar gratis este cuadro interactivo con datos en vivo del modelo ETAS y sismos recientes de Chile.</p>
             <p style="margin-top:14px; font-weight:600; font-size:.9rem; color:var(--text)">Código HTML (Iframe):</p>
-            <pre style="background:#141416; padding:10px; border-radius:4px; font-size:11px; overflow-x:auto; border:1px solid var(--rule-dim); color:var(--oef); margin-top:6px;"><code>&lt;iframe src="https://etemen.cl/chile-oef/widget.html" width="100%" height="340" frameborder="0" style="border:1px solid #1c2a38; border-radius:6px;"&gt;&lt;/iframe&gt;</code></pre>
+            <pre style="background:#141416; padding:10px; border-radius:4px; font-size:11px; border:1px solid var(--rule-dim); color:var(--oef); margin-top:6px; white-space:pre-wrap; word-break:break-all;"><code>&lt;iframe src="https://etemen.cl/chile-oef/widget.html" width="100%" height="360" frameborder="0" style="border:1px solid #1c2a38; border-radius:6px;"&gt;&lt;/iframe&gt;</code></pre>
             <p style="margin-top:12px; font-weight:600; font-size:.9rem; color:var(--text)">Código Script (Custom Element):</p>
-            <pre style="background:#141416; padding:10px; border-radius:4px; font-size:11px; overflow-x:auto; border:1px solid var(--rule-dim); color:var(--oef); margin-top:6px;"><code>&lt;chile-oef-widget&gt;&lt;/chile-oef-widget&gt;
+            <pre style="background:#141416; padding:10px; border-radius:4px; font-size:11px; border:1px solid var(--rule-dim); color:var(--oef); margin-top:6px; white-space:pre-wrap; word-break:break-all;"><code>&lt;chile-oef-widget&gt;&lt;/chile-oef-widget&gt;
 &lt;script src="https://etemen.cl/chile-oef/widget.js" async&gt;&lt;/script&gt;</code></pre>
           </div>
           <div>
             <p class="plain-note" style="margin-bottom:10px; font-weight:600">Vista previa del Widget:</p>
-            <iframe src="/chile-oef/widget.html" width="100%" height="340" frameborder="0" style="border:1px solid #1c2a38; border-radius:6px; background:#0b0b0c;"></iframe>
+            <iframe src="/chile-oef/widget.html" width="100%" height="360" frameborder="0" style="border:1px solid #1c2a38; border-radius:6px; background:#0b0b0c; width:100%;"></iframe>
           </div>
         </div>
       </div>
