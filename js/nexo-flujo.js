@@ -3,7 +3,7 @@
     salon: {
       titulo: "Salones & Spas",
       familia: "Nexo · Servicios",
-      precio: "$45.000 / mes · Setup $100.000",
+      precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/luna/",
       trial: "/contacto/?producto=Nexo+Servicios&rubro=Sal%C3%B3n",
       app: "https://nexus-trial-demo.onrender.com/login",
@@ -18,7 +18,7 @@
     barberia: {
       titulo: "Barberías",
       familia: "Nexo · Servicios",
-      precio: "$45.000 / mes · Setup $100.000",
+      precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/atelier/",
       trial: "/contacto/?producto=Nexo+Servicios&rubro=Barber%C3%ADa",
       app: "https://nexus-trial-demo.onrender.com/login",
@@ -33,7 +33,7 @@
     taller: {
       titulo: "Talleres Mecánicos",
       familia: "Nexo · Servicios",
-      precio: "$45.000 / mes · Setup $100.000",
+      precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/taller/",
       trial: "/contacto/?producto=Nexo+Taller&rubro=Taller",
       app: "https://nexus-trial-taller.onrender.com/login",
@@ -48,7 +48,7 @@
     ferreteria: {
       titulo: "Ferreterías",
       familia: "Nexo · Comercio",
-      precio: "$19.900 / mes · Setup $39.000",
+      precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/ferreteria/",
       trial: "/contacto/?producto=Nexo+Ferreteria&rubro=Ferreter%C3%ADa",
       app: "https://bodega-trial-ferreteria-demo.onrender.com/login",
@@ -63,7 +63,7 @@
     minimarket: {
       titulo: "Minimarkets & Almacenes",
       familia: "Nexo · Comercio",
-      precio: "$19.900 / mes · Setup $39.000",
+      precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/almacen/",
       trial: "/contacto/?producto=Nexo+Almacen&rubro=Minimarket",
       app: "https://bodega-trial-almacen-demo.onrender.com/login",
@@ -78,7 +78,7 @@
     botilleria: {
       titulo: "Botillerías",
       familia: "Nexo · Comercio",
-      precio: "$19.900 / mes · Setup $39.000",
+      precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/botilleria/",
       trial: "/contacto/?producto=Nexo+Botilleria&rubro=Botiller%C3%ADa",
       app: "https://bodega-trial-botilleria-demo.onrender.com/login",
