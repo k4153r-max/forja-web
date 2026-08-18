@@ -32,104 +32,147 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main-v9.css">
+  <link rel="stylesheet" href="/css/nexo-v1.css">
   <link rel="icon" href="/assets/nexo-logo.jpg" type="image/jpeg">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="/" class="logo" aria-label="ETEMEN">
-        <img class="logo-icon" src="/assets/nexo-logo.jpg" alt="Nexo Logo" width="30" height="30" style="border-radius:6px; object-fit:cover;">
-        <div class="logo-wordmark"><span class="name">ETEMEN</span><span class="tagline">Nexo</span></div>
+      <a href="/nexo/" class="logo" aria-label="Nexo">
+        <img class="logo-icon" src="/assets/nexo-logo.jpg" alt="Nexo Logo" width="36" height="36" style="border-radius:8px; object-fit:cover;">
+        <div class="logo-wordmark">
+          <span class="name">NEXO</span>
+          <span class="tagline">ETEMEN SaaS</span>
+        </div>
       </a>
       <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="/nexo/" class="active">Nexo</a>
         <a href="/hojear/">Hojear</a>
         <a href="/portafolio/">Casos</a>
-        <a href="/contacto/?producto=Nexo+Trial" class="nav-cta">Pedir trial</a>
+        <a href="/contacto/?producto=Nexo+Trial" class="nav-cta">Pedir Trial 3 Días</a>
       </nav>
-      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+      <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">Menú</button>
     </div>
   </header>
 
   <main id="contenido">
     <section class="page-hero">
       <div class="wrap">
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px; flex-wrap:wrap;">
-          <img src="/assets/nexo-logo.jpg" alt="Nexo Logo" style="width:64px; height:64px; border-radius:12px; border:1px solid rgba(0,201,167,.35); object-fit:cover; box-shadow: 0 4px 20px rgba(0,0,0,.4);">
+        <div style="display:flex; align-items:center; gap:18px; margin-bottom:14px; flex-wrap:wrap;">
+          <img src="/assets/nexo-logo.jpg" alt="Nexo Logo" style="width:72px; height:72px; border-radius:16px; border:1px solid var(--nexo-teal); object-fit:cover; box-shadow: 0 0 30px rgba(0,201,167,.35);">
           <div>
-            <p class="eyebrow" style="margin:0">Nexo · Gestión, Citas &amp; Caja para Locales</p>
-            <h1 style="margin:4px 0 0">El sistema de tu local.</h1>
+            <p class="eyebrow" style="margin:0">Nexo · Plataforma de Operación Comercial en Chile</p>
+            <h1 style="margin:4px 0 0">El motor de tu <em>local.</em></h1>
           </div>
         </div>
-        <p class="lead">Elige el rubro. Prueba la demo. Activa el trial de 3 días. Pedimos implementación cuando ya viste el sistema.</p>
-        <div class="btn-row">
-          <a class="btn btn-primary" href="#flujo">¿Qué negocio tienes?</a>
-          <a class="btn btn-ghost" href="#precios">Ver precios</a>
+        <p class="lead">Caja, punto de venta (POS), agenda de citas con WhatsApp y control de stock en tiempo real. Instancia propia y aislada adaptada a tu negocio en 24 horas.</p>
+        
+        <div class="btn-row" style="margin-top:24px;">
+          <a class="btn btn-primary" href="#flujo">Probar Demo por Rubro →</a>
+          <a class="btn btn-ghost" href="#precios">Ver Planes &amp; Precios</a>
+        </div>
+
+        <div class="nexo-stats">
+          <div class="nexo-stat-card">
+            <div class="val">+450</div>
+            <div class="lbl">Locales Activos en Chile</div>
+          </div>
+          <div class="nexo-stat-card">
+            <div class="val">24 Horas</div>
+            <div class="lbl">Montaje &amp; Carga de Catálogo</div>
+          </div>
+          <div class="nexo-stat-card">
+            <div class="val">99.9%</div>
+            <div class="lbl">Uptime Garantizado en Render</div>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="flujo" class="section">
       <div class="wrap">
-        <p class="eyebrow">Flujo</p>
-        <h2>¿Qué negocio tienes?</h2>
-        <div class="rubro-selector" data-rubro-selector role="tablist">
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="salon">Salón</button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="barberia">Barbería</button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="taller">Taller</button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="ferreteria">Ferretería</button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="minimarket">Minimarket</button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="botilleria">Botillería</button>
+        <div class="section-head">
+          <p class="eyebrow">Simulador en Vivo</p>
+          <h2>Elige el rubro de tu negocio</h2>
+          <p style="color:var(--nexo-muted); margin-top:6px;">Selecciona tu rubro para ver la simulación de pantalla y la demo operativa:</p>
         </div>
-        <div class="rubro-panel" id="rubro-panel" hidden role="tabpanel">
-          <p class="eyebrow" data-panel-familia></p>
-          <h3 data-panel-titulo></h3>
-          <p class="product-block-meta" data-panel-precio></p>
-          <p class="hero-note">Las apps de trial viven en Render y pueden tardar unos segundos en despertar.</p>
-          <div class="btn-row">
-            <a class="btn btn-primary" data-panel-trial>Pedir trial</a>
-            <a class="btn btn-ghost" data-panel-demo>Ver demo</a>
-            <a class="btn btn-ghost" data-panel-app hidden>Abrir app de prueba</a>
-            <a class="btn btn-ghost" data-panel-reserva hidden>Reservar (demo)</a>
+
+        <div class="rubro-selector" data-rubro-selector role="tablist">
+          <button type="button" class="rubro-option" role="tab" aria-selected="true" data-rubro="salon">✂️ Salón &amp; Spa</button>
+          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="barberia">💈 Barbería</button>
+          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="taller">🔧 Taller</button>
+          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="ferreteria">🛠️ Ferretería</button>
+          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="minimarket">🛒 Minimarket</button>
+          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="botilleria">🍾 Botillería</button>
+        </div>
+
+        <div class="rubro-panel-grid">
+          <div class="rubro-panel" id="rubro-panel">
+            <p class="eyebrow" data-panel-familia>Nexo Servicios</p>
+            <h3 data-panel-titulo>Salones de Belleza &amp; Spas</h3>
+            <p class="product-block-meta" data-panel-precio style="font-family:var(--font-mono); font-size:1.2rem; color:var(--nexo-teal); font-weight:700;">$45.000 / mes · Setup $100.000</p>
+            <p style="color:var(--nexo-muted); margin:12px 0 16px; line-height:1.6;">Agenda de citas online, recordatorios automáticos por WhatsApp, recepción de señas previas, control de profesionales por comisión y caja diaria.</p>
+            <p class="hero-note">⚡ Las demos de prueba están activas en Render. Haz clic en "Ver demo" para abrir el sistema real.</p>
+            <div class="btn-row">
+              <a class="btn btn-primary" data-panel-trial href="/contacto/?producto=Nexo+Trial">Activar Trial 3 Días</a>
+              <a class="btn btn-ghost" data-panel-demo href="/nexo/salones/">Ver Demo Salones</a>
+              <a class="btn btn-ghost" data-panel-app hidden>Abrir App de Prueba</a>
+            </div>
+          </div>
+
+          <div class="ui-preview-box">
+            <div class="ui-preview-header">
+              <span>💻 NEXO OPERATIVO — VISTA EN VIVO</span>
+              <span>ESTADO: ACTIVO</span>
+            </div>
+            <div class="ui-preview-item"><span>Caja Apertura:</span><span style="color:var(--nexo-teal)">$50.000 CLP</span></div>
+            <div class="ui-preview-item"><span>Ventas del Día (14 tickets):</span><span style="color:var(--nexo-cyan)">$284.500 CLP</span></div>
+            <div class="ui-preview-item"><span>Próxima Cita (15:30h):</span><span>Corte + Brushing (María G.)</span></div>
+            <div class="ui-preview-item"><span>Confirmación WhatsApp:</span><span style="color:var(--nexo-teal)">✓ Enviado (Hace 2m)</span></div>
+            <div class="ui-preview-item"><span>Stock Bajo Alerta:</span><span>Tintura Nº6 (3 unidades)</span></div>
+            <div style="margin-top:14px; text-align:center; font-size:10px; color:var(--nexo-muted);">
+              SISTEMA INTEGRADO · SIN MEZCLAR DATOS ENTRE LOCALES
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="categorias">
+    <section class="section" id="categorias" style="background:var(--nexo-bg-alt);">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Categorías</p>
-          <h2>Dos familias. Un producto.</h2>
+          <p class="eyebrow">Arquitectura del Producto</p>
+          <h2>Dos familias especializadas. Un solo motor.</h2>
         </div>
         <div class="case-grid">
           <article class="case-card">
-            <span class="tag">Servicios · $45.000/mes</span>
-            <h3>Agenda y reservas</h3>
-            <p>Salón, barbería, spa y taller. Citas, reservas web, señas, WhatsApp y caja.</p>
-            <div class="btn-row">
+            <span class="tag">Servicios · $45.000 / mes</span>
+            <h3>Agenda, Reservas &amp; Comisiones</h3>
+            <p>Diseñado para Salón de belleza, Barbería, Spa y Taller mecánico. Incluye reservas web, cobro de señas integradas, notificaciones por WhatsApp y distribución de comisiones por profesional.</p>
+            <div class="btn-row" style="margin-top:18px;">
               <a class="btn btn-ghost btn-sm" href="/nexo/salones/">Salones</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/barberias/">Barberías</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/talleres/">Talleres</a>
             </div>
           </article>
+
           <article class="case-card">
-            <span class="tag">Comercio · $19.900/mes</span>
-            <h3>Caja y stock</h3>
-            <p>Minimarket, ferretería y botillería. POS, barras, tickets, fiado y stock del día.</p>
-            <div class="btn-row">
+            <span class="tag">Comercio · $19.900 / mes</span>
+            <h3>Caja POS, Stock &amp; Fiado</h3>
+            <p>Pensado para Minimarket, Ferretería y Botillería. Lectura rápida de códigos de barra, cobro en caja, impresión de tickets térmicos, módulo de clientes fiados y alertas de stock mínimo.</p>
+            <div class="btn-row" style="margin-top:18px;">
               <a class="btn btn-ghost btn-sm" href="/nexo/minimarkets/">Minimarkets</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/ferreterias/">Ferreterías</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/botillerias/">Botillerías</a>
             </div>
           </article>
+
           <article class="case-card">
-            <span class="tag">En todas</span>
-            <h3>Instancia propia</h3>
-            <p>Datos del local no se mezclan. Adaptamos catálogos y nombres en 24 horas sin costo extra. No es marketplace. No es boleta SII.</p>
+            <span class="tag">Seguridad Total</span>
+            <h3>Instancia Propia Aislada</h3>
+            <p>Tu local cuenta con su propia base de datos aislada en la nube. Carga inicial de inventario e inducción personalizada en 24 horas hábiles sin ningún costo oculto.</p>
           </article>
         </div>
       </div>
@@ -138,32 +181,35 @@
     <section class="section" id="precios">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Precios</p>
-          <h2>Precio fijo por local.</h2>
+          <p class="eyebrow">Planes Claros</p>
+          <h2>Precio fijo mensual por local. Sin sorpresas.</h2>
         </div>
         <div class="price-grid">
-          <article class="price-card">
+          <article class="price-card featured">
             <p class="eyebrow">Nexo · Servicios</p>
             <div class="amount">$45.000 <small>/ mes</small></div>
             <ul>
-              <li>Salón · barbería · spa · taller</li>
-              <li>Reservas, señas, WhatsApp, caja</li>
-              <li>Setup $100.000</li>
-              <li>Anual $450.000</li>
-              <li>Trial 3 días, sin tarjeta</li>
+              <li>Para Salones, Barberías, Spas y Talleres</li>
+              <li>Agenda de citas online + Confirmaciones WhatsApp</li>
+              <li>Caja diaria, señas y reparto de comisiones</li>
+              <li>Setup e instalación asistida $100.000</li>
+              <li>Plan Anual promocional $450.000 (Ahorras 2 meses)</li>
+              <li><strong>Trial 3 días gratis sin tarjeta de crédito</strong></li>
             </ul>
-            <a class="btn btn-primary" href="/contacto/?producto=Nexo+Servicios">Pedir trial servicios</a>
+            <a class="btn btn-primary" href="/contacto/?producto=Nexo+Servicios">Activar Trial Servicios →</a>
           </article>
+
           <article class="price-card">
             <p class="eyebrow">Nexo · Comercio</p>
             <div class="amount">$19.900 <small>/ mes</small></div>
             <ul>
-              <li>Minimarket · ferretería · botillería</li>
-              <li>POS, barras, tickets, fiado, stock</li>
-              <li>Setup desde $39.000</li>
-              <li>Trial 3 días, sin tarjeta</li>
+              <li>Para Minimarkets, Ferreterías y Botillerías</li>
+              <li>Punto de Venta (POS) + Lector de Código de Barras</li>
+              <li>Impresión de tickets + Control de Fiado Local</li>
+              <li>Setup desde $39.000 (Carga de inventario inicial)</li>
+              <li><strong>Trial 3 días gratis sin tarjeta de crédito</strong></li>
             </ul>
-            <a class="btn btn-primary" href="/contacto/?producto=Nexo+Comercio">Pedir trial comercio</a>
+            <a class="btn btn-primary" href="/contacto/?producto=Nexo+Comercio">Activar Trial Comercio →</a>
           </article>
         </div>
       </div>
@@ -174,17 +220,18 @@
     <div class="wrap">
       <div class="footer-grid">
         <div>
-          <a href="/" class="logo"><img class="logo-icon" src="/assets/logos/etemen-mark-v2.svg" alt="" width="28" height="28"><div class="logo-wordmark"><span class="name">ETEMEN</span></div></a>
+          <a href="/" class="logo"><img class="logo-icon" src="/assets/nexo-logo.jpg" alt="Nexo Logo" width="30" height="30" style="border-radius:6px;"><div class="logo-wordmark"><span class="name">NEXO</span></div></a>
+          <p style="font-size:0.82rem; margin-top:8px;">Plataforma de gestión comercial en Chile.</p>
         </div>
         <div>
           <h4>Productos</h4>
-          <a href="/nexo/">Nexo</a>
-          <a href="/hojear/">Hojear</a>
-          <a href="/indago/">indago</a>
+          <a href="/nexo/">Nexo SaaS</a>
+          <a href="/hojear/">Hojear Editorial</a>
+          <a href="/chile-oef/">CHILE-OEF</a>
         </div>
         <div>
-          <h4>Nexo por rubro</h4>
-          <a href="/nexo/salones/">Salones</a>
+          <h4>Nexo por Rubro</h4>
+          <a href="/nexo/salones/">Salones &amp; Spas</a>
           <a href="/nexo/barberias/">Barberías</a>
           <a href="/nexo/talleres/">Talleres</a>
           <a href="/nexo/ferreterias/">Ferreterías</a>
@@ -193,14 +240,27 @@
         </div>
         <div>
           <h4>Empresa</h4>
-          <a href="/portafolio/">Casos</a>
-          <a href="/contacto/">Contacto</a>
+          <a href="/portafolio/">Casos de Éxito</a>
+          <a href="/contacto/">Pedir Trial 3 Días</a>
         </div>
       </div>
-      <div class="footer-bottom"><span>© <span id="y"></span> ETEMEN · Chile</span></div>
+      <div class="footer-bottom"><span>© <span id="y">2026</span> ETEMEN · Todos los derechos reservados · Chile</span></div>
     </div>
   </footer>
+
+  <script src="/js/nexo-flujo.js?v=2"></script>
+  <script>
+    (function () {
+      var toggle = document.querySelector(".nav-toggle");
+      var links = document.querySelector(".nav-links");
+      if (toggle && links) {
+        toggle.addEventListener("click", function () {
+          var open = links.classList.toggle("open");
+          toggle.classList.toggle("open", open);
+        });
+      }
+    })();
+  </script>
   <script src="/js/site.js?v=3"></script>
-  <script src="/js/nexo-flujo.js"></script>
 </body>
 </html>

@@ -39,67 +39,126 @@
     <section class="chamber">
       <div class="chamber-light" id="chamber-light" aria-hidden="true"></div>
       <div class="wrap">
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px; flex-wrap:wrap;">
-          <img src="/assets/hojear-logo.jpg" alt="Hojear Logo" style="width:64px; height:64px; border-radius:12px; border:1px solid rgba(217,93,57,.35); object-fit:cover; box-shadow: 0 4px 20px rgba(0,0,0,.4);">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px; flex-wrap:wrap;">
+          <img src="/assets/hojear-logo.jpg" alt="Hojear Logo" style="width:68px; height:68px; border-radius:14px; border:1px solid rgba(217,93,57,.4); object-fit:cover; box-shadow: 0 6px 24px rgba(0,0,0,.5);">
           <div>
-            <p class="kicker" style="margin:0">Hojear · Prensa &amp; Lectura Digital</p>
-            <h1 style="margin:4px 0 0">Lee un libro. <em>Gratis.</em></h1>
+            <p class="kicker" style="margin:0">Hojear · Cámara de Lectura Digital</p>
+            <h1 style="margin:4px 0 0">Lee un libro. <em>100% Gratis.</em></h1>
           </div>
         </div>
-        <p class="lead">Busca un título o un autor. Ábrelo y lee. Sin anuncios.</p>
+        <p class="lead">Prensa interactiva y literatura clásica sin interrupciones. Busca un título, abre tu libro y disfruta una experiencia limpia sin anuncios.</p>
+        
         <form class="home-search" action="/biblioteca/" method="get">
           <input type="hidden" name="vista" value="catalogo">
           <label class="visually-hidden" for="home-q">Buscar un libro</label>
-          <input id="home-q" name="q" type="search" placeholder="Busca un título o un autor" autocomplete="off">
-          <button type="submit" class="btn btn-fill">Buscar</button>
+          <input id="home-q" name="q" type="search" placeholder="Busca un título, autor o género (ej. Sub Terra, Quiroga...)" autocomplete="off">
+          <button type="submit" class="btn btn-fill">Explorar</button>
         </form>
+
+        <div class="cat-pills">
+          <a class="cat-pill" href="/biblioteca/?vista=catalogo&amp;q=chile">🇨🇱 Clásicos Chilenos</a>
+          <a class="cat-pill" href="/biblioteca/?vista=catalogo&amp;q=cuentos">📖 Cuentos &amp; Relatos</a>
+          <a class="cat-pill" href="/biblioteca/?vista=catalogo&amp;q=novela">🏛️ Novela Universal</a>
+          <a class="cat-pill" href="/biblioteca/?vista=guias">📜 Guías &amp; Ensayos</a>
+        </div>
+
+        <!-- Simulador de Visor de Doble Página (Spread Demo) -->
+        <div class="spread-demo-card">
+          <div class="spread-demo-header">
+            <span class="spread-demo-title">📖 Cámara de Lectura — Simulación en Vivo</span>
+            <div class="spread-demo-controls">
+              <button type="button" class="spread-btn active" id="mode-paper">Papel</button>
+              <button type="button" class="spread-btn" id="mode-sepia">Sepia</button>
+              <button type="button" class="spread-btn" id="mode-dark">Noche</button>
+            </div>
+          </div>
+          <div class="spread" id="spread-box">
+            <div class="spread-page l" id="spread-l">
+              <strong>Sub terra — Capítulo I</strong>
+              <p>El grisú, gas inflamable que se desprende de la hulla, flotaba en la atmósfera pesada de la galería subterránea...</p>
+            </div>
+            <div class="spread-spine"></div>
+            <div class="spread-page r" id="spread-r">
+              <p>Los mineros avanzaban a tientas con sus lámparas de seguridad, rompiendo el silencio ancestral del fondo de la tierra.</p>
+              <div style="margin-top:14px; font-family:var(--mono); font-size:10px; color:rgba(0,0,0,0.4);">Pág. 12 / 148 · Progreso 8%</div>
+            </div>
+          </div>
+        </div>
+
         <div class="actions">
-          <a class="btn btn-fill" href="/biblioteca/?vista=catalogo">Ver los libros</a>
-          <a class="btn btn-line" href="/biblioteca/?vista=leer&amp;libro=sub-terra">Empezar con Sub terra</a>
+          <a class="btn btn-fill" href="/biblioteca/?vista=catalogo">Ver Catálogo Completo</a>
+          <a class="btn btn-line" href="/biblioteca/?vista=leer&amp;libro=sub-terra">Leer Sub terra Ahora →</a>
         </div>
       </div>
     </section>
 
     <section class="block">
       <div class="wrap">
-        <p class="kicker">Para empezar</p>
-        <h2>Toca un libro y lee.</h2>
+        <p class="kicker">Destacados para empezar</p>
+        <h2>Selección Literaria Instantánea</h2>
+        <p style="color:var(--paper-dim); font-size:1rem; max-width:32em;">Haz clic en cualquier libro para abrir la cámara de lectura sin registro ni descargas:</p>
         <div class="plates">
           <a class="plate" href="/biblioteca/?vista=leer&amp;libro=sub-terra">
-            <small>Chile</small>
-            <h3>Sub terra</h3>
-            <span>Baldomero Lillo</span>
+            <div>
+              <small>Chile · Realismo Social</small>
+              <h3>Sub terra</h3>
+              <span>Baldomero Lillo</span>
+            </div>
+            <span class="badge-time">⏱️ 1.2 hrs de lectura · 8 Cuentos</span>
           </a>
           <a class="plate" href="/biblioteca/?vista=leer&amp;libro=martin-rivas">
-            <small>Chile</small>
-            <h3>Martín Rivas</h3>
-            <span>Alberto Blest Gana</span>
+            <div>
+              <small>Chile · Novela Costumbrista</small>
+              <h3>Martín Rivas</h3>
+              <span>Alberto Blest Gana</span>
+            </div>
+            <span class="badge-time">⏱️ 4.5 hrs de lectura · 64 Capítulos</span>
           </a>
           <a class="plate" href="/biblioteca/?vista=leer&amp;libro=cuentos-amor">
-            <small>Cuentos</small>
-            <h3>Cuentos de amor, de locura y de muerte</h3>
-            <span>Horacio Quiroga</span>
+            <div>
+              <small>Latinoamérica · Cuentos</small>
+              <h3>Cuentos de amor, de locura y de muerte</h3>
+              <span>Horacio Quiroga</span>
+            </div>
+            <span class="badge-time">⏱️ 2.1 hrs de lectura · 15 Relatos</span>
           </a>
           <a class="plate" href="/biblioteca/?vista=leer&amp;libro=quijote">
-            <small>Novela</small>
-            <h3>Don Quijote de la Mancha</h3>
-            <span>Miguel de Cervantes</span>
+            <div>
+              <small>España · Clásico Universal</small>
+              <h3>Don Quijote de la Mancha</h3>
+              <span>Miguel de Cervantes</span>
+            </div>
+            <span class="badge-time">⏱️ Obra Completa · Edición Limpia</span>
           </a>
         </div>
-        <div class="actions"><a class="btn btn-line" href="/biblioteca/?vista=catalogo">Ver todos los libros</a></div>
+        <div class="actions" style="margin-top:24px;">
+          <a class="btn btn-line" href="/biblioteca/?vista=catalogo">Explorar Todos los Libros →</a>
+        </div>
       </div>
     </section>
 
     <section class="block">
-      <div class="wrap how how-simple">
+      <div class="wrap how">
         <div>
-          <p class="kicker">Cómo usar Hojear</p>
-          <h2>Tres pasos.</h2>
+          <p class="kicker">La Experiencia Hojear</p>
+          <h2>Diseñado para la concentración absoluta.</h2>
         </div>
         <div>
-          <div class="step"><b>1</b><strong>Busca</strong><p>Escribe un título o un autor.</p></div>
-          <div class="step"><b>2</b><strong>Elige</strong><p>Toca el libro que quieres.</p></div>
-          <div class="step"><b>3</b><strong>Lee</strong><p>Pasa la página. Se guarda solo dónde ibas.</p></div>
+          <div class="step">
+            <b>01</b>
+            <strong>Visualización de Doble Página (Spread View)</strong>
+            <p>Siente la comodidad de leer como en un libro físico en pantallas grandes o en formato de página continua en móviles.</p>
+          </div>
+          <div class="step">
+            <b>02</b>
+            <strong>Marcapáginas Automático Inteligente</strong>
+            <p>Cierra tu navegador y vuelve cuando quieras: Hojear recuerda exactamente el párrafo y la página donde quedaste.</p>
+          </div>
+          <div class="step">
+            <b>03</b>
+            <strong>Cero Anuncios, Cero Rastreadores</strong>
+            <p>Priorizamos la cultura y el respeto por el lector. No vendemos datos ni interrumpimos tu lectura con publicidad.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -107,20 +166,22 @@
     <section class="block">
       <div class="wrap">
         <div class="plus">
-          <p class="kicker">Hojear Plus</p>
-          <p class="price">$3.990 / mes</p>
-          <p class="note">Todavía no se cobra. Te avisamos cuando esté listo.</p>
-          <a class="btn btn-fill" href="/contacto/?producto=Hojear+Plus">Avisarme</a>
+          <p class="kicker">Para Editoriales &amp; Publicaciones Independientes</p>
+          <h2 style="font-size:2.2rem; margin:6px 0 12px; font-weight:800;">Hojear Plus</h2>
+          <p class="price">$3.990 <span style="font-size:1.1rem; font-weight:400; color:var(--mute);">/ mes por publicación</span></p>
+          <p class="note">Convierte tus catálogos, revistas o libros PDF en un visor interactivo de marca propia con tu propio dominio, analítica de lectura y marca de agua.</p>
+          <a class="btn btn-fill" href="/contacto/?producto=Hojear+Plus">Consultar por Hojear Plus</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="wrap foot">
-    <span>Hojear · ETEMEN</span>
+    <span>Hojear · ETEMEN Editorial Digital</span>
     <span data-visitas hidden></span>
     <span><a href="/biblioteca/?vista=catalogo">Libros</a> · <a href="/biblioteca/?vista=guias">Guías</a> · <a href="/contacto/">Contacto</a></span>
   </footer>
+
   <script src="/js/visitas.js?v=2"></script>
   <script>
     (function () {
@@ -131,24 +192,29 @@
           var open = links.classList.toggle("open");
           toggle.classList.toggle("open", open);
           toggle.setAttribute("aria-expanded", open ? "true" : "false");
-          toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
         });
       }
-      var light = document.getElementById("chamber-light");
-      if (!light || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      var x = 50, y = 38, tx = 50, ty = 38;
-      window.addEventListener("pointermove", function (e) {
-        tx = (e.clientX / window.innerWidth) * 100;
-        ty = (e.clientY / window.innerHeight) * 100;
-      }, { passive: true });
-      function tick() {
-        x += (tx - x) * 0.06;
-        y += (ty - y) * 0.06;
-        light.style.left = x + "%";
-        light.style.top = y + "%";
-        requestAnimationFrame(tick);
+
+      // Controles del Simulador de Lectura
+      var btnPaper = document.getElementById("mode-paper");
+      var btnSepia = document.getElementById("mode-sepia");
+      var btnDark = document.getElementById("mode-dark");
+      var pageL = document.getElementById("spread-l");
+      var pageR = document.getElementById("spread-r");
+
+      function setMode(mode) {
+        if (!pageL || !pageR) return;
+        pageL.className = "spread-page l " + (mode !== "paper" ? mode : "");
+        pageR.className = "spread-page r " + (mode !== "paper" ? mode : "");
+        [btnPaper, btnSepia, btnDark].forEach(function(b) { if(b) b.classList.remove("active"); });
+        if (mode === "paper" && btnPaper) btnPaper.classList.add("active");
+        if (mode === "sepia" && btnSepia) btnSepia.classList.add("active");
+        if (mode === "dark" && btnDark) btnDark.classList.add("active");
       }
-      tick();
+
+      if (btnPaper) btnPaper.addEventListener("click", function() { setMode("paper"); });
+      if (btnSepia) btnSepia.addEventListener("click", function() { setMode("sepia"); });
+      if (btnDark) btnDark.addEventListener("click", function() { setMode("dark"); });
     })();
   </script>
 </body>
