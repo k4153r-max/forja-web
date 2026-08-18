@@ -11,7 +11,7 @@
   <meta property="og:url" content="https://etemen.cl/hojear/">
   <meta property="og:title" content="Hojear — Lee un libro gratis">
   <meta property="og:description" content="Busca un título, ábrelo y lee. Sin anuncios.">
-  <meta property="og:image" content="https://etemen.cl/assets/logos/hojear-icon.jpg">
+  <meta property="og:image" content="https://etemen.cl/assets/hojear-logo.jpg">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Hojear","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://etemen.cl/hojear/","author":{"@type":"Organization","name":"ETEMEN","url":"https://etemen.cl/"}}
   </script>
@@ -19,13 +19,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/hojear-v3.css">
-  <link rel="icon" href="/assets/logos/hojear-mark-v2.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/hojear-logo.jpg" type="image/jpeg">
 </head>
 <body>
   <a class="skip" href="#contenido">Saltar al contenido</a>
   <header class="hnav">
     <div class="wrap">
-      <a class="brand" href="/hojear/"><img src="/assets/logos/hojear-mark-v2.svg" alt="" width="28" height="28">Hojear</a>
+      <a class="brand" href="/hojear/"><img src="/assets/hojear-logo.jpg" alt="Hojear Logo" width="32" height="32" style="border-radius:6px; object-fit:cover;">Hojear</a>
       <button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">Menú</button>
       <nav class="hnav-links" aria-label="Hojear">
         <a href="/biblioteca/?vista=catalogo">Libros</a>
@@ -39,8 +39,13 @@
     <section class="chamber">
       <div class="chamber-light" id="chamber-light" aria-hidden="true"></div>
       <div class="wrap">
-        <p class="kicker">Hojear</p>
-        <h1>Lee un libro.<em>Gratis.</em></h1>
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px; flex-wrap:wrap;">
+          <img src="/assets/hojear-logo.jpg" alt="Hojear Logo" style="width:64px; height:64px; border-radius:12px; border:1px solid rgba(217,93,57,.35); object-fit:cover; box-shadow: 0 4px 20px rgba(0,0,0,.4);">
+          <div>
+            <p class="kicker" style="margin:0">Hojear · Prensa &amp; Lectura Digital</p>
+            <h1 style="margin:4px 0 0">Lee un libro. <em>Gratis.</em></h1>
+          </div>
+        </div>
         <p class="lead">Busca un título o un autor. Ábrelo y lee. Sin anuncios.</p>
         <form class="home-search" action="/biblioteca/" method="get">
           <input type="hidden" name="vista" value="catalogo">
