@@ -1,0 +1,252 @@
+(() => {
+  "use strict";
+
+  const API_BASE = "https://chile-oef-api.onrender.com/v1";
+  const USGS_QUERY =
+    "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson" +
+    "&minlatitude=-56&maxlatitude=-17&minlongitude=-78&maxlongitude=-66" +
+    "&minmagnitude=4.5&orderby=time&limit=5";
+
+  const DEFAULT_CITIES = [
+    { name: "Santiago", lat: -33.45, lon: -70.66 },
+    { name: "Valparaíso", lat: -33.04, lon: -71.61 },
+    { name: "Coquimbo / La Serena", lat: -29.95, lon: -71.33 },
+    { name: "Concepción", lat: -36.82, lon: -73.05 },
+    { name: "Antofagasta", lat: -23.65, lon: -70.40 }
+  ];
+
+  function formatChance(prob) {
+    if (prob == null || isNaN(prob)) return "sin dato";
+    const pct = prob * 100;
+    if (pct >= 1) return `${pct.toFixed(1)}%`;
+    if (pct <= 0.0001) return "<0.01%";
+    const oneInN = Math.round(1 / prob);
+    return `1 en ${new Intl.NumberFormat("es-CL").format(oneInN)}`;
+  }
+
+  function cleanPlace(place) {
+    if (!place) return "Chile";
+    return place
+      .replace(/^\d+\s*km\s+[A-Z]{1,3}\s+of\s+/i, "")
+      .replace(/\s+Earthquake$/i, "")
+      .replace(/\s+Chile$/i, ", Chile")
+      .replace(/^,\s*/, "")
+      .trim();
+  }
+
+  function timeAgo(date) {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    if (seconds < 60) return "hace instantes";
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `hace ${minutes}m`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `hace ${hours}h`;
+    const days = Math.floor(hours / 24);
+    return `hace ${days}d`;
+  }
+
+  const STYLES = `
+    :host, .chile-oef-w-box {
+      display: block;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0b0b0c;
+      color: #f4f1ea;
+      border: 1px solid #242428;
+      border-radius: 6px;
+      padding: 16px;
+      max-width: 480px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      line-height: 1.4;
+      font-size: 13px;
+    }
+    .w-head {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #1f1f24; padding-bottom: 10px; margin-bottom: 12px;
+    }
+    .w-title {
+      display: flex; align-items: center; gap: 8px; font-weight: 700;
+      font-size: 14px; color: #f4f1ea; text-decoration: none;
+    }
+    .w-title .mark {
+      width: 10px; height: 10px; background: #6ba3c9; border-radius: 2px;
+    }
+    .w-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: monospace; font-size: 10px; text-transform: uppercase;
+      background: rgba(107,163,201,0.12); color: #6ba3c9; border: 1px solid rgba(107,163,201,0.3);
+      padding: 2px 6px; border-radius: 3px;
+    }
+    .w-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #6ba3c9; animation: w-pulse 2s infinite;
+    }
+    @keyframes w-pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    .w-latest {
+      background: #141416; border: 1px solid #1f1f24; border-radius: 4px;
+      padding: 10px 12px; margin-bottom: 12px;
+    }
+    .w-latest-l { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: #8a8a93; }
+    .w-latest-val { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+    .w-mag { font-weight: 800; font-size: 16px; color: #c4894a; }
+    .w-loc { font-weight: 600; color: #f4f1ea; font-size: 13px; }
+    .w-time { font-size: 11px; color: #8a8a93; margin-left: auto; }
+
+    .w-section-l { font-size: 11px; font-weight: 600; color: #8a8a93; margin-bottom: 6px; }
+    .w-city-grid { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .w-city-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #141416; border: 1px solid #1f1f24; padding: 6px 10px; border-radius: 4px;
+    }
+    .w-city-name { font-weight: 500; font-size: 12px; }
+    .w-city-prob { font-family: monospace; font-size: 12px; font-weight: 700; color: #6ba3c9; }
+
+    .w-foot {
+      font-size: 10px; color: #8a8a93; border-top: 1px solid #1f1f24;
+      padding-top: 8px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .w-foot-links { display: flex; gap: 12px; }
+    .w-foot a { color: #6ba3c9; text-decoration: none; }
+    .w-foot a:hover { text-decoration: underline; }
+  `;
+
+  class ChileOefWidget extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+      this.render();
+      this.loadData();
+    }
+
+    render() {
+      this.shadowRoot.innerHTML = `
+        <style>${STYLES}</style>
+        <div class="chile-oef-w-box">
+          <div class="w-head">
+            <a href="https://etemen.cl/chile-oef/" target="_blank" rel="noopener" class="w-title">
+              <span class="mark"></span>
+              <span>CHILE-OEF</span>
+            </a>
+            <span class="w-badge"><span class="dot"></span> ETAS 7d (M≥5.0)</span>
+          </div>
+
+          <div class="w-latest" id="w-latest-box">
+            <div class="w-latest-l">Último sismo relevante registrado (USGS)</div>
+            <div class="w-latest-val">
+              <span class="w-mag" id="w-mag">...</span>
+              <span class="w-loc" id="w-loc">Cargando datos...</span>
+              <span class="w-time" id="w-time"></span>
+            </div>
+          </div>
+
+          <div class="w-section-l">Probabilidad estimada 7 días (M≥5.0, radio 40 km):</div>
+          <div class="w-city-grid" id="w-city-grid">
+            ${DEFAULT_CITIES.map(c => `
+              <div class="w-city-row">
+                <span class="w-city-name">${c.name}</span>
+                <span class="w-city-prob">...</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="w-foot">
+            <div class="w-foot-links">
+              <span>Fuentes oficiales: <a href="https://www.csn.uchile.cl/" target="_blank" rel="noopener">CSN</a> · <a href="https://www.senapred.cl/" target="_blank" rel="noopener">SENAPRED</a></span>
+              <a href="https://etemen.cl/chile-oef/" target="_blank" rel="noopener" style="margin-left:auto">Ver mapa completo →</a>
+            </div>
+            <div>Investigación experimental. No predice terremotos deterministamente.</div>
+          </div>
+        </div>
+      `;
+    }
+
+    async loadData() {
+      // 1. Fetch USGS latest quake
+      try {
+        const res = await fetch(USGS_QUERY);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.features && data.features.length > 0) {
+            const first = data.features[0];
+            const mag = first.properties.mag ? `M ${first.properties.mag.toFixed(1)}` : "M --";
+            const loc = cleanPlace(first.properties.place);
+            const timeStr = timeAgo(first.properties.time);
+            
+            const magEl = this.shadowRoot.getElementById("w-mag");
+            const locEl = this.shadowRoot.getElementById("w-loc");
+            const timeEl = this.shadowRoot.getElementById("w-time");
+            if (magEl) magEl.textContent = mag;
+            if (locEl) locEl.textContent = loc;
+            if (timeEl) timeEl.textContent = timeStr;
+          }
+        }
+      } catch (e) {
+        console.warn("CHILE-OEF Widget: error al cargar USGS feed", e);
+      }
+
+      // 2. Fetch CHILE-OEF forecast
+      try {
+        const res = await fetch(`${API_BASE}/forecasts/latest`);
+        if (res.ok) {
+          const forecast = await res.json();
+          if (forecast && forecast.cells) {
+            this.updateCityProbabilities(forecast.cells);
+          }
+        }
+      } catch (e) {
+        console.warn("CHILE-OEF Widget: error al cargar API forecast", e);
+      }
+    }
+
+    updateCityProbabilities(cells) {
+      const gridEl = this.shadowRoot.getElementById("w-city-grid");
+      if (!gridEl) return;
+
+      const html = DEFAULT_CITIES.map(city => {
+        // Find closest cell
+        let bestDist = Infinity;
+        let bestCell = null;
+        for (const cell of cells) {
+          const dLat = cell.lat - city.lat;
+          const dLon = cell.lon - city.lon;
+          const dist = dLat * dLat + dLon * dLon;
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestCell = cell;
+          }
+        }
+
+        let probStr = "sin dato";
+        if (bestCell) {
+          const p = (bestCell.bins && (bestCell.bins["5-6"] || bestCell.bins["5+"])) || bestCell.rate;
+          probStr = formatChance(p);
+        }
+
+        return `
+          <div class="w-city-row">
+            <span class="w-city-name">${city.name}</span>
+            <span class="w-city-prob">${probStr}</span>
+          </div>
+        `;
+      }).join('');
+
+      gridEl.innerHTML = html;
+    }
+  }
+
+  // Register custom element
+  if (!customElements.get('chile-oef-widget')) {
+    customElements.define('chile-oef-widget', ChileOefWidget);
+  }
+
+  // Auto-mount if container #oef-widget-root exists
+  document.addEventListener("DOMContentLoaded", () => {
+    const root = document.getElementById("oef-widget-root");
+    if (root && !root.hasChildNodes()) {
+      const widget = document.createElement("chile-oef-widget");
+      root.appendChild(widget);
+    }
+  });
+})();
