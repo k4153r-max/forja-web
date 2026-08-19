@@ -349,6 +349,11 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
 
 /* Sections */
 .section { padding: 64px 0; border-bottom: 1px solid var(--rule-dim); }
+.section--devweb {
+  background: var(--carbon-2);
+  border-top: 1px solid var(--rule-dim);
+  border-bottom: 1px solid var(--rule-dim);
+}
 .section--paper {
   background: var(--paper);
   color: var(--carbon);
@@ -485,6 +490,9 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
   padding: 4px 7px;
   color: var(--ink-dim);
 }
+.tag--copper { color: var(--copper); }
+.case-card--surface { background: var(--carbon); border: 1px solid var(--rule-dim); }
+.btn-row--lg { margin-top: 32px; }
 
 /* Rubro selector */
 .rubro-selector {
