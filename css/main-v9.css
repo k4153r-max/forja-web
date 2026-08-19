@@ -103,9 +103,10 @@ h1 {
   font-size: clamp(2.15rem, 7vw, 4.4rem);
   font-variation-settings: "wdth" 62;
   text-transform: uppercase;
+  text-wrap: balance;
 }
-h2 { font-size: clamp(1.5rem, 3.2vw, 2.15rem); }
-h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.5rem, 3.2vw, 2.15rem); text-wrap: balance; }
+h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; text-wrap: pretty; }
 
 .lead { color: var(--ink-dim); font-size: 1.05rem; max-width: 42rem; }
 .eyebrow {
@@ -137,6 +138,10 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
   transition: background var(--t) var(--ease), color var(--t) var(--ease);
 }
 .btn:hover { background: var(--copper); color: var(--carbon); }
+.btn:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 3px;
+}
 .btn-primary { background: var(--copper); color: var(--carbon); }
 .btn-primary:hover { background: var(--copper-2); }
 .btn-ghost { border-color: var(--rule-dim); }
@@ -188,6 +193,14 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
 }
 .nav-links a:hover,
 .nav-links a.active { color: var(--ink); }
+.nav-links a:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 3px;
+}
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 3px;
+}
 .nav-links .nav-cta { color: var(--copper); }
 .nav-toggle {
   display: none;
@@ -349,6 +362,7 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
 
 /* Sections */
 .section { padding: 64px 0; border-bottom: 1px solid var(--rule-dim); }
+.section[id] { scroll-margin-top: 64px; }
 .section--devweb {
   background: var(--carbon-2);
   border-top: 1px solid var(--rule-dim);
@@ -430,6 +444,7 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
   font-weight: 500;
   color: var(--ink);
   letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
 }
 .metric span {
   display: block;
