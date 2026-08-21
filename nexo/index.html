@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nexo — Agenda y caja para tu local | ETEMEN</title>
+  <title>Nexo — El hilo entre el local y el cliente | ETEMEN</title>
   <meta name="description" content="Nexo es el sistema del local en Chile: agenda y reservas para salón, barbería, spa y taller; caja y stock para minimarket, ferretería y botillería. Trial 3 días.">
-  <meta name="theme-color" content="#0E7C6B">
+  <meta name="theme-color" content="#120F0C">
   <link rel="canonical" href="https://etemen.cl/nexo/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://etemen.cl/nexo/">
   <meta property="og:site_name" content="ETEMEN">
   <meta property="og:locale" content="es_CL">
-  <meta property="og:title" content="Nexo — Agenda y caja para tu local | ETEMEN">
-  <meta property="og:description" content="Elige tu rubro. Prueba 3 días. Te dejamos el local operativo en 24 horas.">
+  <meta property="og:title" content="Nexo — El hilo entre el local y el cliente | ETEMEN">
+  <meta property="og:description" content="Una instancia por negocio. Agenda o caja, según el rubro. Trial 3 días.">
   <meta property="og:image" content="https://etemen.cl/assets/logos/nexo-mark-og.jpg">
   <script type="application/ld+json">
   {
@@ -34,8 +34,8 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/nexo-v2.css">
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;500;700;800&family=Karla:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/nexo-v3.css">
   <link rel="icon" href="/assets/logos/nexo-mark.svg" type="image/svg+xml">
 </head>
 <body>
@@ -43,65 +43,95 @@
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
       <a href="/nexo/" class="logo" aria-label="Nexo">
-        <img class="logo-icon" src="/assets/logos/nexo-mark.svg" alt="" width="36" height="36">
+        <img class="logo-icon" src="/assets/logos/nexo-mark.svg" alt="" width="34" height="34">
         <div class="logo-wordmark">
           <span class="name">NEXO</span>
-          <span class="tagline">Sistema del local</span>
+          <span class="tagline">ETEMEN</span>
         </div>
       </a>
       <nav class="nav-links" aria-label="Principal">
         <a href="/">Inicio</a>
         <a href="/nexo/" class="active">Nexo</a>
-        <a href="/nexo/#flujo">Rubros</a>
+        <a href="/nexo/#flujo">El hilo</a>
         <a href="/nexo/#precios">Cotización</a>
-        <a href="/contacto/?producto=Nexo+Trial" class="nav-cta">Pedir trial 3 días</a>
+        <a href="/contacto/?producto=Nexo+Trial" class="nav-cta">Trial 3 días</a>
       </nav>
       <button class="nav-toggle" type="button" aria-label="Menú" aria-expanded="false">Menú</button>
     </div>
   </header>
 
   <main id="contenido">
-    <section class="page-hero">
-      <div class="wrap hero-grid">
-        <div>
-          <p class="eyebrow">Nexo · Chile</p>
-          <h1>Agenda y caja. En el mostrador de tu local.</h1>
-          <p class="lead">Un sistema por negocio: reservas y WhatsApp para servicios, punto de venta y stock para comercio. Instancia propia. Lo configuramos en 24 horas.</p>
-          <div class="btn-row" style="margin-top:28px;">
-            <a class="btn btn-primary" href="#flujo">Elige tu rubro</a>
-            <a class="btn btn-ghost" href="/contacto/?producto=Nexo+Trial">Pedir trial 3 días</a>
-          </div>
-          <div class="hero-facts">
-            <span class="hero-fact"><strong>3 días</strong> de prueba, sin tarjeta</span>
-            <span class="hero-fact"><strong>24 h</strong> para dejarlo operativo</span>
-            <span class="hero-fact"><strong>1 local</strong> = 1 instancia</span>
-          </div>
-        </div>
+    <section class="chamber" id="flujo">
+      <div class="haz-word" aria-hidden="true">NEXO</div>
 
-        <div class="device" aria-label="Vista previa de Nexo: agenda y caja">
-          <div class="device-bar">
-            <span>Nexo · <span id="device-rubro-label">salón</span></span>
-            <span>En vivo</span>
+      <div class="haz-thesis">
+        <p class="eyebrow">ETEMEN · NEXO</p>
+        <h1>El hilo entre el local y el cliente.</h1>
+        <p>Nexo es esa curva: el negocio en un extremo, la gente en el otro. Una instancia por local. Agenda o caja, según el rubro. Lo tiende ETEMEN en 24 horas.</p>
+        <div class="haz-meta">
+          <span>Chile · <span id="haz-clock">—:—</span></span>
+          <span>Trial 3 días · sin tarjeta</span>
+          <span>1 local = 1 instancia</span>
+        </div>
+      </div>
+
+      <div class="haz" data-rubro-selector role="tablist" aria-label="Rubros sobre el hilo de Nexo">
+        <svg class="haz-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="track" d="M 6 88 C 8 30, 74 76, 94 10"></path>
+          <path id="haz-path" class="track" d="M 6 88 C 8 30, 74 76, 94 10" style="stroke:transparent;stroke-width:8"></path>
+          <path id="haz-live" class="live" d="M 6 88 C 8 30, 74 76, 94 10"></path>
+          <path id="haz-pulse" class="pulse" d="M 6 88 C 8 30, 74 76, 94 10"></path>
+        </svg>
+        <div class="haz-end haz-end--tierra"><strong>Tierra</strong> el local</div>
+        <div class="haz-end haz-end--cielo"><strong>Cielo</strong> el cliente</div>
+
+        <button type="button" class="rubro-option haz-node" role="tab" aria-selected="true" data-rubro="salon">
+          <span class="haz-dot"></span><span class="haz-name">Salón</span>
+        </button>
+        <button type="button" class="rubro-option haz-node" role="tab" aria-selected="false" data-rubro="barberia">
+          <span class="haz-dot"></span><span class="haz-name">Barbería</span>
+        </button>
+        <button type="button" class="rubro-option haz-node" role="tab" aria-selected="false" data-rubro="taller">
+          <span class="haz-dot"></span><span class="haz-name">Taller</span>
+        </button>
+        <button type="button" class="rubro-option haz-node" role="tab" aria-selected="false" data-rubro="ferreteria">
+          <span class="haz-dot"></span><span class="haz-name">Ferretería</span>
+        </button>
+        <button type="button" class="rubro-option haz-node" role="tab" aria-selected="false" data-rubro="minimarket">
+          <span class="haz-dot"></span><span class="haz-name">Minimarket</span>
+        </button>
+        <button type="button" class="rubro-option haz-node" role="tab" aria-selected="false" data-rubro="botilleria">
+          <span class="haz-dot"></span><span class="haz-name">Botillería</span>
+        </button>
+      </div>
+
+      <div class="ai-rubro-finder">
+        <p class="eyebrow">Consulta al hilo</p>
+        <h3>nexo:</h3>
+        <p>Una frase. El sistema enciende el nodo que te corresponde.</p>
+        <div class="ai-chat-row">
+          <input type="text" id="ai-rubro-input" class="ai-rubro-input"
+                 placeholder='tengo una barbería con 3 sillones en Maipú'
+                 autocomplete="off" maxlength="300">
+          <button type="button" id="ai-rubro-btn" class="btn btn-primary">Tender</button>
+        </div>
+        <div id="ai-rubro-response" class="ai-rubro-response" hidden></div>
+      </div>
+
+      <div class="dock">
+        <div class="instrument" aria-label="Instrumento Nexo: agenda y caja">
+          <div class="instrument-bar">
+            <span>Instrumento · <span id="device-rubro-label">salón</span></span>
+            <span class="pos-status-badge">vivo</span>
           </div>
           <div class="device-screen">
             <div class="agenda-board">
               <h3 id="agenda-title">Hoy · agenda</h3>
-              <div id="agenda-rows">
-                <div class="agenda-row"><div class="agenda-time">09:00</div><div><strong>Camila R.</strong><span>Color + brushing</span></div></div>
-                <div class="agenda-row"><div class="agenda-time">10:30</div><div><strong>Valentina M.</strong><span>Manicura rusa</span></div></div>
-                <div class="agenda-row"><div class="agenda-time">12:00</div><div><strong>Andrea S.</strong><span>Corte dama</span></div></div>
-                <div class="agenda-row"><div class="agenda-time">15:30</div><div><strong>Francisca P.</strong><span>Mechas</span></div></div>
-                <div class="agenda-row"><div class="agenda-time">17:00</div><div><strong>Hueco libre</strong><span>Reserva web abierta</span></div></div>
-              </div>
+              <div id="agenda-rows"></div>
             </div>
-
             <div class="pos-terminal-sim">
-              <div class="pos-screen-bar">
-                <span>Caja</span>
-                <span class="pos-status-badge">ACTIVO</span>
-              </div>
+              <div class="pos-screen-bar"><span>Caja</span></div>
               <div class="pos-receipt-paper">
-                <div style="text-align:center;margin-bottom:8px;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--nexo-ink-dim)">Ticket del local</div>
                 <div id="pos-receipt-lines"></div>
                 <div class="pos-receipt-line total">
                   <span>Total</span>
@@ -113,135 +143,57 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section id="flujo" class="section section--rubros">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Paso 1 · Rubro</p>
-          <h2>¿Qué negocio tienes?</h2>
-          <p class="lead" style="margin-top:8px">Primero el rubro, después el sistema. Agenda para servicios. Caja para comercio.</p>
-        </div>
-
-        <div class="ai-rubro-finder">
-          <p class="eyebrow">Asistente</p>
-          <h3>Descríbelo y te decimos el módulo</h3>
-          <p>Una frase alcanza. El asistente elige el rubro y abre la consola.</p>
-          <div class="ai-chat-row">
-            <input type="text" id="ai-rubro-input" class="ai-rubro-input"
-                   placeholder='Ej: "tengo una barbería con 3 sillones en Maipú"'
-                   autocomplete="off" maxlength="300">
-            <button type="button" id="ai-rubro-btn" class="btn btn-primary">Consultar</button>
-          </div>
-          <div id="ai-rubro-response" class="ai-rubro-response" hidden></div>
-        </div>
-
-        <div class="rubro-selector" data-rubro-selector role="tablist" aria-label="Rubros de Nexo">
-          <button type="button" class="rubro-option" role="tab" aria-selected="true" data-rubro="salon">
-            <span class="rubro-tile-visual rubro-tile-visual--salon" aria-hidden="true"></span>
-            <span class="rubro-tile-meta"><strong>Salón &amp; Spa</strong><span>Agenda</span></span>
-          </button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="barberia">
-            <span class="rubro-tile-visual rubro-tile-visual--barberia" aria-hidden="true"></span>
-            <span class="rubro-tile-meta"><strong>Barbería</strong><span>Agenda</span></span>
-          </button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="taller">
-            <span class="rubro-tile-visual rubro-tile-visual--taller" aria-hidden="true"></span>
-            <span class="rubro-tile-meta"><strong>Taller</strong><span>Órdenes</span></span>
-          </button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="ferreteria">
-            <span class="rubro-tile-visual rubro-tile-visual--ferreteria" aria-hidden="true"></span>
-            <span class="rubro-tile-meta"><strong>Ferretería</strong><span>Caja</span></span>
-          </button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="minimarket">
-            <span class="rubro-tile-visual rubro-tile-visual--minimarket" aria-hidden="true"></span>
-            <span class="rubro-tile-meta"><strong>Minimarket</strong><span>Caja</span></span>
-          </button>
-          <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="botilleria">
-            <span class="rubro-tile-visual rubro-tile-visual--botilleria" aria-hidden="true"></span>
-            <span class="rubro-tile-meta"><strong>Botillería</strong><span>Caja</span></span>
-          </button>
-        </div>
-
-        <div class="rubro-panel-grid">
-          <div class="rubro-panel" id="rubro-panel">
-            <p class="eyebrow" data-panel-familia>Nexo Servicios</p>
-            <h3 data-panel-titulo>Salones de Belleza &amp; Spas</h3>
-            <p class="product-block-meta" data-panel-precio>Precio por confirmar · A consultar por local</p>
-            <p style="color:var(--nexo-ink-dim);margin:14px 0 8px;max-width:48ch">Agenda, señas, WhatsApp y caja en la instancia del local. Arriba puedes agregar ítems al ticket y simular un cobro.</p>
-            <p class="hero-note">Las apps de prueba viven en Render y pueden tardar unos segundos en despertar.</p>
-            <div class="btn-row">
-              <a class="btn btn-primary" data-panel-trial href="/contacto/?producto=Nexo+Trial">Pedir trial 3 días</a>
-              <a class="btn btn-ghost" data-panel-demo href="/nexo/salones/">Ver demo del rubro</a>
-              <a class="btn btn-ghost" data-panel-app hidden>Abrir app de prueba</a>
-            </div>
+        <div class="rubro-panel" id="rubro-panel">
+          <p class="eyebrow" data-panel-familia>Nexo Servicios</p>
+          <h3 data-panel-titulo>Salones de Belleza &amp; Spas</h3>
+          <p class="product-block-meta" data-panel-precio>Precio por confirmar · A consultar por local</p>
+          <p style="color:var(--dust-dim);margin:12px 0 8px">Toca un nodo del hilo. La agenda y la caja cambian con el rubro. El cobro de prueba está a la izquierda.</p>
+          <p class="hero-note">Las apps de prueba viven en Render y pueden tardar unos segundos en despertar.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" data-panel-trial href="/contacto/?producto=Nexo+Trial">Pedir trial 3 días</a>
+            <a class="btn btn-ghost" data-panel-demo href="/nexo/salones/">Ver demo</a>
+            <a class="btn btn-ghost" data-panel-app hidden>Abrir app de prueba</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="metodo" style="padding-top:12px">
+    <section class="section" id="funciones">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Cómo se activa</p>
-          <h2>Tres pasos. Sin letra chica.</h2>
+          <p class="eyebrow">Qué viaja por el hilo</p>
+          <h2>Tres materias. Ninguna plantilla.</h2>
         </div>
-        <div class="steps">
-          <article class="step">
-            <div class="num">1</div>
-            <h3>Elige el rubro</h3>
-            <p>Salón, barbería, taller, ferretería, minimarket o botillería. El sistema se arma alrededor de eso.</p>
-          </article>
-          <article class="step">
-            <div class="num">2</div>
-            <h3>Prueba 3 días</h3>
-            <p>Sin tarjeta. Entras a una instancia de prueba, ves agenda o caja, y decides.</p>
-          </article>
-          <article class="step">
-            <div class="num">3</div>
-            <h3>Te lo dejamos listo</h3>
-            <p>Carga asistida y operación en 24 horas. Un responsable: Antonio, no un ticket anónimo.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="funciones" style="background:transparent;padding-top:24px">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Qué corre en el local</p>
-          <h2>Lo que el dueño toca todos los días.</h2>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <p class="num">01 · Servicios</p>
-            <h3>La agenda deja de vivir en el cuaderno</h3>
-            <p>Horas, profesionales y huecos a la vista. La clienta reserva. El recordatorio sale por WhatsApp.</p>
+        <div class="placas">
+          <article class="placa">
+            <p class="eyebrow">Servicios</p>
+            <h3>La hora</h3>
+            <p>La clienta reserva. WhatsApp recuerda. El cuaderno queda en el cajón.</p>
             <ul>
               <li>Reservas web del local</li>
               <li>Señas y abonos</li>
               <li>Comisiones por profesional</li>
             </ul>
           </article>
-          <article class="feature-card">
-            <p class="num">02 · Comercio</p>
-            <h3>Caja que cuadra al cierre</h3>
-            <p>Barras, tickets y fiado del barrio. El stock se mueve con cada venta, no al día siguiente.</p>
+          <article class="placa">
+            <p class="eyebrow">Comercio</p>
+            <h3>La caja</h3>
+            <p>Barras, ticket, fiado del barrio. El stock se mueve con la venta.</p>
             <ul>
               <li>Punto de venta y códigos</li>
-              <li>Fiado / cuentas de clientes</li>
+              <li>Cuentas de clientes</li>
               <li>Arqueo de caja</li>
             </ul>
           </article>
-          <article class="feature-card">
-            <p class="num">03 · Operación</p>
-            <h3>Una instancia. La tuya.</h3>
-            <p>Los datos de un local no se mezclan con los de otro. Quien lo construye, lo opera.</p>
+          <article class="placa">
+            <p class="eyebrow">ETEMEN</p>
+            <h3>La instancia</h3>
+            <p>Los datos de un local no se mezclan con los de otro. Quien tiende el hilo, responde.</p>
             <ul>
               <li>Base dedicada por negocio</li>
-              <li>Respuesta en menos de 24 h</li>
-              <li>Monitoreo público del sistema</li>
+              <li>Operativo en 24 horas</li>
+              <li>Monitoreo público</li>
             </ul>
           </article>
         </div>
@@ -251,47 +203,43 @@
     <section class="section" id="categorias">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Dos familias</p>
-          <h2>Servicios o comercio. No un paquete genérico.</h2>
+          <p class="eyebrow">Dos polos</p>
+          <h2>Mismo hilo. Distinto nudo.</h2>
         </div>
-        <div class="case-grid">
-          <article class="case-card">
+        <div class="poles">
+          <article class="pole">
             <span class="tag">Nexo · Servicios</span>
             <h3>Agenda, citas y señas</h3>
             <p>Salón, barbería, spa y taller. Reservas, WhatsApp, comisiones y caja del día. OT y patente en taller.</p>
-            <div class="btn-row" style="margin-top:20px;">
+            <div class="btn-row" style="margin-top:18px">
               <a class="btn btn-ghost btn-sm" href="/nexo/salones/">Salones</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/barberias/">Barberías</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/talleres/">Talleres</a>
             </div>
           </article>
-          <article class="case-card">
+          <article class="pole">
             <span class="tag">Nexo · Comercio</span>
             <h3>Punto de venta y fiado</h3>
             <p>Minimarket, ferretería y botillería. Barras, ticket térmico, cuentas de clientes y stock del día.</p>
-            <div class="btn-row" style="margin-top:20px;">
+            <div class="btn-row" style="margin-top:18px">
               <a class="btn btn-ghost btn-sm" href="/nexo/minimarkets/">Minimarkets</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/ferreterias/">Ferreterías</a>
               <a class="btn btn-ghost btn-sm" href="/nexo/botillerias/">Botillerías</a>
             </div>
           </article>
         </div>
-
-        <figure class="quote-block">
-          <blockquote>“Antes anotaba las horas a mano en un cuaderno. Ahora las clientas reservan solas, les llega el recordatorio por WhatsApp y la caja cuadra sola al final del día.”</blockquote>
-          <figcaption class="quote-cite">
-            <span class="quote-avatar" aria-hidden="true">YA</span>
-            <cite>Ysabel Aragón — Ysabel Aragón NW, Puente Alto</cite>
-          </figcaption>
+        <figure class="etch">
+          <blockquote>Antes anotaba las horas a mano en un cuaderno. Ahora las clientas reservan solas, les llega el recordatorio por WhatsApp y la caja cuadra sola al final del día.</blockquote>
+          <cite>Ysabel Aragón — Ysabel Aragón NW, Puente Alto</cite>
         </figure>
       </div>
     </section>
 
-    <section id="roi" class="section" style="padding-top:12px">
+    <section id="roi" class="section">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Si sigues en cuaderno</p>
-          <h2>Cuánto se pierde en un mes desordenado.</h2>
+          <p class="eyebrow">Si el hilo no existe</p>
+          <h2>Lo que se pierde en un mes desordenado.</h2>
         </div>
         <div class="roi-card">
           <div class="roi-grid">
@@ -306,7 +254,7 @@
               </div>
             </div>
             <div class="roi-result-box">
-              <div class="roi-lbl">Pérdida estimada al mes</div>
+              <div class="roi-lbl">Estimación al mes</div>
               <div class="roi-val" id="roi-val-res">$0 / mes</div>
             </div>
           </div>
@@ -318,14 +266,13 @@
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Cotización</p>
-          <h2>Precio por local, no una tarifa de afiche.</h2>
-          <p class="lead" style="margin-top:8px">Se cotiza según el rubro y lo que hay que dejar funcionando. Trial de 3 días en todos los planes.</p>
+          <h2>Se tiende por local. No hay tarifa de afiche.</h2>
         </div>
         <div class="price-grid">
           <article class="price-card featured">
             <p class="eyebrow">Nexo · Servicios</p>
             <div class="amount">Por confirmar</div>
-            <p style="color:var(--nexo-ink-dim);font-size:0.95rem">Cotización según el local y el equipo.</p>
+            <p style="color:var(--dust-dim)">Según el local y el equipo.</p>
             <ul>
               <li>Salones, barberías, spas y talleres</li>
               <li>Agenda online y WhatsApp</li>
@@ -338,7 +285,7 @@
           <article class="price-card">
             <p class="eyebrow">Nexo · Comercio</p>
             <div class="amount">Por confirmar</div>
-            <p style="color:var(--nexo-ink-dim);font-size:0.95rem">Cotización según inventario y caja.</p>
+            <p style="color:var(--dust-dim)">Según inventario y caja.</p>
             <ul>
               <li>Minimarkets, ferreterías y botillerías</li>
               <li>POS y códigos de barras</li>
@@ -352,43 +299,42 @@
       </div>
     </section>
 
-    <section class="section" id="faq" style="padding-top:8px">
+    <section class="section" id="faq">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Preguntas</p>
-          <h2>Antes de pedir el trial.</h2>
+          <p class="eyebrow">Bitácora</p>
+          <h2>Antes de tender el trial.</h2>
         </div>
-        <div class="faq-list">
+        <div class="bitacora">
           <details open>
             <summary>¿Nexo es agenda o es caja?</summary>
-            <p>Las dos, según el rubro. Servicios (salón, barbería, spa, taller) viven en la agenda. Comercio (minimarket, ferretería, botillería) vive en la caja. No es un paquete único que pretenda servir para todo.</p>
+            <p>Las dos, según el rubro. Servicios viven en la agenda. Comercio vive en la caja. No es un paquete único.</p>
           </details>
           <details>
             <summary>¿Cuánto cuesta?</summary>
-            <p>Se cotiza por local. No publicamos una tarifa fija porque el setup y el inventario cambian. El trial de 3 días no pide tarjeta.</p>
+            <p>Se cotiza por local. El trial de 3 días no pide tarjeta.</p>
           </details>
           <details>
             <summary>¿Mis datos se mezclan con otro negocio?</summary>
-            <p>No. Cada local corre en su propia instancia, con su propia base. Eso es parte del producto, no un extra.</p>
+            <p>No. Cada local corre en su propia instancia, con su propia base.</p>
           </details>
           <details>
             <summary>¿Tengo que instalar algo?</summary>
-            <p>No. Entras por el navegador. Las demos públicas a veces tardan unos segundos en despertar porque viven en Render.</p>
+            <p>No. Entras por el navegador. Las demos públicas a veces tardan unos segundos en despertar.</p>
           </details>
           <details>
             <summary>¿Quién responde si algo falla?</summary>
-            <p>Antonio opera ETEMEN. Cotización y soporte no pasan por una mesa anónima. Respuesta en menos de 24 horas hábiles.</p>
+            <p>Antonio opera ETEMEN. Respuesta en menos de 24 horas hábiles.</p>
           </details>
         </div>
-
-        <div class="cta-band" style="margin-top:40px">
+        <div class="cta-close">
           <div>
-            <h2>Prueba el mostrador 3 días.</h2>
-            <p>Elige rubro, pide trial, te dejamos el local listo.</p>
+            <p class="eyebrow">Siguiente nudo</p>
+            <h2>Tres días en el hilo.</h2>
           </div>
           <div class="btn-row">
             <a class="btn btn-primary" href="/contacto/?producto=Nexo+Trial">Pedir trial</a>
-            <a class="btn btn-ghost" href="#flujo" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.25)">Volver a rubros</a>
+            <a class="btn btn-ghost" href="#flujo">Volver a los nodos</a>
           </div>
         </div>
       </div>
@@ -403,7 +349,7 @@
             <img class="logo-icon" src="/assets/logos/nexo-mark.svg" alt="" width="30" height="30">
             <div class="logo-wordmark"><span class="name">NEXO</span></div>
           </a>
-          <p style="margin-top:12px;max-width:32ch">Sistema del local para Chile. Un producto de ETEMEN.</p>
+          <p style="margin-top:12px;max-width:34ch">El hilo del local. Un producto de ETEMEN — la casa del fundamento.</p>
         </div>
         <div>
           <h4>Productos</h4>
@@ -412,7 +358,7 @@
           <a href="/indago/">indago</a>
         </div>
         <div>
-          <h4>Nexo por rubro</h4>
+          <h4>Nodos</h4>
           <a href="/nexo/salones/">Salones</a>
           <a href="/nexo/barberias/">Barberías</a>
           <a href="/nexo/talleres/">Talleres</a>
@@ -421,7 +367,7 @@
           <a href="/nexo/botillerias/">Botillerías</a>
         </div>
         <div>
-          <h4>Empresa</h4>
+          <h4>ETEMEN</h4>
           <a href="/portafolio/">Casos</a>
           <a href="/contacto/">Contacto</a>
           <a href="https://stats.uptimerobot.com/z6bYAoGxq6" target="_blank" rel="noopener">Estado del sistema</a>
@@ -432,7 +378,7 @@
   </footer>
 
   <script src="/js/nexo-flujo.js?v=2"></script>
-  <script src="/js/nexo-stage.js?v=1"></script>
+  <script src="/js/nexo-stage.js?v=3"></script>
   <script src="/js/site.js?v=3"></script>
   <script src="/js/nexo-ai.js?v=1" defer></script>
 </body>
