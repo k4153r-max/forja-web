@@ -229,6 +229,9 @@ const books = [
  { id:'juvenilla', title:'Juvenilla', author:'Miguel Cané', type:'Ensayo', genre:'Ensayo', place:'Latinoamérica', color:'brown', year:'1884', hasText:true, license:'Dominio público', source:'Project Gutenberg #41575', desc:'El colegio y la juventud porteña.', lang:'es' },
  { id:'antano-ogano', title:'Antaño y ogaño', author:'José Victorino Lastarria', type:'Cuentos', genre:'Cuentos', place:'Chile', color:'brown', year:'1885', hasText:true, license:'Dominio público', source:'Project Gutenberg #45945', desc:'Novelas y cuentos de la vida hispanoamericana.', lang:'es' },
  { id:'la-america-1', title:'La América (Tomo I)', author:'José Victorino Lastarria', type:'Ensayo', genre:'Ensayo', place:'Chile', color:'navy', year:'1865', hasText:true, license:'Dominio público', source:'Project Gutenberg #71275', desc:'Ensayo sobre América y su destino.', lang:'es' },
+ { id:'rimas-y-leyendas', title:'Rimas y leyendas', author:'Gustavo Adolfo Bécquer', type:'Poesía', genre:'Poesía', place:'Universal', color:'purple', year:'1871', hasText:true, license:'Dominio público', source:'Project Gutenberg #14647', desc:'La cumbre del Romanticismo español.', lang:'es' },
 ];
 const CATALOG_STATS = { total: 228, readable: 228, chile: 17, oer: 8 };
+
+
 
