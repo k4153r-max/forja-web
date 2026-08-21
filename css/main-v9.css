@@ -39,7 +39,7 @@
   --bp-nav:        640px;
   --radius:        0;
   --radius-sm:     2px;
-  --ease:          linear;
+  --ease:          cubic-bezier(0.4, 0, 0.2, 1);
   --t:             150ms;
   --font-display:  "Archivo", "Arial Narrow", "Helvetica Neue", sans-serif;
   --font-body:     "Source Sans 3", "Source Sans Pro", "Segoe UI", sans-serif;
@@ -57,6 +57,7 @@ html {
 body {
   font-family: var(--font-body);
   background:
+    linear-gradient(var(--rule-dim) 1px, transparent 1px) 0 0 / 80px 80px,
     linear-gradient(to right, var(--rule-dim) 1px, transparent 1px) 0 0 / 80px 80px,
     var(--carbon);
   color: var(--ink);
@@ -144,7 +145,7 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; text-wrap: p
 }
 .btn-primary { background: var(--copper); color: var(--carbon); }
 .btn-primary:hover { background: var(--copper-2); }
-.btn-ghost { border-color: var(--rule-dim); }
+.btn-ghost { border-color: rgba(244, 241, 234, 0.18); }
 .btn-sm { min-height: 40px; padding: 8px 12px; }
 .btn-nexo { border-color: var(--nexo); }
 .btn-nexo:hover, .btn-nexo.btn-primary { background: var(--nexo); color: var(--carbon); }
@@ -422,6 +423,10 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; text-wrap: p
 .product-block--indago { box-shadow: inset 3px 0 0 var(--indago); }
 .product-block--hojear { box-shadow: inset 3px 0 0 var(--hojear); }
 
+.status-rail .status-chip:nth-child(1) .mark { background: var(--nexo); }
+.status-rail .status-chip:nth-child(2) .mark { background: var(--indago); }
+.status-rail .status-chip:nth-child(3) .mark { background: var(--hojear); }
+
 /* Metrics */
 .metrics {
   display: grid;
@@ -671,6 +676,62 @@ textarea { min-height: 140px; resize: vertical; }
   height: 8px;
   margin-top: 7px;
   background: var(--copper);
+}
+
+/* Hero terminal */
+.hero-terminal {
+  margin-top: 28px;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.hero-terminal-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 14px;
+  background: var(--carbon-2);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.hero-terminal-body {
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--ink-dim);
+  overflow-x: auto;
+}
+.hero-terminal-body .k { color: var(--copper); }
+.hero-terminal-body .v { color: var(--nexo); }
+
+/* Testimonial */
+.testimonial {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--rule-dim);
+}
+.quote-cite {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.quote-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--copper);
+  color: var(--carbon);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
 }
 
 /* Case study */
