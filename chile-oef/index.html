@@ -45,6 +45,12 @@
         <label class="toggle-row"><input type="checkbox" id="tog-activity" checked> Capa: Actividad Esperada</label>
         <label class="toggle-row"><input type="checkbox" id="tog-cities" checked> Capa: Ciudades (M>5)</label>
         <label class="toggle-row"><input type="checkbox" id="tog-recent" checked> Capa: Sismos <= 30 días</label>
+        <label class="toggle-row"><input type="checkbox" id="tog-mega"> Capa: Megaterremotos Históricos</label>
+        <label class="toggle-row"><input type="checkbox" id="tog-faults"> Capa: Fosa de Subducción</label>
+        
+        <div style="margin-top:16px;">
+          <button id="btn-radar" style="width:100%; padding:10px; background:var(--bg-panel); color:var(--accent); border:1px solid var(--accent); font-family:var(--font-mono); font-weight:700; cursor:pointer; text-transform:uppercase;">▶ Iniciar Radar (30 Días)</button>
+        </div>
       </div>
 
       <div class="tech-details">
@@ -126,4 +132,5 @@
   <script src="/chile-oef/app.js"></script>
 </body>
 </html>
+
 

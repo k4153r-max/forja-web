@@ -54,7 +54,10 @@
   let lastCells = [];
   let lastPlaces = [];
   let lastUsgsQuakes = [];
-  const layerOn = { activity: true, cities: true, recent: true };
+  const layerOn = { activity: true, cities: true, recent: true, mega: false, faults: false };
+  let megaLayer = null;
+  let faultLayer = null;
+  let radarInterval = null;
 
   const fmtInt = (n) => new Intl.NumberFormat("es-CL").format(n);
   const fmtDate = (iso) =>
@@ -433,10 +436,23 @@
         fillColor: "#ffcc00",
         fillOpacity: 0.9,
       });
-      marker.bindTooltip(
-        `<strong>${place.name}</strong><br>${formatChance(place.probability_at_least_one)}`,
-        { direction: "top", offset: [0, -6], opacity: 0.95 }
-      );
+              const chanceNum = parseFloat(formatChance(place.probability_at_least_one));
+        const barsHTML = [1, 2, 3, 4, 5, 6, 7].map(day => {
+          const height = Math.max(10, 100 * Math.pow(0.75, day-1)); 
+          const op = Math.max(0.2, Math.pow(0.8, day-1));
+          return `<div style="width:8px;height:${height}%;background:var(--warn);opacity:${op};border-radius:2px;"></div>`;
+        }).join('');
+        
+        const html = `<div style="font-family:ui-monospace,monospace;font-size:12px;background:#03060a;border:1px solid var(--grid-thick);padding:12px;color:#fff;min-width:140px;">
+          <strong style="color:var(--accent);font-size:13px;display:block;margin-bottom:4px;">${place.name}</strong>
+          Prob. 7 días: <b style="color:var(--warn)">${formatChance(place.probability_at_least_one)}</b>
+          <div style="margin-top:10px;font-size:9px;color:var(--text-dim);margin-bottom:4px;">Decaimiento ETAS:</div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:40px;border-bottom:1px solid var(--grid-thick);padding-bottom:2px;">
+            ${barsHTML}
+          </div>
+        </div>`;
+        
+        marker.bindPopup(html, { className: "war-popup" });
       marker.on("click", () => leafletMap.setView([place.latitude, place.longitude], 8));
       marker.addTo(placeLayer);
     }
@@ -731,11 +747,111 @@
     }
   }
 
+  const MEGA_QUAKES = [
+    { lat: -38.29, lon: -73.05, mag: 9.5, name: "Valdivia 1960", year: 1960 },
+    { lat: -36.122, lon: -72.898, mag: 8.8, name: "Maule 2010", year: 2010 },
+    { lat: -31.57, lon: -71.65, mag: 8.3, name: "Illapel 2015", year: 2015 },
+    { lat: -28.15, lon: -71.17, mag: 8.5, name: "Vallenar 1922", year: 1922 },
+    { lat: -33.0, lon: -71.9, mag: 8.0, name: "Valparaíso 1985", year: 1985 },
+    { lat: -19.61, lon: -70.77, mag: 8.2, name: "Iquique 2014", year: 2014 },
+    { lat: -39.8, lon: -73.2, mag: 8.5, name: "Valdivia 1575", year: 1575 },
+    { lat: -33.12, lon: -71.55, mag: 8.3, name: "Valparaíso 1906", year: 1906 }
+  ];
+
+  const FAULT_TRENCH = [
+    [-18, -71.6], [-20, -71.7], [-23, -71.8], [-27, -72.2],
+    [-30, -72.7], [-33, -72.8], [-38, -74.5], [-45, -76.5], [-50, -77.2]
+  ];
+
+  function paintMegaQuakes() {
+    if (!map) return;
+    if (megaLayer) map.removeLayer(megaLayer);
+    if (!layerOn.mega) return;
+    megaLayer = L.layerGroup();
+    for (const mq of MEGA_QUAKES) {
+      const radius = Math.max(10, (mq.mag - 7) * 15);
+      const marker = L.circleMarker([mq.lat, mq.lon], {
+        radius: radius,
+        weight: 2,
+        color: "#ff3366",
+        fillColor: "rgba(255, 51, 102, 0.4)",
+        fillOpacity: 0.6,
+        className: "mega-pulse"
+      });
+      const html = `<div style="font-family:ui-monospace,monospace;font-size:12px;background:#03060a;border:1px solid #ff3366;padding:8px;color:#fff;">
+        <strong style="color:#ff3366;font-size:14px;display:block;">${mq.name}</strong>
+        Magnitud: <b>${mq.mag}</b><br>
+        Año: ${mq.year}
+      </div>`;
+      marker.bindPopup(html, { className: "war-popup" });
+      marker.addTo(megaLayer);
+    }
+    megaLayer.addTo(map);
+  }
+
+  function paintFaults() {
+    if (!map) return;
+    if (faultLayer) map.removeLayer(faultLayer);
+    if (!layerOn.faults) return;
+    faultLayer = L.polyline(FAULT_TRENCH, {
+      color: "#00e5ff",
+      weight: 3,
+      dashArray: "10, 15",
+      opacity: 0.8
+    });
+    faultLayer.bindTooltip("Fosa de Subducción (Placa Nazca / Sudamericana)", {
+      direction: "right", sticky: true, className: "war-tooltip"
+    });
+    faultLayer.addTo(map);
+  }
+
+  function playRadar() {
+    if (!lastUsgsQuakes || !lastUsgsQuakes.length) return;
+    const btn = document.getElementById("btn-radar");
+    if (btn) btn.textContent = "EJECUTANDO BARRIDO...";
+    layerOn.recent = false;
+    const chk = document.getElementById("tog-recent");
+    if (chk) chk.checked = false;
+    paintUsgsQuakes([]);
+    
+    // Sort oldest to newest
+    const sorted = [...lastUsgsQuakes].sort((a,b) => a.time - b.time);
+    let i = 0;
+    const radarLayer = L.layerGroup().addTo(map);
+    
+    if (radarInterval) clearInterval(radarInterval);
+    radarInterval = setInterval(() => {
+      if (i >= sorted.length) {
+        clearInterval(radarInterval);
+        if (btn) btn.textContent = "▶ Iniciar Radar (30 Días)";
+        setTimeout(() => {
+          map.removeLayer(radarLayer);
+          layerOn.recent = true;
+          if (chk) chk.checked = true;
+          paintUsgsQuakes(lastUsgsQuakes);
+        }, 3000);
+        return;
+      }
+      const q = sorted[i];
+      const radius = Math.max(4, (q.mag - 4) * 4);
+      const m = L.circleMarker([q.lat, q.lon], {
+        radius: radius, color: "#fff", fillColor: "#00e5ff", fillOpacity: 0.9, weight: 2
+      }).addTo(radarLayer);
+      
+      // Fade out effect
+      setTimeout(() => {
+        if (map.hasLayer(m)) m.setStyle({ color: "#00e5ff", fillColor: "rgba(0, 229, 255, 0.2)", weight: 1 });
+      }, 500);
+
+      i++;
+    }, 40);
+  }
+
   function bindLayerToggles() {
     const pairs = [
       ["tog-activity", "activity"],
       ["tog-cities", "cities"],
-      ["tog-recent", "recent"],
+      ["tog-recent", "recent"], ["tog-mega", "mega"], ["tog-faults", "faults"],
     ];
     for (const [id, key] of pairs) {
       const input = document.getElementById(id);
@@ -745,6 +861,8 @@
         if (key === "activity" && gridLayer) gridLayer.setCells(layerOn.activity ? lastCells : []);
         if (key === "cities") paintPlaces(lastPlaces);
         if (key === "recent") paintUsgsQuakes(lastUsgsQuakes);
+          if (key === "mega") paintMegaQuakes();
+          if (key === "faults") paintFaults();
       });
     }
   }
@@ -869,13 +987,20 @@
     });
   }
 
-  bindLayerToggles();
+  const btn = document.getElementById("btn-radar");
+    if (btn) btn.addEventListener("click", playRadar);
+
+    bindLayerToggles();
   loadCatalog();
   loadModelSummary();
   initForecast();
   loadUsgs();
   initComunaSearch();
 })();
+
+
+
+
 
 
 
