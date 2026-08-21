@@ -226,17 +226,15 @@
     const tbody = document.getElementById("top-events");
     tbody.innerHTML = "";
     for (const event of summary.top_magnitude_events) {
-      const tr = document.createElement("tr");
+      const tr = document.createElement("div"); tr.className = "feed-item";
       if ((event.event_time || "").slice(0, 10) === MAULE_DATE) tr.className = "notable";
-      const dateTd = document.createElement("td");
+      const dateTd = document.createElement("div"); dateTd.className = "feed-meta";
       dateTd.textContent = fmtDate(event.event_time);
-      const magTd = document.createElement("td");
+      const magTd = document.createElement("div"); magTd.className = "feed-mag";
       magTd.innerHTML = `<span class="mag-pill">${event.magnitude.toFixed(1)}</span>`;
-      const placeTd = document.createElement("td");
+      const placeTd = document.createElement("div"); placeTd.className = "feed-place";
       placeTd.textContent = cleanPlace(event.place);
-      tr.appendChild(dateTd);
-      tr.appendChild(magTd);
-      tr.appendChild(placeTd);
+      const main = document.createElement("div"); main.className = "feed-main"; main.appendChild(placeTd); main.appendChild(magTd); tr.appendChild(dateTd); tr.appendChild(main);
       tbody.appendChild(tr);
     }
 
@@ -352,9 +350,9 @@
         const w = Math.max(1.6, Math.abs(b.x - a.x));
         const h = Math.max(1.6, Math.abs(b.y - a.y));
         let fill;
-        if (t < 0.45) fill = `rgba(80,140,180,${0.18 + t * 0.25})`;
-        else if (t < 0.78) fill = `rgba(196,137,74,${0.32 + t * 0.28})`;
-        else fill = `rgba(255,190,110,${0.55 + (t - 0.78) * 0.8})`;
+        if (t < 0.45) fill = `rgba(0, 229, 255, ${0.15 + t * 0.25})`;
+        else if (t < 0.78) fill = `rgba(255, 204, 0, ${0.25 + t * 0.3})`;
+        else fill = `rgba(255, 51, 102, ${0.45 + (t - 0.78) * 0.8})`;
         ctx.fillStyle = fill;
         ctx.fillRect(x, y, w, h);
       }
@@ -432,7 +430,7 @@
         radius: 5,
         weight: 1,
         color: "#f4f1ea",
-        fillColor: "#c4894a",
+        fillColor: "#ffcc00",
         fillOpacity: 0.9,
       });
       marker.bindTooltip(
@@ -458,7 +456,7 @@
     quakeLayer = L.layerGroup();
     for (const quake of recent) {
       const ageDays = (Date.now() - quake.time) / 86400000;
-      const fill = ageDays < 2 ? "#ffb26b" : ageDays < 7 ? "#c4894a" : "#6ba3c9";
+      const fill = ageDays < 2 ? "#ff3366" : ageDays < 7 ? "#ffcc00" : "#00e5ff";
       const marker = L.circleMarker([quake.lat, quake.lon], {
         radius: Math.max(3, (quake.mag - 4) * 3.2),
         weight: 1,
@@ -609,7 +607,7 @@
     }
     tbody.innerHTML = "";
     runs.forEach((run, index) => {
-      const tr = document.createElement("tr");
+      const tr = document.createElement("div"); tr.className = "feed-item";
       if (index === 0) tr.className = "live";
       const archived = run.b_value_used > 1.6;
       const status = index === 0 ? "En uso" : archived ? "Archivo (mb)" : "Anterior";
@@ -878,4 +876,6 @@
   loadUsgs();
   initComunaSearch();
 })();
+
+
 
