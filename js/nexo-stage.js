@@ -1,4 +1,4 @@
-/* El Haz: coloca nodos sobre la curva del mark y sincroniza la agenda. */
+/* El Haz: en desktop los nodos van sobre la curva; en móvil, grilla táctil. */
 (() => {
   const BOARD = {
     salon: { label: "Hoy · agenda", rows: [
@@ -48,6 +48,9 @@
     salon: "salón", barberia: "barbería", taller: "taller",
     ferreteria: "ferretería", minimarket: "minimarket", botilleria: "botillería",
   };
+  const STACK_MAX = 760;
+  const PATH_DESKTOP = "M 6 88 C 8 30, 74 76, 94 10";
+  const PATH_STACK = "M 4 56 C 28 12, 70 92, 96 40";
 
   const haz = document.querySelector(".haz");
   const path = document.getElementById("haz-path");
@@ -59,31 +62,54 @@
   const clock = document.getElementById("haz-clock");
   const nodes = haz ? [...haz.querySelectorAll(".rubro-option")] : [];
 
-  const pathD = () => (window.innerWidth < 760
-    ? "M 16 8 C 28 26, 12 62, 22 94"
-    : "M 6 88 C 8 30, 74 76, 94 10");
+  const isStack = () => window.matchMedia("(max-width: " + STACK_MAX + "px)").matches;
 
   const applyPath = () => {
-    const d = pathD();
+    const d = isStack() ? PATH_STACK : PATH_DESKTOP;
     [path, live, pulse].forEach((p) => { if (p) p.setAttribute("d", d); });
+  };
+
+  const clearNodePos = () => {
+    nodes.forEach((btn) => {
+      btn.style.left = "";
+      btn.style.top = "";
+    });
+  };
+
+  const screenPoint = (svgPath, pt) => {
+    const ctm = svgPath.getScreenCTM();
+    if (!ctm) return null;
+    return {
+      x: ctm.a * pt.x + ctm.c * pt.y + ctm.e,
+      y: ctm.b * pt.x + ctm.d * pt.y + ctm.f,
+    };
   };
 
   const placeNodes = () => {
     if (!haz || !path || !nodes.length) return;
     applyPath();
-    const svg = path.ownerSVGElement;
-    const len = path.getTotalLength();
+    if (isStack()) {
+      haz.classList.add("is-stack");
+      clearNodePos();
+      return;
+    }
+    haz.classList.remove("is-stack");
+    let len = 0;
+    try { len = path.getTotalLength(); } catch (_) { return; }
+    if (!len) return;
     const box = haz.getBoundingClientRect();
+    if (!box.width || !box.height) return;
     nodes.forEach((btn, i) => {
-      const t = 0.1 + (i / Math.max(nodes.length - 1, 1)) * 0.8;
-      const pt = path.getPointAtLength(len * t);
-      const ctm = path.getScreenCTM();
-      if (!ctm || !svg) return;
-      const sp = svg.createSVGPoint();
-      sp.x = pt.x; sp.y = pt.y;
-      const screen = sp.matrixTransform(ctm);
-      btn.style.left = ((screen.x - box.left) / box.width * 100) + "%";
-      btn.style.top = ((screen.y - box.top) / box.height * 100) + "%";
+      const t = 0.12 + (i / Math.max(nodes.length - 1, 1)) * 0.76;
+      let pt;
+      try { pt = path.getPointAtLength(len * t); } catch (_) { return; }
+      const screen = screenPoint(path, pt);
+      if (!screen) return;
+      const x = ((screen.x - box.left) / box.width) * 100;
+      const y = ((screen.y - box.top) / box.height) * 100;
+      if (!isFinite(x) || !isFinite(y)) return;
+      btn.style.left = Math.max(8, Math.min(92, x)) + "%";
+      btn.style.top = Math.max(10, Math.min(88, y)) + "%";
     });
   };
 
@@ -108,7 +134,7 @@
         return row;
       }));
     }
-    if (haz) {
+    if (haz && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       haz.classList.remove("is-firing");
       void haz.offsetWidth;
       haz.classList.add("is-firing");
@@ -117,9 +143,14 @@
 
   const tick = () => {
     if (!clock) return;
-    clock.textContent = new Date().toLocaleTimeString("es-CL", {
-      timeZone: "America/Santiago", hour: "2-digit", minute: "2-digit",
-    });
+    try {
+      clock.textContent = new Date().toLocaleTimeString("es-CL", {
+        timeZone: "America/Santiago", hour: "2-digit", minute: "2-digit",
+      });
+    } catch (_) {
+      const d = new Date();
+      clock.textContent = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+    }
   };
 
   document.addEventListener("click", (ev) => {
@@ -128,9 +159,21 @@
     paint(btn.dataset.rubro);
   });
 
-  window.addEventListener("resize", placeNodes);
-  requestAnimationFrame(placeNodes);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeNodes);
+  let resizeTimer = 0;
+  const onResize = () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      window.requestAnimationFrame(placeNodes);
+    }, 80);
+  };
+  window.addEventListener("resize", onResize);
+  window.addEventListener("orientationchange", onResize);
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", onResize);
+
+  window.requestAnimationFrame(placeNodes);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => window.requestAnimationFrame(placeNodes)).catch(() => {});
+  }
   paint("salon");
   tick();
   setInterval(tick, 30000);
