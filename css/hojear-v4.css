@@ -1,0 +1,181 @@
+/* Hojear v4 — SaaS Editorial Premium (Estilo Matter / Readwise / Standard Ebooks) */
+:root {
+  --bg: #0c0b0a;
+  --surface: #141311;
+  --surface-hover: #1c1a18;
+  --fg: #E8E4D9;
+  --fg-dim: #A8A399;
+  
+  --hojear-terra: #D95D39;
+  --hojear-terra-glow: rgba(217, 93, 57, 0.15);
+  --hojear-gold: #E29D52;
+  
+  --border: rgba(232, 228, 217, 0.1);
+  --border-strong: rgba(232, 228, 217, 0.2);
+  
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-ui: "Archivo", system-ui, sans-serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  font-family: var(--font-body); background: var(--bg); color: var(--fg);
+  line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+/* sutil textura de papel quemado en el fondo */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.15;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+}
+a { color: inherit; text-decoration: none; }
+.wrap { width: min(1200px, 100% - 48px); margin: 0 auto; position: relative; z-index: 2; }
+
+/* Navegación Glass */
+.hnav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  background: rgba(12, 11, 10, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.hnav-inner { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+.brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; font-style: italic; color: #fff; }
+.brand img { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border-strong); }
+.hnav-links { display: flex; gap: 32px; align-items: center; font-family: var(--font-ui); font-size: 0.9rem; font-weight: 600; color: var(--fg-dim); }
+.hnav-links a:hover { color: var(--fg); }
+.hnav-cta {
+  background: var(--fg); color: var(--bg); padding: 8px 18px; border-radius: 100px;
+  transition: 0.2s;
+}
+.hnav-cta:hover { background: var(--hojear-terra); color: #fff; }
+
+/* Global UI */
+.eyebrow {
+  display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--hojear-terra); margin-bottom: 16px; padding: 6px 12px; border-radius: 100px; border: 1px solid var(--hojear-terra-glow);
+  background: rgba(217, 93, 57, 0.05);
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 28px; font-family: var(--font-ui); font-weight: 600; font-size: 1rem;
+  border-radius: 100px; transition: 0.2s; cursor: pointer; border: none;
+}
+.btn-primary { background: var(--hojear-terra); color: #fff; }
+.btn-primary:hover { background: #e86a45; transform: translateY(-2px); box-shadow: 0 8px 24px var(--hojear-terra-glow); }
+.btn-outline { background: rgba(255,255,255,0.03); color: var(--fg); border: 1px solid var(--border-strong); }
+.btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
+
+/* Hero Editorial */
+.hero { padding: 180px 0 100px; text-align: center; }
+.hero h1 {
+  font-family: var(--font-display); font-weight: 400; font-size: clamp(3.5rem, 8vw, 6rem);
+  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px;
+  color: #fff; max-width: 16ch; margin-inline: auto;
+}
+.hero h1 em { font-style: italic; color: var(--hojear-terra); }
+.hero p.lead {
+  font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--fg-dim); max-width: 600px; margin: 0 auto 40px; font-family: var(--font-ui);
+}
+.search-bar {
+  display: flex; gap: 8px; max-width: 500px; margin: 0 auto;
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: 100px; padding: 6px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.search-bar input {
+  flex: 1; background: transparent; border: none; padding: 0 20px;
+  color: var(--fg); font-family: var(--font-ui); font-size: 1rem; outline: none;
+}
+.search-bar input::placeholder { color: var(--fg-dim); }
+.search-bar button {
+  background: var(--fg); color: var(--bg); border: none; border-radius: 100px;
+  padding: 0 24px; font-weight: 600; font-family: var(--font-ui); cursor: pointer; transition: 0.2s;
+}
+.search-bar button:hover { background: var(--hojear-terra); color: #fff; }
+
+/* App UI Showcase (Matter / Readwise vibe) */
+.app-showcase { padding: 0 0 120px; }
+.reader-ui {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  display: grid; grid-template-columns: 1fr 300px; overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+}
+@media (max-width: 900px) { .reader-ui { grid-template-columns: 1fr; } }
+
+.reader-main {
+  background: #F4F1EA; color: #1A1918; padding: 60px 80px;
+  position: relative;
+}
+@media (max-width: 600px) { .reader-main { padding: 40px 24px; } }
+.reader-top { display: flex; justify-content: space-between; font-family: var(--font-ui); font-size: 0.8rem; color: #8C8880; margin-bottom: 40px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+.reader-content h2 { font-family: var(--font-display); font-size: 2.5rem; font-weight: 600; margin-bottom: 24px; line-height: 1.1; }
+.reader-content p { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.7; margin-bottom: 20px; }
+.highlight { background: rgba(217, 93, 57, 0.15); border-bottom: 2px solid var(--hojear-terra); padding: 0 2px; }
+
+.reader-sidebar {
+  background: var(--bg); border-left: 1px solid var(--border); padding: 32px 24px;
+}
+.sidebar-module { margin-bottom: 32px; }
+.sidebar-module h4 { font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-dim); margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.note-card { background: var(--surface-hover); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 16px; font-family: var(--font-body); font-size: 0.9rem; color: var(--fg); border-left: 3px solid var(--hojear-gold); }
+.note-card strong { display: block; color: var(--hojear-gold); margin-bottom: 4px; font-family: var(--font-ui); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* Bento Grids (Standard Ebooks Classic Display) */
+.library { padding: 120px 0; border-top: 1px solid var(--border); }
+.library-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 32px; margin-top: 60px;
+}
+.book-card {
+  display: flex; flex-direction: column; gap: 16px; transition: 0.3s;
+}
+.book-card:hover { transform: translateY(-6px); }
+.book-cover {
+  aspect-ratio: 2 / 3; background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm); position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 24px;
+}
+.book-cover::after {
+  content: ""; position: absolute; inset: 0; box-shadow: inset 4px 0 12px rgba(0,0,0,0.4); pointer-events: none;
+}
+.book-cover.chile { border: 4px solid var(--surface-hover); border-top-color: var(--hojear-terra); }
+.book-cover.universal { border: 4px solid var(--surface-hover); border-top-color: var(--hojear-gold); }
+.cover-author { font-family: var(--font-ui); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--fg-dim); margin-bottom: 12px; }
+.cover-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; color: #fff; line-height: 1.1; font-style: italic; }
+
+.book-info h3 { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 4px; color: var(--fg); }
+.book-info p { font-family: var(--font-ui); font-size: 0.85rem; color: var(--fg-dim); }
+.book-tags { display: flex; gap: 6px; margin-top: 8px; }
+.book-tags span { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; color: var(--fg-dim); }
+
+/* Features (Perlego Academic Vibe) */
+.features { padding: 120px 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.features-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 60px; }
+@media (max-width: 900px) { .features-grid { grid-template-columns: 1fr; } }
+.feat-card {
+  padding: 40px; border: 1px solid var(--border); background: var(--bg); border-radius: var(--radius-md);
+}
+.feat-card h3 { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 16px; color: #fff; }
+.feat-card p { color: var(--fg-dim); font-size: 1.05rem; }
+
+/* Pricing */
+.pricing { padding: 120px 0; text-align: center; }
+.plus-card {
+  max-width: 600px; margin: 40px auto 0; padding: 56px; border: 1px solid var(--border-strong);
+  background: linear-gradient(180deg, var(--surface), var(--bg)); border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; overflow: hidden;
+}
+.plus-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--hojear-terra);
+}
+.plus-card h3 { font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 16px; }
+.plus-card .price { font-family: var(--font-ui); font-size: 1.2rem; color: var(--hojear-gold); margin-bottom: 24px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.plus-card p { color: var(--fg-dim); margin-bottom: 32px; font-size: 1.1rem; }
+
+/* Footer */
+.foot { border-top: 1px solid var(--border); padding: 40px 0; display: flex; justify-content: space-between; color: var(--fg-dim); font-family: var(--font-ui); font-size: 0.9rem; }
+.foot a:hover { color: var(--fg); }
