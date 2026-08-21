@@ -532,6 +532,55 @@ async function handleInbox(request, env, url, origin) {
   }, 200, origin);
 }
 
+const NEXO_AI_SYSTEM = `Eres el asistente de Nexo, el sistema de gestión para locales chilenos de ETEMEN.
+Tu trabajo es identificar el rubro del negocio que describe el usuario y recomendarle el módulo correcto.
+
+Módulos disponibles:
+- Nexo Servicios (agenda, reservas, WhatsApp): Salón de belleza, Barbería, Spa, Taller mecánico
+- Nexo Comercio (caja, stock, fiado, POS): Minimarket, Ferretería, Botillería
+
+Responde en máximo 3 oraciones directas: identifica el rubro, recomienda el módulo y menciona el feature más útil. Usa lenguaje chileno simple.
+En la última línea escribe ÚNICAMENTE: RUBRO:salon O RUBRO:barberia O RUBRO:taller O RUBRO:ferreteria O RUBRO:minimarket O RUBRO:botilleria`;
+
+async function handleNexoAI(request, env, origin) {
+  if (request.method !== "POST") return json({ ok: false }, 405, origin);
+  if (!env.NVIDIA_KEY) return json({ ok: false, error: "not_configured" }, 503, origin);
+
+  const body = await readJson(request);
+  const query = String(body.query || "").trim().slice(0, 300);
+  if (!query) return json({ ok: false, error: "query_required" }, 400, origin);
+
+  try {
+    const res = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${env.NVIDIA_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "meta/llama-3.1-70b-instruct",
+        messages: [
+          { role: "system", content: NEXO_AI_SYSTEM },
+          { role: "user", content: query },
+        ],
+        max_tokens: 220,
+        temperature: 0.3,
+      }),
+    });
+
+    if (!res.ok) throw new Error(`nvidia_${res.status}`);
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content?.trim() || "";
+    const rubroMatch = text.match(/RUBRO:(\w+)/i);
+    const rubro = rubroMatch?.[1]?.toLowerCase() || "";
+    const texto = text.replace(/RUBRO:\w+/gi, "").trim();
+
+    return json({ ok: true, rubro, texto }, 200, origin);
+  } catch (e) {
+    return json({ ok: false, error: String(e && e.message ? e.message : "ai_error") }, 502, origin);
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -560,6 +609,10 @@ export default {
         db = true;
       } catch (_) {}
       return json({ ok: true, db }, 200, origin);
+    }
+
+    if (url.pathname === "/api/nexo-ai") {
+      return handleNexoAI(request, env, origin);
     }
 
     if (

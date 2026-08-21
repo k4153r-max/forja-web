@@ -99,6 +99,19 @@
           <p style="color:var(--nexo-ink-dim); margin-top:6px; font-family:var(--font-mono); font-size:0.9rem;">Prueba la consola de caja e ingresa a las aplicaciones reales en Render:</p>
         </div>
 
+        <div class="ai-rubro-finder">
+          <p class="eyebrow">Asistente IA · NVIDIA</p>
+          <h3>¿Cuál es tu negocio?</h3>
+          <p>Descríbelo y te decimos qué módulo de Nexo necesitas.</p>
+          <div class="ai-chat-row">
+            <input type="text" id="ai-rubro-input" class="ai-rubro-input"
+                   placeholder='Ej: "tengo una barbería con 3 sillones en Maipú"'
+                   autocomplete="off" maxlength="300">
+            <button type="button" id="ai-rubro-btn" class="btn btn-primary">Consultar →</button>
+          </div>
+          <div id="ai-rubro-response" class="ai-rubro-response" hidden></div>
+        </div>
+
         <div class="rubro-selector" data-rubro-selector role="tablist">
           <button type="button" class="rubro-option" role="tab" aria-selected="true" data-rubro="salon">Salón &amp; Spa</button>
           <button type="button" class="rubro-option" role="tab" aria-selected="false" data-rubro="barberia">Barbería</button>
@@ -291,5 +304,6 @@
 
   <script src="/js/nexo-flujo.js?v=2"></script>
   <script src="/js/site.js?v=3"></script>
+  <script src="/js/nexo-ai.js?v=1" defer></script>
 </body>
 </html>
