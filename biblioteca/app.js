@@ -1096,7 +1096,24 @@ function bindCatalogue() {
     if (!list.length) {
       box.innerHTML = '<p class="catalogue-note">No hay libros con eso. Prueba otra búsqueda o pulsa Todos.</p>';
     } else {
-      box.innerHTML = `<div class="stack"><div class="books">${list.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></div>`;
+      const isGrouped = state.q === '' && state.genre === 'Todos' && state.place === 'todos' && state.lang === 'todos';
+      if (isGrouped) {
+        const grouped = {};
+        list.forEach(b => {
+           const g = bookGenre(b);
+           if (!grouped[g]) grouped[g] = [];
+           grouped[g].push(b);
+        });
+        const order = [...GENRE_ORDER.filter(g => grouped[g]), ...Object.keys(grouped).filter(g => !GENRE_ORDER.includes(g)).sort()];
+        let html = '';
+        for (const g of order) {
+          html += `<h2 style="font-family: var(--serif); color: var(--gold); margin-top: 56px; margin-bottom: 24px; border-bottom: 1px solid rgba(244, 239, 230, 0.15); padding-bottom: 8px; font-weight: normal; font-size: 2.2rem; font-style: italic;">${g}</h2>`;
+          html += `<div class="stack"><div class="books">${grouped[g].map(bookCard).join('')}</div></div>`;
+        }
+        box.innerHTML = html;
+      } else {
+        box.innerHTML = `<div class="stack"><div class="books">${list.map(bookCard).join('')}</div></div>`;
+      }
     }
     if (countEl) countEl.textContent = `${list.length} ${list.length === 1 ? 'libro' : 'libros'}`;
     paint();
