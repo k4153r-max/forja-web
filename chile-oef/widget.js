@@ -45,7 +45,8 @@
     return `hace ${days}d`;
   }
 
-  const STYLES = `
+  const STYLES = @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Mono:wght@400;500;700&display=swap');
+
     :host {
       display: block;
       width: 100%;
@@ -54,10 +55,10 @@
     .chile-oef-w-box {
       box-sizing: border-box;
       width: 100%;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0b0b0c;
-      color: #f4f1ea;
-      border: 1px solid #242428;
+      font-family: 'Archivo', sans-serif;
+      background: #03060a;
+      color: #e2f1f8;
+      border: 1px solid rgba(0,229,255,0.2);
       border-radius: 6px;
       padding: 14px;
       line-height: 1.35;
@@ -65,51 +66,51 @@
     }
     .w-head {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      border-bottom: 1px solid #1f1f24; padding-bottom: 8px; margin-bottom: 10px;
+      border-bottom: 1px solid rgba(0,229,255,0.1); padding-bottom: 8px; margin-bottom: 10px;
     }
     .w-title {
       display: flex; align-items: center; gap: 6px; font-weight: 700;
-      font-size: 13px; color: #f4f1ea; text-decoration: none;
+      font-size: 13px; color: #e2f1f8; text-decoration: none;
     }
     .w-title .mark {
-      width: 8px; height: 8px; background: #6ba3c9; border-radius: 2px; flex-shrink: 0;
+      width: 8px; height: 8px; background: #00e5ff; border-radius: 2px; flex-shrink: 0;
     }
     .w-badge {
       display: inline-flex; align-items: center; gap: 4px;
       font-family: ui-monospace, SFMono-Regular, monospace; font-size: 10px; text-transform: uppercase;
-      background: rgba(107,163,201,0.12); color: #6ba3c9; border: 1px solid rgba(107,163,201,0.3);
+      background: rgba(107,163,201,0.12); color: #00e5ff; border: 1px solid rgba(107,163,201,0.3);
       padding: 2px 6px; border-radius: 3px; white-space: nowrap;
     }
     .w-badge .dot {
-      width: 5px; height: 5px; border-radius: 50%; background: #6ba3c9; animation: w-pulse 2s infinite; flex-shrink: 0;
+      width: 5px; height: 5px; border-radius: 50%; background: #00e5ff; animation: w-pulse 2s infinite; flex-shrink: 0;
     }
     @keyframes w-pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 
     .w-latest {
-      background: #141416; border: 1px solid #1f1f24; border-radius: 4px;
+      background: #141416; border: 1px solid rgba(0,229,255,0.1); border-radius: 4px;
       padding: 8px 10px; margin-bottom: 10px;
     }
     .w-latest-l { font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: #8a8a93; }
     .w-latest-val { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 3px; flex-wrap: wrap; }
     .w-mag { font-weight: 800; font-size: 14px; color: #c4894a; white-space: nowrap; }
-    .w-loc { font-weight: 600; color: #f4f1ea; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 100px; }
+    .w-loc { font-weight: 600; color: #e2f1f8; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 100px; }
     .w-time { font-size: 10px; color: #8a8a93; white-space: nowrap; }
 
     .w-section-l { font-size: 10px; font-weight: 600; color: #8a8a93; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .03em; }
     .w-city-grid { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
     .w-city-row {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      background: #141416; border: 1px solid #1f1f24; padding: 5px 8px; border-radius: 4px;
+      background: #141416; border: 1px solid rgba(0,229,255,0.1); padding: 5px 8px; border-radius: 4px;
     }
-    .w-city-name { font-weight: 500; font-size: 11px; color: #f4f1ea; }
-    .w-city-prob { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 11px; font-weight: 700; color: #6ba3c9; white-space: nowrap; }
+    .w-city-name { font-weight: 500; font-size: 11px; color: #e2f1f8; }
+    .w-city-prob { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 11px; font-weight: 700; color: #00e5ff; white-space: nowrap; }
 
     .w-foot {
-      font-size: 10px; color: #8a8a93; border-top: 1px solid #1f1f24;
+      font-size: 10px; color: #8a8a93; border-top: 1px solid rgba(0,229,255,0.1);
       padding-top: 8px; display: flex; flex-direction: column; gap: 3px;
     }
     .w-foot-links { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-    .w-foot a { color: #6ba3c9; text-decoration: none; }
+    .w-foot a { color: #00e5ff; text-decoration: none; }
     .w-foot a:hover { text-decoration: underline; }
   `;
 
@@ -251,3 +252,5 @@
     }
   });
 })();
+
+

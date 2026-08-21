@@ -217,3 +217,54 @@ body {
   font-family: var(--font-mono); font-size: 11px; padding: 4px 8px; border-radius: 2px;
 }
 .war-tooltip::before { border-right-color: var(--accent); }
+
+/* PRINT MODE (BOLETÍN OFICIAL) */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .oef-ribbon, .layer-toggles, .alert-box, #btn-radar, #btn-print, #btn-charts {
+    display: none !important;
+  }
+  .dashboard-container {
+    display: block !important;
+    height: auto !important;
+    background: #fff !important;
+  }
+  .panel {
+    border: none !important;
+    background: #fff !important;
+    overflow: visible !important;
+    page-break-inside: avoid;
+  }
+  .brand h1 { color: #000 !important; }
+  .brand .sub { color: #555 !important; }
+  .data-value { color: #000 !important; text-shadow: none !important; }
+  .data-label { color: #333 !important; }
+  
+  #oef-map-wrap {
+    height: 400px !important;
+    min-height: 400px !important;
+    border: 2px solid #000 !important;
+    margin: 20px 0 !important;
+  }
+  .map-hud, .map-legend { display: none !important; }
+  
+  .panel-title {
+    color: #000 !important;
+    border-bottom: 2px solid #000 !important;
+    margin-top: 30px !important;
+  }
+  .feed-item {
+    background: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #000 !important;
+  }
+  .feed-place, .feed-mag, .city-name, .city-chance {
+    color: #000 !important; text-shadow: none !important;
+  }
+  .zone-track { background: #eee !important; }
+  .zone-fill { background: #555 !important; }
+  .tech-details { display: none !important; }
+}

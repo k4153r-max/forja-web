@@ -238,7 +238,20 @@
       const placeTd = document.createElement("div"); placeTd.className = "feed-place";
       placeTd.textContent = cleanPlace(event.place);
       const main = document.createElement("div"); main.className = "feed-main"; main.appendChild(placeTd); main.appendChild(magTd); tr.appendChild(dateTd); tr.appendChild(main);
-      tbody.appendChild(tr);
+              tr.addEventListener("click", () => {
+          if (!map) return;
+          map.setView([event.latitude, event.longitude], 6);
+          if (window.aftershockCircle) map.removeLayer(window.aftershockCircle);
+          const radiusKm = Math.max(10, Math.pow(10, 0.5 * event.magnitude - 1.2));
+          window.aftershockCircle = L.circle([event.latitude, event.longitude], {
+            radius: radiusKm * 1000,
+            color: "#ff3366",
+            weight: 2,
+            fillColor: "rgba(255,51,102,0.2)",
+            dashArray: "5, 10"
+          }).bindPopup(`<div class="war-popup" style="padding:10px;background:#03060a;color:#fff;font-family:var(--font-mono);font-size:11px;"><b>ZONA DE RÉPLICAS EST.</b><br>Evento M${event.magnitude.toFixed(1)}<br>Radio de influencia: ${Math.round(radiusKm)} km</div>`).addTo(map).openPopup();
+        });
+        tbody.appendChild(tr);
     }
 
     document.getElementById("catalog-loading").style.display = "none";
@@ -640,7 +653,20 @@
         td.textContent = value;
         tr.appendChild(td);
       }
-      tbody.appendChild(tr);
+              tr.addEventListener("click", () => {
+          if (!map) return;
+          map.setView([event.latitude, event.longitude], 6);
+          if (window.aftershockCircle) map.removeLayer(window.aftershockCircle);
+          const radiusKm = Math.max(10, Math.pow(10, 0.5 * event.magnitude - 1.2));
+          window.aftershockCircle = L.circle([event.latitude, event.longitude], {
+            radius: radiusKm * 1000,
+            color: "#ff3366",
+            weight: 2,
+            fillColor: "rgba(255,51,102,0.2)",
+            dashArray: "5, 10"
+          }).bindPopup(`<div class="war-popup" style="padding:10px;background:#03060a;color:#fff;font-family:var(--font-mono);font-size:11px;"><b>ZONA DE RÉPLICAS EST.</b><br>Evento M${event.magnitude.toFixed(1)}<br>Radio de influencia: ${Math.round(radiusKm)} km</div>`).addTo(map).openPopup();
+        });
+        tbody.appendChild(tr);
     });
     if (loading) loading.style.display = "none";
     if (table) table.style.display = "table";
@@ -990,6 +1016,61 @@
   const btn = document.getElementById("btn-radar");
     if (btn) btn.addEventListener("click", playRadar);
 
+      function drawGRChart() {
+    const ctx = document.getElementById('gr-chart').getContext('2d');
+    if (window.grChartInstance) window.grChartInstance.destroy();
+    
+    // Gutenberg-Richter standard synthetic data for Chile (b-value ~ 1.0)
+    const labels = [4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5];
+    const data = labels.map(m => Math.pow(10, 6.5 - (0.95 * m))); 
+    
+    window.grChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Frecuencia Acumulada Anual Estimada (N > M)',
+          data: data,
+          backgroundColor: 'rgba(0, 229, 255, 0.2)',
+          borderColor: '#00e5ff',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            type: 'logarithmic',
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { color: '#7995a8' }
+          },
+          x: {
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { color: '#7995a8' },
+            title: { display: true, text: 'Magnitud (Mw)', color: '#00e5ff' }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: '#fff', font: { family: 'IBM Plex Mono' } } }
+        }
+      }
+    });
+  }
+
+  const btnChart = document.getElementById("btn-charts");
+  const modalChart = document.getElementById("chart-modal");
+  const btnCloseChart = document.getElementById("btn-close-chart");
+  if (btnChart && modalChart) {
+    btnChart.addEventListener("click", () => {
+      modalChart.style.display = "block";
+      drawGRChart();
+    });
+    btnCloseChart.addEventListener("click", () => {
+      modalChart.style.display = "none";
+    });
+  }
+
     bindLayerToggles();
   loadCatalog();
   loadModelSummary();
@@ -997,6 +1078,8 @@
   loadUsgs();
   initComunaSearch();
 })();
+
+
 
 
 

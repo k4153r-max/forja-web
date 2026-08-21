@@ -51,6 +51,12 @@
         <div style="margin-top:16px;">
           <button id="btn-radar" style="width:100%; padding:10px; background:var(--bg-panel); color:var(--accent); border:1px solid var(--accent); font-family:var(--font-mono); font-weight:700; cursor:pointer; text-transform:uppercase;">▶ Iniciar Radar (30 Días)</button>
         </div>
+        <div style="margin-top:16px;">
+          <button id="btn-charts" style="width:100%; padding:10px; background:transparent; color:var(--text-dim); border:1px solid var(--grid-thick); font-family:var(--font-mono); font-weight:700; cursor:pointer; text-transform:uppercase; transition:0.2s;">📈 GRÁFICOS CIENTÍFICOS</button>
+        </div>
+        <div style="margin-top:8px;">
+          <button id="btn-print" style="width:100%; padding:10px; background:transparent; color:var(--text-dim); border:1px solid var(--grid-thick); font-family:var(--font-mono); font-weight:700; cursor:pointer; text-transform:uppercase; transition:0.2s;" onclick="window.print()">🖨️ EXPORTAR BOLETÍN PDF</button>
+        </div>
       </div>
 
       <div class="tech-details">
@@ -128,9 +134,22 @@
   <input id="comuna-input" type="text" style="display:none;">
   <div id="comuna-result" style="display:none;"></div>
 
+    <!-- MODAL GRÁFICOS -->
+  <div id="chart-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(3,6,10,0.95); z-index:9999; padding:40px; overflow-y:auto; backdrop-filter:blur(10px);">
+    <div style="max-width:900px; margin:0 auto; background:var(--bg-surface); border:1px solid var(--accent); padding:24px; position:relative;">
+      <button id="btn-close-chart" style="position:absolute; top:16px; right:16px; background:transparent; color:var(--accent); border:1px solid var(--accent); padding:4px 12px; cursor:pointer; font-family:var(--font-mono);">CERRAR [X]</button>
+      <h2 style="color:var(--accent); margin-top:0; font-family:var(--font-mono);">DISTRIBUCIÓN GUTENBERG-RICHTER</h2>
+      <p style="color:var(--text-dim); font-size:0.85rem;">Frecuencia vs Magnitud (Logarítmica) para el catálogo OEF en Chile.</p>
+      <div style="height:400px; margin-top:24px;">
+        <canvas id="gr-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="/chile-oef/app.js"></script>
 </body>
 </html>
+
 
 
