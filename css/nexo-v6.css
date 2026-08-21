@@ -320,3 +320,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.
 .footer a { display: block; color: var(--fg-dim); margin-bottom: 12px; transition: 0.2s; }
 .footer a:hover { color: var(--nexo-teal); }
 .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; color: var(--fg-dim); display: flex; justify-content: space-between; }
+/* Uptime Widget injected by site.js */
+.uptime-widget {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0, 201, 167, 0.05); border: 1px solid rgba(0, 201, 167, 0.2);
+  padding: 6px 12px; border-radius: 100px; font-family: var(--font-mono);
+  font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--fg-dim); white-space: nowrap; transition: 0.2s;
+}
+.uptime-widget:hover { background: rgba(0, 201, 167, 0.1); border-color: rgba(0, 201, 167, 0.4); }
+.uptime-widget-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--nexo-teal); box-shadow: 0 0 8px var(--nexo-teal); }
+.uptime-widget.is-down .uptime-widget-dot { background: #ff4444; box-shadow: 0 0 8px #ff4444; }
+.uptime-widget-pct { color: var(--nexo-teal); font-weight: 700; }
+.uptime-widget.is-down .uptime-widget-pct { color: #ff4444; }
+.uptime-widget-win { display: none; }
