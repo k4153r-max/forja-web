@@ -74,7 +74,7 @@ a { color: inherit; text-decoration: none; }
 /* Hero Editorial */
 .hero { padding: 180px 0 100px; text-align: center; }
 .hero h1 {
-  font-family: var(--font-display); font-weight: 400; font-size: clamp(3.5rem, 8vw, 6rem);
+  font-family: var(--font-display); font-weight: 400; font-size: clamp(2.3rem, 8vw, 6rem);
   line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px;
   color: #fff; max-width: 16ch; margin-inline: auto;
 }
@@ -179,3 +179,12 @@ a { color: inherit; text-decoration: none; }
 /* Footer */
 .foot { border-top: 1px solid var(--border); padding: 40px 0; display: flex; justify-content: space-between; color: var(--fg-dim); font-family: var(--font-ui); font-size: 0.9rem; }
 .foot a:hover { color: var(--fg); }
+
+
+
+@media (max-width: 768px) {
+  .hnav-links a:not(.hnav-cta) { display: none; }
+  .hnav-inner { padding: 0 16px; }
+  .hero { padding: 120px 0 60px; }
+  .feat-card { padding: 24px; }
+}
