@@ -24,10 +24,23 @@
       width: 100%;
       height: 100%;
     }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
   </style>
 </head>
 <body>
-  <div id="oef-widget-root"></div>
-  <script src="/chile-oef/widget.js?v=2"></script>
+  <main id="oef-widget-root">
+    <h1 class="sr-only">CHILE-OEF · resumen sísmico experimental</h1>
+  </main>
+  <script src="/chile-oef/widget-v3.js?v=20260822-3"></script>
 </body>
 </html>

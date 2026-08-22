@@ -3,153 +3,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WAR ROOM · CHILE-OEF</title>
-  <meta name="description" content="Dashboard de Investigación OEF en Chile. Modelo ETAS 74k.">
-  <link rel="stylesheet" href="/css/chile-oef-v2.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#050b10">
+  <title>CHILE-OEF · Monitor sísmico experimental</title>
+  <meta name="description" content="Monitor experimental de actividad sísmica en Chile basado en un modelo ETAS. No es una alerta ni reemplaza información oficial.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3ynHTCsyxIjD0cOQ4H4O4wH3FJv4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/chile-oef-v3.css?v=20260822-2">
 </head>
 <body>
-  <div class="oef-ribbon">
-    <div><span class="status-dot"></span> <span>CHILE-OEF (EXPERIMENTAL)</span></div>
-    <div><span>NO ES ALERTA - NO REEMPLAZA AL CSN NI SENAPRED</span></div>
-    <div><a href="/">VOLVER A ETEMEN</a></div>
-  </div>
+  <a class="skip-link" href="#main-content">Saltar al tablero</a>
 
-  <div class="dashboard-container">
-    <!-- LEFT PANEL -->
-    <aside class="panel panel-left">
-      <div class="brand">
-        <img src="/assets/logos/chile-oef-mark.svg" alt="CHILE-OEF">
-        <div>
-          <h1>CHILE-OEF</h1>
-          <span class="sub">Operaciones y Pronóstico</span>
-        </div>
-      </div>
-      
-      <div class="data-group">
-        <div class="data-label">Catálogo Súper Histórico</div>
-        <div class="data-value" id="s-total">--</div>
-      </div>
-      <div class="data-group">
-        <div class="data-label">Rango de Años</div>
-        <div class="data-value" id="s-range">--</div>
-      </div>
-      
-      <div class="alert-box">
-        <h3>ADVERTENCIA EXPERIMENTAL</h3>
-        <p>Este mapa compara zonas usando historia sísmica y ETAS. No predice fechas, horas ni epicentros. En caso de emergencia, siga las instrucciones del CSN y SENAPRED.</p>
-      </div>
-
-      <div class="layer-toggles">
-        <label class="toggle-row"><input type="checkbox" id="tog-activity" checked> Capa: Actividad Esperada</label>
-        <label class="toggle-row"><input type="checkbox" id="tog-cities" checked> Capa: Ciudades (M>5)</label>
-        <label class="toggle-row"><input type="checkbox" id="tog-recent" checked> Capa: Sismos <= 30 días</label>
-        <label class="toggle-row"><input type="checkbox" id="tog-mega"> Capa: Megaterremotos Históricos</label>
-        <label class="toggle-row"><input type="checkbox" id="tog-faults"> Capa: Fosa de Subducción</label>
-        
-        <div style="margin-top:16px;">
-          <button id="btn-radar" style="width:100%; padding:10px; background:var(--bg-panel); color:var(--accent); border:1px solid var(--accent); font-family:var(--font-mono); font-weight:700; cursor:pointer; text-transform:uppercase;">▶ Iniciar Radar (30 Días)</button>
-        </div>
-        <div style="margin-top:16px;">
-          <button id="btn-charts" style="width:100%; padding:10px; background:transparent; color:var(--text-dim); border:1px solid var(--grid-thick); font-family:var(--font-mono); font-weight:700; cursor:pointer; text-transform:uppercase; transition:0.2s;">📈 GRÁFICOS CIENTÍFICOS</button>
-        </div>
-        <div style="margin-top:8px;">
-          <button id="btn-print" style="width:100%; padding:10px; background:transparent; color:var(--text-dim); border:1px solid var(--grid-thick); font-family:var(--font-mono); font-weight:700; cursor:pointer; text-transform:uppercase; transition:0.2s;" onclick="window.print()">🖨️ EXPORTAR BOLETÍN PDF</button>
-        </div>
-      </div>
-
-      <div class="tech-details">
-        <p>Magnitud objetivo:</p>
-        <select id="mag-select" class="mag-select">
-          <option value="5">M 5.0+</option>
-          <option value="6">M 6.0+</option>
-          <option value="7">M 7.0+</option>
-        </select>
-        <div id="model-summary" style="margin-top:12px; font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim);"></div>
-      </div>
-    </aside>
-
-    <!-- CENTER PANEL: MAP -->
-    <main class="panel panel-center">
-      <div class="map-hud">
-        <div class="hud-title">
-          <h2>MAPA DE ACTIVIDAD (7 DÍAS)</h2>
-          <span id="rail-valid">ESPERANDO DATOS...</span>
-        </div>
-      </div>
-      
-      <div id="oef-map-wrap">
-        <div id="oef-map"></div>
-      </div>
-
-      <div class="map-legend">
-        <span class="legend-label">INTENSIDAD RELATIVA (CALOR)</span>
-        <div class="legend-bar"></div>
-        <div class="legend-ticks"><span>BAJA</span><span>MEDIA</span><span>ALTA</span></div>
-      </div>
-    </main>
-
-    <!-- RIGHT PANEL: FEED -->
-    <aside class="panel panel-right">
-      <div class="panel-section">
-        <h3 class="panel-title">ZONAS DE INTERÉS</h3>
-        <div class="zone-list" id="fc-zone-list">
-          <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim);">Cargando...</div>
-        </div>
-      </div>
-
-      <div class="panel-section">
-        <h3 class="panel-title">CIUDADES (PROB. 7 DÍAS)</h3>
-        <div class="feed-list" id="city-list"></div>
-      </div>
-
-      <div class="panel-section" style="margin-top:auto;">
-        <h3 class="panel-title">TOP EVENTOS RECIENTES</h3>
-        <div class="feed-list" id="top-events"></div>
-      </div>
-    </aside>
-  </div>
-  
-  <div id="forecast-loading" style="display:none;"></div>
-  <div id="forecast-error" style="display:none;"></div>
-  <div id="forecast-content" style="display:none;"></div>
-  
-  <div id="catalog-loading" style="display:none;"></div>
-  <div id="catalog-error" style="display:none;"></div>
-  <div id="catalog-content" style="display:none;"></div>
-  <div id="model-loading" style="display:none;"></div>
-  <div id="model-content" style="display:none;"></div>
-  <dl id="model-kv" style="display:none;"></dl>
-
-  <!-- Dummy tags to satisfy app.js -->
-  <div id="mag-type-bars" style="display:none;"></div>
-  <div id="fc-summary" style="display:none;"></div>
-  <dl id="fc-kv" style="display:none;"></dl>
-  <div id="run-history" style="display:none;"></div>
-  <div id="runs-table" style="display:none;"></div>
-  <div id="runs-loading" style="display:none;"></div>
-  <canvas id="mt-chart" style="display:none;"></canvas>
-  <div id="mt-caption" style="display:none;"></div>
-  <input id="comuna-input" type="text" style="display:none;">
-  <div id="comuna-result" style="display:none;"></div>
-
-    <!-- MODAL GRÁFICOS -->
-  <div id="chart-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(3,6,10,0.95); z-index:9999; padding:40px; overflow-y:auto; backdrop-filter:blur(10px);">
-    <div style="max-width:900px; margin:0 auto; background:var(--bg-surface); border:1px solid var(--accent); padding:24px; position:relative;">
-      <button id="btn-close-chart" style="position:absolute; top:16px; right:16px; background:transparent; color:var(--accent); border:1px solid var(--accent); padding:4px 12px; cursor:pointer; font-family:var(--font-mono);">CERRAR [X]</button>
-      <h2 style="color:var(--accent); margin-top:0; font-family:var(--font-mono);">DISTRIBUCIÓN GUTENBERG-RICHTER</h2>
-      <p style="color:var(--text-dim); font-size:0.85rem;">Frecuencia vs Magnitud (Logarítmica) para el catálogo OEF en Chile.</p>
-      <div style="height:400px; margin-top:24px;">
-        <canvas id="gr-chart"></canvas>
-      </div>
+  <header class="oef-topbar">
+    <div class="topbar-brand">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span>CHILE-OEF · investigación experimental</span>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="/chile-oef/app.js"></script>
+    <span class="topbar-disclaimer">No es alerta ni predicción determinista</span>
+    <nav class="topbar-links" aria-label="Enlaces institucionales">
+      <a href="https://www.csn.uchile.cl/" target="_blank" rel="noopener noreferrer">CSN</a>
+      <span class="topbar-separator" aria-hidden="true">/</span>
+      <a href="https://www.senapred.cl/" target="_blank" rel="noopener noreferrer">SENAPRED</a>
+      <span class="topbar-separator" aria-hidden="true">/</span>
+      <a href="/">ETEMEN</a>
+    </nav>
+  </header>
+
+  <main class="dashboard" id="main-content">
+    <aside class="panel panel-context" aria-labelledby="context-title">
+      <div class="product-lockup">
+        <img src="/assets/logos/chile-oef-mark.svg" width="42" height="42" alt="">
+        <div>
+          <p class="eyebrow">Laboratorio sísmico</p>
+          <h1 id="context-title">CHILE-OEF</h1>
+        </div>
+      </div>
+
+      <p class="lede">Compara patrones relativos de actividad sísmica en Chile con un pronóstico ETAS de siete días.</p>
+
+      <section class="state-card" aria-label="Estado del pronóstico">
+        <span class="state-chip" id="forecast-state" data-state="loading" aria-live="polite">Cargando pronóstico</span>
+        <p class="state-meta" id="forecast-updated">Consultando la última emisión disponible…</p>
+      </section>
+
+      <dl class="stats" aria-label="Resumen del catálogo y modelo">
+        <div class="stat">
+          <dt>Eventos catalogados</dt>
+          <dd><span id="catalog-total">—</span><small id="catalog-updated">Cargando catálogo…</small></dd>
+        </div>
+        <div class="stat">
+          <dt>Cobertura temporal</dt>
+          <dd><span id="catalog-range">—</span><small>Catálogo agregado</small></dd>
+        </div>
+        <div class="stat">
+          <dt>Magnitud de completitud</dt>
+          <dd><span id="model-mc">—</span><small>Mc del ajuste actual</small></dd>
+        </div>
+        <div class="stat">
+          <dt>Valor b</dt>
+          <dd><span id="model-b">—</span><small>Gutenberg–Richter</small></dd>
+        </div>
+        <div class="stat stat-wide">
+          <dt>Ventana de entrenamiento</dt>
+          <dd id="model-window">—</dd>
+        </div>
+      </dl>
+
+      <section class="control-group" aria-labelledby="controls-title">
+        <h2 class="control-title" id="controls-title">Capas y lectura</h2>
+        <label class="select-label" for="mag-select">
+          Magnitud objetivo
+          <select id="mag-select" disabled>
+            <option>Cargando intervalos…</option>
+          </select>
+        </label>
+
+        <div class="toggles">
+          <label class="toggle-row"><input type="checkbox" id="tog-activity" checked> Actividad relativa ETAS</label>
+          <label class="toggle-row"><input type="checkbox" id="tog-cities" checked> Lecturas por ciudad</label>
+          <label class="toggle-row"><input type="checkbox" id="tog-recent" checked> Sismos USGS · 30 días</label>
+          <label class="toggle-row"><input type="checkbox" id="tog-notable"> Eventos M≥8 del catálogo</label>
+          <label class="toggle-row"><input type="checkbox" id="tog-trench"> Fosa de subducción · aprox.</label>
+        </div>
+
+        <div class="actions">
+          <button class="button button-primary" id="btn-radar" type="button" aria-pressed="false">Reproducir 30 días</button>
+          <button class="button" id="btn-charts" type="button" disabled>Curva científica</button>
+          <button class="button" id="btn-print" type="button">Imprimir boletín</button>
+        </div>
+      </section>
+
+      <section class="method-card" aria-labelledby="method-title">
+        <div class="method-card__head">
+          <h2 id="method-title">Modelo actual</h2>
+          <span class="state-chip" id="model-state">Consultando</span>
+        </div>
+        <p id="model-summary">Cargando parámetros del ajuste ETAS…</p>
+        <a href="https://chile-oef-api.onrender.com/docs" target="_blank" rel="noopener noreferrer">Ver contrato y endpoints del API →</a>
+      </section>
+    </aside>
+
+    <section class="panel panel-map" aria-labelledby="map-title">
+      <div class="map-hud">
+        <div class="map-title">
+          <h2 id="map-title">Actividad relativa · horizonte de 7 días</h2>
+          <p id="map-status" aria-live="polite">Preparando mapa…</p>
+        </div>
+      </div>
+      <p class="map-disclaimer" id="calibration-note">Las intensidades comparan celdas del modelo; no representan una alerta ni riesgo personal.</p>
+      <div id="oef-map" role="application" aria-label="Mapa interactivo de actividad sísmica estimada para Chile"></div>
+      <div class="map-legend" aria-hidden="true">
+        <div class="legend-label"><span>Intensidad relativa</span><span id="legend-mag">M5,0–6,0</span></div>
+        <div class="legend-bar"></div>
+        <div class="legend-scale"><span>Menor</span><span>Mayor</span></div>
+      </div>
+    </section>
+
+    <aside class="panel panel-insights" aria-label="Lecturas del pronóstico y actividad reciente">
+      <section class="insight-section" aria-labelledby="zones-title">
+        <h2 class="section-title" id="zones-title">Macrozonas <span class="section-kicker">índice 0–100</span></h2>
+        <p class="section-note">Comparación interna entre las celdas de mayor tasa de esta emisión.</p>
+        <div class="zone-list" id="zone-list" aria-live="polite">
+          <p class="microcopy">Cargando zonas…</p>
+        </div>
+      </section>
+
+      <section class="insight-section" aria-labelledby="cities-title">
+        <h2 class="section-title" id="cities-title">Ciudades <span class="section-kicker">radio 40 km</span></h2>
+        <p class="section-note">Estimación puntual de al menos un evento en siete días. Selecciona una ciudad para centrarla.</p>
+        <div class="list" id="city-list" aria-live="polite">
+          <p class="microcopy">Cargando ciudades…</p>
+        </div>
+      </section>
+
+      <section class="insight-section" aria-labelledby="recent-title">
+        <h2 class="section-title" id="recent-title">Actividad reciente <span class="section-kicker">USGS</span></h2>
+        <div class="list" id="recent-list" aria-live="polite">
+          <p class="microcopy">Cargando eventos…</p>
+        </div>
+        <p class="source-meta" id="usgs-updated">Consulta independiente del pronóstico ETAS.</p>
+      </section>
+
+      <div class="notice" id="global-message" role="status" hidden></div>
+
+      <div class="official-links">
+        <strong>Información oficial:</strong>
+        <a href="https://www.csn.uchile.cl/" target="_blank" rel="noopener noreferrer">Centro Sismológico Nacional</a>
+        <a href="https://www.senapred.cl/" target="_blank" rel="noopener noreferrer">SENAPRED</a>
+      </div>
+    </aside>
+  </main>
+
+  <dialog class="chart-dialog" id="chart-modal" aria-labelledby="chart-title">
+    <div class="dialog-inner">
+      <header class="dialog-head">
+        <div>
+          <p class="eyebrow">Parámetro del modelo</p>
+          <h2 id="chart-title">Curva Gutenberg–Richter</h2>
+          <p>Frecuencia acumulada derivada del b-value y la magnitud de completitud del ajuste vigente.</p>
+        </div>
+        <button class="icon-button" id="btn-close-chart" type="button" aria-label="Cerrar gráfico">Cerrar</button>
+      </header>
+      <div class="chart" id="gr-chart"></div>
+      <p class="microcopy" id="gr-caption"></p>
+      <p class="notice">Esta curva describe el ajuste estadístico del catálogo; no estima cuándo ni dónde ocurrirá un terremoto.</p>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+  <script src="/chile-oef/app-v3.js?v=20260822-2"></script>
 </body>
 </html>
-
-
-
