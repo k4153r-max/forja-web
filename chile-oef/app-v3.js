@@ -692,8 +692,14 @@
     if (catalogResult.status === "fulfilled") renderCatalog(catalogResult.value);
     else reportProblem("Catálogo", catalogResult.reason);
 
-    if (modelResult.status === "fulfilled") renderModel(modelResult.value);
-    else reportProblem("Modelo", modelResult.reason);
+    if (modelResult.status === "fulfilled") {
+      renderModel(modelResult.value);
+    } else {
+      setText("model-summary", "Sin ajuste ETAS convergente publicado.");
+      $("model-state").textContent = "Modelo no disponible";
+      $("model-state").dataset.state = "warning";
+      reportProblem("Modelo", modelResult.reason);
+    }
 
     if (usgsResult.status === "fulfilled") renderRecent(usgsResult.value);
     else reportProblem("Sismos USGS", usgsResult.reason);
