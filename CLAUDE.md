@@ -92,7 +92,8 @@ chile-oef/          → dashboard estático de CHILE-OEF
 
 ### Próximos pasos
 
-1. Publicar los cambios del dashboard y del keep-alive que apuntan a Fly.
+1. Autenticar Wrangler y desplegar el Worker `chile-oef-keepalive`; el dashboard
+   ya fue publicado y verificado contra Fly el 2026-08-25.
 2. Revocar el token de Render expuesto y retirar el servicio suspendido solo
    después de verificar el dashboard en producción.
 3. Ejecutar las evaluaciones walk-forward homogénea/adaptativa alineadas y
