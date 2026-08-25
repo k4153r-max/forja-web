@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const API_BASE = window.CHILE_OEF_API_BASE || "https://chile-oef-api.onrender.com/v1";
+  const API_BASE = window.CHILE_OEF_API_BASE || "https://chile-oef-api.fly.dev/v1";
   const FETCH_TIMEOUT_MS = 12000;
   const MAX_ATTEMPTS = 2;
   const RETRY_DELAY_MS = 1500;

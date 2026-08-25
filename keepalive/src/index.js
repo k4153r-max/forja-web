@@ -1,4 +1,4 @@
-const DEFAULT_URL = "https://chile-oef-api.onrender.com/v1/health";
+const DEFAULT_URL = "https://chile-oef-api.fly.dev/v1/health";
 
 async function ping(url) {
   const response = await fetch(url, { method: "GET", redirect: "follow" });

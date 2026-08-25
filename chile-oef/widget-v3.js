@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const API_BASE = window.CHILE_OEF_API_BASE || "https://chile-oef-api.onrender.com/v1";
+  const API_BASE = window.CHILE_OEF_API_BASE || "https://chile-oef-api.fly.dev/v1";
   const REFRESH_MS = 15 * 60 * 1000;
   const TIMEOUT_MS = 35000;
   const USGS_QUERY =

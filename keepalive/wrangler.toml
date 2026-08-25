@@ -8,4 +8,4 @@ preview_urls = false
 crons = ["* * * * *"]
 
 [vars]
-KEEPALIVE_URL = "https://chile-oef-api.onrender.com/v1/health"
+KEEPALIVE_URL = "https://chile-oef-api.fly.dev/v1/health"

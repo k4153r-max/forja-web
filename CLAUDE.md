@@ -62,17 +62,20 @@ chile-oef/          → dashboard estático de CHILE-OEF
 | Plataforma | Responsabilidad | Estado |
 |---|---|---|
 | Render | `etemen.cl` estático | Activo; no tocar |
-| Neon | PostgreSQL | Proyecto creado; credenciales por rotar |
-| Fly.io | Backends Python | Configuración de CHILE-OEF preparada |
+| Neon | PostgreSQL | CHILE-OEF activo; contraseña rotada |
+| Fly.io | Backends Python | `chile-oef-api` desplegada y saludable |
 
 ### CHILE-OEF
 
 - Repositorio: `k4153r-max/chile-oef`.
-- Se prepararon localmente `Dockerfile`, `.dockerignore` y `fly.toml`.
+- `Dockerfile`, `.dockerignore` y `fly.toml` están versionados en el repositorio.
 - Región objetivo: `gru` (São Paulo), cercana a Neon `aws-sa-east-1`.
 - El release ejecuta `alembic upgrade head` y verifica `/v1/health` contra la DB.
 - La imagen `chile-oef:fly-migration` construyó correctamente.
-- No se creó ninguna aplicación ni recurso facturable en Fly.io.
+- Producción: `https://chile-oef-api.fly.dev`; `/v1/health` confirma API y DB
+  saludables con versión `0.1.0`.
+- Una máquina `shared-cpu-1x` de 512 MB, con autoapagado/autoinicio y cero
+  máquinas mínimas permanentemente activas.
 
 ### Seguridad
 
@@ -80,21 +83,21 @@ chile-oef/          → dashboard estático de CHILE-OEF
   publicaron anteriormente en este archivo.
 - Sus valores se retiraron de la versión de trabajo, pero permanecen en el
   historial de Git y deben considerarse comprometidos.
-- Antes de desplegar: revocar y reemplazar las credenciales. La nueva URL debe
-  configurarse exclusivamente como secreto `CHILE_OEF_DATABASE_URL` en Fly.io.
+- La contraseña PostgreSQL de Neon fue rotada y la antigua clave API `Prueba`
+  fue revocada el 2026-08-25. La nueva URL existe exclusivamente como secreto
+  `CHILE_OEF_DATABASE_URL` en Fly.io.
+- El token de Render que apareció en el historial aún debe revocarse desde el
+  proveedor; no reutilizarlo.
 - Limpiar el historial requiere coordinación y no sustituye la rotación.
 
 ### Próximos pasos
 
-1. Confirmar/iniciar sesión en Fly.io e instalar `flyctl`.
-2. Rotar las credenciales expuestas de Neon y Render.
-3. Crear `chile-oef-api` en Fly.io y cargar la nueva URL de Neon como secreto.
-4. Desplegar y comprobar migración `0016`, checks y `/v1/health`.
-5. Solo después de confirmar Fly saludable, cambiar las URLs del dashboard y del
-   keep-alive desde Render a Fly.
-6. Ejecutar las evaluaciones walk-forward homogénea/adaptativa alineadas y
+1. Publicar los cambios del dashboard y del keep-alive que apuntan a Fly.
+2. Revocar el token de Render expuesto y retirar el servicio suspendido solo
+   después de verificar el dashboard en producción.
+3. Ejecutar las evaluaciones walk-forward homogénea/adaptativa alineadas y
    `assess-model-promotion`; no promover sin resultado `promote`.
-7. Migrar Nexo y Bodega uno por uno, verificando cada reemplazo.
+4. Migrar Nexo y Bodega uno por uno, verificando cada reemplazo.
 
 ### No rehacer
 
