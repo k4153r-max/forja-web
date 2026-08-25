@@ -76,7 +76,7 @@ Decisión: distribuir infraestructura en plataformas sin suspensión.
 |---|---|---|
 | **Render** | Solo `etemen.cl` estático (srv-d9ifoibeo5us739sr680) | ✅ Activo, NO tocar |
 | **Neon** | Todas las DB PostgreSQL | ✅ chile-oef creada |
-| **Koyeb** | Todos los backends Python (chile-oef-api, nexus, bodega trials) | ⏳ Pendiente |
+| **Fly.io** | Todos los backends Python (chile-oef-api, nexus, bodega trials) | ⏳ Pendiente |
 | **Fly.io** | Experimentación | ⏳ Futuro |
 
 ### Neon — chile-oef DB creada (2026-08-24)
@@ -97,15 +97,15 @@ Decisión: distribuir infraestructura en plataformas sin suspensión.
 
 ### Próximos pasos
 
-1. [ ] Confirmar si Antonio tiene cuenta Koyeb
+1. [ ] Confirmar si Antonio tiene cuenta Fly.io
 2. [ ] Identificar el repo de chile-oef
 3. [ ] Conectar proyecto Neon chile-oef a su repo GitHub
-4. [ ] Deploy chile-oef-api en Koyeb con DATABASE_URL de Neon
-5. [ ] Migrar nexus y bodega trials a Koyeb de a uno
+4. [ ] Deploy chile-oef-api en Fly.io con DATABASE_URL de Neon
+5. [ ] Migrar nexus y bodega trials a Fly.io de a uno
 6. [ ] Borrar servicios suspendidos de Render una vez migrados
 
 ### No rehacer
 
 - No borrar Etemen estático de Render — es el único servicio que funciona bien ahí.
-- No borrar servicios de Render antes de confirmar que funcionan en Koyeb.
-- cron-job.org keep-alive de nexus-trial-demo apunta a Render — actualizar URL a Koyeb al migrar.
+- No borrar servicios de Render antes de confirmar que funcionan en Fly.io.
+- cron-job.org keep-alive de nexus-trial-demo apunta a Render — actualizar URL a Fly.io al migrar.
