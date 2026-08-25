@@ -63,7 +63,7 @@ chile-oef/          → dashboard estático de CHILE-OEF
 |---|---|---|
 | Render | `etemen.cl` estático | Activo; no tocar |
 | Neon | PostgreSQL | CHILE-OEF activo; contraseña rotada |
-| Fly.io | Backends Python | `chile-oef-api` desplegada y saludable |
+| Fly.io | Backends Python | CHILE-OEF, 5 Nexo y 4 Bodega desplegados |
 
 ### CHILE-OEF
 
@@ -74,8 +74,13 @@ chile-oef/          → dashboard estático de CHILE-OEF
 - La imagen `chile-oef:fly-migration` construyó correctamente.
 - Producción: `https://chile-oef-api.fly.dev`; `/v1/health` confirma API y DB
   saludables con versión `0.1.0`.
-- Una máquina `shared-cpu-1x` de 512 MB, con autoapagado/autoinicio y cero
-  máquinas mínimas permanentemente activas.
+- Una máquina `shared-cpu-1x` de 512 MB en configuración estable, con
+  autoapagado/autoinicio y cero máquinas mínimas permanentemente activas.
+- Volumen cifrado `chile_oef_data` de 1 GB montado en `/app/data`; los nueve
+  artefactos USGS crudos sobreviven despliegues.
+- Catálogo productivo cargado: 74.403 eventos USGS (1964-01-26 a 2026-08-24),
+  nueve particiones, sin fallos. La línea científica `mwc` está en ajuste y aún
+  no debe declararse promovida.
 - Worker `chile-oef-keepalive` desplegado en
   `https://chile-oef-keepalive.etemen.workers.dev`, con ping cada minuto a Fly.
 
@@ -89,21 +94,35 @@ chile-oef/          → dashboard estático de CHILE-OEF
   fue revocada el 2026-08-25. La nueva URL existe exclusivamente como secreto
   `CHILE_OEF_DATABASE_URL` en Fly.io.
 - El token de Render que apareció en el historial aún debe revocarse desde el
-  proveedor; no reutilizarlo.
+  panel del proveedor (Render no ofrece endpoint para revocarlo); no reutilizarlo.
 - Limpiar el historial requiere coordinación y no sustituye la rotación.
+
+### Nexo y Bodega
+
+- Migración completada el 2026-08-25 a Fly `gru`, con una app y un volumen
+  cifrado `app_data` de 1 GB por instancia; SQLite persiste entre reinicios.
+- Nexo: `nexus-trial-demo`, `nexus-trial-taller`, `nexus-trial-unas`,
+  `nexus-dpb7` y `etemen-nexus` (el nombre global `nexus` no estaba disponible).
+- Bodega: `bodega-trial-almacen-demo`, `bodega-trial-botilleria-demo`,
+  `bodega-trial-ferreteria-demo` y `bodega-trial-la-parissiene`.
+- Todas pasaron `/health`; las públicas pasaron login y persistencia. Los demos
+  genéricos Nexo/Taller se renovaron hasta 2026-10-31; `unas` conserva su fecha.
+- `etemen.cl` ya publica enlaces Fly. Los 10 backends Render suspendidos (los
+  nueve anteriores más CHILE-OEF) se eliminaron tras verificar reemplazos. En
+  Render queda únicamente el sitio estático ETEMEN.
 
 ### Próximos pasos
 
-1. Revocar el token de Render expuesto y retirar el servicio suspendido solo
-   después de verificar el dashboard en producción.
+1. Finalizar ETAS `mwc`, cargar Slab2/CHAF y clasificar tectónica.
 2. Ejecutar las evaluaciones walk-forward homogénea/adaptativa alineadas y
    `assess-model-promotion`; no promover sin resultado `promote`.
-3. Migrar Nexo y Bodega uno por uno, verificando cada reemplazo.
+3. Restaurar CHILE-OEF a 512 MB/autoapagado y revocar manualmente el token de
+   Render expuesto desde Account Settings.
 
 ### No rehacer
 
 - No eliminar ETEMEN estático de Render.
-- No borrar servicios suspendidos antes de confirmar sus reemplazos.
+- No tocar `salon-ysabel` ni su despliegue.
 - No mezclar tipos de magnitud en CHILE-OEF.
 - No presentar IAS como peligro ni como probabilidad de un gran terremoto.
 - No modificar el campeón científico sin superar la compuerta de promoción.
