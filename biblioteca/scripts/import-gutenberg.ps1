@@ -56,9 +56,10 @@ function Get-Slug([string]$title) {
 }
 
 function Get-Catalog {
+  if ($Ids.Count -gt 0) { return @() }
   if (-not (Test-Path $CatalogCache) -or ((Get-Item $CatalogCache).LastWriteTime -lt (Get-Date).AddDays(-7))) {
-    Write-Host "Descargando catálogo Gutenberg..."
-    Invoke-WebRequest -Uri 'https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv' -OutFile $CatalogCache -Headers $Headers -TimeoutSec 180
+    Write-Host "Descargando catalogo Gutenberg..."
+    Invoke-WebRequest -Uri "https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv" -OutFile $CatalogCache -Headers $Headers -TimeoutSec 180
   }
   return Import-Csv $CatalogCache
 }
@@ -172,3 +173,4 @@ foreach ($m in ($manifest | Where-Object { $_.status -in 'ok','exists' })) {
   $genre = if ($Genre -eq 'Todos') { 'Clásico' } else { $Genre }
   Write-Host "  { id: '$($m.id)', title: '$($m.title -replace "'","\'")', author: '$($m.author -replace "'","\'")', type: '$genre', genre: '$genre', place: 'Universal', color: 'navy', year: 'DP', hasText: true, license: 'Dominio público', source: 'Project Gutenberg #$($m.gutenberg)', desc: 'Texto en dominio público importado para lectura en Hojear.' },"
 }
+
