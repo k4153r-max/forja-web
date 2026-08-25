@@ -76,6 +76,8 @@ chile-oef/          → dashboard estático de CHILE-OEF
   saludables con versión `0.1.0`.
 - Una máquina `shared-cpu-1x` de 512 MB, con autoapagado/autoinicio y cero
   máquinas mínimas permanentemente activas.
+- Worker `chile-oef-keepalive` desplegado en
+  `https://chile-oef-keepalive.etemen.workers.dev`, con ping cada minuto a Fly.
 
 ### Seguridad
 
@@ -92,13 +94,11 @@ chile-oef/          → dashboard estático de CHILE-OEF
 
 ### Próximos pasos
 
-1. Autenticar Wrangler y desplegar el Worker `chile-oef-keepalive`; el dashboard
-   ya fue publicado y verificado contra Fly el 2026-08-25.
-2. Revocar el token de Render expuesto y retirar el servicio suspendido solo
+1. Revocar el token de Render expuesto y retirar el servicio suspendido solo
    después de verificar el dashboard en producción.
-3. Ejecutar las evaluaciones walk-forward homogénea/adaptativa alineadas y
+2. Ejecutar las evaluaciones walk-forward homogénea/adaptativa alineadas y
    `assess-model-promotion`; no promover sin resultado `promote`.
-4. Migrar Nexo y Bodega uno por uno, verificando cada reemplazo.
+3. Migrar Nexo y Bodega uno por uno, verificando cada reemplazo.
 
 ### No rehacer
 
