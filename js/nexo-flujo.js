@@ -6,8 +6,8 @@
       precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/luna/",
       trial: "/contacto/?producto=Nexo+Servicios&rubro=Sal%C3%B3n",
-      app: "https://nexus-trial-demo.onrender.com/login",
-      reserva: "https://nexus-erz6.onrender.com/reservar",
+      app: "https://nexus-trial-demo.fly.dev/login",
+      reserva: "https://etemen-nexus.fly.dev/reservar",
       items: [
         { name: "Corte Dama + Brushing", price: 25000 },
         { name: "Manicura Rusa (Ysabel)", price: 18000 },
@@ -21,8 +21,8 @@
       precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/atelier/",
       trial: "/contacto/?producto=Nexo+Servicios&rubro=Barber%C3%ADa",
-      app: "https://nexus-trial-demo.onrender.com/login",
-      reserva: "https://nexus-erz6.onrender.com/reservar",
+      app: "https://nexus-trial-demo.fly.dev/login",
+      reserva: "https://etemen-nexus.fly.dev/reservar",
       items: [
         { name: "Corte Barba + Perfilado", price: 16000 },
         { name: "Lavado + Peinado Pomada", price: 8000 },
@@ -36,7 +36,7 @@
       precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/taller/",
       trial: "/contacto/?producto=Nexo+Taller&rubro=Taller",
-      app: "https://nexus-trial-taller.onrender.com/login",
+      app: "https://nexus-trial-taller.fly.dev/login",
       reserva: null,
       items: [
         { name: "Cambio Aceite 10W40 + Filtro", price: 42000 },
@@ -51,7 +51,7 @@
       precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/ferreteria/",
       trial: "/contacto/?producto=Nexo+Ferreteria&rubro=Ferreter%C3%ADa",
-      app: "https://bodega-trial-ferreteria-demo.onrender.com/login",
+      app: "https://bodega-trial-ferreteria-demo.fly.dev/login",
       reserva: null,
       items: [
         { name: "Taladro Percutor 750W", price: 49900 },
@@ -66,7 +66,7 @@
       precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/almacen/",
       trial: "/contacto/?producto=Nexo+Almacen&rubro=Minimarket",
-      app: "https://bodega-trial-almacen-demo.onrender.com/login",
+      app: "https://bodega-trial-almacen-demo.fly.dev/login",
       reserva: null,
       items: [
         { name: "Bebida Coca-Cola 1.5L", price: 2200 },
@@ -81,7 +81,7 @@
       precio: "Precio por confirmar · A consultar por local",
       demo: "/demos/botilleria/",
       trial: "/contacto/?producto=Nexo+Botilleria&rubro=Botiller%C3%ADa",
-      app: "https://bodega-trial-botilleria-demo.onrender.com/login",
+      app: "https://bodega-trial-botilleria-demo.fly.dev/login",
       reserva: null,
       items: [
         { name: "Pack Cerveza Imperial 6x355cc", price: 7990 },
