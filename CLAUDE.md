@@ -60,3 +60,52 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
   - `8203623` Nexo demo → `https://nexus-trial-demo.onrender.com/health` (enabled, OK)
   - API: `https://api.cron-job.org/` Bearer key en Console → Settings (**no commitear**)
   - Nexo `/health` debe ser público en repo `nexus` (si 302 a login, el cron falla status 4)
+
+---
+
+## Memoria sesión 2026-08-24 (Claude — plan migración infraestructura ETEMEN)
+
+### Contexto
+
+Los servicios Python de ETEMEN en Render están "Suspended by Render" (free tier sin horas).
+Decisión: distribuir infraestructura en plataformas sin suspensión.
+
+### Arquitectura objetivo
+
+| Plataforma | Qué va ahí | Estado |
+|---|---|---|
+| **Render** | Solo `etemen.cl` estático (srv-d9ifoibeo5us739sr680) | ✅ Activo, NO tocar |
+| **Neon** | Todas las DB PostgreSQL | ✅ chile-oef creada |
+| **Koyeb** | Todos los backends Python (chile-oef-api, nexus, bodega trials) | ⏳ Pendiente |
+| **Fly.io** | Experimentación | ⏳ Futuro |
+
+### Neon — chile-oef DB creada (2026-08-24)
+
+- **Cuenta**: godoyleytonantonio@gmail.com (Free)
+- **API Key**: `napi_86pao48yf1hy3i8pts3tpxf2hwda4yr75wdabpwqxp1djvjy773cb5q5lvw4a8ox`
+- **Project ID**: `broad-firefly-79273260`
+- **Región**: `aws-sa-east-1` (São Paulo)
+- **DATABASE_URL**: `postgresql://neondb_owner:npg_xOp8M1jAeunU@ep-mute-term-acylh9me.sa-east-1.aws.neon.tech/neondb?sslmode=require`
+- GitHub integración conectada en Neon (repos accesibles: nexus, salon-ysabel, indago, + más)
+- Pendiente: conectar proyecto chile-oef al repo de chile-oef desde dashboard Neon → Integrations
+
+### Servicios en Render a migrar (todos suspendidos)
+
+1. **chile-oef-api** — primer candidato (DB ya en Neon)
+2. **nexus** + **nexus-trial-demo** / **nexus-trial-taller** / **nexus-trial-unas** / **nexus-dpb7**
+3. **bodega-trial-almacen-demo** / **bodega-trial-ferreteria-demo** / **bodega-trial-botilleria-demo** / **bodega-trial-la-parissiene**
+
+### Próximos pasos
+
+1. [ ] Confirmar si Antonio tiene cuenta Koyeb
+2. [ ] Identificar el repo de chile-oef
+3. [ ] Conectar proyecto Neon chile-oef a su repo GitHub
+4. [ ] Deploy chile-oef-api en Koyeb con DATABASE_URL de Neon
+5. [ ] Migrar nexus y bodega trials a Koyeb de a uno
+6. [ ] Borrar servicios suspendidos de Render una vez migrados
+
+### No rehacer
+
+- No borrar Etemen estático de Render — es el único servicio que funciona bien ahí.
+- No borrar servicios de Render antes de confirmar que funcionan en Koyeb.
+- cron-job.org keep-alive de nexus-trial-demo apunta a Render — actualizar URL a Koyeb al migrar.
