@@ -67,10 +67,25 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 
 ### Decisiones tomadas
 
-- **chile-oef cancelado** (2026-08-25) — proyecto fuera del nicho. Recursos eliminados:
-  - Servicio Render `chile-oef-api` → borrado
-  - Proyecto Neon `broad-firefly-79273260` → borrado
-  - Repo GitHub `chile-oef` → borrado
+- **chile-oef cancelado como producto/investigación** (decisión de Antonio, 2026-08-25) —
+  fuera del nicho de ETEMEN. **Corrección 2026-08-26: la nota de abajo decía que el repo de
+  GitHub y el proyecto Neon estaban borrados — es falso, nunca se ejecutó (o se revirtió sin
+  documentar).** Verificado en vivo el 2026-08-26: el repo `k4153r-max/chile-oef` sigue activo
+  con CI corriendo, y el proyecto Neon `broad-firefly-79273260` sigue activo y en uso real
+  (llegó a superar su cuota de storage del plan free ese mismo día).
+  - Antonio decidió explícitamente **mantener vivo solo el bot de Telegram** de alertas
+    sísmicas (`telegram-alerts.yml`, USGS M≥4.0 cada 10 min) — no el resto del proyecto
+    (dashboard científico, pipeline CSEP, roadmap de fases). El repo y el proyecto Neon
+    siguen existiendo porque el bot los necesita para correr.
+  - El dashboard público estático (`forja-web/chile-oef/`) sí se borró de verdad — por eso no
+    hay ya ningún link a `/chile-oef/` en este sitio (ver `index.html` y
+    `desarrollo-web/index.html`, limpiados 2026-08-26).
+  - Servicio Render `chile-oef-api` — este si se dio de baja (chile-oef ya había migrado a
+    Fly.io antes de la cancelación; Render quedó como legado sin tráfico).
+  - **Si se vuelve a tocar el repo `chile-oef`**: es mantenimiento mínimo del bot, no retomar
+    el roadmap de investigación (ETAS/CSEP fases 3-8) salvo que Antonio lo pida explícito —
+    `docs/PROJECT_STATE.md` de ese repo todavía está escrito como si fuera investigación activa
+    de pleno derecho, desactualizado tras esta decisión (pendiente corregir ahí también).
 
 ### Arquitectura objetivo (actualizada)
 
