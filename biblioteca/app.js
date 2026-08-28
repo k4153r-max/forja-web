@@ -277,7 +277,7 @@ function internalReader(b) {
       </div>
       ${hasAudio(b) ? `
       <div class="reader-audio-bar" id="reader-audio-bar" hidden>
-        <audio id="fr-audio-el" preload="metadata"></audio>
+        <audio id="fr-audio-el" crossorigin="anonymous" preload="metadata"></audio>
         <div class="rab-row">
           <div class="rab-info" id="rab-info"><strong>Audio</strong></div>
           <div class="rab-controls">
@@ -820,66 +820,88 @@ function leerLoader(b) {
   // Filtro de audio Vintage (Radio a tubos / Gramófono 1920)
   let vCtx = null;
   let vSrc = null;
+  let vDryGain = null;
+  let vWetGain = null;
   let vHigh = null;
   let vLow = null;
   let vPeak = null;
   let vDist = null;
-  let vGain = null;
   let vActive = false;
 
-  function toggleVintageAudio() {
+  function initVintageAudio() {
+    if (vCtx) return true;
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      if (!vCtx) {
-        vCtx = new AC();
-        vSrc = vCtx.createMediaElementSource(frAudio);
-        vHigh = vCtx.createBiquadFilter();
-        vHigh.type = 'highpass';
-        vHigh.frequency.value = 380;
-        vLow = vCtx.createBiquadFilter();
-        vLow.type = 'lowpass';
-        vLow.frequency.value = 3000;
-        vPeak = vCtx.createBiquadFilter();
-        vPeak.type = 'peaking';
-        vPeak.frequency.value = 1500;
-        vPeak.gain.value = 4;
-        vDist = vCtx.createWaveShaper();
-        const n = 44100;
-        const curve = new Float32Array(n);
-        for (let i = 0; i < n; ++i) {
-          const x = (i * 2) / n - 1;
-          curve[i] = ((3 + 12) * x * 20 * (Math.PI / 180)) / (Math.PI + 12 * Math.abs(x));
-        }
-        vDist.curve = curve;
-        vGain = vCtx.createGain();
-        vGain.gain.value = 1.25;
+      if (!AC) return false;
+      vCtx = new AC();
+      vSrc = vCtx.createMediaElementSource(frAudio);
 
-        vSrc.connect(vHigh);
-        vHigh.connect(vLow);
-        vLow.connect(vPeak);
-        vPeak.connect(vDist);
-        vDist.connect(vGain);
-        vGain.connect(vCtx.destination);
+      // Rama Dry (sonido normal sin distorsión)
+      vDryGain = vCtx.createGain();
+      vDryGain.gain.value = 1.0;
+      vSrc.connect(vDryGain);
+      vDryGain.connect(vCtx.destination);
+
+      // Rama Wet (sonido radio de época / gramófono)
+      vHigh = vCtx.createBiquadFilter();
+      vHigh.type = 'highpass';
+      vHigh.frequency.value = 380;
+      vHigh.Q.value = 0.8;
+
+      vLow = vCtx.createBiquadFilter();
+      vLow.type = 'lowpass';
+      vLow.frequency.value = 3200;
+      vLow.Q.value = 1.1;
+
+      vPeak = vCtx.createBiquadFilter();
+      vPeak.type = 'peaking';
+      vPeak.frequency.value = 1600;
+      vPeak.gain.value = 4.5;
+
+      vDist = vCtx.createWaveShaper();
+      const n = 44100;
+      const curve = new Float32Array(n);
+      for (let i = 0; i < n; ++i) {
+        const x = (i * 2) / n - 1;
+        curve[i] = ((3 + 10) * x * 20 * (Math.PI / 180)) / (Math.PI + 10 * Math.abs(x));
       }
-      if (vCtx.state === 'suspended') vCtx.resume();
-      vActive = !vActive;
-      if (vActive) {
-        vSrc.disconnect();
-        vSrc.connect(vHigh);
-        vGain.connect(vCtx.destination);
-        rabVintage?.classList.add('active');
-        if (rabVintage) rabVintage.style.background = 'var(--gold, #d9a870)';
-        if (rabVintage) rabVintage.style.color = '#000';
-      } else {
-        vSrc.disconnect();
-        vGain.disconnect();
-        vSrc.connect(vCtx.destination);
-        rabVintage?.classList.remove('active');
-        if (rabVintage) rabVintage.style.background = '';
-        if (rabVintage) rabVintage.style.color = '';
-      }
-    } catch (_) {}
+      vDist.curve = curve;
+
+      vWetGain = vCtx.createGain();
+      vWetGain.gain.value = 0.0;
+
+      vSrc.connect(vHigh);
+      vHigh.connect(vLow);
+      vLow.connect(vPeak);
+      vPeak.connect(vDist);
+      vDist.connect(vWetGain);
+      vWetGain.connect(vCtx.destination);
+
+      return true;
+    } catch (e) {
+      console.warn('Web Audio init error:', e);
+      return false;
+    }
+  }
+
+  function toggleVintageAudio() {
+    if (!initVintageAudio()) return;
+    if (vCtx.state === 'suspended') vCtx.resume();
+    vActive = !vActive;
+    const now = vCtx.currentTime;
+    if (vActive) {
+      vDryGain.gain.setTargetAtTime(0, now, 0.04);
+      vWetGain.gain.setTargetAtTime(1.35, now, 0.04);
+      rabVintage?.classList.add('active');
+      if (rabVintage) rabVintage.style.background = 'var(--gold, #d9a870)';
+      if (rabVintage) rabVintage.style.color = '#000';
+    } else {
+      vDryGain.gain.setTargetAtTime(1, now, 0.04);
+      vWetGain.gain.setTargetAtTime(0, now, 0.04);
+      rabVintage?.classList.remove('active');
+      if (rabVintage) rabVintage.style.background = '';
+      if (rabVintage) rabVintage.style.color = '';
+    }
   }
 
   rabVintage?.addEventListener('click', toggleVintageAudio);
@@ -898,6 +920,7 @@ function leerLoader(b) {
     function loadTrack(n, autoPlay) {
       trackIdx = Math.max(0, Math.min(packAudio.tracks.length - 1, n));
       const tr = packAudio.tracks[trackIdx];
+      frAudio.crossOrigin = 'anonymous';
       frAudio.src = tr.u;
       frAudio.playbackRate = speeds[speedIdx];
       if (rabInfo) rabInfo.innerHTML = `<strong>Cap. ${trackIdx + 1}/${packAudio.tracks.length}</strong> ${esc(tr.t)}`;
