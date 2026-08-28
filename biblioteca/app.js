@@ -232,8 +232,12 @@ function catalogue() {
       ${chip('genre', 'Novela', '[ NOVELA ]')}
       ${chip('genre', 'Cuentos', '[ CUENTOS ]')}
       ${chip('genre', 'Poesía', '[ POESÍA ]')}
+      ${chip('genre', 'Teatro', '[ TEATRO ]')}
+      ${chip('genre', 'Ensayo', '[ ENSAYO ]')}
+      ${chip('genre', 'Misterio', '[ MISTERIO ]')}
       ${chip('genre', 'Revista', '[ ⏳ HEMEROTECA ]')}
       ${chip('audio', 'audio', '[ 🎧 CON AUDIO ]')}
+      ${chip('license', 'oer', '[ 📚 OER / LIBRE ]')}
     </div>
 
     <div class="swiss-cat-meta-bar">
