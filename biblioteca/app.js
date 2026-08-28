@@ -76,7 +76,7 @@ const buyBtn = b => {
 };
 
 function nav() {
-  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark.svg" width="30" height="30" alt="">Hojear</a><button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">Menú</button><div class="nav-links"><a href="${link('catalogo')}">Libros</a><a href="${link('guias')}">Guías</a><a class="pill" href="/contacto/?producto=Hojear+Plus">Plus</a></div></div></nav>`;
+  return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}">HOJEAR <span class="brand-tag">ARCHIVO</span></a><button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">MENU [≡]</button><div class="nav-links"><a href="${link('catalogo')}">CATÁLOGO</a><a href="${link('catalogo', '&filtro=Revista')}">HEMEROTECA</a><a href="${link('guias')}">GUÍAS</a><a class="pill" href="/contacto/?producto=Hojear+Plus">PLUS [→]</a></div></div></nav>`;
 }
 function bindNav() {
   const toggle = document.querySelector('.nav-toggle');
@@ -90,98 +90,180 @@ function bindNav() {
   });
 }
 function footer() {
-  return `<footer class="footer"><div class="wrap foot"><span>Hojear · ETEMEN</span><span data-visitas hidden></span><span><a href="${link('catalogo')}">Libros</a> · <a href="${link('guias')}">Guías</a> · <a href="/contacto/?producto=Hojear+Plus">Plus</a></span></div></footer>`;
+  return `<footer class="footer"><div class="wrap foot"><span>[ HOJEAR / ETEMEN ENGINE ] · DOMINIO PÚBLICO</span><span data-visitas hidden></span><span><a href="${link('catalogo')}">ÍNDICE</a> · <a href="${link('catalogo', '&filtro=Revista')}">HEMEROTECA</a> · <a href="${link('guias')}">GUÍAS</a> · <a href="/contacto/?producto=Hojear+Plus">SOPORTE</a></span></div></footer>`;
 }
+
 function bookCard(b) {
   const dest = b.hasText ? link('leer', '&libro=' + b.id) : link('libro', '&libro=' + b.id);
-  return `<a class="book ${b.color || 'brown'}" href="${dest}"><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span></div></a>`;
+  const isMag = b.genre === 'Revista';
+  const tagText = isMag ? 'HEMEROTECA' : (b.genre || 'LITERATURA').toUpperCase();
+  const yearText = b.year ? b.year : (b.place || 'DOMINIO PÚBLICO');
+  const badgeHtml = hasAudio(b) 
+    ? `<span class="bcs-badge bcs-audio">🎧 AUDIO</span>` 
+    : `<span class="bcs-badge bcs-text">📖 TEXTO</span>`;
+
+  return `<a class="book-card-swiss ${isMag ? 'is-magazine' : ''}" href="${dest}">
+    <div class="bcs-head">
+      <span class="bcs-id">[#${b.id.slice(0, 8)}]</span>
+      <span class="bcs-tag">${esc(tagText)}</span>
+    </div>
+    <div class="bcs-body">
+      <div class="bcs-title">${esc(b.title)}</div>
+      <div class="bcs-author">${esc(b.author)}</div>
+    </div>
+    <div class="bcs-foot">
+      <span class="bcs-meta">${esc(yearText)}</span>
+      ${badgeHtml}
+    </div>
+  </a>`;
 }
 
 function home() {
-  const featured = books.filter(b => b.hasText && b.genre !== 'Revista').slice(0, 8);
+  const featured = books.filter(b => b.hasText && b.genre !== 'Revista').slice(0, 12);
   const revistas = books.filter(b => b.genre === 'Revista').slice(0, 6);
-  return `<main>
-<section class="hero"><div class="wrap">
-  <span class="eyebrow">Hojear</span>
-  <h1>Lee un libro.<br><em>Gratis.</em></h1>
-  <p class="lead">Busca un título o un autor. Toca el libro y lee.</p>
-  <form class="home-search" action="" method="get">
-    <input type="hidden" name="vista" value="catalogo">
-    <label class="visually-hidden" for="home-q">Buscar un libro</label>
-    <input id="home-q" name="q" type="search" placeholder="Busca un título o un autor" autocomplete="off">
-    <button type="submit" class="button">Buscar</button>
-  </form>
-  <div class="actions">
-    <a class="button" href="${link('catalogo')}">Ver los libros</a>
-    <a class="button alt" href="${link('leer', '&libro=sub-terra')}">Empezar con Sub terra</a>
-  </div>
-</div></section>
-
-<!-- Máquina del Tiempo / Hemeroteca Histórica -->
-<section class="section time-machine-section" style="border-top:1px solid rgba(244,239,230,.08);background:rgba(217,93,57,.03);padding:60px 0">
-  <div class="wrap">
-    <div class="head" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px">
-      <div>
-        <span class="eyebrow" style="color:var(--gold,#d9a870)">⏳ Máquina del Tiempo</span>
-        <h2 style="margin:6px 0 0">Prensa y revistas de hace un siglo.</h2>
-        <p class="lead" style="font-size:.95rem;margin-top:6px">Fascículos originales, relatos pulp, expediciones y crónicas de 1878 a 1923.</p>
+  return `<main class="swiss-main">
+  <!-- Ticker Suizo de Estado -->
+  <div class="swiss-ticker">
+    <div class="wrap swiss-ticker-in">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="ticker-dot"></span>
+        <span class="ticker-text">ARCHIVO DIGITAL DE ACCESO LIBRE · 238 OBRAS INDEXADAS · LECTURA PURA</span>
       </div>
-      <a class="text-link" href="${link('catalogo', '&filtro=Revista')}">Ver todas las revistas →</a>
+      <span class="ticker-loc">[ SANTIAGO / CHILE ]</span>
     </div>
-    <div class="stack"><div class="books">${revistas.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></div>
   </div>
-</section>
 
-<section class="section"><div class="wrap">
-  <div class="head"><div><span class="eyebrow">Para empezar</span><h2>Toca uno y lee.</h2></div>
-  <a class="text-link" href="${link('catalogo')}">Ver todos →</a></div>
-  <div class="stack"><div class="books">${featured.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></div>
-</div></section>
-</main>`;
+  <!-- Hero Suizo -->
+  <section class="swiss-hero">
+    <div class="wrap">
+      <div class="swiss-hero-grid">
+        <div class="swiss-hero-left">
+          <span class="swiss-eyebrow">SISTEMA DE LECTURA DIGITAL</span>
+          <h1 class="swiss-h1">LEE.<br>INVESTIGA.<br><em>HOJEA.</em></h1>
+          <p class="swiss-lead">Acceso público, directo y sin intermediarios a las grandes obras de la literatura universal y la hemeroteca histórica chilena.</p>
+          <div class="swiss-actions">
+            <a class="btn-swiss btn-primary" href="${link('catalogo')}">EXPLORAR CATÁLOGO [238] →</a>
+            <a class="btn-swiss btn-ghost" href="${link('leer', '&libro=sub-terra')}">LEER SUB TERRA</a>
+          </div>
+        </div>
+        <div class="swiss-hero-right">
+          <form class="swiss-search" action="" method="get">
+            <input type="hidden" name="vista" value="catalogo">
+            <div class="search-box-swiss">
+              <span class="search-prompt">&gt;</span>
+              <input id="home-q" name="q" type="search" placeholder="Buscar por título, autor o temática..." autocomplete="off">
+              <button type="submit" class="search-submit-swiss">BUSCAR [↵]</button>
+            </div>
+          </form>
+          <div class="swiss-metrics-grid">
+            <div class="sm-card">
+              <div class="sm-num">238</div>
+              <div class="sm-lbl">TÍTULOS DISPONIBLES</div>
+            </div>
+            <div class="sm-card">
+              <div class="sm-num">100%</div>
+              <div class="sm-lbl">DOMINIO PÚBLICO</div>
+            </div>
+            <div class="sm-card">
+              <div class="sm-num">0 ms</div>
+              <div class="sm-lbl">LATENCIA / SIN ANUNCIOS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Máquina del Tiempo / Hemeroteca Histórica 1878 - 1923 -->
+  <section class="swiss-section swiss-hemeroteca">
+    <div class="wrap">
+      <div class="swiss-sec-head">
+        <div>
+          <span class="swiss-eyebrow" style="color:var(--gold,#ffb340)">ARCHIVO HISTÓRICO · HEMEROTECA</span>
+          <h2 class="swiss-h2">Prensa y revistas de hace un siglo</h2>
+          <p class="swiss-sec-sub">Ediciones completas, relatos pulp y expediciones científicas de 1878 a 1923.</p>
+        </div>
+        <a class="swiss-link" href="${link('catalogo', '&filtro=Revista')}">VER TODAS LAS REVISTAS →</a>
+      </div>
+      <div class="swiss-books-grid">${revistas.map(bookCard).join('')}</div>
+    </div>
+  </section>
+
+  <!-- Obras Destacadas -->
+  <section class="swiss-section">
+    <div class="wrap">
+      <div class="swiss-sec-head">
+        <div>
+          <span class="swiss-eyebrow">COLECCIÓN PRINCIPAL</span>
+          <h2 class="swiss-h2">Obras de lectura inmediata</h2>
+          <p class="swiss-sec-sub">Toca cualquier ficha para abrir el lector en modo libro o continuo.</p>
+        </div>
+        <a class="swiss-link" href="${link('catalogo')}">VER TODO EL ÍNDICE [238] →</a>
+      </div>
+      <div class="swiss-books-grid">${featured.map(bookCard).join('')}</div>
+    </div>
+  </section>
+  </main>`;
 }
 
 function chip(mode, filter, title, extraClass = '') {
   return `<button type="button" class="chip ${extraClass}" data-mode="${mode}" data-filter="${filter}" aria-pressed="false">${title}</button>`;
 }
+
 function catalogue() {
-  return `<main class="page cat"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / Libros</div>
-    <h1 class="cat-h1">Libros</h1>
-    <p class="lead">Escribe un nombre o elige un grupo.</p>
-    <label class="cat-search">
-      <span class="visually-hidden">Buscar un libro</span>
-      <input id="cat-q" type="search" placeholder="Busca un título o un autor" autocomplete="off" spellcheck="false">
-    </label>
-    <div class="chips" id="filters-quick">
-      ${chip('reset', 'todos', 'Todos', 'active')}
-      ${chip('lang', 'es', 'En español')}
-      ${chip('place', 'Chile', 'Chile')}
-      ${chip('genre', 'Novela', 'Novela')}
-      ${chip('genre', 'Cuentos', 'Cuentos')}
-      ${chip('genre', 'Poesía', 'Poesía')}
-      ${chip('genre', 'Revista', 'Revistas')}
-      ${chip('audio', 'audio', 'Con audio')}
+  return `<main class="page swiss-cat-page"><div class="wrap">
+    <div class="crumb swiss-crumb"><a href="${link('inicio')}">[INICIO]</a> / [CATÁLOGO GENERAL]</div>
+    <div class="swiss-cat-header">
+      <h1 class="swiss-h1" style="font-size:clamp(2.4rem,5vw,4.2rem);margin:0 0 8px">ÍNDICE DE OBRAS</h1>
+      <p class="swiss-lead" style="max-width:none">238 títulos de dominio público libres de derechos, listos para leer en pantalla o escuchar.</p>
     </div>
-    <p class="cat-count" id="cat-count"></p>
-    <div id="catalogue-books"></div>
+    
+    <div class="swiss-search-bar">
+      <span class="search-prompt">&gt;</span>
+      <input id="cat-q" type="search" placeholder="Filtrar por título, autor o contenido..." autocomplete="off" spellcheck="false">
+      <span class="search-kbd">ESC PARA LIMPIAR</span>
+    </div>
+
+    <div class="swiss-filter-pills" id="filters-quick">
+      ${chip('reset', 'todos', '[ TODOS ]', 'active')}
+      ${chip('lang', 'es', '[ ES · EN ESPAÑOL ]')}
+      ${chip('place', 'Chile', '[ 🇨🇱 CHILE ]')}
+      ${chip('genre', 'Novela', '[ NOVELA ]')}
+      ${chip('genre', 'Cuentos', '[ CUENTOS ]')}
+      ${chip('genre', 'Poesía', '[ POESÍA ]')}
+      ${chip('genre', 'Revista', '[ ⏳ HEMEROTECA ]')}
+      ${chip('audio', 'audio', '[ 🎧 CON AUDIO ]')}
+    </div>
+
+    <div class="swiss-cat-meta-bar">
+      <span class="cat-count" id="cat-count">CARGANDO REGISTROS...</span>
+      <span class="swiss-grid-label">VISTA DE ESPECÍMENES [GRID]</span>
+    </div>
+
+    <div id="catalogue-books" class="swiss-books-grid"></div>
   </div></main>`;
 }
 
 function bookPage(b) {
   const readBtn = b.hasText
-    ? `<a class="button" href="${link('leer', '&libro=' + b.id)}">Leer</a>`
-    : `<a class="button alt" href="${link('catalogo')}">Volver a los libros</a>`;
-  return `<main class="page"><div class="wrap">
-    <div class="crumb"><a href="${link('inicio')}">Inicio</a> / <a href="${link('catalogo')}">Libros</a> / ${b.title}</div>
-    <section class="book-hero">
-      <div class="cover ${b.color}"><div class="book-title">${b.title}</div><div class="book-footer"><span>${b.author}</span></div></div>
-      <div>
-        <h1 style="font-size:clamp(2.4rem,5vw,4rem);margin-bottom:12px">${b.title}</h1>
-        <p class="meta">${b.author}${b.year ? ' · ' + b.year : ''}<br>${b.desc || ''}</p>
+    ? `<a class="btn-swiss btn-primary" href="${link('leer', '&libro=' + b.id)}">LEER AHORA [📖]</a>`
+    : `<a class="btn-swiss btn-ghost" href="${link('catalogo')}">VOLVER AL ÍNDICE</a>`;
+  return `<main class="page swiss-book-page"><div class="wrap">
+    <div class="crumb swiss-crumb"><a href="${link('inicio')}">[INICIO]</a> / <a href="${link('catalogo')}">[CATÁLOGO]</a> / [${b.id.toUpperCase()}]</div>
+    <section class="swiss-book-specimen">
+      <div class="sbs-card">
+        <div class="bcs-head">
+          <span class="bcs-id">[#${b.id.slice(0, 8)}]</span>
+          <span class="bcs-tag">${(b.genre || 'LITERATURA').toUpperCase()}</span>
+        </div>
+        <h1 class="sbs-title" style="font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.8rem);margin:8px 0 12px;color:#fff">${b.title}</h1>
+        <div class="sbs-author" style="font-size:1.1rem;color:var(--ink2);margin-bottom:6px">${b.author}</div>
+        <div class="sbs-meta" style="font-family:var(--mono);font-size:.78rem;color:var(--ink3);margin-bottom:20px">${b.year ? 'PUBLICADO EN ' + b.year : ''}${b.place ? ' · ' + b.place : ''}</div>
+        <p class="sbs-desc" style="font-size:1.05rem;line-height:1.7;color:var(--ink2);max-width:680px">${b.desc || 'Edición íntegra de dominio público digitalizada y verificada para lectura web libre de anuncios.'}</p>
         <p class="libro-hits" id="libro-hits" hidden></p>
-        <div class="actions">
+        <div class="swiss-actions" style="margin-top:32px">
           ${readBtn}
-          ${hasAudio(b) ? `<a class="button alt" href="${link('escuchar', '&libro=' + b.id)}">Escuchar</a>` : ''}
+          ${hasAudio(b) ? `<a class="btn-swiss btn-ghost" href="${link('escuchar', '&libro=' + b.id)}">🎧 ESCUCHAR AUDIOLIBRO</a>` : ''}
           ${buyBtn(b)}
         </div>
       </div>
@@ -1212,15 +1294,18 @@ function bindCatalogue() {
         const order = [...GENRE_ORDER.filter(g => grouped[g]), ...Object.keys(grouped).filter(g => !GENRE_ORDER.includes(g)).sort()];
         let html = '';
         for (const g of order) {
-          html += `<h2 style="font-family: var(--serif); color: var(--gold); margin-top: 56px; margin-bottom: 24px; border-bottom: 1px solid rgba(244, 239, 230, 0.15); padding-bottom: 8px; font-weight: normal; font-size: 2.2rem; font-style: italic;">${g}</h2>`;
-          html += `<div class="stack"><div class="books">${grouped[g].map(bookCard).join('')}</div></div>`;
+          html += `<div style="margin-top: 48px; margin-bottom: 20px; border-bottom: 1px solid var(--line); padding-bottom: 10px; display:flex; justify-content:space-between; align-items:flex-end">
+            <h2 class="swiss-h2" style="font-size:1.8rem;margin:0">${g}</h2>
+            <span style="font-family:var(--mono);font-size:.72rem;color:var(--ink3)">[ ${grouped[g].length} OBRAS ]</span>
+          </div>`;
+          html += `<div class="swiss-books-grid">${grouped[g].map(bookCard).join('')}</div>`;
         }
         box.innerHTML = html;
       } else {
-        box.innerHTML = `<div class="stack"><div class="books">${list.map(bookCard).join('')}</div></div>`;
+        box.innerHTML = `<div class="swiss-books-grid">${list.map(bookCard).join('')}</div>`;
       }
     }
-    if (countEl) countEl.textContent = `${list.length} ${list.length === 1 ? 'libro' : 'libros'}`;
+    if (countEl) countEl.textContent = `[ ${list.length} ${list.length === 1 ? 'REGISTRO ENCONTRADO' : 'REGISTROS ENCONTRADOS'} ]`;
     paint();
   };
 
