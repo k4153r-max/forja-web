@@ -98,7 +98,8 @@ function bookCard(b) {
 }
 
 function home() {
-  const featured = books.filter(b => b.hasText).slice(0, 8);
+  const featured = books.filter(b => b.hasText && b.genre !== 'Revista').slice(0, 8);
+  const revistas = books.filter(b => b.genre === 'Revista').slice(0, 6);
   return `<main>
 <section class="hero"><div class="wrap">
   <span class="eyebrow">Hojear</span>
@@ -115,6 +116,22 @@ function home() {
     <a class="button alt" href="${link('leer', '&libro=sub-terra')}">Empezar con Sub terra</a>
   </div>
 </div></section>
+
+<!-- Máquina del Tiempo / Hemeroteca Histórica -->
+<section class="section time-machine-section" style="border-top:1px solid rgba(244,239,230,.08);background:rgba(217,93,57,.03);padding:60px 0">
+  <div class="wrap">
+    <div class="head" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px">
+      <div>
+        <span class="eyebrow" style="color:var(--gold,#d9a870)">⏳ Máquina del Tiempo</span>
+        <h2 style="margin:6px 0 0">Prensa y revistas de hace un siglo.</h2>
+        <p class="lead" style="font-size:.95rem;margin-top:6px">Fascículos originales, relatos pulp, expediciones y crónicas de 1878 a 1923.</p>
+      </div>
+      <a class="text-link" href="${link('catalogo', '&filtro=Revista')}">Ver todas las revistas →</a>
+    </div>
+    <div class="stack"><div class="books">${revistas.map(bookCard).join('')}</div><div class="shelf-plank" aria-hidden="true"></div></div>
+  </div>
+</section>
+
 <section class="section"><div class="wrap">
   <div class="head"><div><span class="eyebrow">Para empezar</span><h2>Toca uno y lee.</h2></div>
   <a class="text-link" href="${link('catalogo')}">Ver todos →</a></div>
@@ -267,6 +284,7 @@ function internalReader(b) {
             <button type="button" class="rab-btn" id="rab-back15" title="Rebobinar 15s">−15s</button>
             <button type="button" class="rab-btn play-btn" id="rab-play" title="Reproducir / Pausa">▶</button>
             <button type="button" class="rab-btn" id="rab-fwd15" title="Avanzar 15s">+15s</button>
+            <button type="button" class="rab-btn" id="rab-vintage" title="Efecto Radio Época / Gramófono 1920">📻 Radio</button>
             <button type="button" class="rab-btn" id="rab-speed" title="Velocidad">1x</button>
             <button type="button" class="rab-btn" id="rab-close" title="Ocultar audio">✕</button>
           </div>
@@ -792,11 +810,79 @@ function leerLoader(b) {
   const rabBack15 = document.getElementById('rab-back15');
   const rabFwd15 = document.getElementById('rab-fwd15');
   const rabSpeed = document.getElementById('rab-speed');
+  const rabVintage = document.getElementById('rab-vintage');
   const rabClose = document.getElementById('rab-close');
   const rabInfo = document.getElementById('rab-info');
   const rabSeek = document.getElementById('rab-seek');
   const rabCur = document.getElementById('rab-cur');
   const rabDur = document.getElementById('rab-dur');
+
+  // Filtro de audio Vintage (Radio a tubos / Gramófono 1920)
+  let vCtx = null;
+  let vSrc = null;
+  let vHigh = null;
+  let vLow = null;
+  let vPeak = null;
+  let vDist = null;
+  let vGain = null;
+  let vActive = false;
+
+  function toggleVintageAudio() {
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      if (!vCtx) {
+        vCtx = new AC();
+        vSrc = vCtx.createMediaElementSource(frAudio);
+        vHigh = vCtx.createBiquadFilter();
+        vHigh.type = 'highpass';
+        vHigh.frequency.value = 380;
+        vLow = vCtx.createBiquadFilter();
+        vLow.type = 'lowpass';
+        vLow.frequency.value = 3000;
+        vPeak = vCtx.createBiquadFilter();
+        vPeak.type = 'peaking';
+        vPeak.frequency.value = 1500;
+        vPeak.gain.value = 4;
+        vDist = vCtx.createWaveShaper();
+        const n = 44100;
+        const curve = new Float32Array(n);
+        for (let i = 0; i < n; ++i) {
+          const x = (i * 2) / n - 1;
+          curve[i] = ((3 + 12) * x * 20 * (Math.PI / 180)) / (Math.PI + 12 * Math.abs(x));
+        }
+        vDist.curve = curve;
+        vGain = vCtx.createGain();
+        vGain.gain.value = 1.25;
+
+        vSrc.connect(vHigh);
+        vHigh.connect(vLow);
+        vLow.connect(vPeak);
+        vPeak.connect(vDist);
+        vDist.connect(vGain);
+        vGain.connect(vCtx.destination);
+      }
+      if (vCtx.state === 'suspended') vCtx.resume();
+      vActive = !vActive;
+      if (vActive) {
+        vSrc.disconnect();
+        vSrc.connect(vHigh);
+        vGain.connect(vCtx.destination);
+        rabVintage?.classList.add('active');
+        if (rabVintage) rabVintage.style.background = 'var(--gold, #d9a870)';
+        if (rabVintage) rabVintage.style.color = '#000';
+      } else {
+        vSrc.disconnect();
+        vGain.disconnect();
+        vSrc.connect(vCtx.destination);
+        rabVintage?.classList.remove('active');
+        if (rabVintage) rabVintage.style.background = '';
+        if (rabVintage) rabVintage.style.color = '';
+      }
+    } catch (_) {}
+  }
+
+  rabVintage?.addEventListener('click', toggleVintageAudio);
 
   if (packAudio && frAudio && audioBar) {
     const audioKey = 'hojear-audio-v1:' + b.id;
