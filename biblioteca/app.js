@@ -70,8 +70,10 @@ const buyUrl = b => {
   }
   return url;
 };
-const buyBtn = b =>
-  `<a class="button alt buy-bc" href="${buyUrl(b)}" target="_blank" rel="noopener sponsored">Comprar el libro</a>`;
+const buyBtn = b => {
+  if (b.type === 'Revista' || b.genre === 'Revista' || (b.license && String(b.license).indexOf('CC') === 0)) return '';
+  return `<a class="button alt buy-bc" href="${buyUrl(b)}" target="_blank" rel="noopener sponsored">Comprar el libro</a>`;
+};
 
 function nav() {
   return `<nav><div class="wrap nav-in"><a class="brand" href="${link('inicio')}"><img class="brand-logo" src="/assets/logos/hojear-mark.svg" width="30" height="30" alt="">Hojear</a><button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">Menú</button><div class="nav-links"><a href="${link('catalogo')}">Libros</a><a href="${link('guias')}">Guías</a><a class="pill" href="/contacto/?producto=Hojear+Plus">Plus</a></div></div></nav>`;
@@ -140,6 +142,7 @@ function catalogue() {
       ${chip('genre', 'Novela', 'Novela')}
       ${chip('genre', 'Cuentos', 'Cuentos')}
       ${chip('genre', 'Poesía', 'Poesía')}
+      ${chip('genre', 'Revista', 'Revistas')}
       ${chip('audio', 'audio', 'Con audio')}
     </div>
     <p class="cat-count" id="cat-count"></p>
@@ -482,7 +485,7 @@ function leerLoader(b) {
   }
   function isHead(t) {
     if (t.length > 100) return false;
-    if (/^(cap[ií]tulo|cap[\.\s]|parte\b|pr[oó]logo|ep[ií]logo|dedicatoria|libro\b|secci[óo]n|conclusi[óo]n|introducci[óo]n|acto\b|escena|tom[oa]\b|nota\b|ap[eé]ndice|advertencia|prefaci)/i.test(t)) return true;
+    if (/^(cap[ií]tulo|cap[\.\s]|parte\b|pr[oó]logo|ep[ií]logo|dedicatoria|libro\b|secci[óo]n|conclusi[óo]n|introducci[óo]n|acto\b|escena|tom[oa]\b|nota\b|ap[eé]ndice|advertencia|prefaci|editorial\b|cr[oó]nica|art[ií]culo|cuento\b|relato\b|reportaje|fasc[ií]culo|sumario|contents|stories|volumen|volume|issue|chapter)/i.test(t)) return true;
     const u = t.replace(/[.,;:!?¡¿"'()\-—–]/g, '').trim();
     return u.length > 3 && u.length < 70 && /^[A-ZÁÉÍÓÚÑÜ0-9][A-ZÁÉÍÓÚÑÜ0-9\s.,;:!?¡¿\-—']+$/.test(u);
   }

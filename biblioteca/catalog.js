@@ -230,8 +230,13 @@ const books = [
  { id:'antano-ogano', title:'Antaño y ogaño', author:'José Victorino Lastarria', type:'Cuentos', genre:'Cuentos', place:'Chile', color:'brown', year:'1885', hasText:true, license:'Dominio público', source:'Project Gutenberg #45945', desc:'Novelas y cuentos de la vida hispanoamericana.', lang:'es' },
  { id:'la-america-1', title:'La América (Tomo I)', author:'José Victorino Lastarria', type:'Ensayo', genre:'Ensayo', place:'Chile', color:'navy', year:'1865', hasText:true, license:'Dominio público', source:'Project Gutenberg #71275', desc:'Ensayo sobre América y su destino.', lang:'es' },
  { id:'rimas-y-leyendas', title:'Rimas y leyendas', author:'Gustavo Adolfo Bécquer', type:'Poesía', genre:'Poesía', place:'Universal', color:'purple', year:'1871', hasText:true, license:'Dominio público', source:'Project Gutenberg #14647', desc:'La cumbre del Romanticismo español.', lang:'es' },
+  { id:'strand-magazine-1894-01', title:'The Strand Magazine (Vol. VII, Nº 37)', author:'George Newnes (Ed.)', type:'Revista', genre:'Revista', place:'Universal', color:'navy', year:'1894', hasText:true, license:'Dominio público', source:'Project Gutenberg #10020', desc:'Revista ilustrada británica de 1894 con relatos, reportajes y misterio.', lang:'en' },
+  { id:'weird-tales-1923-09', title:'Weird Tales (Vol. 2, Nº 2 — Sep 1923)', author:'Edwin Baird (Ed.)', type:'Revista', genre:'Revista', place:'Universal', color:'purple', year:'1923', hasText:true, license:'Dominio público', source:'Internet Archive (WeirdTalesV02N02192309)', desc:'Edición clásica de la legendaria revista de horror, fantasía y ciencia ficción.', lang:'en' },
+  { id:'wide-world-magazine-1909-03', title:'The Wide World Magazine (Vol. 22, Nº 132)', author:'Varios autores', type:'Revista', genre:'Revista', place:'Universal', color:'green', year:'1909', hasText:true, license:'Dominio público', source:'Project Gutenberg #52408', desc:'Crónicas de viajes, relatos de expediciones y aventuras alrededor del mundo.', lang:'en' },
+  { id:'pansy-magazine-1887-11', title:'The Pansy Magazine (Noviembre 1887)', author:'Isabella Macdonald Alden', type:'Revista', genre:'Revista', place:'Universal', color:'yellow', year:'1887', hasText:true, license:'Dominio público', source:'Project Gutenberg #52909', desc:'Revista ilustrada del siglo XIX con cuentos infantiles, grabados y lecciones morales.', lang:'en' },
+  { id:'strand-magazine-1894-02', title:'The Strand Magazine (Vol. VII, Nº 38 — Feb 1894)', author:'George Newnes (Ed.)', type:'Revista', genre:'Revista', place:'Universal', color:'navy', year:'1894', hasText:true, license:'Dominio público', source:'Project Gutenberg #10021', desc:'Edición de febrero de 1894 de la clásica revista ilustrada británica.', lang:'en' },
 ];
-const CATALOG_STATS = { total: 228, readable: 228, chile: 17, oer: 8 };
+const CATALOG_STATS = { total: 234, readable: 234, chile: 17, oer: 8 };
 
 
 

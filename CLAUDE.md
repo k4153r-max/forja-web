@@ -63,7 +63,7 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 
 ---
 
-## Memoria sesión 2026-08-25 (Antigravity — estado infraestructura ETEMEN)
+## Estado infraestructura ETEMEN (actualizado 2026-08-25)
 
 ### Decisiones tomadas
 
@@ -87,28 +87,35 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
     `docs/PROJECT_STATE.md` de ese repo todavía está escrito como si fuera investigación activa
     de pleno derecho, desactualizado tras esta decisión (pendiente corregir ahí también).
 
-### Arquitectura objetivo (actualizada)
+### Arquitectura final ✅
 
 | Plataforma | Qué va ahí | Estado |
 |---|---|---|
-| **Render** | Solo `etemen.cl` estático (srv-d9ifoibeo5us739sr680) | ✅ Activo, NO tocar |
-| **Fly.io** | Backends Python: nexus, bodega trials | ⏳ Pendiente |
+| **Render** | Solo `etemen.cl` estático (`srv-d9ifoibeo5us739sr680`) | ✅ Único servicio — NO tocar |
+| **Fly.io** | Todos los backends Python | ✅ Migrado |
 
-### Servicios en Render a migrar (todos suspendidos)
+### Apps en Fly.io (todas migradas)
 
-1. **nexus** + **nexus-trial-demo** / **nexus-trial-taller** / **nexus-trial-unas** / **nexus-dpb7**
-2. **bodega-trial-almacen-demo** / **bodega-trial-ferreteria-demo** / **bodega-trial-botilleria-demo** / **bodega-trial-la-parissiene**
+| App | Estado |
+|---|---|
+| `etemen-nexus` | suspended (duerme, despierta con tráfico) |
+| `nexus-trial-demo` | suspended |
+| `nexus-trial-taller` | suspended |
+| `nexus-trial-unas` | suspended |
+| `nexus-dpb7` | suspended |
+| `bodega-trial-almacen-demo` | suspended |
+| `bodega-trial-ferreteria-demo` | deployed |
+| `bodega-trial-botilleria-demo` | suspended |
+| `bodega-trial-la-parissiene` | suspended |
 
-### Próximos pasos
+### Decisiones permanentes
 
-1. [ ] Confirmar si Antonio tiene cuenta Fly.io
-2. [ ] Migrar nexus a Fly.io
-3. [ ] Migrar bodega trials a Fly.io de a uno
-4. [ ] Borrar servicios suspendidos de Render una vez migrados en Fly.io
+- **chile-oef cancelado** (2026-08-25) — fuera del nicho. Render + Neon + GitHub borrados.
+- No tocar el estático Etemen en Render.
+- cron-job.org keep-alive: actualizar URLs de Render → Fly.io si aún apuntan al viejo dominio.
 
-### No rehacer
+### Flyctl
 
-- No borrar Etemen estático de Render — es el único servicio que funciona bien ahí.
-- No borrar servicios de Render antes de confirmar que funcionan en Fly.io.
-- cron-job.org keep-alive de nexus-trial-demo apunta a Render — actualizar URL a Fly.io al migrar.
+- Instalado en `~\.fly\bin`
+- Auth: usar `$env:FLY_ACCESS_TOKEN` en cada comando (token en Fly.io dashboard → Tokens)
 
