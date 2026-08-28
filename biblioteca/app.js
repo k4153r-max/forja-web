@@ -277,7 +277,7 @@ function internalReader(b) {
       </div>
       ${hasAudio(b) ? `
       <div class="reader-audio-bar" id="reader-audio-bar" hidden>
-        <audio id="fr-audio-el" crossorigin="anonymous" preload="metadata"></audio>
+        <audio id="fr-audio-el" preload="metadata"></audio>
         <div class="rab-row">
           <div class="rab-info" id="rab-info"><strong>Audio</strong></div>
           <div class="rab-controls">
@@ -817,87 +817,73 @@ function leerLoader(b) {
   const rabCur = document.getElementById('rab-cur');
   const rabDur = document.getElementById('rab-dur');
 
-  // Filtro de audio Vintage (Radio a tubos / Gramófono 1920)
+  // Efecto ambiental Gramófono / Radio de Época 1920 (crepitar de aguja a 78 RPM y tono analógico)
   let vCtx = null;
-  let vSrc = null;
-  let vDryGain = null;
-  let vWetGain = null;
-  let vHigh = null;
-  let vLow = null;
-  let vPeak = null;
-  let vDist = null;
+  let vNoiseNode = null;
+  let vNoiseGain = null;
   let vActive = false;
 
-  function initVintageAudio() {
+  function initVintageAtmosphere() {
     if (vCtx) return true;
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return false;
       vCtx = new AC();
-      vSrc = vCtx.createMediaElementSource(frAudio);
 
-      // Rama Dry (sonido normal sin distorsión)
-      vDryGain = vCtx.createGain();
-      vDryGain.gain.value = 1.0;
-      vSrc.connect(vDryGain);
-      vDryGain.connect(vCtx.destination);
-
-      // Rama Wet (sonido radio de época / gramófono)
-      vHigh = vCtx.createBiquadFilter();
-      vHigh.type = 'highpass';
-      vHigh.frequency.value = 380;
-      vHigh.Q.value = 0.8;
-
-      vLow = vCtx.createBiquadFilter();
-      vLow.type = 'lowpass';
-      vLow.frequency.value = 3200;
-      vLow.Q.value = 1.1;
-
-      vPeak = vCtx.createBiquadFilter();
-      vPeak.type = 'peaking';
-      vPeak.frequency.value = 1600;
-      vPeak.gain.value = 4.5;
-
-      vDist = vCtx.createWaveShaper();
-      const n = 44100;
-      const curve = new Float32Array(n);
-      for (let i = 0; i < n; ++i) {
-        const x = (i * 2) / n - 1;
-        curve[i] = ((3 + 10) * x * 20 * (Math.PI / 180)) / (Math.PI + 10 * Math.abs(x));
+      // Buffer de 3 segundos con ruido rosa + pops aleatorios de aguja de gramófono
+      const bufferSize = vCtx.sampleRate * 3;
+      const buffer = vCtx.createBuffer(1, bufferSize, vCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      let b0 = 0, b1 = 0, b2 = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        let pink = b0 + b1 + b2 + white * 0.1;
+        // Crackle & pops aleatorios de disco antiguo
+        if (Math.random() < 0.0008) {
+          pink += (Math.random() > 0.5 ? 1 : -1) * (0.5 + Math.random() * 0.4);
+        }
+        data[i] = pink * 0.07;
       }
-      vDist.curve = curve;
 
-      vWetGain = vCtx.createGain();
-      vWetGain.gain.value = 0.0;
+      vNoiseNode = vCtx.createBufferSource();
+      vNoiseNode.buffer = buffer;
+      vNoiseNode.loop = true;
 
-      vSrc.connect(vHigh);
-      vHigh.connect(vLow);
-      vLow.connect(vPeak);
-      vPeak.connect(vDist);
-      vDist.connect(vWetGain);
-      vWetGain.connect(vCtx.destination);
+      // Filtro pasa-banda para dar textura de radio AM / tubo antiguo
+      const filter = vCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 1600;
+      filter.Q.value = 1.0;
+
+      vNoiseGain = vCtx.createGain();
+      vNoiseGain.gain.value = 0.0;
+
+      vNoiseNode.connect(filter);
+      filter.connect(vNoiseGain);
+      vNoiseGain.connect(vCtx.destination);
+      vNoiseNode.start(0);
 
       return true;
     } catch (e) {
-      console.warn('Web Audio init error:', e);
       return false;
     }
   }
 
   function toggleVintageAudio() {
-    if (!initVintageAudio()) return;
+    if (!initVintageAtmosphere()) return;
     if (vCtx.state === 'suspended') vCtx.resume();
     vActive = !vActive;
     const now = vCtx.currentTime;
     if (vActive) {
-      vDryGain.gain.setTargetAtTime(0, now, 0.04);
-      vWetGain.gain.setTargetAtTime(1.35, now, 0.04);
+      vNoiseGain.gain.setTargetAtTime(!frAudio.paused ? 0.35 : 0, now, 0.05);
       rabVintage?.classList.add('active');
       if (rabVintage) rabVintage.style.background = 'var(--gold, #d9a870)';
       if (rabVintage) rabVintage.style.color = '#000';
     } else {
-      vDryGain.gain.setTargetAtTime(1, now, 0.04);
-      vWetGain.gain.setTargetAtTime(0, now, 0.04);
+      vNoiseGain.gain.setTargetAtTime(0, now, 0.05);
       rabVintage?.classList.remove('active');
       if (rabVintage) rabVintage.style.background = '';
       if (rabVintage) rabVintage.style.color = '';
@@ -920,8 +906,7 @@ function leerLoader(b) {
     function loadTrack(n, autoPlay) {
       trackIdx = Math.max(0, Math.min(packAudio.tracks.length - 1, n));
       const tr = packAudio.tracks[trackIdx];
-      frAudio.crossOrigin = 'anonymous';
-      frAudio.src = tr.u;
+      frAudio.src = tr.u.replace('https://www.archive.org/', 'https://archive.org/');
       frAudio.playbackRate = speeds[speedIdx];
       if (rabInfo) rabInfo.innerHTML = `<strong>Cap. ${trackIdx + 1}/${packAudio.tracks.length}</strong> ${esc(tr.t)}`;
       if (rabDur) rabDur.textContent = fmtTime(tr.s);
@@ -962,8 +947,16 @@ function leerLoader(b) {
       else frAudio.pause();
     });
 
-    frAudio.addEventListener('play', () => { if (rabPlay) rabPlay.textContent = '⏸'; audioToggle?.classList.add('active'); });
-    frAudio.addEventListener('pause', () => { if (rabPlay) rabPlay.textContent = '▶'; saveAudioState(); });
+    frAudio.addEventListener('play', () => {
+      if (rabPlay) rabPlay.textContent = '⏸';
+      audioToggle?.classList.add('active');
+      if (vActive && vNoiseGain && vCtx) vNoiseGain.gain.setTargetAtTime(0.35, vCtx.currentTime, 0.05);
+    });
+    frAudio.addEventListener('pause', () => {
+      if (rabPlay) rabPlay.textContent = '▶';
+      if (vNoiseGain && vCtx) vNoiseGain.gain.setTargetAtTime(0, vCtx.currentTime, 0.05);
+      saveAudioState();
+    });
 
     frAudio.addEventListener('timeupdate', () => {
       if (seeking) return;
