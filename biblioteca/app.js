@@ -50,6 +50,7 @@ const link = (vista, extra = '') => `?vista=${vista}${extra}`;
 const audioPack = id => (typeof hojearAudio !== 'undefined' && hojearAudio[id]) || null;
 const hasAudio = b => !!(audioPack(b && b.id) && audioPack(b.id).tracks && audioPack(b.id).tracks.length);
 const escapeHtml = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const esc = escapeHtml;
 const fmtTime = sec => {
   sec = Math.max(0, Math.floor(Number(sec) || 0));
   const h = Math.floor(sec / 3600);
