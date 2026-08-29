@@ -278,6 +278,11 @@ body.reading-mode .reader-crumb{display:none}
 }
 .reader-image-page img{display:block;width:100%;height:auto;max-height:78vh;object-fit:contain;margin:auto}
 .reader-image-page figcaption{padding:10px 4px 2px;color:var(--read-muted);font:500 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.reader-image-text{width:min(100%,58rem);margin:24px auto 0;border:1px solid var(--read-edge);background:var(--read-chrome);color:var(--read-ink);box-shadow:var(--read-shadow)}
+.reader-image-text summary{padding:14px 18px;cursor:pointer;color:var(--read-accent);font:600 .82rem var(--sans);letter-spacing:.04em}
+.reader-image-text>div{padding:8px clamp(18px,4vw,42px) 28px;text-align:left;max-height:70vh;overflow:auto}
+.reader-image-text .p-h{color:var(--read-ink)}
+.reader-image-text-scroll{margin-bottom:32px}
 @keyframes reader-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .reader-body p{
   margin:0 0 var(--read-gap);

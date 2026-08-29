@@ -574,6 +574,7 @@ function leerLoader(b) {
   const hint = document.getElementById('book-hint');
   const storageKey = 'hojear-read-v1:' + b.id;
   let pages = [];
+  let textPages = [];
   let rawParas = [];
   let idx = 0; // índice de página o pliego
   let fr = 100;
@@ -652,7 +653,11 @@ function leerLoader(b) {
     }
     const seg = pages[pageIndex];
     if (seg && seg[0] && seg[0].image) {
-      return '<figure class="reader-image-page"><img src="' + esc(seg[0].image) + '" alt="' + esc(b.title + ', página ' + (pageIndex + 1)) + '" loading="lazy"><figcaption>' + esc(b.title) + ' · página ' + (pageIndex + 1) + '</figcaption></figure>';
+      let ocr = '';
+      if (pageIndex === 0 && textPages.length) {
+        ocr = '<details class="reader-image-text"><summary>Leer historia y diálogos · transcripción OCR</summary><div>' + textPages.flat().map((q, i) => paraToHtml(q.trim(), i === 0)).join('') + '</div></details>';
+      }
+      return '<figure class="reader-image-page"><img src="' + esc(seg[0].image) + '" alt="' + esc(b.title + ', página ' + (pageIndex + 1)) + '" loading="lazy"><figcaption>' + esc(b.title) + ' · página ' + (pageIndex + 1) + '</figcaption></figure>' + ocr;
     }
     let h = '';
     if (pageIndex === 0 && isFirstOverall) {
@@ -733,6 +738,9 @@ function leerLoader(b) {
   }
   function renderScroll() {
     let h = '<div class="p-cover"><h2 class="p-chapter">' + esc(b.title) + '</h2><p class="p-author">' + esc(b.author) + ' · ' + esc(String(b.year)) + '</p></div>';
+    if (Array.isArray(b.imagePages) && textPages.length) {
+      h += '<details class="reader-image-text reader-image-text-scroll"><summary>Leer historia y diálogos · transcripción OCR</summary><div>' + textPages.flat().map((q, i) => paraToHtml(q.trim(), i === 0)).join('') + '</div></details>';
+    }
     let firstP = true;
     pages.forEach((seg, pi) => {
       if (pi > 0) h += '<hr class="page-break" data-page="' + pi + '">';
@@ -871,6 +879,7 @@ function leerLoader(b) {
         sum += p.length;
       }
       if (cur.length) pages.push(cur);
+      textPages = pages;
       if (Array.isArray(b.imagePages) && b.imagePages.length) {
         pages = b.imagePages.map(src => [{ image: src }]);
       }
