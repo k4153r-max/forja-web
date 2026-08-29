@@ -245,7 +245,7 @@ function catalogue() {
       <span class="swiss-grid-label">VISTA DE ESPECÍMENES [GRID]</span>
     </div>
 
-    <div id="catalogue-books" class="swiss-books-grid"></div>
+    <div id="catalogue-books" class="catalogue-container"></div>
   </div></main>`;
 }
 
@@ -1299,11 +1299,13 @@ function bindCatalogue() {
         const order = [...GENRE_ORDER.filter(g => grouped[g]), ...Object.keys(grouped).filter(g => !GENRE_ORDER.includes(g)).sort()];
         let html = '';
         for (const g of order) {
-          html += `<div style="margin-top: 48px; margin-bottom: 20px; border-bottom: 1px solid var(--line); padding-bottom: 10px; display:flex; justify-content:space-between; align-items:flex-end">
-            <h2 class="swiss-h2" style="font-size:1.8rem;margin:0">${g}</h2>
-            <span style="font-family:var(--mono);font-size:.72rem;color:var(--ink3)">[ ${grouped[g].length} OBRAS ]</span>
+          html += `<div class="swiss-genre-group" style="margin-top: 48px; margin-bottom: 24px;">
+            <div style="border-bottom: 1px solid var(--line-strong); padding-bottom: 10px; margin-bottom: 20px; display:flex; justify-content:space-between; align-items:flex-end">
+              <h2 class="swiss-h2" style="font-size:1.8rem;margin:0">${g}</h2>
+              <span style="font-family:var(--mono);font-size:.72rem;color:var(--ink3)">[ ${grouped[g].length} OBRAS ]</span>
+            </div>
+            <div class="swiss-books-grid">${grouped[g].map(bookCard).join('')}</div>
           </div>`;
-          html += `<div class="swiss-books-grid">${grouped[g].map(bookCard).join('')}</div>`;
         }
         box.innerHTML = html;
       } else {
