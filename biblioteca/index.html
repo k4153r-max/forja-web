@@ -5,25 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Lee clásicos gratis. Busca un título o un autor, ábrelo y lee. Sin anuncios.">
   <title>Hojear — Lee un libro</title>
-  <meta name="theme-color" content="#0B0B0C">
+  <link rel="canonical" href="https://etemen.cl/biblioteca/">
+  <meta name="theme-color" content="#0c0b0a">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"ItemList","name":"Hojear — catálogo","itemListElement":[
+    {"@type":"ListItem","position":1,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=sub-terra","name":"Sub terra"},
+    {"@type":"ListItem","position":2,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=quijote","name":"Don Quijote de la Mancha"},
+    {"@type":"ListItem","position":3,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=martin-rivas","name":"Martín Rivas"},
+    {"@type":"ListItem","position":4,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=cuentos-amor","name":"Cuentos de amor, de locura y de muerte"},
+    {"@type":"ListItem","position":5,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=lazarillo","name":"Lazarillo de Tormes"},
+    {"@type":"ListItem","position":6,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=platero","name":"Platero y yo"},
+    {"@type":"ListItem","position":7,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=altazor","name":"Altazor"},
+    {"@type":"ListItem","position":8,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=fuente-ovejuna","name":"Fuente Ovejuna"},
+    {"@type":"ListItem","position":9,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=niebla","name":"Niebla"},
+    {"@type":"ListItem","position":10,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=frankenstein","name":"Frankenstein"},
+    {"@type":"ListItem","position":11,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=dracula","name":"Drácula"},
+    {"@type":"ListItem","position":12,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=ariel","name":"Ariel"},
+    {"@type":"ListItem","position":13,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=pazos-ulloa","name":"Los pazos de Ulloa"},
+    {"@type":"ListItem","position":14,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=romancero-gitano","name":"Primer romancero gitano"},
+    {"@type":"ListItem","position":15,"url":"https://etemen.cl/biblioteca/?vista=leer&libro=juana-lucero","name":"Juana Lucero"},
+    {"@type":"ListItem","position":16,"url":"https://etemen.cl/biblioteca/?vista=escuchar&libro=lazarillo","name":"Lazarillo (audio)"},
+    {"@type":"ListItem","position":17,"url":"https://etemen.cl/biblioteca/?vista=catalogo&filtro=Revista","name":"Hemeroteca"},
+    {"@type":"ListItem","position":18,"url":"https://etemen.cl/biblioteca/?vista=catalogo&filtro=Cómic","name":"Cómics"},
+    {"@type":"ListItem","position":19,"url":"https://etemen.cl/biblioteca/?vista=catalogo&filtro=Chile","name":"Chile"},
+    {"@type":"ListItem","position":20,"url":"https://etemen.cl/biblioteca/?vista=guias","name":"Guías de lectura"}
+  ]}
+  </script>
   <link rel="icon" href="/assets/logos/hojear-mark-v2.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/logos/hojear-icon.jpg">
   <meta property="og:image" content="https://etemen.cl/assets/logos/hojear-icon.jpg">
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62,600;62,800;100,400;100,600;100,800&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 :root{
-  --bg:#08080a;--bg2:#101014;--panel:#15151a;--panel-hover:#1c1c23;
-  --ink:#ffffff;--ink2:rgba(255,255,255,.68);--ink3:rgba(255,255,255,.42);
-  --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.2);
-  --swiss-red:#ff3b00;--swiss-red-glow:rgba(255,59,0,.15);--swiss-cyan:#00e5ff;--gold:#ffb340;
-  --display:'Archivo',"Helvetica Neue",Arial,sans-serif;
+  --bg:#0c0b0a;--bg2:#141311;--panel:#1c1a18;--panel-hover:#24211e;
+  --ink:#E8E4D9;--ink2:rgba(232,228,217,.72);--ink3:rgba(232,228,217,.42);
+  --line:rgba(232,228,217,.1);--line-strong:rgba(232,228,217,.22);
+  --swiss-red:#D95D39;--swiss-red-glow:rgba(217,93,57,.18);--swiss-cyan:#E29D52;--gold:#E29D52;
+  --display:'Newsreader',Georgia,serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
   --serif:'Newsreader',Georgia,serif;
   --sans:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;
   --read-font:'Literata',Georgia,serif;
   --read-size:1.125rem;--read-lh:1.78;--read-measure:42rem;--read-gap:1.35em;
   --read-pad-x:clamp(1.25rem,5vw,3.5rem);--read-pad-y:clamp(2rem,5vh,3.5rem);
-  --read-paper:#faf6ee;--read-ink:#2a2622;--read-muted:#6b635a;--read-accent:#ff3b00;
+  --read-paper:#faf6ee;--read-ink:#2a2622;--read-muted:#6b635a;--read-accent:#D95D39;
   --read-chrome:rgba(250,246,238,.92);--read-edge:rgba(42,38,34,.08);--read-shadow:0 24px 64px -28px rgba(42,38,34,.28)
 }
 *{box-sizing:border-box}
@@ -34,7 +59,7 @@ body.lib-mode{background:#08080a;color:#fff}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--swiss-red);color:#fff}
 .wrap{width:min(1240px,calc(100% - 40px));margin:auto}
-h1,h2,h3{font-family:var(--display);letter-spacing:-.04em;font-weight:800;color:#fff;text-transform:uppercase}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em;font-weight:600;color:#fff;text-transform:none}
 .eyebrow{color:var(--swiss-red);font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono)}
 .eyebrow:before{content:"[";color:var(--swiss-red);opacity:.7}
 .eyebrow:after{content:"]";color:var(--swiss-red);opacity:.7}
@@ -42,7 +67,7 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.04em;font-weight:800;color:
 /* NAV SUIZO */
 nav{position:sticky;top:0;z-index:40;background:rgba(8,8,10,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:0 max(20px, env(safe-area-inset-right, 0px))}
 nav .wrap.nav-in,.nav-in{display:flex;width:100%;max-width:1240px;margin:0 auto;min-height:64px;justify-content:space-between;align-items:center;gap:16px;position:relative}
-.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.35rem;letter-spacing:-.04em;text-transform:uppercase;color:#fff}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:1.45rem;letter-spacing:-.02em;font-style:italic;color:#fff}
 .brand-tag{font-family:var(--mono);font-size:.65rem;font-weight:600;letter-spacing:.1em;background:var(--swiss-red);color:#fff;padding:2px 6px}
 .nav-links{display:flex;align-items:center;flex-wrap:nowrap;justify-content:flex-end;gap:20px}
 .nav-links a{font-family:var(--mono);font-size:.76rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);transition:color .15s}
@@ -60,11 +85,11 @@ nav .wrap.nav-in,.nav-in{display:flex;width:100%;max-width:1240px;margin:0 auto;
 /* HERO SUIZO */
 .swiss-hero{padding:72px 0 64px;border-bottom:1px solid var(--line)}
 .swiss-hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
-.swiss-h1{font-family:var(--display);font-size:clamp(3rem,7vw,5.6rem);font-weight:800;line-height:.88;letter-spacing:-.05em;text-transform:uppercase;margin:0 0 20px;color:#fff}
+.swiss-h1{font-family:var(--display);font-size:clamp(2.6rem,6.4vw,5.2rem);font-weight:500;line-height:.95;letter-spacing:-.03em;text-transform:none;margin:0 0 20px;color:#fff}
 .swiss-h1 em{font-style:normal;color:var(--swiss-red)}
 .swiss-lead{font-size:1.05rem;line-height:1.6;color:var(--ink2);max-width:500px;margin:0 0 28px}
 .swiss-actions{display:flex;gap:12px;flex-wrap:wrap}
-.btn-swiss{font-family:var(--mono);font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:14px 22px;border-radius:0;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
+.btn-swiss{font-family:var(--sans);font-size:.9rem;font-weight:600;letter-spacing:.02em;text-transform:none;padding:14px 22px;border-radius:0;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
 .btn-swiss.btn-primary{background:var(--swiss-red);color:#fff;border:1px solid var(--swiss-red)}
 .btn-swiss.btn-primary:hover{background:#ff5522;border-color:#ff5522;transform:translateY(-2px);box-shadow:0 8px 24px var(--swiss-red-glow)}
 .btn-swiss.btn-ghost{background:transparent;color:#fff;border:1px solid var(--line-strong)}
@@ -87,7 +112,7 @@ nav .wrap.nav-in,.nav-in{display:flex;width:100%;max-width:1240px;margin:0 auto;
 /* SECCIONES & GRID */
 .swiss-section{padding:72px 0;border-bottom:1px solid var(--line)}
 .swiss-sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;gap:20px}
-.swiss-h2{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.04em;text-transform:uppercase;margin:4px 0 0;color:#fff}
+.swiss-h2{font-family:var(--display);font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:600;letter-spacing:-.02em;text-transform:none;margin:4px 0 0;color:#fff}
 .swiss-sec-sub{font-size:.95rem;color:var(--ink2);margin:6px 0 0}
 .swiss-link{font-family:var(--mono);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--swiss-red);border-bottom:1px solid var(--swiss-red);padding-bottom:2px;white-space:nowrap;transition:opacity .15s}
 .swiss-link:hover{opacity:.8}
@@ -100,7 +125,7 @@ nav .wrap.nav-in,.nav-in{display:flex;width:100%;max-width:1240px;margin:0 auto;
 .bcs-tag{color:var(--swiss-red);font-weight:600}
 .book-card-swiss.is-magazine .bcs-tag{color:var(--gold)}
 .bcs-body{flex:1;display:flex;flex-direction:column;justify-content:center}
-.bcs-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;line-height:1.2;color:#fff;margin:0 0 8px;letter-spacing:-.01em}
+.bcs-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;font-style:italic;line-height:1.2;color:#fff;margin:0 0 8px;letter-spacing:-.01em}
 .bcs-author{font-family:var(--sans);font-size:.85rem;color:var(--ink2)}
 .bcs-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;margin-top:16px;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink3)}
 .bcs-badge{padding:3px 8px;font-weight:600;letter-spacing:.06em}
@@ -288,6 +313,15 @@ body.reading-mode .reader-crumb{display:none}
   margin:0 0 var(--read-gap);
   content-visibility:auto;
   contain-intrinsic-size:auto 6em;
+}
+.reader-body p[data-hl],
+.leaf-inner p[data-hl]{cursor:pointer}
+.reader-body p.is-hl,
+.leaf-inner p.is-hl{
+  background:rgba(217,93,57,.16);
+  border-bottom:2px solid var(--hojear-terra, #D95D39);
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
 }
 .reader-body .p-cover{
   text-align:center;
@@ -772,9 +806,12 @@ body.reading-mode .reader-crumb{display:none}
 </style>
 </head>
 <body><div id="app"></div>
-<script src="catalog.js?v=20260828-swiss"></script>
+<noscript>
+  <p>Hojear funciona con JavaScript. Mientras tanto: <a href="/biblioteca/?vista=leer&libro=sub-terra">Sub terra</a>, <a href="/biblioteca/?vista=leer&libro=quijote">Quijote</a>, <a href="/biblioteca/?vista=leer&libro=martin-rivas">Martín Rivas</a>, <a href="/biblioteca/?vista=leer&libro=lazarillo">Lazarillo</a>, <a href="/hojear/">landing</a>.</p>
+</noscript>
+<script src="catalog.js?v=20260829-truth"></script>
 <script src="audio.js?v=20260828-swiss"></script>
 <script src="/js/visitas.js?v=2"></script>
-<script src="app.js?v=20260829-ocr"></script>
+<script src="app.js?v=20260829-unify"></script>
 </body>
 </html>
