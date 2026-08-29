@@ -651,6 +651,9 @@ function leerLoader(b) {
       return '<div class="leaf-empty">—</div>';
     }
     const seg = pages[pageIndex];
+    if (seg && seg[0] && seg[0].image) {
+      return '<figure class="reader-image-page"><img src="' + esc(seg[0].image) + '" alt="' + esc(b.title + ', página ' + (pageIndex + 1)) + '" loading="lazy"><figcaption>' + esc(b.title) + ' · página ' + (pageIndex + 1) + '</figcaption></figure>';
+    }
     let h = '';
     if (pageIndex === 0 && isFirstOverall) {
       h += '<div class="p-cover"><h2 class="p-chapter">' + esc(b.title) + '</h2><p class="p-author">' + esc(b.author) + ' · ' + esc(String(b.year)) + '</p></div>';
@@ -733,6 +736,10 @@ function leerLoader(b) {
     let firstP = true;
     pages.forEach((seg, pi) => {
       if (pi > 0) h += '<hr class="page-break" data-page="' + pi + '">';
+      if (seg && seg[0] && seg[0].image) {
+        h += '<figure class="reader-image-page"><img src="' + esc(seg[0].image) + '" alt="' + esc(b.title + ', página ' + (pi + 1)) + '" loading="lazy"><figcaption>' + esc(b.title) + ' · página ' + (pi + 1) + '</figcaption></figure>';
+        return;
+      }
       for (const q of seg) {
         const t = q.trim();
         if (!isHead(t) && firstP) {
@@ -864,6 +871,9 @@ function leerLoader(b) {
         sum += p.length;
       }
       if (cur.length) pages.push(cur);
+      if (Array.isArray(b.imagePages) && b.imagePages.length) {
+        pages = b.imagePages.map(src => [{ image: src }]);
+      }
       if (!pages.length) {
         art.innerHTML = '<p class="reader-loading">No se pudo abrir este libro. Elige otro.</p>';
         return;

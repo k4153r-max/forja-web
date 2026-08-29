@@ -272,6 +272,12 @@ body.reading-mode .reader-crumb{display:none}
   transition:font-size .15s,line-height .15s,max-width .2s,color .35s;
   animation:reader-in .45s ease both;
 }
+.reader-image-page{
+  width:min(100%, 58rem);margin:0 auto;padding:12px;text-align:center;
+  background:#eee8dc;border:1px solid var(--read-edge);box-shadow:var(--read-shadow);
+}
+.reader-image-page img{display:block;width:100%;height:auto;max-height:78vh;object-fit:contain;margin:auto}
+.reader-image-page figcaption{padding:10px 4px 2px;color:var(--read-muted);font:500 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase}
 @keyframes reader-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .reader-body p{
   margin:0 0 var(--read-gap);
