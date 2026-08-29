@@ -56,7 +56,6 @@ function Get-Slug([string]$title) {
 }
 
 function Get-Catalog {
-  if ($Ids.Count -gt 0) { return @() }
   if (-not (Test-Path $CatalogCache) -or ((Get-Item $CatalogCache).LastWriteTime -lt (Get-Date).AddDays(-7))) {
     Write-Host "Descargando catalogo Gutenberg..."
     Invoke-WebRequest -Uri "https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv" -OutFile $CatalogCache -Headers $Headers -TimeoutSec 180
