@@ -94,6 +94,23 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 | **Render** | Solo `etemen.cl` estático (`srv-d9ifoibeo5us739sr680`) | ✅ Único servicio — NO tocar |
 | **Fly.io** | Todos los backends Python | ✅ Migrado |
 
+### Demos self-hosted (2026-10-02)
+
+Las 9 apps demo/trial se migraron a la PC Linux Mint de Antonio (Docker + túnel Cloudflare `etemen-demos`).
+Los links públicos usan `*.etemen.cl`; las apps de Fly siguen existiendo en paralelo (apagadas) hasta decidir su baja.
+
+| App | Host |
+|---|---|
+| `nexus-trial-demo` | https://demo.etemen.cl |
+| `nexus-trial-taller` | https://taller.etemen.cl |
+| `nexus-trial-unas` | https://unas.etemen.cl |
+| `nexus-dpb7` | https://dpb7.etemen.cl |
+| `etemen-nexus` | https://reservas.etemen.cl |
+| `bodega-trial-almacen-demo` | https://almacen.etemen.cl |
+| `bodega-trial-botilleria-demo` | https://botilleria.etemen.cl |
+| `bodega-trial-ferreteria-demo` | https://ferreteria.etemen.cl |
+| `bodega-trial-la-parissiene` | https://parissiene.etemen.cl |
+
 ### Apps en Fly.io (todas migradas)
 
 | App | Estado |
