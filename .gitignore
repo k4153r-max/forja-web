@@ -9,3 +9,8 @@ keepalive/.wrangler/
 task_plan.md
 findings.md
 progress.md
+
+# Cloudflare Pages build output (scripts/build-pages.sh)
+dist/
+node_modules/
+.wrangler/
