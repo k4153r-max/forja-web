@@ -1,0 +1,5 @@
+# Cloudflare Pages: equivalente a los headers de render.yaml.
+# Render ignora este archivo.
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
