@@ -1,0 +1,109 @@
+/* Hojear v6 — rediseño editorial cálido (papel claro, cobre) */
+@import url('/css/hojear-v5.css');
+
+:root {
+  --bg: #FAF7F2;
+  --surface: #FFFFFF;
+  --surface-hover: #F3EEE6;
+  --fg: #2B2620;
+  --fg-dim: #6B635A;
+  --hojear-terra: #C4894A;
+  --hojear-terra-glow: rgba(196, 137, 74, 0.15);
+  --hojear-gold: #A67C52;
+  --border: rgba(43, 38, 32, 0.1);
+  --border-strong: rgba(43, 38, 32, 0.22);
+}
+
+/* Biblioteca (variables inline) */
+:root {
+  --bg: #FAF7F2;
+  --bg2: #F3EEE6;
+  --panel: #FFFFFF;
+  --panel-hover: #F3EEE6;
+  --ink: #2B2620;
+  --ink2: rgba(43, 38, 32, 0.72);
+  --ink3: rgba(43, 38, 32, 0.45);
+  --line: rgba(43, 38, 32, 0.1);
+  --line-strong: rgba(43, 38, 32, 0.22);
+  --swiss-red: #C4894A;
+  --swiss-red-glow: rgba(196, 137, 74, 0.18);
+  --swiss-cyan: #A67C52;
+  --gold: #A67C52;
+  --read-paper: #FAF7F2;
+  --read-ink: #2B2620;
+  --read-muted: #6B635A;
+  --read-accent: #C4894A;
+  --read-chrome: rgba(250, 247, 242, 0.92);
+  --read-edge: rgba(43, 38, 32, 0.08);
+}
+
+html, body { background: var(--bg); color: var(--fg, var(--ink)); }
+body::before { opacity: 0.04; }
+
+.brand, .path-card h3, .sec-title { color: var(--fg, var(--ink)); }
+.hnav { background: rgba(250, 247, 242, 0.78); border-bottom: 1px solid var(--border, var(--line)); }
+.hnav-links a { color: var(--fg-dim, var(--ink2)); }
+.hnav-links a:hover { color: var(--fg, var(--ink)); }
+.btn-outline { background: rgba(43, 38, 32, 0.03); border-color: var(--border-strong, var(--line-strong)); color: var(--fg, var(--ink)); }
+.btn-outline:hover { background: rgba(43, 38, 32, 0.06); }
+.plus-card { background: linear-gradient(180deg, var(--surface, #fff), var(--bg)); box-shadow: 0 20px 40px rgba(43, 38, 32, 0.08); }
+.hero h1, .cover-title, .feat-card h3 { color: var(--fg); }
+.foot { border-top: 1px solid var(--border, var(--line)); color: var(--fg-dim, var(--ink2)); }
+
+/* Foco visible accesible */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--hojear-terra, var(--swiss-red, #C4894A));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+@media (max-width: 768px) {
+  .hnav-links.open { background: rgba(250, 247, 242, 0.96); }
+}
+/* Biblioteca: contraste sobre fondo claro */
+h1, h2, h3, .swiss-h1, .swiss-h2, .bcs-title, .sm-num, .listen-h1 { color: var(--ink); }
+.brand, .nav-links a, .nav-toggle, .simple-btn { color: var(--ink); }
+input, textarea, select { color: var(--ink); }
+.rab-info { color: var(--ink); }
+.button.alt { color: var(--ink); border-color: var(--line-strong); }
+@media (max-width: 640px) {
+  .search-bar { flex-direction: column; border-radius: var(--radius-md, 12px); padding: 10px; }
+  .search-bar button { width: 100%; padding: 12px; }
+  .swiss-books-grid { grid-template-columns: 1fr; }
+  .book-card-swiss { min-height: 280px; }
+}
+/* Portada: búsqueda protagonista */
+.search-bar { max-width: 640px; box-shadow: 0 16px 48px rgba(43,38,32,0.12); }
+.search-bar button { background: var(--hojear-terra); color: #fff; }
+/* Catálogo: portadas protagonistas */
+.book-card-swiss { padding: 0; min-height: 340px; }
+.bcs-cover { height: 190px; display: flex; align-items: center; justify-content: center; padding: 18px; background: linear-gradient(135deg, var(--panel-hover), var(--bg2)); border-bottom: 1px solid var(--line); }
+.bcs-cover-title { font-family: var(--display, var(--serif)); font-size: 1.15rem; font-style: italic; text-align: center; color: var(--ink); opacity: .82; line-height: 1.25; max-width: 14ch; }
+.bcs-head, .bcs-body, .bcs-foot { padding-left: 18px; padding-right: 18px; }
+.bcs-head { padding-top: 14px; }
+.bcs-foot { padding-bottom: 14px; }
+.button.alt:hover { color: var(--ink); }
+/* Portadas diferenciadas por color de catálogo */
+.bcs-cover--blue { background: linear-gradient(135deg, #dce6f5, #b7c9e8); }
+.bcs-cover--red { background: linear-gradient(135deg, #f5dcdc, #e8b7b7); }
+.bcs-cover--yellow { background: linear-gradient(135deg, #f5efd8, #e8dda0); }
+.bcs-cover--purple { background: linear-gradient(135deg, #eadcf5, #d0b7e8); }
+.bcs-cover--green { background: linear-gradient(135deg, #dcefd8, #b7e0a8); }
+.bcs-cover--neutral { background: linear-gradient(135deg, var(--panel-hover), var(--bg2)); }
+.bcs-cover-author { display: block; margin-top: 6px; font-family: var(--sans, var(--font-ui)); font-size: 0.78rem; font-style: normal; color: var(--ink2, var(--fg-dim)); opacity: .9; }
+/* Portada: libros destacados */
+.featured-books { padding: 0 0 80px; }
+.cover-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; margin-top: 24px; }
+.cover-card { display: flex; flex-direction: column; justify-content: flex-end; min-height: 220px; padding: 16px; border-radius: 6px; text-decoration: none; box-shadow: 0 10px 30px rgba(43,38,32,0.1); transition: transform .2s; overflow: hidden; }
+.cover-card:hover { transform: translateY(-4px); }
+.cover-title { font-family: var(--font-display); font-size: 1.15rem; font-style: italic; line-height: 1.15; color: var(--fg); }
+.cover-author { margin-top: 6px; font-family: var(--font-ui); font-size: 0.78rem; color: var(--fg-dim); }
+.bcs-cover--brown { background: linear-gradient(135deg, #efe6d8, #d8c7a8); }
+.bcs-cover--copper { background: linear-gradient(135deg, #f3e3d3, #e2c09a); }
+.bcs-cover--navy { background: linear-gradient(135deg, #dce1f0, #b7c1e0); }
+.bcs-cover--pink { background: linear-gradient(135deg, #f5dce4, #e8b7c8); }

@@ -263,6 +263,7 @@ function bookCard(b) {
     : `<span class="bcs-badge bcs-text">Texto</span>`;
 
   return `<a class="book-card-swiss ${isMag ? 'is-magazine' : ''}" href="${dest}">
+    <div class="bcs-cover bcs-cover--${esc(b.color || 'neutral')}" aria-hidden="true"><span class="bcs-cover-title">${esc(b.title)}</span><span class="bcs-cover-author">${esc(b.author)}</span></div>
     <div class="bcs-head">
       <span class="bcs-id">${esc(LANG_LABEL[bookLang(b)] || bookLang(b))}</span>
       <span class="bcs-tag">${esc(tagText)}</span>
