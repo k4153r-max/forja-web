@@ -82,8 +82,8 @@
             <span class="status-chip"><span class="mark"></span>Hojear / Available</span>
           </div>
           <div class="btn-row">
-            <a class="btn btn-primary" href="/desarrollo-web/" target="_blank" rel="noopener">Desarrollo Web a Medida ↗</a>
-            <a class="btn btn-ghost" href="/nexo/#flujo">Probar Nexo por Rubro</a>
+            <a class="btn btn-primary" href="/contacto/?producto=Nexo+Trial&src=home-hero" data-cta="nexo-trial" data-cta-source="home-hero">Pedir trial 3 días</a>
+            <a class="btn btn-ghost" href="/desarrollo-web/" target="_blank" rel="noopener" data-cta="desarrollo-web" data-cta-source="home-hero">Desarrollo Web a Medida ↗</a>
           </div>
           <div class="hero-terminal" aria-hidden="true">
             <div class="hero-terminal-bar">
@@ -134,7 +134,7 @@
             <p>Cámara de lectura digital. Prensa interactiva y literatura clásica 100% libre de publicidad.</p>
             <p class="product-block-meta">100% Gratis · Hojear Plus para editoriales</p>
             <div class="btn-row">
-              <a class="btn btn-hojear btn-sm" href="/biblioteca/">Leer Libros</a>
+              <a class="btn btn-hojear btn-sm" href="/hojear/">Leer Libros</a>
               <a class="btn btn-ghost btn-sm" href="/hojear/">Qué es Hojear</a>
             </div>
           </article>
@@ -328,8 +328,8 @@
           <p class="lead">Cuéntanos qué necesitas. Respuesta en menos de 24 horas hábiles.</p>
         </div>
         <div class="btn-row">
-          <a class="btn btn-primary" href="/contacto/?producto=Desarrollo+Web">Cotizar proyecto web</a>
-          <a class="btn btn-ghost" href="/contacto/?producto=Nexo+Trial">Pedir trial 3 días</a>
+          <a class="btn btn-primary" href="/contacto/?producto=Nexo+Trial&src=home-contacto" data-cta="nexo-trial" data-cta-source="home-contacto">Pedir trial 3 días</a>
+          <a class="btn btn-ghost" href="/contacto/?producto=Desarrollo+Web&src=home-contacto" data-cta="desarrollo-web" data-cta-source="home-contacto">Cotizar proyecto web</a>
           <a class="btn btn-ghost" href="mailto:hola@etemen.cl">hola@etemen.cl</a>
         </div>
       </div>
@@ -374,6 +374,39 @@
       </div>
     </div>
   </footer>
-  <script src="/js/site.js?v=3"></script>
+  <script src="/js/site.js?v=4"></script>
+  <script>
+    (function () {
+      function slug(v) {
+        return String(v || "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .slice(0, 40) || "na";
+      }
+      function track(a) {
+        if (!a) return;
+        var cta = a.getAttribute("data-cta");
+        var source = a.getAttribute("data-cta-source") || "unknown";
+        if (!cta) return;
+        var path = "/cta/" + slug(cta) + "/" + slug(source);
+        if (window.etemenVisitas && typeof window.etemenVisitas.ping === "function") {
+          window.etemenVisitas.ping({ kind: "page", path: path, force: true }).catch(function () {});
+        } else {
+          try {
+            fetch("https://api.etemen.cl/api/visita", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ path: path, kind: "page" }),
+              keepalive: true,
+            }).catch(function () {});
+          } catch (_) {}
+        }
+      }
+      document.querySelectorAll("a[data-cta]").forEach(function (a) {
+        a.addEventListener("click", function () { track(a); });
+      });
+    })();
+  </script>
 </body>
 </html>

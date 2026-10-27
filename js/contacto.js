@@ -16,6 +16,15 @@
   ];
 
   const params = new URLSearchParams(location.search);
+  const source = params.get("src") || params.get("utm_source") || params.get("ref") || "directo";
+
+  function slug(v) {
+    return String(v || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 40) || "na";
+  }
   if (params.get("enviado") === "1") {
     const card = document.querySelector(".contact-card");
     if (card) {
@@ -77,6 +86,19 @@
         body: JSON.stringify(payload),
       });
       if (res.status === 201) {
+        var eventPath = "/contacto-evento/" + slug(payload.producto) + "/" + slug(source);
+        if (window.etemenVisitas && typeof window.etemenVisitas.ping === "function") {
+          window.etemenVisitas.ping({ kind: "page", path: eventPath, force: true }).catch(function () {});
+        } else {
+          try {
+            fetch("https://api.etemen.cl/api/visita", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ path: eventPath, kind: "page" }),
+              keepalive: true,
+            }).catch(function () {});
+          } catch (_) {}
+        }
         if (payload.empresa_web) {
           const done = document.createElement("div");
           done.className = "contact-success";

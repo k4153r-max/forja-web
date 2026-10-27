@@ -255,6 +255,9 @@ h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; text-wrap: p
   background: #EF4444;
   box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
 }
+.uptime-widget.is-down .uptime-widget-pct { color: #EF4444; }
+.uptime-widget.is-unknown .uptime-widget-dot { background: #8B949E; box-shadow: none; }
+.uptime-widget.is-unknown .uptime-widget-pct { color: var(--ink-dim, #8B949E); }
 .uptime-widget-pct { color: #10B981; font-weight: 700; }
 .uptime-widget-win { color: var(--ink-mute, #6E7681); font-size: 10px; }
 .uptime-widget--hero {

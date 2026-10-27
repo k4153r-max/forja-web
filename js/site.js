@@ -28,7 +28,7 @@
 
   const STATUS_URL = "https://stats.uptimerobot.com/z6bYAoGxq6";
   const STATUS_API = "https://stats.uptimerobot.com/api/getMonitorList/z6bYAoGxq6";
-  const CACHE_KEY = "etemen-uptime-v1";
+  const CACHE_KEY = "etemen-uptime-v2";
   const CACHE_MS = 5 * 60 * 1000;
 
   const formatPct = (n) => {
@@ -44,10 +44,10 @@
     a.href = STATUS_URL;
     a.target = "_blank";
     a.rel = "noopener";
-    a.title = "Estado público de los sistemas ETEMEN (Monitoreo UptimeRobot)";
+    a.title = "Estado público de ETEMEN.cl (Monitoreo UptimeRobot)";
     a.innerHTML =
       '<span class="uptime-widget-dot" aria-hidden="true"></span>' +
-      '<span class="uptime-widget-label">Sistemas</span>' +
+      '<span class="uptime-widget-label">ETEMEN.cl</span>' +
       '<span class="uptime-widget-pct" data-uptime-pct>99.9%</span>' +
       '<span class="uptime-widget-win">OK</span>';
     return a;
@@ -63,13 +63,19 @@
     document.querySelectorAll("[data-uptime-widget]").forEach((el) => {
       const pct = el.querySelector("[data-uptime-pct]");
       const win = el.querySelector(".uptime-widget-win");
-      el.classList.toggle("is-ok", !state.down);
+      const unknown = !!state.unknown;
+      el.classList.toggle("is-ok", !state.down && !unknown);
       el.classList.toggle("is-down", !!state.down);
-      if (pct) pct.textContent = state.pct || "99.9%";
-      if (win) win.textContent = state.down ? "DOWN" : "OK";
-      const label = state.down ? "Incidencia detectada" : "Monitoreo 24/7 · Todos los sistemas operativos";
-      el.setAttribute("title", `${label} (${state.pct || "99.9%"})`);
-      el.setAttribute("aria-label", `Estado de Sistemas: ${state.pct || "99.9%"} Uptime`);
+      el.classList.toggle("is-unknown", unknown);
+      if (pct) pct.textContent = state.pct || "—";
+      if (win) win.textContent = state.down ? "DOWN" : (unknown ? "N/D" : "OK");
+      const label = state.down
+        ? "Incidencia detectada"
+        : unknown
+        ? "Estado no disponible"
+        : "Monitoreo 24/7 · Sitio operativo";
+      el.setAttribute("title", `${label} (${state.pct || "—"})`);
+      el.setAttribute("aria-label", `Estado de ETEMEN.cl: ${state.pct || "—"} Uptime`);
     });
   };
 
@@ -85,14 +91,20 @@
     }
   };
 
+  const SITE_MONITOR = "etemen.cl";
+
   const compute = (data) => {
     const monitors = Array.isArray(data) ? data : [];
-    const ratios = monitors
-      .map((m) => parseFloat(m["30dRatio"] && m["30dRatio"].ratio))
-      .filter((n) => Number.isFinite(n));
-    const avg = ratios.length ? ratios.reduce((a, b) => a + b, 0) / ratios.length : 99.9;
-    const down = monitors.some((m) => m.statusClass && m.statusClass !== "success");
-    return { pct: formatPct(avg), ok: ratios.length > 0, down };
+    const site = monitors.find(
+      (m) => String((m && m.name) || "").trim().toLowerCase() === SITE_MONITOR
+    );
+    if (!site) {
+      return { pct: "—", ok: false, down: false, unknown: true };
+    }
+    const ratio = parseFloat(site["30dRatio"] && site["30dRatio"].ratio);
+    const hasRatio = Number.isFinite(ratio);
+    const down = !!(site.statusClass && site.statusClass !== "success");
+    return { pct: hasRatio ? formatPct(ratio) : "—", ok: hasRatio, down, unknown: !hasRatio };
   };
 
   const cached = readCache();
@@ -112,7 +124,7 @@
       paint(state);
     })
     .catch(() => {
-      paint({ pct: "99.9%", ok: true, down: false });
+      paint({ pct: "—", ok: false, down: false, unknown: true });
     });
 
   if (!document.querySelector('script[src*="/js/visitas.js"]')) {
