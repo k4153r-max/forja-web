@@ -29,3 +29,28 @@ input, textarea, select { color: var(--ink); background: var(--panel); }
 .reader-audio-bar { background: var(--read-chrome) !important; box-shadow: 0 20px 50px rgba(43,38,32,.15) !important; }
 .mode-choice-btn, .theme-choice-btn, .simple-btn { color: var(--ink); }
 .rab-info { color: var(--ink); }
+
+/* Componentes adicionales sobre fondo claro */
+.guide-card, .catalogue-note, .leaf-empty, .pend, .page-break, .au-box, .au-item, .book-hint, .crumb, .bcs-tag, .bcs-meta, .bcs-id { color: var(--ink); }
+.au-box { background: var(--panel); border-color: var(--line); }
+.au-item:hover { background: rgba(43,38,32,.04); color: var(--ink); }
+.au-item.active { color: var(--swiss-red); }
+.guide-card { background: var(--panel); border-color: var(--line); }
+.leaf-empty { color: var(--ink3); }
+.pend { background: var(--panel); }
+.pend-mark { background: var(--swiss-red); color: #fff; }
+.page-break { border-color: var(--line); }
+.nav-links a:hover { color: var(--ink); }
+
+/* Skip link */
+.skip-link {
+  position: absolute; left: 8px; top: -48px; z-index: 200;
+  background: var(--swiss-red, #C4894A); color: #fff; padding: 8px 12px;
+  font-family: var(--mono, monospace); font-size: 12px; letter-spacing: 0.06em;
+}
+.skip-link:focus { top: 8px; }
+
+/* Foco visible */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--swiss-red, #C4894A); outline-offset: 2px;
+}

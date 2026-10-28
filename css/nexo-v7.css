@@ -1,0 +1,63 @@
+/* Nexo v7 — alineación a Cimientos (carbono/tinta/cobre, radios 0–2px, sin glow/blur) */
+@import url('/css/nexo-v6.css');
+
+:root {
+  --bg: #0B0B0C;
+  --surface: #141416;
+  --surface-hover: #1C1C1F;
+  --fg: #F4F1EA;
+  --fg-dim: rgba(244,241,234,0.62);
+  --border: rgba(244,241,234,0.10);
+  --border-strong: rgba(244,241,234,0.22);
+  --nexo-copper: #C4894A;
+  --font-display: 'Archivo', 'Arial Narrow', sans-serif;
+  --font-body: 'Source Sans 3', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius-sm: 0px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+}
+
+html, body { background: var(--bg); color: var(--fg); }
+.nav { background: #0B0B0C !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-bottom: 1px solid var(--border); }
+.logo-icon { filter: none; }
+.nav-cta { border-radius: 0; background: var(--fg); color: var(--bg); }
+.nav-cta:hover { background: var(--nexo-teal); color: var(--bg); transform: none; }
+.eyebrow { border-radius: 0; background: rgba(0,201,167,0.08); }
+.btn { border-radius: 0; }
+.btn-primary { background: var(--nexo-teal); color: #000; }
+.btn-primary:hover { background: var(--nexo-teal); box-shadow: none; transform: none; }
+.btn-outline { border-radius: 0; }
+.hero-glow { display: none !important; }
+.ai-box, .rubro-selector, .price-card, .price-card.featured::before, .roi-result-box, .uptime-widget { border-radius: 0; }
+.price-card.featured::before { border-radius: 0; }
+.uptime-widget { border-radius: 0; }
+.uptime-widget-dot { box-shadow: none; }
+.price-card.featured { border-color: var(--nexo-teal); }
+.hero { background: var(--bg); }
+section { background: transparent; }
+.price-card { background: var(--surface); }
+.ai-box { background: var(--surface); }
+.rubro-option { border-radius: 0; }
+.hero-glow { display: none; }
+
+/* Foco visible */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--nexo-teal); outline-offset: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute; left: 8px; top: -48px; z-index: 200;
+  background: var(--nexo-teal); color: #000; padding: 8px 12px;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
+}
+.skip-link:focus { top: 8px; }
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* Eliminación final de glows, blur y sombras neón */
+* { box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; text-shadow: none !important; }

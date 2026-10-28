@@ -62,6 +62,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
 
+/* Skip link */
+.skip-link {
+  position: absolute; left: 8px; top: -48px; z-index: 200;
+  background: var(--hojear-terra, #C4894A); color: #fff; padding: 8px 12px;
+  font-family: var(--font-mono, monospace); font-size: 12px; letter-spacing: 0.06em;
+}
+.skip-link:focus { top: 8px; }
+
 @media (max-width: 768px) {
   .hnav-links.open { background: rgba(250, 247, 242, 0.96); }
 }

@@ -913,3 +913,55 @@ body {
     overflow-x: auto;
   }
 }
+
+/* Skip link */
+.skip-link {
+  position: absolute; left: 8px; top: -48px; z-index: 200;
+  background: var(--neon-cyan, #C4894A); color: #0B0B0C; padding: 8px 12px;
+  font-family: var(--font-mono, monospace); font-size: 12px; letter-spacing: 0.06em;
+}
+.skip-link:focus { top: 8px; }
+
+
+/* ==========================================================================
+   Cimientos override — reintegra Desarrollo Web a la identidad ETEMEN
+   ========================================================================== */
+:root {
+  --bg-dark: #0B0B0C;
+  --bg-surface: #141416;
+  --bg-card: #141416;
+  --bg-glass: #141416;
+  --neon-cyan: #C4894A;
+  --neon-cyan-glow: rgba(196,137,74,0.25);
+  --neon-purple: #C4894A;
+  --neon-purple-glow: rgba(196,137,74,0.25);
+  --neon-copper: #C4894A;
+  --neon-emerald: #C4894A;
+  --neon-emerald-glow: rgba(196,137,74,0.2);
+  --text-main: #F4F1EA;
+  --text-muted: rgba(244,241,234,0.62);
+  --text-dim: rgba(244,241,234,0.42);
+  --border-cyan: rgba(196,137,74,0.28);
+  --border-glass: rgba(244,241,234,0.10);
+  --border-glow: rgba(196,137,74,0.5);
+  --font-display: 'Archivo', 'Arial Narrow', sans-serif;
+  --font-heading: 'Archivo', 'Arial Narrow', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-body: 'Source Sans 3', sans-serif;
+}
+#cyber-canvas, .scanline-overlay { display: none !important; }
+body { background: var(--bg-dark); color: var(--text-main); }
+* { border-radius: 0 !important; }
+.nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: var(--bg-dark) !important; }
+.btn, .cyber-nav-cta, .cyber-btn, .terminal-action-btn, .hud-pill, .hud-metric-card, .price-card, .option-card { border-radius: 0 !important; }
+.cyber-title-gradient, .cyber-title-glow { color: var(--neon-cyan) !important; text-shadow: none !important; }
+.hero-glow { display: none !important; }
+.cyber-badge { border-color: var(--border-cyan); color: var(--neon-cyan); }
+.hud-metric-val, .terminal-price-big { color: var(--neon-cyan); }
+.cyber-footer { background: var(--bg-dark); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--neon-cyan); outline-offset: 2px;
+}
+
+/* Eliminación final de glows, blur y sombras neón/cyber */
+* { box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; text-shadow: none !important; }
