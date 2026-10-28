@@ -921,8 +921,6 @@ body {
   font-family: var(--font-mono, monospace); font-size: 12px; letter-spacing: 0.06em;
 }
 .skip-link:focus { top: 8px; }
-
-
 /* ==========================================================================
    Cimientos override — reintegra Desarrollo Web a la identidad ETEMEN
    ========================================================================== */
@@ -949,19 +947,95 @@ body {
   --font-mono: 'IBM Plex Mono', monospace;
   --font-body: 'Source Sans 3', sans-serif;
 }
-#cyber-canvas, .scanline-overlay { display: none !important; }
-body { background: var(--bg-dark); color: var(--text-main); }
-* { border-radius: 0 !important; }
-.nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: var(--bg-dark) !important; }
-.btn, .cyber-nav-cta, .cyber-btn, .terminal-action-btn, .hud-pill, .hud-metric-card, .price-card, .option-card { border-radius: 0 !important; }
-.cyber-title-gradient, .cyber-title-glow { color: var(--neon-cyan) !important; text-shadow: none !important; }
-.hero-glow { display: none !important; }
-.cyber-badge { border-color: var(--border-cyan); color: var(--neon-cyan); }
-.hud-metric-val, .terminal-price-big { color: var(--neon-cyan); }
-.cyber-footer { background: var(--bg-dark); }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid var(--neon-cyan); outline-offset: 2px;
-}
+#cyber-canvas, .scanline-overlay, .hero-glow { display: none !important; }
+body { background: linear-gradient(var(--border-glass) 1px, transparent 1px) 0 0 / 80px 80px, linear-gradient(to right, var(--border-glass) 1px, transparent 1px) 0 0 / 80px 80px, var(--bg-dark) !important; color: var(--text-main) !important; }
+* { border-radius: 0 !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; text-shadow: none !important; }
 
-/* Eliminación final de glows, blur y sombras neón/cyber */
-* { box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; text-shadow: none !important; }
+.cyber-nav, .cyber-title, .cyber-logo-title, .cyber-nav-cta, .cyber-badge, .hud-pill, .cyber-card-title, .cyber-card-category, .terminal-title, .terminal-price-big, .terminal-action-btn, .form-group-label, .option-card-title, .comparison-table th, .cyber-card-url, .cyber-card-score, .tech-tag, .terminal-result-header, .cyber-footer, .cyber-lead, .cyber-card-desc, .option-card-desc { font-family: var(--font-body) !important; }
+.cyber-title, .cyber-logo-title, .cyber-nav-cta, .terminal-action-btn, .terminal-price-big, .cyber-card-title, .comparison-table th { font-family: var(--font-display) !important; }
+
+.cyber-nav { background: var(--bg-dark) !important; border-bottom: 1px solid var(--border-glass) !important; }
+.cyber-nav-inner { height: 64px; }
+.cyber-logo { color: var(--text-main) !important; }
+.cyber-logo-mark { background: var(--neon-cyan) !important; background-image: none !important; clip-path: none !important; color: #0B0B0C !important; }
+.cyber-logo-title { background: none !important; background-image: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important; -webkit-text-fill-color: var(--text-main) !important; color: var(--text-main) !important; }
+.cyber-logo-sub { color: var(--neon-cyan) !important; }
+.hud-pill { background: transparent !important; background-image: none !important; border: 1px solid var(--border-glass) !important; color: var(--text-muted) !important; }
+.hud-dot { background: var(--neon-cyan) !important; }
+.cyber-nav-cta { background: var(--neon-cyan) !important; background-image: none !important; color: #0B0B0C !important; clip-path: none !important; font-family: var(--font-display) !important; border: none !important; }
+.cyber-nav-cta:hover { background: var(--neon-cyan) !important; background-image: none !important; transform: none !important; }
+.cyber-nav-cta span { color: #0B0B0C !important; }
+
+.cyber-hero { background: transparent !important; }
+.cyber-badge { background: transparent !important; background-image: none !important; border: 1px solid var(--border-glass) !important; color: var(--text-muted) !important; }
+.cyber-title { color: var(--text-main) !important; }
+.cyber-title-gradient { background: none !important; background-image: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important; -webkit-text-fill-color: var(--neon-cyan) !important; color: var(--neon-cyan) !important; display: inline !important; }
+.cyber-title-glow { text-shadow: none !important; -webkit-text-fill-color: inherit !important; }
+.cyber-lead { color: var(--text-muted) !important; }
+.cyber-lead strong { color: var(--text-main) !important; }
+.cyber-grid { gap: 24px !important; }
+.cyber-card { background: var(--bg-card) !important; background-image: none !important; border: 1px solid var(--border-glass) !important; backdrop-filter: none !important; transform: none !important; }
+.cyber-card::after { display: none !important; content: none !important; }
+.cyber-card:hover { transform: none !important; }
+.cyber-card:hover::after { display: none !important; }
+.cyber-card-header { background: var(--bg-dark) !important; border-bottom: 1px solid var(--border-glass) !important; }
+.cyber-card-dots span { background: var(--text-dim) !important; }
+.cyber-card-dots span:nth-child(1),
+.cyber-card-dots span:nth-child(2),
+.cyber-card-dots span:nth-child(3) { background: var(--text-dim) !important; }
+.cyber-card-url { background: transparent !important; color: var(--text-muted) !important; }
+.cyber-card-score { color: var(--neon-cyan) !important; }
+.cyber-card-preview { background: var(--bg-dark) !important; }
+.cyber-card-badge-top { background: var(--bg-dark) !important; background-image: none !important; border: 1px solid var(--border-glass) !important; color: var(--text-muted) !important; backdrop-filter: none !important; }
+.cyber-card-category { color: var(--text-muted) !important; }
+.cyber-card-title { color: var(--text-main) !important; }
+.cyber-card-desc { color: var(--text-muted) !important; }
+.tech-tag { background: transparent !important; border: 1px solid var(--border-glass) !important; color: var(--text-muted) !important; }
+
+.cyber-btn { font-family: var(--font-body) !important; }
+.cyber-btn-primary { background: transparent !important; background-image: none !important; border: 1px solid var(--border-cyan) !important; color: var(--neon-cyan) !important; }
+.cyber-btn-primary:hover { background: var(--neon-cyan) !important; background-image: none !important; color: #0B0B0C !important; }
+.cyber-btn-outline { background: transparent !important; border: 1px solid var(--border-glass) !important; color: var(--text-muted) !important; }
+.cyber-btn-outline:hover { background: transparent !important; border-color: var(--border-cyan) !important; color: var(--text-main) !important; }
+
+.specs-section { background: transparent !important; background-image: none !important; }
+.comparison-box { background: var(--bg-card) !important; background-image: none !important; border: 1px solid var(--border-glass) !important; backdrop-filter: none !important; }
+.comparison-table th { font-family: var(--font-display) !important; color: var(--text-muted) !important; }
+.comparison-table th:nth-child(2) { color: var(--text-muted) !important; }
+.comparison-table th:nth-child(3) { color: var(--neon-cyan) !important; }
+.comparison-table td:first-child { color: var(--text-main) !important; }
+.bad-metric { color: var(--text-muted) !important; }
+.good-metric { color: var(--neon-cyan) !important; }
+
+.cyber-terminal { background: var(--bg-card) !important; background-image: none !important; border: 1px solid var(--border-glass) !important; }
+.terminal-header { background: var(--bg-dark) !important; border-bottom: 1px solid var(--border-glass) !important; }
+.terminal-title { color: var(--neon-cyan) !important; }
+.terminal-body { background: transparent !important; }
+.form-group-label { color: var(--text-main) !important; }
+.option-card-label { background: var(--bg-dark) !important; background-image: none !important; border: 1px solid var(--border-glass) !important; }
+.option-card input:checked + .option-card-label { background: rgba(196,137,74,0.12) !important; border-color: var(--neon-cyan) !important; }
+.option-card input:checked + .option-card-label .option-card-title { color: var(--neon-cyan) !important; }
+.option-card-title { color: var(--text-main) !important; }
+.option-card-desc { color: var(--text-muted) !important; }
+.terminal-result-panel { background: var(--bg-card) !important; background-image: none !important; border: 1px solid var(--border-glass) !important; }
+.terminal-result-header { color: var(--text-muted) !important; }
+.terminal-price-big { color: var(--text-main) !important; font-family: var(--font-display) !important; }
+.terminal-price-sub { color: var(--neon-cyan) !important; }
+.terminal-summary-list li { color: var(--text-muted) !important; border-bottom: 1px solid var(--border-glass) !important; }
+.terminal-summary-list li span:last-child { color: var(--text-main) !important; }
+.terminal-action-btn { background: var(--neon-cyan) !important; background-image: none !important; border: none !important; color: #0B0B0C !important; font-family: var(--font-display) !important; }
+.terminal-action-btn:hover { transform: none !important; background: var(--neon-cyan) !important; background-image: none !important; }
+.terminal-action-btn span { color: #0B0B0C !important; }
+.cyber-footer { background: var(--bg-dark) !important; border-top: 1px solid var(--border-glass) !important; color: var(--text-muted) !important; }
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--neon-cyan) !important; outline-offset: 2px !important; }
+
+.skip-link { background: var(--neon-cyan) !important; color: #0B0B0C !important; }
+
+.hud-metric-card { background: var(--bg-card) !important; border: 1px solid var(--border-glass) !important; }
+.hud-metric-val { color: var(--neon-cyan) !important; }
+.hud-metric-label { color: var(--text-muted) !important; }
+.price-card { background: var(--bg-card) !important; border: 1px solid var(--border-glass) !important; }
+
+.cyber-card-title { color: var(--text-main) !important; }
+.form-group-label { color: var(--text-main) !important; }
