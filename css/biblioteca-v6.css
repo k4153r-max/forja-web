@@ -1,0 +1,31 @@
+/* Biblioteca v6 — ajustes de contraste y superficies claras */
+:root {
+  --bg: #FAF7F2; --bg2: #F3EEE6; --panel: #FFFFFF; --panel-hover: #F3EEE6;
+  --ink: #2B2620; --ink2: rgba(43,38,32,.72); --ink3: rgba(43,38,32,.45);
+  --line: rgba(43,38,32,.1); --line-strong: rgba(43,38,32,.22);
+  --swiss-red: #C4894A; --swiss-red-glow: rgba(196,137,74,.18);
+  --gold: #A67C52; --swiss-cyan: #8B7CF7;
+  --read-paper: #FAF7F2; --read-ink: #2B2620; --read-muted: #6B635A; --read-accent: #C4894A;
+  --read-chrome: rgba(250,247,242,.92); --read-edge: rgba(43,38,32,.08);
+}
+body, body.lib-mode { background: var(--bg); color: var(--ink); }
+body.lib-mode { background: var(--bg); }
+* { color: inherit; }
+.btn-swiss.btn-primary, .button:not(.alt), .au-play, .play-btn, .pend-mark {
+  background: var(--swiss-red) !important; color: #fff !important;
+}
+nav { background: rgba(250,247,242,.92) !important; }
+.nav-links { background: transparent !important; }
+.bcs-badge.bcs-audio, .chip.active, .chip:hover { color: #fff; }
+input, textarea, select { color: var(--ink); background: var(--panel); }
+.reader-page, .book-leaf, .leaf-inner { background: var(--read-paper); color: var(--read-ink); }
+.reader-shell, .reader-body { background: var(--bg); }
+/* Lector: variables de tema aplicadas al área de texto */
+.reader-stage.theme-paper .reader-body { --read-paper:#faf6ee;--read-ink:#2a2622;--read-muted:#6b635a;--read-accent:#9a5b32;--read-chrome:rgba(250,246,238,.92);--read-edge:rgba(42,38,34,.08); }
+.reader-stage.theme-sepia .reader-body { --read-paper:#f4ecd8;--read-ink:#3a2f26;--read-muted:#7a6a55;--read-accent:#8c5324;--read-chrome:rgba(244,236,216,.94);--read-edge:rgba(58,47,38,.1); }
+.reader-stage.theme-night .reader-body { --read-paper:#121514;--read-ink:#dcd7cc;--read-muted:#8e968f;--read-accent:#d4a574;--read-chrome:rgba(18,21,20,.94);--read-edge:rgba(220,215,204,.08); }
+.reader-stage.theme-mist .reader-body { --read-paper:#edf1f5;--read-ink:#243038;--read-muted:#5d6b75;--read-accent:#386b7a;--read-chrome:rgba(237,241,245,.94);--read-edge:rgba(36,48,56,.1); }
+.reader-stage .reader-body { background: var(--read-paper); color: var(--read-ink); }
+.reader-audio-bar { background: var(--read-chrome) !important; box-shadow: 0 20px 50px rgba(43,38,32,.15) !important; }
+.mode-choice-btn, .theme-choice-btn, .simple-btn { color: var(--ink); }
+.rab-info { color: var(--ink); }
