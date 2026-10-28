@@ -184,7 +184,7 @@ function initEstimatorCalculator() {
   function calculate() {
     let basePrice = 280000; // CLP base
     let days = 5;
-    let selectedTypeLabel = 'Sitio Web Corporativo';
+    let selectedTypeLabel = 'Landing Page';
     let selectedFeatures = [];
 
     // Type check
@@ -215,7 +215,7 @@ function initEstimatorCalculator() {
     });
 
     // Format CLP currency
-    const formattedPrice = '$' + basePrice.toLocaleString('es-CL');
+    const formattedPrice = 'Desde $' + basePrice.toLocaleString('es-CL');
 
     priceElem.textContent = formattedPrice;
     timeElem.textContent = `${days}–${days + 3} Días Hábiles`;
@@ -225,15 +225,16 @@ function initEstimatorCalculator() {
     if (selectedFeatures.length) {
       html += `<li><span>Módulos:</span> <span>${selectedFeatures.length} Seleccionados</span></li>`;
     }
-    html += `<li><span>Optimizaciones:</span> <span>SEO + 100/100 Speed</span></li>`;
+    html += `<li><span>Impuestos:</span> <span>IVA incluido</span></li>`;
+    html += `<li><span>Precio:</span> <span>De partida; sujeto a alcance</span></li>`;
     summaryElem.innerHTML = html;
 
     // Update WhatsApp Link
     const msg = `Hola ETEMEN! Me interesa cotizar un proyecto web a medida con las siguientes especificaciones:
 - *Tipo:* ${selectedTypeLabel}
 - *Módulos:* ${selectedFeatures.join(', ') || 'Ninguno adicional'}
-- *Estimado:* ${formattedPrice} (${days} días)
-Por favor contáctenme para revisar detalles.`;
+- *Precio de partida:* ${formattedPrice} (estimación de ${days} a ${days + 3} días hábiles)
+Entiendo que el alcance y el precio final se confirman en una propuesta.`;
 
     const encodedMsg = encodeURIComponent(msg);
     submitBtn.href = `https://wa.me/56994782026?text=${encodedMsg}`;

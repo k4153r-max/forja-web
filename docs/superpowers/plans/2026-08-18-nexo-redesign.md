@@ -225,7 +225,7 @@ Y el panel:
   <h3 data-panel-titulo>Salones de Belleza &amp; Spas</h3>
   <p data-panel-precio>Precio por confirmar · A consultar por local</p>
   <div class="btn-row">
-    <a class="btn btn-primary" data-panel-trial href="/contacto/?producto=Nexo+Trial">Pedir Trial 3 Días</a>
+    <a class="btn btn-primary" data-panel-trial href="/contacto/?producto=Nexo+Trial">Pedir prueba de 14 días</a>
     <a class="btn btn-ghost" data-panel-demo href="/nexo/salones/">Ver Demo Salones</a>
     <a class="btn btn-ghost" data-panel-app hidden>Abrir App de Prueba</a>
   </div>

@@ -31,15 +31,15 @@ Bloques pegables (URLs, tokens, fonts, RUBROS, panel, D1, wrangler, form): **## 
 - Hojear: “20 títulos”, Frankenstein `hasText:false`, “Pago seguro”, Offer JSON-LD 3990.
 - Catálogo: 122 fichas / 117 textos (`catalog.js`).
 - Legado `/umbral/` `/nexus/` `/minimarket/` `/bodega/` = 200 + JS. Render no aplica `_redirects` si el archivo existe.
-- Trial público 3 días. `PRECIOS.md` aún dice 14 (no tocar ese repo).
+- Trial público 14 días sin tarjeta, alineado con los generadores de trial vigentes.
 
 ---
 
 ## Goals & Non-Goals
 
-Goals: operador (no agencia); Nexo prominente; 6 verticales; portafolio = cases (**Ysabel, indago, La Parissiene**); Hojear “No solo leas. Entiende.”; Plus = waitlist $3.990; indago = infra (no en nav); `main-v8.css`; form D1 + success literal; 301 CF; ≤5 pasos al CTA; **ship PR1–PR7**.
+Goals: operador (no agencia); Nexo prominente; 6 verticales; portafolio = cases (**Ysabel, indago, La Parissiene**); Hojear “No solo leas. Entiende.”; Plus = $3.990/mes, IVA incluido, consultas por contacto; indago = infra (no en nav); `main-v8.css`; form D1 + success literal; 301 CF; ≤5 pasos al CTA; **ship PR1–PR7**.
 
-Non-goals: no `biblioteca/` visual; no `salon-ysabel`; no cobro Plus (solo waitlist); no métricas inventadas; no anual Comercio $199.000; no uptime %; no Forja/competidores/voseo; no parentesco ni fiado de vecinos en el caso Parissiene.
+Non-goals: no `biblioteca/` visual; no `salon-ysabel`; no métricas inventadas; no uptime %; no Forja/voseo; no parentesco ni fiado de vecinos en el caso Parissiene.
 
 ---
 
@@ -51,11 +51,11 @@ UX/CRO: trust-bar edad, CTA genérico, form `name="email"`, portafolio = product
 
 | Ítem | UI |
 |------|-----|
-| 3 productos · +8.000 · +50 (no recontados) · trial 3 días · < 24 h · 48 h operativo · 24 h adaptar catálogo | Sí |
-| Servicios $45.000 / setup $100.000 / anual $450.000 · Comercio $19.900 / setup desde $39.000 | Sí |
-| Hojear 117/122 · Plus $3.990 **waitlist visible** | Sí |
+| 3 productos · +8.000 · +50 (no recontados) · prueba 14 días · < 24 h · 48 h operativo · 24 h adaptar catálogo | Sí |
+| Servicios $45.000 / setup $100.000 / anual $450.000 · Comercio $19.900 / setup desde $39.000 / anual $199.000 · IVA incluido | Sí |
+| Hojear 117/122 · Plus $3.990/mes con IVA incluido · CTA de consulta | Sí |
 | La Parissiene como caso piloto (sin $ de venta) | Sí — chip `PILOT` |
-| 99.98% · +6 meses · operaciones · anual Comercio $199k · revenue/uptime Parissiene · PINs · parentesco · fiado de vecinos | **No** |
+| 99.98% · +6 meses · revenue/uptime Parissiene · PINs · parentesco · fiado de vecinos | **No** |
 
 **Features vertical = solo hub §4.9.** Servicios: agenda, reservas web, señas/abonos, recordatorios, WhatsApp, caja, instancia. Taller +: OT, patente, km, estados. Comercio: POS, barras, tickets, fiado/cuentas, stock del día. **Stock ≠ Servicios/taller.**
 
@@ -132,11 +132,11 @@ Eyebrow: `Caso · Nexo Comercio · Piloto`
 H1: `La Parissiene`  
 Chip: `PILOT`  
 Fuentes: `bodega/docs/PILOTO_LA_PARISSIENE.md`, `SETUP_LA_PARISSIENE.md`, `FORJA_CEREBRO.md` (2026-07-31).  
-**Prohibido en UI:** parentesco; PINs; URL de login del piloto como “abrir el local”; datos o nombres de fiado; revenue; uptime; recuento de ventas u operaciones; anual $199.000.
+**Prohibido en UI:** parentesco; PINs; URL de login del piloto como “abrir el local”; datos o nombres de fiado; revenue; uptime; recuento de ventas u operaciones.
 
 **Problema.** Almacén / minimarket de barrio. El mostrador necesita caja, stock y fiado en un solo sistema. Antes del piloto existía una PWA local; no había instancia de servidor Nexo Comercio para ese local.
 
-**Solución.** Nexo Comercio (caja, stock, fiado) en una instancia propia del local, con perfil de almacén. El catálogo del negocio se carga en esa instancia. Precio de la familia: $19.900/mes · setup desde $39.000. Trial de marketing público: 3 días (el piloto interno usó otra duración de trial; **no publicar esa fecha ni esa duración en la landing**).
+**Solución.** Nexo Comercio (caja, stock, fiado y documentos SII, según confirmación de producto) en una instancia propia del local, con perfil de almacén. Precio de la familia: $19.900/mes · anual $199.000 · setup desde $39.000 · IVA incluido. Prueba pública de 14 días sin tarjeta.
 
 **Implementación.** Instancia dedicada, `INSTANCE_PROFILE=parissiene`, nombre de local **La Parissiene**. Seed del catálogo desde la PWA del almacén (`productos-iniciales.json` → **39 productos**). Instancia desplegada (2026). **No publicar PINs ni el login del piloto** (riesgo de fiado de vecinos). `salon-ysabel` no se toca.
 
@@ -149,17 +149,17 @@ Fuentes: `bodega/docs/PILOTO_LA_PARISSIENE.md`, `SETUP_LA_PARISSIENE.md`, `FORJA
 Cómo trabaja: 01 instancia · 02 operación 5 min · 03 quien construye responde.  
 Tech: Python FastAPI SQLite-por-instancia Render Cloudflare UptimeRobot MP WhatsApp.  
 Demos: luna/atelier/taller/almacen/ferreteria/botilleria + onrender (**Apéndice A §A.1**). Reserva pública solo Luna/Atelier (erz6). Cold start.  
-Precios: Servicios $45k / setup $100k / anual **$450.000**. Comercio **$19.900/mes** / setup **desde $39.000**. **No publicar anual Comercio $199.000.** Keep: adaptar catálogos 24 h. Qué no es: marketplace, SII, indago.
+Precios: Servicios $45.000/mes / setup $100.000 / anual $450.000. Comercio $19.900/mes / anual $199.000 / setup desde $39.000. Valores con IVA incluido. Prueba 14 días sin tarjeta. Nexo Comercio incluye boleta y factura electrónica SII (confirmado por el usuario el 28-10-2026). Mantener: adaptar catálogos 24 h. No es marketplace ni indago.
 
 ### 4.10 Verticales (implementable)
 
-FAQ común: (2) trial 3 días sin tarjeta; (3) 48 h según info del local; (4) instancia propia, datos no se mezclan.
+FAQ común: (2) prueba 14 días sin tarjeta; (3) 48 h según info del local; (4) instancia propia, datos no se mezclan.
 
 **Salones.** Lead: horas a mano, inasistencias, caja aparte. $45k.  
 Solución: agenda + reserva web + señas/abonos + recordatorios + WhatsApp + caja + instancia. 48 h.  
 Features: Agenda por hora · Reservas web · Señas/abonos · Recordatorios y WhatsApp · Caja · Instancia.  
 Demo `/demos/luna/`. Trial nexus-trial-demo. Reserva erz6. Sin JPG. Caso Ysabel (link case solo post-PR5).  
-FAQ1: $45.000/mes, setup $100.000, anual $450.000, trial 3 días.  
+FAQ1: $45.000/mes IVA incluido, setup $100.000, anual $450.000, prueba 14 días.
 CTA: `?producto=Nexo+Servicios&rubro=Sal%C3%B3n`
 
 **Barberías.** Lead: sillones sin turno, walk-ins vs reserva, caja suelta. *(walk-in = problema, no feature)*  
@@ -175,9 +175,9 @@ CTA: `?producto=Nexo+Taller&rubro=Taller`
 
 **Ferreterías.** Problemas: SKU, cuentas de maestro, stock ≠ caja.  
 Solución: POS, barras, tickets, cuentas de maestro; stock del día; 24 h nombres.  
-Features: POS · Barras · Tickets · Cuentas de maestro / fiado · Stock del día · Instancia $19.900.  
+Features: POS · Barras · Tickets · Cuentas de maestro / fiado · Stock del día · Instancia desde $19.900/mes (IVA incluido), anual $199.000, setup desde $39.000.
 Demo `/demos/ferreteria/`. JPG `assets/demos/ferreteria.jpg`. App bodega-trial-ferreteria-demo.  
-FAQ1: $19.900/mes, setup desde $39.000, trial 3 días. **Sin anual.**  
+FAQ1: $19.900/mes IVA incluido, setup desde $39.000, anual $199.000, prueba 14 días.
 CTA: `?producto=Nexo+Ferreteria&rubro=Ferreter%C3%ADa`
 
 **Minimarkets.** Fila, fiado, cierre a ojo. POS rápido, barras, tickets, fiado, cierre. Demo `/demos/almacen/` + `almacen.jpg`. App bodega-trial-almacen-demo.  
@@ -189,8 +189,8 @@ CTA: `?producto=Nexo+Almacen&rubro=Minimarket`
 ### 4.11 Hojear — kill-list PR4 (final)
 
 H1: `No solo leas. Entiende.`  
-Plus **visible** a **$3.990/mes** como **lista de espera**. CTA: `Avisarme cuando Plus esté disponible` → `?producto=Hojear+Plus`.  
-Micro: `Plus está definido. El cobro todavía no.`  
+Plus **visible** a **$3.990/mes con IVA incluido**. CTA actual: `Consultar` → `?producto=Hojear+Plus`; el precio se publica y la contratación se consulta por contacto.
+Micro: `Un visor con tu dominio y tu marca, sin anuncios.`
 Vitrina `hasText:true`: Sub terra, Martín Rivas, Cuentos de amor…, Quijote.
 
 | Matar | Reemplazo |
@@ -201,7 +201,7 @@ Vitrina `hasText:true`: Sub terra, Martín Rivas, Cuentos de amor…, Quijote.
 | Entrar a la biblioteca libre / Abrir Biblioteca Hojear | Entrar a leer |
 | Cada libro … ▶ Escuchar audiolibro | Algunas fichas enlazan LibriVox |
 | simulacros PAES interactivos | Quitar |
-| Pago seguro · Cancela cuando quieras | Plus está definido. El cobro todavía no. |
+| Pago seguro · Cancela cuando quieras | Precio visible; contratación por consulta. |
 | JSON-LD Offer 3990 | **Borrar en PR4** |
 | `/biblioteca/?vista=planes` | `?producto=Hojear+Plus` |
 | Frankenstein/Drácula lectura inmediata | Fuera de vitrina |
@@ -308,9 +308,9 @@ Hojear: borrar Offer JSON-LD en PR4. Sitemap PR7 ⊆ URLs 200 (incluir `/portafo
 GATE = default se implementa; el PR **no espera**.
 
 1. **RESUELTO.** Publicar La Parissiene como caso piloto Nexo Comercio. Chip `PILOT`. 5 secciones solo con hechos de PILOTO / SETUP / CEREBRO. Sin parentesco, PINs, fiado de vecinos, revenue, uptime ni recuento de operaciones. URL: `/portafolio/la-parissiene/` (PR5).
-2. **RESUELTO.** Hojear Plus = waitlist **visible** a **$3.990/mes**. Kill: “pago seguro”, Offer JSON-LD, simulacros interactivos, `?vista=planes`.
+2. **RESUELTO (estado actualizado 2026-10-28).** Hojear Plus publica **$3.990/mes, IVA incluido** y deriva consultas a contacto. La lista de espera fue el estado inicial del PR4 y quedó reemplazada.
 3. **RESUELTO.** indago **no** va en nav. Footer + `/indago/` (PR4) + home.
-4. **RESUELTO.** **No** publicar anual Comercio $199.000. UI Comercio = $19.900/mes + setup desde $39.000. Anual Servicios $450.000 **sí**.
+4. **ACTUALIZADO 2026-10-28 por instrucción del usuario.** Publicar anual Comercio $199.000, IVA incluido; mensual $19.900 y setup desde $39.000.
 5. **RESUELTO.** No publicar uptime %. 5b. ¿DNS naranja? Verificar antes de PR6 (sigue abierto operativo).
 6. ¿SPF/DKIM Resend? 7. ¿`/privacidad/`? 8. ¿`/nexo/spas/`? 9–13. OG, fonts, admin D1, testimonio Ysabel (default verbatim), ROI al final.
 
@@ -318,7 +318,7 @@ GATE = default se implementa; el PR **no espera**.
 
 ## Key Decisions
 
-1–13. Operador; Nexo vende; 8 bloques + deep-link; 6 verticales; `/portafolio/` = casos; Cimientos; color producto acotado; allowlist; Hojear waitlist $3.990; indago ≠ 3D y **fuera de nav**; Worker+D1; HTML plano; 301 CF.  
+1–13. Operador; Nexo vende; 8 bloques + deep-link; 6 verticales; `/portafolio/` = casos; Cimientos; color producto acotado; allowlist; Hojear Plus $3.990/mes con IVA incluido y CTA de consulta; indago ≠ 3D y **fuera de nav**; Worker+D1; HTML plano; 301 CF.
 14. **La Parissiene ON como caso piloto Comercio** (`/portafolio/la-parissiene/`, chip `PILOT`). Hechos only. Sin parentesco, PINs, fiado de vecinos, $ de venta.  
 15. **`biblioteca/` y `salon-ysabel` fuera.**  
 16. PRs incrementales ≠ 404s ≠ hashes muertos. **Ejecutar PR1–PR7 ahora.**  
@@ -327,14 +327,14 @@ GATE = default se implementa; el PR **no espera**.
 19. CSS page-by-page.  
 20. Home rubro CTAs = `/nexo/#categorias` hasta PR3; PR3 flipppea a `#flujo`.  
 21. Features vertical ⊆ hub. Taller no tiene stock. Walk-in es problema, no feature.  
-22. **No anual Comercio $199.000.**  
+22. Anual Comercio $199.000, IVA incluido (decisión actual del usuario).
 23. **No uptime %.**
 
 ---
 
 ## PR Plan
 
-QA común: grep Forja/competidores = 0; no 99.98%; no +6 meses; no pago seguro; no $199.000 en Comercio; no parentesco/PIN/fiado en Parissiene.
+QA común: verificar links externos de comparación y fecha de revisión; no 99.98%; no +6 meses; no pago seguro; mostrar anual $199.000 en Comercio; no parentesco/PIN/fiado en Parissiene.
 
 ### PR1 — `main-v8.css` only
 Sin HTML. Tokens = Apéndice A §A.2–A.3. Effort 0.5–1 d.
@@ -348,7 +348,7 @@ Archivos: 6 landings + `nexo/index.html` + `js/nexo-flujo.js` (RUBROS + panel = 
 QA: 6×200; features ⊆ §4.9; **grep `stock de repuestos` = 0 en Servicios**; **walk-in no es feature**; **grep `199.000` = 0**; home `#flujo` existe. Effort 2–3 d.
 
 ### PR4 — Hojear + `/indago/`
-Waitlist $3.990 + kill-list §4.11. Borrar Offer JSON-LD. Flip footer indago **después** de 200. Effort 1–1.5 d.
+Histórico PR4: waitlist $3.990 + kill-list §4.11. Estado actual: precio público $3.990/mes con IVA incluido y CTA de consulta. Borrar Offer JSON-LD. Flip footer indago **después** de 200. Effort 1–1.5 d.
 
 ### PR5 — Cases (3)
 Archivos: `portafolio/index.html`; `portafolio/ysabel-aragon-nw/`; `portafolio/indago/`; **`portafolio/la-parissiene/index.html`**. Flip home/minimarkets href al case Parissiene. Indago Demostración = **solo indago.cl** si `/indago/` aún no existe.  
@@ -366,4 +366,4 @@ No `_redirects`. Sitemap ⊆ 200 **incluyendo** `/portafolio/la-parissiene/`. Ef
 
 ## Apéndice A — Bloques de implementación
 
-Idéntico al Apéndice A de `grok-design-doc-f1ee7ede.md` (A.1 tabla demo/onrender · A.2 `:root` · A.3 Google Fonts · A.4 `RUBROS` · A.5 panel `#flujo` · A.6 D1 · A.7 wrangler Route · A.8 campos form · A.9 runbook). Implementar desde ese apéndice para no desfasar dos copias de código pegable. Resumen de reglas A.1: no publicar login `bodega-trial-la-parissiene`. Comercio sin anual $199k en precios de `RUBROS` (ya $19.900 + setup desde $39.000).
+Idéntico al Apéndice A de `grok-design-doc-f1ee7ede.md` (A.1 tabla demo/onrender · A.2 `:root` · A.3 Google Fonts · A.4 `RUBROS` · A.5 panel `#flujo` · A.6 D1 · A.7 wrangler Route · A.8 campos form · A.9 runbook). Implementar desde ese apéndice para no desfasar dos copias de código pegable. Resumen de reglas A.1: no publicar login `bodega-trial-la-parissiene`. Mostrar precio mensual y anual vigente de Comercio.

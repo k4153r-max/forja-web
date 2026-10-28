@@ -30,7 +30,7 @@ demos/              → etemen.cl/demos/ (atelier, aura, luna)
 - Paleta Cimientos: carbono `#0B0B0C` · tinta `#F4F1EA` · cobre `#C4894A`
 - Nexo `#00C9A7` · Hojear `#D95D39` · indago `#8B7CF7` — solo en superficies de producto
 - Radio 0–2 px. Sin glow ni blur.
-- **Trial unificado:** 3 días gratis en todo el sitio
+- **Trial unificado:** 14 días gratis, sin tarjeta, en Nexo
 - Spec: `docs/REDISENO_ETEMEN.md`
 
 ## Logos

@@ -3,7 +3,7 @@
     salon: {
       titulo: "Salones & Spas",
       familia: "Nexo · Servicios",
-      precio: "Precio a cotizar por local",
+      precio: "$45.000/mes · setup $100.000 · IVA incluido",
       demo: "/demos/luna/",
       trial: "/contacto/?producto=Nexo+Servicios&rubro=Sal%C3%B3n",
       app: "https://demo.etemen.cl/login",
@@ -18,7 +18,7 @@
     barberia: {
       titulo: "Barberías",
       familia: "Nexo · Servicios",
-      precio: "Precio a cotizar por local",
+      precio: "$45.000/mes · setup $100.000 · IVA incluido",
       demo: "/demos/atelier/",
       trial: "/contacto/?producto=Nexo+Servicios&rubro=Barber%C3%ADa",
       app: "https://demo.etemen.cl/login",
@@ -33,7 +33,7 @@
     taller: {
       titulo: "Talleres Mecánicos",
       familia: "Nexo · Servicios",
-      precio: "Precio a cotizar por local",
+      precio: "$45.000/mes · setup $100.000 · IVA incluido",
       demo: "/demos/taller/",
       trial: "/contacto/?producto=Nexo+Taller&rubro=Taller",
       app: "https://taller.etemen.cl/login",
@@ -48,7 +48,7 @@
     ferreteria: {
       titulo: "Ferreterías",
       familia: "Nexo · Comercio",
-      precio: "Precio a cotizar por local",
+      precio: "$19.900/mes · setup desde $39.000 · IVA incluido",
       demo: "/demos/ferreteria/",
       trial: "/contacto/?producto=Nexo+Ferreteria&rubro=Ferreter%C3%ADa",
       app: "https://ferreteria.etemen.cl/login",
@@ -63,7 +63,7 @@
     minimarket: {
       titulo: "Minimarkets & Almacenes",
       familia: "Nexo · Comercio",
-      precio: "Precio a cotizar por local",
+      precio: "$19.900/mes · setup desde $39.000 · IVA incluido",
       demo: "/demos/almacen/",
       trial: "/contacto/?producto=Nexo+Almacen&rubro=Minimarket",
       app: "https://almacen.etemen.cl/login",
@@ -78,7 +78,7 @@
     botilleria: {
       titulo: "Botillerías",
       familia: "Nexo · Comercio",
-      precio: "Precio a cotizar por local",
+      precio: "$19.900/mes · setup desde $39.000 · IVA incluido",
       demo: "/demos/botilleria/",
       trial: "/contacto/?producto=Nexo+Botilleria&rubro=Botiller%C3%ADa",
       app: "https://botilleria.etemen.cl/login",

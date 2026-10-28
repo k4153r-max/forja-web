@@ -16,7 +16,7 @@ Sitio principal del holding **ETEMEN Studio** y del producto **Nexo**.
 - Design system: `css/main-v8.css` “Cimientos”
 - Spec de rediseño: `docs/REDISENO_ETEMEN.md`
 - Logo: `assets/logos/etemen-mark*.svg` + lockups · ver `assets/logos/BRAND.md`
-- Trial Nexo: **3 días** (unificado en home, nexo, demos y contacto)
+- Trial Nexo: **14 días** sin tarjeta (unificado en home, Nexo, demos y contacto)
 
 ## Estructura
 
